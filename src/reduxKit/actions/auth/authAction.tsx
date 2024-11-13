@@ -37,7 +37,6 @@ export const axiosIn = axios.create({
   
 export const adminLogout = createAsyncThunk(
   "admin/logout",
-
   async (__, { rejectWithValue }) => {
     try {
       axiosIn.delete(`admin/logout`, config )

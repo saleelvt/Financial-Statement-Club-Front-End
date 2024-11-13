@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./reducers/auth/authSlice";
+import AddDocumentSlice from "./reducers/admin/addDocumentSlice";
 export const store = configureStore({
     reducer:{
         auth:authSlice.reducer,
+        admin:AddDocumentSlice.reducer,
     }
 })
 export type RootState = ReturnType<typeof store.getState>

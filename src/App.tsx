@@ -4,7 +4,7 @@ import { AdminLogin } from "./components/forms/admin/login"
 import { AddDocument } from "./components/pages/admin/addDocument";
 import { SignUp } from "./components/pages/welcome";
 import { Routes, Route, } from "react-router-dom";
-import {AdminHomePage} from "./components/pages/admin/adminDashBoard"
+import AdminHomePage from "./components/pages/admin/adminDashBoard"
 import { Toaster } from "react-hot-toast"
 
 export const App:React.FC = React.memo(()=>{

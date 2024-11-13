@@ -2,115 +2,118 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   FaBars,
-  FaTimes,
   FaHome,
   FaListAlt,
   FaUser,
   FaCog,
+  FaTimes
 } from "react-icons/fa";
 
-const AdminSidebar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(true); // Sidebar starts open
+const AdminSidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen(!isOpen);
   };
 
+  const navLinks = [
+    { to: "/admin/dashboard", icon: FaHome, label: "Dashboard" },
+    { to: "/adminAddDocument", icon: FaListAlt, label: "Add Document" },
+    { to: "/admin/profile", icon: FaUser, label: "Profile" },
+    { to: "/admin/settings", icon: FaCog, label: "Settings" }
+  ];
+
   return (
-    <div className="flex h-screen rounded-lg  bg-white ">
+    <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
-      <div
-        className={`flex flex-col  rounded-lg  text-white w-64 h-full transition-transform transform ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 lg:w-64 z-50 shadow-2xl`}
+      <aside 
+        className={`bg-white fixed lg:static h-screen shadow-lg transition-all duration-300 z-20
+          ${isOpen ? 'w-64 translate-x-0' : 'w-0 -translate-x-full lg:w-64 lg:translate-x-0'}
+        `}
       >
-        {/* Sidebar Header */}
-        <div className="flex items-center  rounded-lg justify-between ">
-          {/* <h1 className="text-xl font-bold">Admin Panel</h1> */}
-          <button
-            onClick={toggleSidebar}
-            className="lg:hidden text-white focus:outline-none text-2xl"
-          >
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
+        {/* Close Button */}
+        <button
+          onClick={toggleSidebar}
+          className={`absolute -right-10 top-4 p-2 bg-white rounded-tr-lg rounded-br-lg shadow-lg lg:hidden
+            ${!isOpen && 'hidden'}
+          `}
+        >
+          <FaTimes className="h-6 w-6 text-gray-600" />
+        </button>
 
         {/* Profile Section */}
-        <div className="flex items-center p-4 space-x-4  shadow-lg  rounded-md w-56  lg:ml-3 lg:mt-4 border border-gray-600 bg-gradient-to-b from-green-500 via-green-700 to-green-900">
-          <div className="w-12 h-12 rounded-full bg-gray-400"></div>
-          <div>
-            <h2 className="text-lg font-semibold">Financial statment club</h2>
-            <span className="text-sm text-gray-300">admin12@gmail.com</span>
+        <div className={`p-4 ${!isOpen && 'lg:block hidden'}`}>
+          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                <FaUser className="text-white" />
+              </div>
+              <div className="text-white">
+                <h2 className="font-medium">Admin Panel</h2>
+                <p className="text-sm opacity-80">admin@example.com</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Sidebar Links */}
-        <nav className="flex-1 mt-4 space-y-2">
-          <NavLink
-            to="/admin/dashboard"
-            className={({ isActive }) =>
-              `flex items-center px-4 py-3  rounded-xl text-gray-800 hover:bg-gray-700 hover:text-white transition-all duration-300 ${
-                isActive ? "bg-gray-700" : ""
-              }`
-            }
-          >
-            <FaHome className="mr-3" /> Dashboard
-          </NavLink>
-          <NavLink
-            to="/adminAddDocument"
-            className={({ isActive }) =>
-              `flex items-center px-4 py-3  rounded-xl text-gray-800 hover:bg-gray-700 hover:text-white transition-all duration-300 ${
-                isActive ? "bg-gray-700" : ""
-              }`
-            }
-          >
-            <FaListAlt className="mr-3" />  Add Document
-          </NavLink>
-          <NavLink
-            to="/admin/profile"
-            className={({ isActive }) =>
-              `flex items-center px-4 py-3  rounded-xl text-gray-800 hover:bg-gray-700 hover:text-white transition-all duration-300 ${
-                isActive ? "bg-gray-700" : ""
-              }`
-            }
-          >
-            <FaUser className="mr-3" /> Profile
-          </NavLink>
-          <NavLink
-            to="/admin/settings"
-            className={({ isActive }) =>
-              `flex items-center px-4 py-3 rounded-xl text-gray-800 hover:bg-gray-700 hover:text-white transition-all duration-300 ${
-                isActive ? "bg-gray-700" : ""
-              }`
-            }
-          >
-            <FaCog className="mr-3" /> Settings
-          </NavLink>
+        {/* Navigation */}
+        <nav className={`mt-6 px-3 ${!isOpen && 'lg:block hidden'}`}>
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) => `
+                flex items-center gap-3 px-4 py-3 rounded-lg mb-1
+                transition-colors duration-200
+                ${isActive 
+                  ? 'bg-green-500 text-white' 
+                  : 'text-gray-600 hover:bg-gray-100'}
+              `}
+            >
+              <link.icon />
+              <span>{link.label}</span>
+            </NavLink>
+          ))}
         </nav>
-        {/* Logout Section */}
-      </div>
+      </aside>
+
+      {/* Backdrop for mobile */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/20 lg:hidden z-10"
+          onClick={toggleSidebar}
+        />
+      )}
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
-        <header className="flex items-center justify-between bg-gray-300  p-4 shadow-lg lg:hidden">
-          <h1 className="text-lg font-semibold">Admin Dashboard</h1>
-          <button
-            onClick={toggleSidebar}
-            className="focus:outline-none text-2xl"
-          >
-            <FaBars />
-          </button>
+      <main className="flex-1">
+        {/* Header */}
+        <header className="bg-white shadow-sm p-4">
+          <div className="flex items-center">
+            <button
+              onClick={toggleSidebar}
+              className="p-2 rounded-lg hover:bg-gray-100 lg:hidden"
+            >
+              <FaBars className="h-6 w-6 text-gray-600" />
+            </button>
+            <h1 className="text-xl font-semibold text-gray-800 ml-4">
+              Admin Dashboard
+            </h1>
+          </div>
         </header>
-        <div className="p-6 rounded-lg  bg-slate-400 shadow-md">
-          {/* Replace with actual content */}
-          <h2 className="text-2xl font-semibold mb-4">
-            Welcome to the Admin Panel
-          </h2>
-          <p>
-            This is your admin dashboard where you can manage your application.
-          </p>
+
+        {/* Page Content */}
+        <div className="p-6">
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Welcome to Admin Panel
+            </h2>
+            <p className="text-gray-600">
+              This is your admin dashboard where you can manage your application.
+            </p>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

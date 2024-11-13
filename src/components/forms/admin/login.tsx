@@ -1,11 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { ValidationLogin } from "../../../validation/admin/adminLogin";
-import { LoginInterfaces } from "../../../interfaces/admin/IAdminLogin";
+import { IAdminLogin } from "../../../interfaces/admin/login";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../../reduxKit/store";
+import { loginAdmin } from "../../../reduxKit/actions/auth/authAction";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+
 
 
 export const AdminLogin = React.memo(() => {
-  const initialValues: LoginInterfaces = {
+  const dispatch=useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+  const {loading}=useSelector((state:RootState)=>state.auth)
+
+  const initialValues: IAdminLogin = {
     email: "",
     password: "",
   };
@@ -13,15 +25,40 @@ export const AdminLogin = React.memo(() => {
   const [showPassword, setShowPassword] = useState(false);
 //   const [typingEffectText, setTypingEffectText] = useState("");
  
-
-  const formik = useFormik<LoginInterfaces>({
+  const formik = useFormik<IAdminLogin>({
     initialValues,
     validationSchema: ValidationLogin,
     onSubmit: async (values) => {
       try {
         console.log(values, "before going to salon home page ");
-      } catch (error) {
+        await dispatch(loginAdmin(values)).unwrap()
+     
+        navigate("/adminHomepage")
+        
+      } catch (error:any) {
         console.error("Login failed:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: error.message,
+          timer: 3000,
+          toast: true,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          background: '#fff', // Light red background for an error message
+          color: '#721c24', // Darker red text color for better readability
+          iconColor: '#f44336', // Custom color for the icon
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer); // Pause timer on hover
+            toast.addEventListener('mouseleave', Swal.resumeTimer); // Resume timer on mouse leave
+          },
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown' // Animation when the toast appears
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp' // Animation when the toast disappears
+          }
+        });
       }
     },
   });
@@ -109,7 +146,7 @@ export const AdminLogin = React.memo(() => {
               type="submit"
               className="w-full p-3 rounded-lg mt-4 bg-orange-400 text-white font-semibold hover:bg-orange-600 focus:ring-2 focus:ring-orange-300 transition duration-300 transform hover:scale-105"
             >
-              Login
+           {loading ?"Loading..":"Login"}
             </button>
           </div>
         </form>

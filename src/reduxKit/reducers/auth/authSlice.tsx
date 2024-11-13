@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { createSlice } from "@reduxjs/toolkit";
 
-import { loginAdmin } from "../../actions/auth/authAction";
+import { loginAdmin , adminLogout} from "../../actions/auth/authAction";
 
 export interface UserState {
   userData: UserState | null;
@@ -22,6 +23,7 @@ const initialState: UserState = {
   role: localStorage.getItem("role")
     ? JSON.parse(localStorage.getItem("role")!)
     : null,
+  
   isLogged: localStorage.getItem("isLogged")
     ? JSON.parse(localStorage.getItem("isLogged")!)
     : false,
@@ -32,7 +34,6 @@ const initialState: UserState = {
     ? JSON.parse(localStorage.getItem("_id")!)
     : null,
 };
-
 export const authSlice = createSlice({
   name: "user",
   initialState,
@@ -48,11 +49,11 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginAdmin.fulfilled, (state, { payload }) => {
+        console.log("inshaallah log of the payload ", payload);
         state.loading = false;
         state.error = null;
         state.userData = payload;
         state.role = payload.role;
-        console.log('my admin paylod role is ',payload.role);
         state.isLogged = true;
         localStorage.setItem("role", JSON.stringify(state.role));
         localStorage.setItem("isLogged", JSON.stringify(state.isLogged));
@@ -67,8 +68,33 @@ export const authSlice = createSlice({
         state.error = payload as string;
       })
 
+
+
+
+
+      .addCase(adminLogout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(adminLogout.fulfilled, (state) => {
+        state.loading=false
+        state.isLogged = false,
+          state.error = null,
+          state.role = null,
+          state.userData = null;
+        localStorage.clear();
+      })
+      .addCase(adminLogout.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload as string;
+      })
+      
+      
+
   },
 });
+
 
 
 export const {updateError}= authSlice.actions

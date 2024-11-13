@@ -1,89 +1,111 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// src/components/Navbar.tsx
 
-import React from "react"
-import NavImage from "../../assets/images/WhatsApp_Image_2024-11-06_at_11.10.44_60081502-removebg-preview.png"
-export const AdminNavbar= React.memo(()=>{
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+// import { Button } from "@nextui-org/react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../reduxKit/store";
+import Swal from "sweetalert2";
+// import "../../CSS/logoHeading.css";
+import { FaSignOutAlt } from "react-icons/fa";
+import { adminLogout } from "../../reduxKit/actions/auth/authAction";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reduxKit/store';
 
-    return (
-        <section>
-<nav className="bg-white shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between ">
-          {/* Logo and Brand */}
-          <div className=" flex-shrink-0 flex items-center">
-            <img
-              src={NavImage}
-              alt="Nour Al Safwa Logo"
-              className="h-10 w-auto"
-            />
-            <span className="ml-2 text-xl font-serif text-4xl  text-gray-800">Nour Al Safwa</span>
-          </div>
+ export const AdminNavbar: React.FC = () => {
+  const {role}=useSelector((state:RootState)=>state.auth)
 
-          {/* Navbar Links */}
-          <div className="hidden md:flex space-x-8 items-center">
-            <a href="#" className="text-gray-800 hover:text-yellow-500">
-              Viasas
-            </a>
-            <a href="#" className="text-gray-800 hover:text-yellow-500">
-              Fligts
-            </a>
-            <a href="#" className="text-gray-800 hover:text-yellow-500">
-              Services
-            </a>
-            <a href="#" className="text-gray-800 hover:text-yellow-500">
-              Contact
-            </a>
-          </div>
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button
-              className="text-gray-800 hover:text-yellow-500 focus:outline-none focus:text-yellow-500"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
-            </button>
-          </div>
+
+  console.log('this is my role  admin ',role);
+  
+
+
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+
+
+  const handledata = async () => {
+    try {
+      await dispatch(adminLogout()).unwrap();
+      
+      Swal.fire({
+        icon: "success",
+        title: "Logged out successfully!",
+        showConfirmButton: false,
+        timer: 1000,
+        toast:true
+      }).then(() => {
+        navigate("/adminLogin");
+      });
+    } catch (error:any) {
+      Swal.fire({
+        icon: "error",
+        title: "Logout failed!",
+        showConfirmButton: true,
+        text:error.data
+      });
+    }
+  };
+
+  return (
+    <nav className=" p-6">
+      <div className="container  mx-auto flex justify-between items-center">
+        <div className=" text-4xl ">
+      <h1 className=" font-serif  ">Financial statment club </h1>
         </div>
-      </div>
+        {/* <h1>{adminDetails}</h1> */}
+        <div className="lg:hidden">
+          <button className=" focus:outline-none" onClick={toggleMenu}>
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          className={`lg:flex lg:items-center ${isOpen ? "block" : "hidden"}`}
+        >
+          <Link
+            to="/services"
+            className="block font-semibold px-4 py-2 hover:bg-gradient-to-b from-green-500 via-green-700 to-green-900 mr-6 rounded"
+          >
+            Services
+          </Link>
 
-
-      {/* Mobile Menu */}
-      <div className="md:hidden">
-        <div className="px-2 pt-2 pb-3 space-y-1">
-          <a href="#" className="block text-gray-800 hover:text-yellow-500">
-            VISAS
-          </a>
-          <a href="#" className="block text-gray-800 hover:text-yellow-500">
-            HOTELS
-          </a>
-          <a href="#" className="block text-gray-800 hover:text-yellow-500">
-            FLIGHTS
-          </a>
-          <a href="#" className="block text-gray-800 hover:text-yellow-500">
-            SCHOOLS
-          </a>
-          <a href="#" className="block text-gray-800 hover:text-yellow-500">
-            PACKAGES
-          </a>
+          <Link
+            to="/about"
+            className="block px-4 py-2 font-semibold hover:bg-gradient-to-b from-green-500 via-green-700 to-green-900 mr-6 rounded"
+          >
+            About
+          </Link>
+         <button
+            onClick={handledata}
+            className="bg-gradient-to-b from-green-500 via-green-700 to-green-900 text-white shadow-lg px-4 flex items-center py-2  rounded-md"
+          >
+                  <FaSignOutAlt className="mr-3" /> Logout
+                  </button>
         </div>
       </div>
     </nav>
-        </section>
-    )
-
-
-})
+  );
+};
 

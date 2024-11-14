@@ -18,6 +18,11 @@ const brands = [
   "United Motors Company",
 ];
 
+
+
+
+
+
 const UserHomePage: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
 
@@ -64,9 +69,9 @@ const UserHomePage: React.FC = () => {
 
       {/* Brand Buttons */}
       <div
-        className="grid grid-cols-2 mx-2 sm:grid-cols-3 mx-24 rounded-lg md:grid-cols-4 lg:grid-cols-6 gap-4 px-4 text-center mt-8"
+        className="grid grid-cols-2 mx-4  sm:grid-cols-3 mx-24 rounded-lg md:grid-cols-4 lg:grid-cols-6 gap-4 px-4 text-center mt-8"
         style={{
-          backgroundImage: `url('https://res.cloudinary.com/dllmjze4p/image/upload/v1731560132/digital-art-dark-cosmic-night-sky_d9htus.jpg')`,
+          // backgroundImage: `url('https://res.cloudinary.com/dllmjze4p/image/upload/v1731560132/digital-art-dark-cosmic-night-sky_d9htus.jpg')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
@@ -76,7 +81,7 @@ const UserHomePage: React.FC = () => {
           <button
             key={brand}
             onClick={() => handleBrandClick(brand)}
-            className="text-xl font-serif hover:shadow-lg hover:border focus:ring-2 transition duration-300 transform hover:scale-105 hover:border-gray-100 rounded-sm hover:text-gray-100"
+            className="text-xl  hover:border focus:ring-2 transition duration-300 transform hover:scale-105 hover:border-gray-100 rounded-sm hover:text-gray-100"
           >
             {brand}
           </button>
@@ -106,3 +111,4 @@ const UserHomePage: React.FC = () => {
 };
 
 export default UserHomePage;
+

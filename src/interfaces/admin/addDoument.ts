@@ -4,5 +4,6 @@ export  interface MyObject {
     companyNameAr: string | null;
     companyNameEn: string | null;
     yearOfReport: string | null;
-    file: any;
+    fileAr: any;
+    fileEn:any
   }

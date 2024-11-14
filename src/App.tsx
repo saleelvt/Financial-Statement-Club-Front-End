@@ -5,10 +5,13 @@ import { Toaster } from 'react-hot-toast';
 import { Loading } from './components/pages/Loading';
 
 // Lazy-load each page component
+// import { UserHomePage } from './components/pages/user/userHome';
 const UserHomePage = lazy(() => import('./components/pages/user/userHome'));
+import { DocumentList } from './components/pages/admin/documentList';
 import { AdminLogin } from './components/forms/admin/login';
 import AdminHomePage from './components/pages/admin/adminDashBoard';
 import { AddDocument } from './components/pages/admin/addDocument';
+
 // const AdminLogin = lazy(() => import('./components/forms/admin/login'));
 // const AdminHomePage = lazy(() => import('./components/pages/admin/adminDashBoard'));
 // const AddDocument = lazy(() => import('./components/pages/admin/addDocument'));
@@ -24,6 +27,7 @@ export const App: React.FC = React.memo(() => {
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/adminHomepage" element={<AdminHomePage />} />
           <Route path="/adminAddDocument" element={<AddDocument />} />
+          <Route path="/adminDocumentList" element={<DocumentList />} />
         </Routes>
       </Suspense>
     </Fragment>

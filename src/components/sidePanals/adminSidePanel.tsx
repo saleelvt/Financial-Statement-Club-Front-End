@@ -15,10 +15,15 @@ const AdminSidebar = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-
+  
+   
+  
+   
+    
   const navLinks = [
     { to: "/admin/dashboard", icon: FaHome, label: "Dashboard" },
     { to: "/adminAddDocument", icon: FaListAlt, label: "Add Document" },
+    { to: "/adminDocumentList", icon: FaListAlt, label: "Document List" },
     { to: "/admin/profile", icon: FaUser, label: "Profile" },
     { to: "/admin/settings", icon: FaCog, label: "Settings" }
   ];

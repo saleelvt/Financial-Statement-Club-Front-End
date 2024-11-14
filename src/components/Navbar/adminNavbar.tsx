@@ -60,7 +60,7 @@ import { RootState } from '../../reduxKit/store';
     <nav className=" p-6">
       <div className="container  mx-auto flex justify-between items-center">
         <div className=" text-4xl ">
-      <h1 className=" font-serif  ">Financial statment club </h1>
+      <h1 className=" font-semibold  ">Financial statment club </h1>
         </div>
         {/* <h1>{adminDetails}</h1> */}
         <div className="lg:hidden">

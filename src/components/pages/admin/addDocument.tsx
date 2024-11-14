@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-import { useDispatch } from "react-redux";
 import { addDocument } from "../../../reduxKit/actions/admin/addDocumentAction";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -14,7 +13,8 @@ export const AddDocument: React.FC = () => {
   const [companyNameAr, setCompanyNameAr] = useState("");
   const [companyNameEn, setCompanyNameEn] = useState("");
   const [yearOfReport, setYearOfReport] = useState("");
-  const [file, setFile] = useState("");
+  const [fileAr, setFileAr] = useState<File | null>(null);
+  const [fileEn, setFileEn] = useState<File | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const { loading } = useSelector((state: RootState) => state.admin);
@@ -32,88 +32,56 @@ export const AddDocument: React.FC = () => {
     setYearOfReport(e.target.value);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(e.target.value);
+  const handleFileArChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) setFileAr(e.target.files[0]);
   };
 
-  interface myObject {
-    companyNameAr: string | null;
-    companyNameEn: string | null;
-    yearOfReport: string | null;
-    file: any;
-  }
-  const myObject: myObject = {
-    companyNameAr,
-    companyNameEn,
-    yearOfReport,
-    file,
+  const handleFileEnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) setFileEn(e.target.files[0]);
   };
 
-  // Custom validation function
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
-
-    if (!companyNameAr.trim()) {
-      newErrors.companyNameAr = "Company Name (Arabic) is required.";
-    }
-    if (!companyNameEn.trim()) {
-      newErrors.companyNameEn = "Company Name (English) is required.";
-    }
+    if (!companyNameAr.trim()) newErrors.companyNameAr = "Company Name (Arabic) is required.";
+    if (!companyNameEn.trim()) newErrors.companyNameEn = "Company Name (English) is required.";
     if (!yearOfReport.trim() || isNaN(Number(yearOfReport))) {
       newErrors.yearOfReport = "Please enter a valid Year of Report.";
     }
-    if (!file.trim()) {
-      newErrors.file = "PDF file is required.";
-    }
+    if (!fileAr) newErrors.fileAr = "Arabic PDF file is required.";
+    if (!fileEn) newErrors.fileEn = "English PDF file is required.";
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Returns true if no errors
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
-    // Validate the form before submitting
-    if (!validateForm()) {
-      return; // Don't proceed if there are validation errors
-    }
+    const formData = new FormData();
+    formData.append("companyNameAr", companyNameAr);
+    formData.append("companyNameEn", companyNameEn);
+    formData.append("yearOfReport", yearOfReport);
+    if (fileAr) formData.append("fileAr", fileAr);
+    if (fileEn) formData.append("fileEn", fileEn);
 
     try {
-      console.log("this is my object", myObject);
-      await dispatch(addDocument(myObject)).unwrap();
-      setCompanyNameAr('');
-      setCompanyNameEn('');
+      await dispatch(addDocument(formData)).unwrap();
+      setCompanyNameAr("");
+      setCompanyNameEn("");
       setYearOfReport("");
-      setFile("");
+      setFileAr(null);
+      setFileEn(null);
       toast.success("Document successfully added");
     } catch (error: any) {
-      console.error("Document Adding failed:", error);
-
-      const errorMessage =
-        error?.data?.message ||
-        error?.message ||
-        "An unexpected error occurred OR Existed Already";
       Swal.fire({
         icon: "error",
         title: "Error!",
-        text: errorMessage,
+        text: error?.data?.message || "An unexpected error occurred",
         timer: 3000,
         toast: true,
         showConfirmButton: false,
         timerProgressBar: true,
-        background: "#fff",
-        color: "#721c24",
-        iconColor: "#f44336",
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-        showClass: {
-          popup: "animate__animated animate__fadeInDown",
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutUp",
-        },
       });
     }
   };
@@ -128,83 +96,74 @@ export const AddDocument: React.FC = () => {
         >
           <div className="flex -mx-3">
             <div className="w-1/2 px-3 mb-6 md:mb-3">
-              <label
-                className="block uppercase tracking-wide text-gray-700 font-bold mb-2"
-                htmlFor="company-name-ar"
-              >
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Company Name <span className="text-sm"> (Arabic)</span>
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="company-name-ar"
                 type="text"
                 placeholder="شركة مثال"
                 value={companyNameAr}
                 onChange={handleCompanyNameArChange}
                 required
               />
-              {errors.companyNameAr && (
-                <p className="text-red-500 text-xs">{errors.companyNameAr}</p>
-              )}
+              {errors.companyNameAr && <p className="text-red-500 text-xs">{errors.companyNameAr}</p>}
             </div>
             <div className="w-1/2 px-3 mb-6 md:mb-0">
-              <label
-                className="block uppercase tracking-wide text-gray-700 font-bold mb-2"
-                htmlFor="company-name-en"
-              >
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Company Name <span className="text-sm"> (English)</span>
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="company-name-en"
                 type="text"
                 placeholder="Brand Name"
                 value={companyNameEn}
                 onChange={handleCompanyNameEnChange}
                 required
               />
-              {errors.companyNameEn && (
-                <p className="text-red-500 text-xs">{errors.companyNameEn}</p>
-              )}
+              {errors.companyNameEn && <p className="text-red-500 text-xs">{errors.companyNameEn}</p>}
             </div>
           </div>
 
           <div className="mb-6">
-            <label
-              className="block uppercase tracking-wide text-gray-700 font-bold mb-2"
-              htmlFor="year-of-report"
-            >
+            <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
               Year of Report
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              id="year-of-report"
               type="text"
               placeholder="2023"
               value={yearOfReport}
               onChange={handleYearOfReportChange}
               required
             />
-            {errors.yearOfReport && (
-              <p className="text-red-500 text-xs">{errors.yearOfReport}</p>
-            )}
+            {errors.yearOfReport && <p className="text-red-500 text-xs">{errors.yearOfReport}</p>}
           </div>
 
           <div className="mb-6">
-            <label
-              className="block uppercase tracking-wide text-gray-700 font-bold mb-2"
-              htmlFor="text"
-            >
-              Add PDF
+            <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+              Add PDF (Arabic)
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              id="text"
-              type="text"
-              onChange={handleFileChange}
+              type="file"
+              onChange={handleFileArChange}
               required
             />
-            {errors.file && <p className="text-red-500 text-xs">{errors.file}</p>}
+            {errors.fileAr && <p className="text-red-500 text-xs">{errors.fileAr}</p>}
+          </div>
+
+          <div className="mb-6">
+            <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+              Add PDF (English)
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              type="file"
+              onChange={handleFileEnChange}
+              required
+            />
+            {errors.fileEn && <p className="text-red-500 text-xs">{errors.fileEn}</p>}
           </div>
 
           <div className="flex items-center justify-between">
@@ -216,8 +175,8 @@ export const AddDocument: React.FC = () => {
               Back
             </button>
             <button
-              className="bg-gradient-to-b from-green-500 via-green-700 to-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:from-green-600 hover:via-green-800 hover:to-green-950"
               type="submit"
+              className="bg-gradient-to-b from-green-500 via-green-700 to-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:from-green-600 hover:via-green-800 hover:to-green-950"
             >
               {loading ? "Uploading..." : "Upload"}
             </button>

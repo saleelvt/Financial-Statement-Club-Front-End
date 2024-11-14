@@ -66,7 +66,7 @@ const AdminSidebar = () => {
                 flex items-center gap-3 px-4 py-3 rounded-lg mb-1
                 transition-colors duration-200
                 ${isActive 
-                  ? 'bg-green-500 text-white' 
+                  ? 'bg-green-600 text-white' 
                   : 'text-gray-600 hover:bg-gray-100'}
               `}
             >

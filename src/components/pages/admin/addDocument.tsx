@@ -49,7 +49,6 @@ export const AddDocument: React.FC = () => {
     file,
   };
 
-
   // Custom validation function
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};

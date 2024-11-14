@@ -11,12 +11,10 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 
-
 export const AdminLogin = React.memo(() => {
   const dispatch=useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const {loading}=useSelector((state:RootState)=>state.auth)
-
   const initialValues: IAdminLogin = {
     email: "",
     password: "",
@@ -30,7 +28,7 @@ export const AdminLogin = React.memo(() => {
     validationSchema: ValidationLogin,
     onSubmit: async (values) => {
       try {
-        console.log(values, "before going to salon home page ");
+        console.log(values,"before going to salon home page ");
         await dispatch(loginAdmin(values)).unwrap()
      
         navigate("/adminHomepage")
@@ -140,11 +138,10 @@ export const AdminLogin = React.memo(() => {
               <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
             )}
           </div>
-
           <div className="text-center mt-6">
             <button
               type="submit"
-              className="w-full p-3 rounded-lg mt-4 bg-orange-400 text-white font-semibold hover:bg-orange-600 focus:ring-2 focus:ring-orange-300 transition duration-300 transform hover:scale-105"
+              className="w-full p-3 rounded-lg mt-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold focus:ring-2  transition duration-300 transform hover:scale-105"
             >
            {loading ?"Loading..":"Login"}
             </button>

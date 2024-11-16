@@ -11,6 +11,7 @@ export interface UserState {
   status?: string | null;
   isLogged: boolean;
   _id?: string | null;
+  language?:string|null
 }
 
 
@@ -33,6 +34,7 @@ const initialState: UserState = {
   _id: localStorage.getItem("_id")
     ? JSON.parse(localStorage.getItem("_id")!)
     : null,
+    language:localStorage.getItem("language")?JSON.parse(localStorage.getItem("language")!):null
 };
 export const authSlice = createSlice({
   name: "user",

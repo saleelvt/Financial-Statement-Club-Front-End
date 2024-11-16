@@ -57,14 +57,15 @@ export const AddDocument: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateForm()) return;
-
+  
     const formData = new FormData();
     formData.append("companyNameAr", companyNameAr);
     formData.append("companyNameEn", companyNameEn);
     formData.append("yearOfReport", yearOfReport);
-    if (fileAr) formData.append("fileAr", fileAr);
-    if (fileEn) formData.append("fileEn", fileEn);
-
+    
+    if (fileAr) formData.append("fileAr", fileAr);  // Attach the file
+    if (fileEn) formData.append("fileEn", fileEn);  // Attach the file
+  
     try {
       await dispatch(addDocument(formData)).unwrap();
       setCompanyNameAr("");
@@ -85,6 +86,7 @@ export const AddDocument: React.FC = () => {
       });
     }
   };
+  
 
   return (
     <div className="">
@@ -147,6 +149,7 @@ export const AddDocument: React.FC = () => {
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               type="file"
+              name="fileAr"
               onChange={handleFileArChange}
               required
             />
@@ -160,6 +163,7 @@ export const AddDocument: React.FC = () => {
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               type="file"
+              name="fileEn"
               onChange={handleFileEnChange}
               required
             />

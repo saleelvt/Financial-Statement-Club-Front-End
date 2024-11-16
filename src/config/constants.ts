@@ -3,7 +3,7 @@
 export const URL="http://localhost:2002";
 export const config ={
     headers :{
-        "Content-Type":"application/json",
+        "Content-Type":"multipart/form-data",
     },
     withCredentials:true
 }

@@ -60,7 +60,7 @@ export const adminLogout = createAsyncThunk(
 
 
 export const userLanguageChange = createAsyncThunk(
-  "admin/logout",
+  "admin/language change",
   async (lang:string, { rejectWithValue }) => {
     try {
          const language=lang

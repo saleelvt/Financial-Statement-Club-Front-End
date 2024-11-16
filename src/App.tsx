@@ -1,6 +1,6 @@
 // src/App.tsx
 import React, { Fragment, lazy, Suspense } from 'react';
-import { Routes, Route, } from 'react-router-dom';
+import { Routes, Route,Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Loading } from './components/pages/Loading';
 
@@ -15,10 +15,6 @@ import { AddDocument } from './components/pages/admin/addDocument';
 import { useSelector } from 'react-redux';
 import { RootState } from './reduxKit/store';
 
-// const AdminLogin = lazy(() => import('./components/forms/admin/login'));
-// const AdminHomePage = lazy(() => import('./components/pages/admin/adminDashBoard'));
-// const AddDocument = lazy(() => import('./components/pages/admin/addDocument'));
-
 export const App: React.FC = React.memo(() => {
 
   const {isLogged,role,}=useSelector((state:RootState)=>state.auth)
@@ -32,10 +28,10 @@ export const App: React.FC = React.memo(() => {
         <Routes>
           <Route path="/" element={ <UserHomePage/>} />
           {/* <Route path="/adminLogin" element={<AdminLogin />} /> */}
-          {/* <Route path="/adminLogin" element={isLogged && role === 'admin' ? <Navigate to="/adminHomepage" /> : <AdminLogin />} /> */}
-          <Route path="/adminLogin" element={ <AdminLogin />} />
-          {/* <Route path="/adminHomepage" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} /> */}
-          <Route path="/adminHomepage" element={ <AdminHomePage /> } />
+          <Route path="/adminLogin" element={isLogged && role === 'admin' ? <Navigate to="/adminHomepage" /> : <AdminLogin />} />
+          {/* <Route path="/adminLogin" element={ <AdminLogin />} /> */}
+          <Route path="/adminHomepage" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
+          {/* <Route path="/adminHomepage" element={ <AdminHomePage /> } /> */}
           <Route path="/adminAddDocument" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
           <Route path="/adminDocumentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
         </Routes>

@@ -73,6 +73,7 @@ export const AddDocument: React.FC = () => {
       setYearOfReport("");
       setFileAr(null);
       setFileEn(null);
+      window.location.reload()
       toast.success("Document successfully added");
     } catch (error: any) {
       Swal.fire({
@@ -86,7 +87,6 @@ export const AddDocument: React.FC = () => {
       });
     }
   };
-  
 
   return (
     <div className="">

@@ -1,27 +1,73 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";  // Import useNavigate
 import { AdminNavbar } from "../../Navbar/adminNavbar";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../reduxKit/store";
+import { Loading } from "../Loading";
+import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
+import { setArabicNames } from "../../../functions/setArabicNames";
+import { setEnglishNames } from "../../../functions/setEnglishNames";
+
+interface Document {
+  _id: string;
+  companyNameEn: string;
+  yearOfReport: string;
+}
 
 export const DocumentList: React.FC = () => {
-  const documents=[
-    { _id: "1", companyNameEn: "Saleels", yearOfReport: "2022" },
-    { _id: "2", companyNameEn: "Saleels", yearOfReport: "2021" },
-    { _id: "3", companyNameEn: "Saleels", yearOfReport: "2020" },
-    { _id: "4", companyNameEn: "Saleels", yearOfReport: "2019" },
-    { _id: "5", companyNameEn: "Saleels", yearOfReport: "2018" },
-    { _id: "6", companyNameEn: "Saleels", yearOfReport: "2017" },
-    { _id: "7", companyNameEn: "Saleels", yearOfReport: "2016" },
-    { _id: "8", companyNameEn: "Saleels", yearOfReport: "2015" },
-    { _id: "9", companyNameEn: "Saleels", yearOfReport: "2014" },
-    { _id: "10", companyNameEn: "Saleels", yearOfReport: "2013" },
-    { _id: "11", companyNameEn: "Saleels", yearOfReport: "2012" },
-    { _id: "12", companyNameEn: "Saleels", yearOfReport: "2011" },
-  ]
-    const [currentPage, setCurrentPage] = useState(1);
+  const { userLanguage } = useSelector((state: RootState) => state.userLanguage);
+  const [language, setLanguage] = useState<string>("عربي");
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();  // Initialize useNavigate
+
+  const toggleLanguage = async () => {
+    const newLanguage = language === "English" ? "Arabic" : "English";
+    setLanguage(newLanguage);
+    await dispatch(userLanguageChange(newLanguage));
+  };
+
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [brandsEn, setBrandsEn] = useState<{ name: string; year: string }[]>([]);
+  const [brandsAr, setBrandsAr] = useState<{ name: string; year: string }[]>([]);
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      setLoading(true);
+      try {
+        const response = await commonRequest("GET", "/admin/getDocuments", {}, null);
+        if (response.status === 200 && response.data?.data) {
+          setDocuments(response.data.data);
+        } else {
+          setError("Failed to fetch documents");
+        }
+      } catch (err: any) {
+        setError(err.message || "An unexpected error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDocuments();
+  }, []);
+
+  useEffect(() => {
+    if (documents.length > 0) {
+      const { arabicNamesArray } = setArabicNames(documents);
+      setBrandsAr(arabicNamesArray);
+
+      const { englishNamesArray } = setEnglishNames(documents);
+      setBrandsEn(englishNamesArray);
+    }
+  }, [documents]);
+
+  const [currentPage, setCurrentPage] = useState(1);
   const documentsPerPage = 10;
   const [modalOpen, setModalOpen] = useState(false);
   const [docToDelete, setDocToDelete] = useState<string | null>(null);
@@ -30,17 +76,19 @@ export const DocumentList: React.FC = () => {
   const indexOfLastDoc = currentPage * documentsPerPage;
   const indexOfFirstDoc = indexOfLastDoc - documentsPerPage;
   const currentDocuments = documents.slice(indexOfFirstDoc, indexOfLastDoc);
-
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
   const handleDelete = async () => {
     if (!docToDelete) return;
-
     try {
-      const response= await commonRequest("DELETE", `/admin/deleteDocument/${docToDelete}`, config);
-      if(response.success===true){
-        toast.success("Document Successfully Deleted")
-      }
+      await commonRequest("DELETE", `/admin/deleteDocument/${docToDelete}`, config);
+
+        toast.success("Document Successfully Deleted");
+        // Optionally update state to reflect changes
+        setDocuments(prevDocuments => 
+          prevDocuments.filter(doc => doc._id.toString() !== docToDelete)
+        );
+        // Reload the page to reflect changes
+       
       
     } catch (error) {
       console.error("Failed to delete document:", error);
@@ -49,40 +97,52 @@ export const DocumentList: React.FC = () => {
       setDocToDelete(null);
     }
   };
+  
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    return <div className="text-red-500">Error: {error}</div>;
+  }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       <AdminNavbar />
-      <div className="flex justify-center items-center py-10">
-        <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-4xl border border-gray-300">
-          <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Document List</h1>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left border-collapse">
+      <div className="flex justify-center items-center py-10 px-4 sm:px-8 lg:px-12">
+        <div className="bg-white shadow-lg rounded-xl p-6 md:p-8 w-full max-w-4xl border border-gray-200">
+          <div className="flex justify-between items-center">
+            <button
+              onClick={() => navigate(-1)}  // Navigate back on click
+              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            >
+              Back
+            </button>
+            <h1 className="text-1xl md:text-3xl font-bold text-center mb-6 text-gray-700">
+              Document List
+            </h1>
+          </div>
+
+          <div className="overflow-x-auto mt-2">
+            <table className="w-full text-left">
               <thead>
-                <tr className="border-b-2 border-gray-300">
-                  <th className="py-4 px-6 text-lg font-medium text-gray-700">Brand Name</th>
-                  <th className="py-4 px-6 text-lg font-medium text-gray-700">Year of Statement</th>
-                  <th className="py-4 px-6 text-lg font-medium text-gray-700">Actions</th>
+                <tr className="bg-gray-200">
+                  <th className="py-4 px-3 md:px-6 text-md md:text-lg font-medium text-gray-700">Brand Name</th>
+                  <th className="py-4 px-3 md:px-6 text-md md:text-lg font-medium text-gray-700">Year of Statement</th>
+                  <th className="py-4 px-3 md:px-6 text-md md:text-lg font-medium text-gray-700">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {currentDocuments.map((doc) => (
-                  <tr key={doc._id} className="hover:bg-gray-100 transition-colors">
-                    <td className="py-4 px-6 border-b text-gray-700">{doc.companyNameEn}</td>
-                    <td className="py-4 px-6 border-b text-gray-700">{doc.yearOfReport}</td>
-                    <td className="py-4 px-6 border-b flex space-x-2">
-                      <Link
-                        to={`/view-document/${doc._id}`}
-                        className="text-gray-700 hover:text-gray-900 px-3 py-1 rounded-md border border-gray-300 bg-gray-300 hover:bg-slate-400 font-semibold"
-                      >
-                        View
-                      </Link>
+                {currentDocuments.map((doc, index) => (
+                  <tr key={index} className="bg-white border-b hover:bg-gray-100 transition-colors">
+                    <td className="py-4 px-3 md:px-6 text-gray-700">{doc.companyNameEn}</td>
+                    <td className="py-4 px-3 md:px-6 text-gray-700">{doc.yearOfReport}</td>
+                    <td className="py-4 px-3 md:px-6 flex space-x-2">
                       <button
                         onClick={() => {
                           setDocToDelete(doc._id);
                           setModalOpen(true);
                         }}
-                        className="text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded-md font-semibold"
+                        className="px-3 py-1 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700"
                       >
                         Delete
                       </button>
@@ -119,9 +179,7 @@ export const DocumentList: React.FC = () => {
             </div>
             <button
               onClick={() => paginate(currentPage + 1)}
-              className={`px-3 py-2 ${
-                currentPage === totalPages ? "text-gray-400" : "text-gray-700 hover:text-gray-900"
-              } rounded-md`}
+              className={`px-3 py-2 ${currentPage === totalPages ? "text-gray-400" : "text-gray-700 hover:text-gray-900"} rounded-md`}
               disabled={currentPage === totalPages}
             >
               Next
@@ -139,8 +197,3 @@ export const DocumentList: React.FC = () => {
     </div>
   );
 };
-
-
-
-
-

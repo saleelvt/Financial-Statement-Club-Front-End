@@ -5,6 +5,9 @@ import { commonRequest } from "../../../config/api";
 import { Loading } from "../Loading";
 import { setArabicNames } from "../../../functions/setArabicNames";
 import { setEnglishNames } from "../../../functions/setEnglishNames";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../reduxKit/store";
+import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 
 interface Document {
   id: string;
@@ -16,14 +19,24 @@ interface Document {
 
 const UserHomePage: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
-  const [brandsEn, setBrandsEn] = useState<{ name: string }[]>([]);
-  const [brandsAr, setBrandsAr] = useState<{ name: string }[]>([]);
-  const [arabicFiles, setArabicFiles] = useState<any[]>([]);  // State to store Arabic files
-  const [englishFiles, setEnglishFiles] = useState<any[]>([]);  // State to store English files
+  const [brandsEn, setBrandsEn] = useState<{ name: string; year: string }[]>([]);
+  const [brandsAr, setBrandsAr] = useState<{ name: string; year: string }[]>([]);
+  
+  const [arabicFiles, setArabicFiles] = useState<any[]>([]);
+  const [englishFiles, setEnglishFiles] = useState<any[]>([]);
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [language, setLanguage] = useState<string>("عربي"); // New state for language toggle
+  // const [storeLanguage,setStoreLanguage]= useState<string>('')
+  const dispatch=useDispatch<AppDispatch>()
+  const {userLanguage}=useSelector((state:RootState)=> state.userLanguage)
 
+  useEffect(()=>{
+    console.log("this is the useEffect ", userLanguage);
+  },[userLanguage])
+
+  
   useEffect(() => {
     const fetchDocuments = async () => {
       setLoading(true);
@@ -41,21 +54,18 @@ const UserHomePage: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchDocuments();
   }, []);
 
-  
-  // Set Arabic and English names and files
   useEffect(() => {
     if (documents.length > 0) {
       const { arabicNamesArray, arabicFiles } = setArabicNames(documents);
       setBrandsAr(arabicNamesArray);
-      setArabicFiles(arabicFiles); // Set Arabic files
+      setArabicFiles(arabicFiles);
 
       const { englishNamesArray, englishFiles } = setEnglishNames(documents);
       setBrandsEn(englishNamesArray);
-      setEnglishFiles(englishFiles); // Set English files
+      setEnglishFiles(englishFiles);
     }
   }, [documents]);
 
@@ -66,6 +76,24 @@ const UserHomePage: React.FC = () => {
   const handleShowMore = () => setShowAll(true);
   const handleShowLess = () => setShowAll(false);
 
+
+
+  const toggleLanguage = async() => {
+
+    const newLanguage = language === "English" ? "Arabic" : "English";
+    setLanguage(newLanguage)
+     currentLanguage(newLanguage)
+  };
+
+  const currentLanguage=async(language:string)=>{
+await dispatch(userLanguageChange(language))
+  }
+
+
+  console.log("arabic fils ",arabicFiles);
+  console.log("English fils ",englishFiles);
+  
+
   if (loading) {
     return <Loading />;
   }
@@ -73,12 +101,8 @@ const UserHomePage: React.FC = () => {
     return <div className="text-red-500">Error: {error}</div>;
   }
 
-  console.log("this is my arabic files ",arabicFiles);
-  console.log("this is my english files ",englishFiles);
-  console.log("name off arabic ", brandsAr);
-  
-  
-  
+  const currentBrands = userLanguage === "English" ? brandsEn : brandsAr;
+
   return (
     <div
       className="bg-gray-800 text-white min-h-screen flex flex-col items-center py-8"
@@ -94,7 +118,6 @@ const UserHomePage: React.FC = () => {
         <h1 className="text-6xl font-serif mb-6 animate-bounce text-gray-100">
           Financial Statement Club
         </h1>
-
         {/* Search Bar */}
         <div className="flex items-center w-full max-w-md bg-white rounded-full shadow-lg overflow-hidden mb-8">
           <input
@@ -102,14 +125,15 @@ const UserHomePage: React.FC = () => {
             placeholder="Search..."
             className="w-full p-3 text-gray-700 focus:outline-none rounded-l-full border-2 border-gray-300 focus:border-gray-600 placeholder-gray-700 transition-all"
           />
-          <button className="bg-gray-200 text-white p-3 rounded-r-full hover:bg-gray-500 focus:outline-none transition duration-300">
+          <button className="bg-gray-200 text-white p-3 rounded-r-full hover:bg-gray-300 focus:outline-none transition duration-300">
             🔍
           </button>
         </div>
       </div>
+
       {/* Brand Buttons */}
       <div className="grid grid-cols-2 mx-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 px-4 text-center mt-8">
-        {brandsEn.slice(0, showAll ? brandsEn.length : 10).map((brand, index) => (
+        {currentBrands.slice(0, showAll ? currentBrands.length : 10).map((brand, index) => (
           <button
             key={index}
             onClick={() => handleBrandClick(brand.name)}
@@ -121,7 +145,7 @@ const UserHomePage: React.FC = () => {
       </div>
 
       {/* Show More / Show Less Button */}
-      <div className="mt-6">
+      <div className="mt-6" hidden={currentBrands.length < 10}>
         {!showAll ? (
           <button
             onClick={handleShowMore}
@@ -137,6 +161,36 @@ const UserHomePage: React.FC = () => {
             Show Less...
           </button>
         )}
+      </div>
+
+      {/* Language Toggle Button */}
+      <div className="flex justify-end w-1/2">
+        <button
+          onClick={toggleLanguage}
+          className="py-1 px-2 items-center bg-opacity-80 bg-gray-500 text-black text-2xl font-serif rounded-md hover:border hover:border-gray-300 hover:bg-slate-200"
+        >
+          {language === "English" ? "عربي" : "English"}
+        </button>
+      </div>
+
+      {/* Table for Company Names and Year */}
+      <div className="w-full max-w-2xl p-5">
+        <table className="w-full bg-gray-800 bg-opacity-80 border border-gray-500 text-white">
+          <thead>
+            <tr>
+              <th className="p-3 border border-gray-500">Company Name</th>
+              <th className="p-3 border border-gray-500">Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentBrands.map((brand, index) => (
+              <tr key={index}>
+                <td className="p-3 border border-gray-500 text-center">{brand.name}</td>
+                <td className="p-3 border border-gray-500 text-center">{brand.year}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

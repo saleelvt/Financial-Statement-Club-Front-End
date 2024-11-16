@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { createSlice } from "@reduxjs/toolkit";
 
-import { loginAdmin , adminLogout} from "../../actions/auth/authAction";
+import { loginAdmin , adminLogout,userLanguageChange} from "../../actions/auth/authAction";
+
 
 export interface UserState {
   userData: UserState | null;
@@ -36,6 +37,54 @@ const initialState: UserState = {
     : null,
     language:localStorage.getItem("language")?JSON.parse(localStorage.getItem("language")!):null
 };
+
+export interface UserLanguageState {
+
+  userLanguage:string|null
+  error: string | null;
+  loading: boolean;
+  
+}
+
+
+const initialStateForLanguage: UserLanguageState = {
+  userLanguage: localStorage.getItem("userLanguage") || "English",
+  error: null,
+  loading: false,
+};
+
+
+
+export const userLanguageSlice = createSlice({
+  name: "userLanguage",
+  initialState: initialStateForLanguage,
+  reducers: {
+    updateError: (state, { payload }) => {
+      state.error = payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(userLanguageChange.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(userLanguageChange.fulfilled, (state, { payload }) => {
+        console.log("Payload after language change:", payload);
+        state.loading = false;
+        state.error = null;
+        // Update userLanguage in the state and localStorage
+        state.userLanguage = payload;
+        localStorage.setItem("userLanguage", JSON.stringify(payload));
+      })
+      .addCase(userLanguageChange.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload as string;
+      });
+  },
+});
+
+
 export const authSlice = createSlice({
   name: "user",
   initialState,
@@ -91,7 +140,6 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = payload as string;
       })
-      
       
 
   },

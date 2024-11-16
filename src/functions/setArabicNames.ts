@@ -2,12 +2,12 @@
 
 export const setArabicNames = (documents: any) => {
     try {
-        const arabicNamesArray: { name: string, file: any }[] = [];
+        const arabicNamesArray: { name: string, year:string}[] = [];
         const arabicFiles: any[] = [];  // Separate array for Arabic files
         for (const x of documents) {
             arabicNamesArray.push({
                 name: x?.companyNameAr,
-                file: x?.fileAr, // Add the Arabic file as well
+                year:x?.yearOfReport
             });
             if (x?.fileAr) arabicFiles.push(x?.fileAr);  // Push file to Arabic files array
         }

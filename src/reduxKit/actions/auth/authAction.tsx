@@ -1,6 +1,6 @@
 
 import axios  from "axios";
-import { URL,config } from "../../../config/constants";
+import { URL, createAxiosConfig ,config} from "../../../config/constants";
 
 import { IAdminLogin } from "../../../interfaces/admin/login";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -10,6 +10,9 @@ export const axiosIn = axios.create({
     baseURL: URL,
   });
 
+
+
+
   export const loginAdmin= createAsyncThunk(
     "admin/login",
     async (adminCredentials:IAdminLogin,{rejectWithValue})=>{
@@ -18,7 +21,8 @@ export const axiosIn = axios.create({
               "admin action got this si smy credential",
               adminCredentials
             );
-            const {data} = await axiosIn.post(`/admin/login`, adminCredentials,config);
+            const config1= createAxiosConfig(false) 
+            const {data} = await axiosIn.post(`/admin/login`, adminCredentials,config1);
 
             console.log(data.data, "admin login response data");
             return data.data;
@@ -33,13 +37,34 @@ export const axiosIn = axios.create({
     }
   )
 
-
   
 export const adminLogout = createAsyncThunk(
   "admin/logout",
   async (__, { rejectWithValue }) => {
     try {
+
       axiosIn.delete(`admin/logout`, config )
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue({ message: "Something went wrong!" });
+      }
+    }
+  }
+);
+
+
+
+
+
+export const userLanguageChange = createAsyncThunk(
+  "admin/logout",
+  async (lang:string, { rejectWithValue }) => {
+    try {
+         const language=lang
+      return language 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.response && error.response.data) {

@@ -23,7 +23,7 @@ export const AddDocumentSlice = createSlice({
       },
     },
     extraReducers: (builder) => {
-      builder
+      builder  
       .addCase(addDocument.pending, (state) => {
           state.loading = true;
           state.error = null;

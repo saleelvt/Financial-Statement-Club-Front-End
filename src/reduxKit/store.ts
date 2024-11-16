@@ -2,10 +2,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./reducers/auth/authSlice";
 import AddDocumentSlice from "./reducers/admin/addDocumentSlice";
+import { userLanguageSlice } from "./reducers/auth/authSlice";
 export const store = configureStore({
     reducer:{
         auth:authSlice.reducer,
         admin:AddDocumentSlice.reducer,
+        userLanguage:userLanguageSlice.reducer,
     }
 })
 export type RootState = ReturnType<typeof store.getState>

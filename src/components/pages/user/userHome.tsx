@@ -31,11 +31,12 @@ const UserHomePage: React.FC = () => {
   const [error, setError] = useState("");
   const [language, setLanguage] = useState<string>("عربي");
   const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>(""); // State for search input
+  const [searchTerm, setSearchTerm] = useState<string>(""); 
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const { userLanguage } = useSelector((state: RootState) => state.userLanguage);
 
-  const rowsPerPage = 7; // Number of rows per page
+  const rowsPerPage = 7;
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -76,6 +77,9 @@ const UserHomePage: React.FC = () => {
 
   const handleBrandClick = (brand: string) => {
     console.log(`Selected brand: ${brand}`);
+    setSelectedBrand(brand);
+    setSearchTerm("");
+    setCurrentPage(1);
   };
 
   const handleShowMore = () => setShowAll(true);
@@ -94,12 +98,17 @@ const UserHomePage: React.FC = () => {
     setSelectedPdfCompanyName(companyName);
     setSelectedPdfYear(year);
   };
+     const  arrays=userLanguage === "English" ? brandsEn : brandsAr;
 
-  const currentBrands = userLanguage === "English" ? brandsEn : brandsAr;
+  const currentBrands =arrays.filter((item, index, self) => 
+    index === self.findIndex((t) => t.name === item.name)
+  );
+
   const currentFiles = userLanguage === "English" ? englishFiles : arabicFiles;
 
-  // Apply search filter
-  const filteredBrands = currentBrands.filter((brand) =>
+  // Updated filtering logic to include brand selection
+  const filteredBrands = arrays.filter((brand) => 
+    (selectedBrand ? brand.name === selectedBrand : true) && 
     brand.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -148,54 +157,65 @@ const UserHomePage: React.FC = () => {
             🔍
           </button>
         </div>
+
+        {/* Clear Filter Button */}
+       
       </div>
 
       {/* Brand Buttons */}
       <div
-        className={`grid grid-cols-2 mx-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 px-4 text-center mt-8 ${
+        className={`grid grid-cols-2 px-12  sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4  text-center ${
           language === "Arabic" ? "text-right" : ""
         }`}
       >
-        {filteredBrands.slice(0, showAll ? filteredBrands.length : 10).map((brand, index) => (
-          <button
-            key={index}
-            onClick={() => handleBrandClick(brand.name)}
-            className="text-xl hover:border focus:ring-2 transition duration-300 transform hover:scale-105 hover:border-gray-100 rounded-sm hover:text-gray-100"
-          >
-            {brand.name}
-          </button>
-        ))}
+        {currentBrands
+          .slice(0, showAll ? currentBrands.length : 10)
+          .map((brand, index) => (
+            <button
+              key={index}
+              onClick={() => handleBrandClick(brand.name)}
+              className={`text-xl hover:border focus:ring-2 transition duration-300 transform hover:scale-105 hover:border-gray-200 hover:bg-gray-300 hover:text-black rounded-sm ${
+                selectedBrand === brand.name ? 'bg-gray-200 text-black font-medium' : ''
+              } ${language === "Arabic" ? "p-4" : ""}`}
+            >
+              {brand.name}
+            </button>
+          ))}
       </div>
 
-     {/* Show More / Show Less Button */}
-     <div className="mt-6" hidden={currentBrands.length < 10}>
-   {!showAll ? (
-     <button
-       onClick={handleShowMore}
-       style={{
-         background:
-           "linear-gradient(to right, rgba(96, 125, 139, 0.8), rgba(33, 150, 243, 0.8))",
-       }}
-       className="px-6 py-2 bg-b-500 font-bold border border-gray-150 text-white rounded-lg hover:bg-gray-700 transition-all"
-     >
-       {userLanguage === "English" ? "Show more" : "استعراض المزيد"}
-     </button>
-   ) : (
-     <button
-       onClick={handleShowLess}
-       style={{
-         background:
-           "linear-gradient(to right, rgba(96, 125, 139, 0.8), rgba(33, 150, 243, 0.8))",
-       }}
-       className="px-6 py-2 bg-gray-300 font-bold text-white rounded-lg hover:bg-gray-700 transition-all"
-     >
-       {userLanguage === "English" ? "Show Less" : "عرض أقل"}
-     </button>
-   )}
- </div>
+      {/* Show More / Show Less Button */}
+      <div className="mt-6" hidden={currentBrands.length < 10}>
+        {!showAll ? (
+          <button
+            onClick={handleShowMore}
+            style={{
+              background:
+                "linear-gradient(to right, rgba(96, 125, 139, 0.8), rgba(33, 150, 243, 0.8))",
+            }}
+            className="px-6 py-2 bg-b-500 font-bold border border-gray-150 text-white rounded-lg hover:bg-gray-700 transition-all"
+          >
+            {userLanguage === "English" ? "Show more" : "استعراض المزيد"}
+          </button>
+        ) : (
+          <button
+            onClick={handleShowLess}
+            style={{
+              background:
+                "linear-gradient(to right, rgba(96, 125, 139, 0.8), rgba(33, 150, 243, 0.8))",
+            }}
+            className="px-6 py-2 bg-gray-300 font-bold text-white rounded-lg hover:bg-gray-700 transition-all"
+          >
+            {userLanguage === "English" ? "Show Less" : "عرض أقل"}
+          </button>
+        )}
+      </div>
 
- {/* Language Toggle Button */}
- <div className="flex mt-12 justify-end w-1/2">
+      {/* Rest of the previous code remains the same */}
+      {/* Language Toggle Button, Table, Pagination, PDF Viewer */}
+      {/* ... (keep all the previous code from the original component) */}
+
+
+      <div className="flex mt-12 justify-end w-1/2">
    <button
      onClick={toggleLanguage}
      style={{
@@ -209,31 +229,41 @@ const UserHomePage: React.FC = () => {
  </div>
 
  {/* Table for Company Names, Year, and PDF Viewer with Pagination */}
- <div className="w-full max-w-4xl p-5">
-   <table className="w-full bg-gray-900 bg-opacity-70 border rounded-lg border-gray-500 font-semibold text-white">
+ <div className="w-full max-w-4xl p-4">
+   {selectedBrand && (
+          <div className="mb-4">
+            <button
+              onClick={() => setSelectedBrand(null)}
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
+            >
+              {userLanguage === "English" ? "Clear Filter" : "مسح التصفية"}
+            </button>
+          </div>
+        )}
+   <table className="w-full bg-gray-900 bg-opacity-60 border rounded-lg border-gray-200 font- text-white">
      <thead>
        <tr>
-         <th className="p-4 border border-gray-500"> {userLanguage === "English" ? "Company Name" : "اسم الشركة"}</th>
-         <th className="p-3 border border-gray-500"> {userLanguage === "English" ? "Year" : "سنة"}</th>
-         <th className="p-3 border border-gray-500">  {userLanguage === "English" ? "Actions" : "الاجراءات"}</th>
+         <th className="p-2 border bg-slate-400 text-black border-gray-500"> {userLanguage === "English" ? "Company Name" : "اسم الشركة"}</th>
+         <th className="p-2 border border-gray-500 bg-slate-400 text-black"> {userLanguage === "English" ? "Year" : "سنة"}</th>
+         <th className="p-2 border border-gray-500 bg-slate-400 text-black">  {userLanguage === "English" ? "Actions" : "الاجراءات"}</th>
        </tr>
      </thead>
 
      <tbody>
        {paginatedData.map((brand, index) => (
          <tr key={index}>
-           <td className="p-3 border border-gray-500 text-center">
+           <td className=" border border-gray-500 text-center">
              {brand.name}
            </td>
-           <td className="p-3 border border-gray-500 text-center">
+           <td className=" border border-gray-500 text-center">
              {brand.year}
            </td>
-           <td className="p-3 border border-gray-500 text-center">
+           <td className=" border border-gray-500 text-center">
              <button
                onClick={() =>
                  handleViewPdf(currentFiles[index], brand.name, brand.year)
                }
-               className="px-2 py-1 lg:px-4 lg:py-2 text-white rounded transition-opacity duration-200 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-90"
+               className=" lg:px-4 py-1 m-2 text-white rounded transition-opacity duration-200 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-90"
                style={{
                  background:
                    "linear-gradient(to right, rgba(96, 125, 139, 0.8), rgba(33, 150, 243, 0.8))",
@@ -263,7 +293,7 @@ const UserHomePage: React.FC = () => {
      <span className="text-white">
         {userLanguage === "English" ? "Page" : "صفحة"} {currentPage}/{totalPages}
      </span>
-     <button
+     <button 
        onClick={() =>
          setCurrentPage((prev) => Math.min(prev + 1, totalPages))
        }
@@ -303,7 +333,9 @@ const UserHomePage: React.FC = () => {
      </div>
    </div>
  )}
+
     </div>
   );
 };
+
 export default UserHomePage;

@@ -12,6 +12,7 @@ export const setArabicNames = (documents: any) => {
             if (x?.fileAr) arabicFiles.push(x?.fileAr);  // Push file to Arabic files array
         }
         arabicNamesArray.sort((a, b) => b.name.localeCompare(a.name, 'ar'));
+
         return { arabicNamesArray, arabicFiles };
     } catch (error: any) {
         console.log(error);

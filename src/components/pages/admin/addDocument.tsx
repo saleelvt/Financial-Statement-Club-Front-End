@@ -40,7 +40,7 @@ export const AddDocument: React.FC = () => {
     if (e.target.files) setFileEn(e.target.files[0]);
   };
 
-  
+
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
     if (!companyNameAr.trim()) newErrors.companyNameAr = "Company Name (Arabic) is required.";
@@ -175,7 +175,7 @@ export const AddDocument: React.FC = () => {
           <div className="flex items-center justify-between">
             <button
               type="button"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/adminHomepage")}
               className="bg-gradient-to-b from-green-500 via-green-700 to-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:from-green-600 hover:via-green-800 hover:to-green-950"
             >
               Back

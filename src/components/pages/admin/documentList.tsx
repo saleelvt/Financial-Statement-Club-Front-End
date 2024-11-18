@@ -112,8 +112,8 @@ export const DocumentList: React.FC = () => {
         <div className="bg-white shadow-lg rounded-xl p-6 md:p-8 w-full max-w-4xl border border-gray-200">
           <div className="flex justify-between items-center">
             <button
-              onClick={() => navigate(-1)}  // Navigate back on click
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              onClick={() => navigate("/adminHomepage")}  // Navigate back on click
+              className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
             >
               Back
             </button>
@@ -142,7 +142,7 @@ export const DocumentList: React.FC = () => {
                           setDocToDelete(doc._id);
                           setModalOpen(true);
                         }}
-                        className="px-3 py-1 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700"
+                        className="px-3 py-1 bg-gray-600 text-white rounded-md font-semibold hover:bg-gray-700"
                       >
                         Delete
                       </button>
@@ -169,10 +169,11 @@ export const DocumentList: React.FC = () => {
                   onClick={() => paginate(index + 1)}
                   className={`mx-1 px-3 py-2 ${
                     currentPage === index + 1
-                      ? "bg-blue-500 text-white"
+                      ? "bg-gray-500  text-white"
                       : "text-gray-700 hover:bg-gray-300"
                   } rounded-md`}
                 >
+
                   {index + 1}
                 </button>
               ))}

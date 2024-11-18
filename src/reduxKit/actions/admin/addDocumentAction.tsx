@@ -7,6 +7,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const axiosIn = axios.create({
     baseURL: URL,
   });
+  
 
   export const addDocument= createAsyncThunk(
     "admin/addDocument",
@@ -16,17 +17,15 @@ export const axiosIn = axios.create({
               "this is for add the document ",
               adminCredentials
             );
-            const {data} = await axiosIn.post(`/admin/addDocument`, adminCredentials,config);
-
-            console.log(data.data, "admin login response data");
-            return data.data;
+            console.log("------------------");
+            const response = await axiosIn.post(`/admin/addDocument`, adminCredentials,config);
+            return response.data ;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (error: any) {
-            if (error.response && error.response.data) {
-              return rejectWithValue(error.response.data.message);
-            } else {
-              return rejectWithValue({ message: "Something went wrong!" });
+            if (error.response) {
+              return rejectWithValue(error.response.data);
             }
+            return rejectWithValue({ message: "Something went wrong!" });
           }
     }
   )

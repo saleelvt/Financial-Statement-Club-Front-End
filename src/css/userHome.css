@@ -1,0 +1,10 @@
+/* Styles for Arabic and English fonts */
+.font-arabic {
+    font-family: "Your Arabic Font", sans-serif;
+    direction: rtl;
+}
+
+.font-english {
+    font-family: "Your English Font", sans-serif;
+    direction: ltr;
+}

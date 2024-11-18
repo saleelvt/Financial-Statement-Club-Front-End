@@ -40,6 +40,7 @@ export const AddDocument: React.FC = () => {
     if (e.target.files) setFileEn(e.target.files[0]);
   };
 
+  
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
     if (!companyNameAr.trim()) newErrors.companyNameAr = "Company Name (Arabic) is required.";
@@ -65,21 +66,22 @@ export const AddDocument: React.FC = () => {
     
     if (fileAr) formData.append("fileAr", fileAr);  // Attach the file
     if (fileEn) formData.append("fileEn", fileEn);  // Attach the file
-  
     try {
       await dispatch(addDocument(formData)).unwrap();
+
+        
       setCompanyNameAr("");
       setCompanyNameEn("");
       setYearOfReport("");
       setFileAr(null);
       setFileEn(null);
-      window.location.reload()
       toast.success("Document successfully added");
+      window.location.reload()  
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Error!",
-        text: error?.data?.message || "An unexpected error occurred",
+        text: error.message,
         timer: 3000,
         toast: true,
         showConfirmButton: false,

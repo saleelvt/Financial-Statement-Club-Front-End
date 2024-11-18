@@ -11,6 +11,7 @@ export const setEnglishNames = (documents: any) => {
                 // file: x?.fileEn, // Add the English file as well
             });
             if (x?.fileEn) englishFiles.push(x?.fileEn);  // Push file to English files array
+            englishNamesArray.sort((a, b) => a.name.localeCompare(b.name));
         }
         return { englishNamesArray, englishFiles };
     } catch (error: any) {

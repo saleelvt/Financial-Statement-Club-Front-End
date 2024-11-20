@@ -12,7 +12,6 @@ export interface UserState {
   status?: string | null;
   isLogged: boolean;
   _id?: string | null;
-  language?:string|null
 }
 
 
@@ -35,34 +34,27 @@ const initialState: UserState = {
   _id: localStorage.getItem("_id")
     ? JSON.parse(localStorage.getItem("_id")!)
     : null,
-    language:localStorage.getItem("language")?JSON.parse(localStorage.getItem("language")!):null
 };
 
 export interface UserLanguageState {
-
   userLanguage:string|null
   error: string | null;
   loading: boolean;
-  
 }
-
-
 const initialStateForLanguage: UserLanguageState = {
-  userLanguage: localStorage.getItem("userLanguage") || "English",
+  userLanguage:JSON.parse(localStorage.getItem("userLanguage") || `"English"`),
   error: null,
   loading: false,
 };
-
-
-
 export const userLanguageSlice = createSlice({
-  name: "userLanguage",
+  name: "/userLanguage",
   initialState: initialStateForLanguage,
   reducers: {
     updateError: (state, { payload }) => {
       state.error = payload;
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(userLanguageChange.pending, (state) => {
@@ -73,9 +65,9 @@ export const userLanguageSlice = createSlice({
         console.log("Payload after language change:", payload);
         state.loading = false;
         state.error = null;
-        // Update userLanguage in the state and localStorage
+       
         state.userLanguage = payload;
-        localStorage.setItem("userLanguage", JSON.stringify(payload));
+        localStorage.setItem("userLanguage", JSON.stringify(state.userLanguage));
       })
       .addCase(userLanguageChange.rejected, (state, { payload }) => {
         state.loading = false;
@@ -83,6 +75,18 @@ export const userLanguageSlice = createSlice({
       });
   },
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export const authSlice = createSlice({

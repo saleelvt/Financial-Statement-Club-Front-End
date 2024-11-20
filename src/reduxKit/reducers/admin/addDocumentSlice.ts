@@ -38,12 +38,6 @@ export const AddDocumentSlice = createSlice({
           state.error = payload as string;
         })
   
-  
-  
-  
-  
-        
-  
     },
   });
   

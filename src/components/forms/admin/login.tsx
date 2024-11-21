@@ -30,7 +30,6 @@ export const AdminLogin = React.memo(() => {
       try {
         console.log(values,"before going to salon home page ");
         await dispatch(loginAdmin(values)).unwrap()
-     
         navigate("/adminHomepage")
         
       } catch (error:any) {
@@ -61,6 +60,8 @@ export const AdminLogin = React.memo(() => {
     },
   });
 
+  
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-white p-4">
       <div className="flex flex-col items-center p-6 w-full max-w-lg shadow-lg  border border-gray-300 rounded-lg bg-white transform transition-all duration-500 hover:scale-105">
@@ -87,6 +88,7 @@ export const AdminLogin = React.memo(() => {
             <label htmlFor="password" className="block font-medium text-gray-700 mb-2">
               Password
             </label>
+
             <input
               id="password"
               type={showPassword ? "text" : "password"}

@@ -7,18 +7,7 @@ html {
     scroll-behavior: smooth;
   }
 
-  .custom-heading {
-    font-size: 3.5rem; /* Adjust font size */
-    font-weight: 700; /* Bold text */
-    font-family:  'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Modern sans-serif font */
-    background: linear-gradient();
-    background-clip: text; /* Clip background to text */
-    color: transparent; /* Make text transparent to show gradient */
-    text-transform: uppercase; /* Uppercase for bold, clean look */
-    letter-spacing: 2px; /* Increase letter spacing */
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.795), 0 0 1px rgb(122, 155, 238), 0 0 5px rgb(26, 58, 108);
-    animation: shine 4s infinite alternate; /* Animation for glowing effect */
-  }
+
 
   /* Bounce animation on the text */
   @keyframes bounce {

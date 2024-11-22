@@ -11,7 +11,7 @@ const UserHomePage = lazy(() => import('./components/pages/user/userHome'));
 import { DocumentList } from './components/pages/admin/documentList';
 import { AdminLogin } from './components/forms/admin/login';
 import AdminHomePage from './components/pages/admin/adminDashBoard';
-import { AddDocument } from './components/pages/admin/addDocument';
+import { AddDocument } from './components/pages/admin/addDocumentEn';
 import { useSelector } from 'react-redux';
 import { RootState } from './reduxKit/store';
 
@@ -32,7 +32,7 @@ export const App: React.FC = React.memo(() => {
           {/* <Route path="/adminLogin" element={ <AdminLogin />} /> */}
           <Route path="/adminHomepage" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
           {/* <Route path="/adminHomepage" element={ <AdminHomePage /> } /> */}
-          <Route path="/adminAddDocument" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
+          <Route path="/adminAddDocumentEn" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
           <Route path="/adminDocumentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
         </Routes>
       </Suspense>

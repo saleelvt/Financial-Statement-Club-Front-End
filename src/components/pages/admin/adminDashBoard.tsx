@@ -11,18 +11,12 @@ import AdminSidebar from "../../sidePanals/adminSidePanel"
 
 
 function AdminHomePage() {
-
-  // const {role} =useSelector((state:RootState)=>state.auth)
-  
   return (
     <div className="flex flex-col min-h-screen bg-gray-200">    
     <AdminNavbar/> 
     <header className="w-full bg-gray-800 text-white">
         < AdminSidebar/>
       </header>
-
-    
-
     </div>
   )
 }

@@ -1,32 +1,39 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { NavLink } from "react-router-dom";
+
+
 import {
   FaBars,
   FaHome,
   FaListAlt,
   FaUser,
   FaCog,
-  FaTimes
+  FaTimes,
+  FaFileAlt 
 } from "react-icons/fa";
+
+
+
+ 
+
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-  
-   
-  
-   
-    
   const navLinks = [
+
     { to: "/admin/dashboard", icon: FaHome, label: "Dashboard" },
-    { to: "/adminAddDocument", icon: FaListAlt, label: "Add Document" },
-    { to: "/adminDocumentList", icon: FaListAlt, label: "Document List" },
+    { to: "/adminAddDocumentEn", icon: FaFileAlt, label: "Add Document English" },
+    { to: "/adminDocumentListEn", icon: FaListAlt, label: "Document List English" },
+    { to: "/adminAddDocumentAr", icon: FaFileAlt, label: "Add Document عربي" },
+    { to: "/adminDocumentListAr", icon: FaListAlt, label: "Document List عربي " },
     { to: "/admin/profile", icon: FaUser, label: "Profile" },
     { to: "/admin/settings", icon: FaCog, label: "Settings" }
+
   ];
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
@@ -45,10 +52,9 @@ const AdminSidebar = () => {
         >
           <FaTimes className="h-6 w-6 text-gray-600" />
         </button>
-
         {/* Profile Section */}
         <div className={`p-4 ${!isOpen && 'lg:block hidden'}`}>
-          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4">
+          <div className=" bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-gray-300 hover:text-white font-semibold focus:ring-2 focus:ring-gray-400 transition duration-300 transform hover:scale-105 rounded-lg p-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                 <FaUser className="text-white" />
@@ -62,16 +68,16 @@ const AdminSidebar = () => {
         </div>
 
         {/* Navigation */}
-        <nav className={`mt-6 px-3 ${!isOpen && 'lg:block hidden'}`}>
+        <nav className={` px-3 ${!isOpen && 'lg:block hidden'}`}>
           {navLinks.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
               className={({ isActive }) => `
-                flex items-center gap-3 px-4 py-3 rounded-lg mb-1
+                flex items-center gap-4 px-4 py-4 rounded-lg mb-1
                 transition-colors duration-200
                 ${isActive 
-                  ? 'bg-green-600 text-white' 
+                  ? 'bg-gray-600 text-white' 
                   : 'text-gray-600 hover:bg-gray-100'}
               `}
             >
@@ -81,6 +87,7 @@ const AdminSidebar = () => {
           ))}
         </nav>
       </aside>
+
 
       {/* Backdrop for mobile */}
       {isOpen && (

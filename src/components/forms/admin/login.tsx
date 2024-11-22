@@ -141,13 +141,15 @@ export const AdminLogin = React.memo(() => {
             )}
           </div>
           <div className="text-center mt-6">
-            <button
-              type="submit"
-              className="w-full p-3 rounded-lg mt-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold focus:ring-2  transition duration-300 transform hover:scale-105"
-            >
-           {loading ?"Loading..":"Login"}
-            </button>
-          </div>
+  <button
+    type="submit"
+    className="relative overflow-hidden w-full p-3 rounded-lg mt-4 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-gray-300 hover:text-white font-semibold focus:ring-2 focus:ring-gray-400 transition duration-300 transform hover:scale-105"
+  >
+    <span className="absolute inset-0 bg-gray-600 rounded-full transform scale-0 transition-transform duration-500 ease-in-out opacity-50 hover:scale-150"></span>
+    <span className="relative">{loading ? "Loading..." : "Login"}</span>
+  </button>
+</div>
+
         </form>
       </div>
     </div>

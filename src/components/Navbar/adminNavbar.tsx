@@ -14,25 +14,18 @@ import { adminLogout } from "../../reduxKit/actions/auth/authAction";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reduxKit/store';
 
+
+
  export const AdminNavbar: React.FC = () => {
   const {role}=useSelector((state:RootState)=>state.auth)
-
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-
   console.log('this is my role  admin ',role);
-  
-
-
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-
-
   const handledata = async () => {
     try {
       await dispatch(adminLogout()).unwrap();
@@ -56,13 +49,13 @@ import { RootState } from '../../reduxKit/store';
     }
   };
 
+
   return (
-    <nav className=" p-6">
+    <nav className="p-3">
       <div className="container  mx-auto flex justify-between items-center">
-        <div className=" text-4xl ">
-      <h1 className=" font-semibold  ">Financial statment club </h1>
+        <div className="  w-1/1 ">
+      <h1 className=" font-semibold xs:font-bold lg:text-4xl md:text-2xl sm:1xl xs:text-2xl ">Financial statment club </h1>
         </div>
-        {/* <h1>{adminDetails}</h1> */}
         <div className="lg:hidden">
           <button className=" focus:outline-none" onClick={toggleMenu}>
             <svg
@@ -86,20 +79,19 @@ import { RootState } from '../../reduxKit/store';
         >
           <Link
             to="/services"
-            className="block font-semibold px-4 py-2 hover:bg-gradient-to-b from-green-500 via-green-700 to-green-900 mr-6 rounded"
+            className="block font-semibold px-4 py-2 hover:bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-black hover:text-white  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out mr-6 rounded"
           >
             Services
           </Link>
-
           <Link
             to="/about"
-            className="block px-4 py-2 font-semibold hover:bg-gradient-to-b from-green-500 via-green-700 to-green-900 mr-6 rounded"
+            className="block px-4 py-2 font-semibold hover:bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out mr-6 rounded"
           >
             About
           </Link>
          <button
             onClick={handledata}
-            className="bg-gradient-to-b from-green-500 via-green-700 to-green-900 text-white shadow-lg px-4 flex items-center py-2  rounded-md"
+            className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out text-white shadow-lg px-4 flex items-center py-2  rounded-md"
           >
                   <FaSignOutAlt className="mr-3" /> Logout
                   </button>

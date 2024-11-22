@@ -101,6 +101,8 @@ const UserHomePage: React.FC = () => {
     await dispatch(userLanguageChange(newLanguage));
   };
 
+  
+
   // const handleViewPdf = (
   //   file: { data: any; contentType: string },
   //   companyName: string,
@@ -119,6 +121,10 @@ const UserHomePage: React.FC = () => {
   const currentBrands = arrays.filter(
     (item, index, self) => index === self.findIndex((t) => t.name === item.name)
   );
+
+
+
+
 
   // const currentFiles = userLanguage === "English" ? englishFiles : arabicFiles;
 

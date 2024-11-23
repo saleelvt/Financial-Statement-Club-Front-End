@@ -7,9 +7,15 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { AdminNavbar } from "../../Navbar/adminNavbar";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
 
 export const AddDocument: React.FC = () => {
+
   const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [companyNameAr, setCompanyNameAr] = useState("");
   const [companyNameEn, setCompanyNameEn] = useState("");
   const [yearOfReport, setYearOfReport] = useState("");
@@ -19,6 +25,11 @@ export const AddDocument: React.FC = () => {
   const { loading } = useSelector((state: RootState) => state.admin);
   const dispatch = useDispatch<AppDispatch>();
 
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
+
+ 
 
   const handleCompanyNameArChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -32,17 +43,13 @@ export const AddDocument: React.FC = () => {
     setCompanyNameEn(e.target.value);
   };
 
-  const handleYearOfReportChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setYearOfReport(e.target.value);
-  };
 
-  const handleFileArChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setFileAr(e.target.files[0]);
-  };
+
+  
+
   const handleFileEnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setFileEn(e.target.files[0]);
   };
-
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
     if (!companyNameAr.trim())
@@ -57,17 +64,22 @@ export const AddDocument: React.FC = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+
+
     e.preventDefault();
     if (!validateForm()) return;
-
-
     const formData = new FormData();
     formData.append("companyNameAr", companyNameAr);
     formData.append("companyNameEn", companyNameEn);
     formData.append("yearOfReport", yearOfReport);
     if (fileAr) formData.append("fileAr", fileAr); // Attach the file
     if (fileEn) formData.append("fileEn", fileEn); // Attach the file
+
     try {
 
 
@@ -91,23 +103,28 @@ export const AddDocument: React.FC = () => {
       });
     }
   };
-
+  
+  
 
   return (
     <div className="">
       <AdminNavbar />
-      <div className="flex justify-center items-center">
+      <div className="flex flex-col items-center lg:py-4  min-h-screen px-4">
         <form
           onSubmit={handleSubmit}
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
+          className="bg-white shadow-md rounded px-2 pt-2 pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
         >
-          <div className="flex -mx-3">
-            <div className="w-1/2 px-3 mb-6 md:mb-3">
-              <label className="block uppercase tracking-wide  text-gray-700 font-bold mb-2">
-                Full Name <span className="font-mono text-xs"> (English)</span>
+          <h2 className="text-2xl font-bold text-center text-gray-700">
+            Add Document
+          </h2>
+
+          <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+            <div className="w-full">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                Full Name <span className="font-mono text-xs"> (Arabic)</span>
               </label>
               <input
-                className="appearance-none block w-full text-sm bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="Full Name"
                 value={companyNameAr}
@@ -117,14 +134,13 @@ export const AddDocument: React.FC = () => {
               {errors.companyNameAr && (
                 <p className="text-red-500 text-xs">{errors.companyNameAr}</p>
               )}
-
             </div>
-            <div className="w-1/2 px-3 mb-6 md:mb-0">
-              <label className="block uppercase tracking-wide  text-gray-700 font-bold mb-2">
+            <div className="w-full">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Nick Name <span className="text-xs font-mono"> (English)</span>
               </label>
               <input
-                className="appearance-none text-sm block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="Nick Name"
                 value={companyNameEn}
@@ -136,231 +152,243 @@ export const AddDocument: React.FC = () => {
               )}
             </div>
           </div>
-          <div className="flex -mx-3">
-            <div className="w-1/2 px-3 mb-6 md:mb-3">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                الاسم الكامل <span className="font-mono text-xs"> (عربي)</span>
-              </label>
-              <input
-                className="appearance-none block text-x text-sm w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="أدخل الاسم الكامل"
-                value={companyNameAr}
-                onChange={handleCompanyNameArChange}
-                required
-              />
-              {errors.companyNameAr && (
-                <p className="text-red-500 text-xs">{errors.companyNameAr}</p>
-              )}
-            </div>
-            <div className="w-1/2 px-3 mb-6 md:mb-0">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                اسم المستعار <span className="text-xs font-mono"> (عربي)</span>
-              </label>
-              <input
-                className="appearance-none block w-full text-sm bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder=" أدخل الاسم المستعار"
-                value={companyNameEn}
-                onChange={handleCompanyNameEnChange}
-                required
-              />
-              {errors.companyNameEn && (
-                <p className="text-red-500 text-xs">{errors.companyNameEn}</p>
-              )}
-            </div>
-          </div>
-          <div className="mb-6">
-            <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-              Year of Report
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              type="text"
-              placeholder="2023"
-              value={yearOfReport}
-              onChange={handleYearOfReportChange}
-              required
-            />
-            {errors.yearOfReport && (
-              <p className="text-red-500 text-xs">{errors.yearOfReport}</p>
-            )}
-          </div>
-          <div className="">
-            <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-              Add PDF (Arabic)
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              type="file"
-              name="fileAr"
-              onChange={handleFileArChange}
-              required
-            />
-            {errors.fileAr && (
-              <p className="text-red-500 text-xs">{errors.fileAr}</p>
-            )}
-          </div>
-          <div className="mb-6">
-            <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-              Add PDF (English)
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              type="file"
-              name="fileEn"
-              onChange={handleFileEnChange}
-              required
-            />
-            {errors.fileEn && (
-              <p className="text-red-500 text-xs">{errors.fileEn}</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {["Q1", "Q2", "Q3", "Q4", "S1", "Board", "Year"].map(
+              (label, index) => (
+                <div key={index}>
+                  <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                    {label}
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                    type="file"
+                    name="fileEn"
+                    onChange={handleFileEnChange}
+                    required
+                  />
+                  {errors.fileEn && (
+                    <p className="text-red-500 text-xs">{errors.fileEn}</p>
+                  )}
+                </div>
+              )
             )}
           </div>
 
-          <div className="flex  flex-col  pb-4 px-2 gap-1">
-            <div className="">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-               Q1
-              </label>
-              <input
-                className="appearance-none block   bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
-                type="file"
-                name="fileEn"
-                onChange={handleFileEnChange}
-                required
-              />
-              {errors.fileEn && (
-                <p className="text-red-500 text-xs">{errors.fileEn}</p>
-              )}
-            </div>
-            <div className="">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-              Q2
-              </label>
-              <input
-                className="appearance-none block  bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
-                type="file"
-                name="fileEn"
-                onChange={handleFileEnChange}
-                required
-              />
-              {errors.fileEn && (
-                <p className="text-red-500 text-xs">{errors.fileEn}</p>
-              )}
-            </div>
-            <div className="">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                Q3
-              </label>
-              <input
-                className="appearance-none block  bg-gray-200 text-gray-700 border rounded   leading-tight focus:outline-none focus:bg-white"
-                type="file"
-                name="fileEn"
-                onChange={handleFileEnChange}
-                required
-              />
-              {errors.fileEn && (
-                <p className="text-red-500 text-xs">{errors.fileEn}</p>
-              )}
-            </div>
+          <div className="w-full">
+        <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+          اختر التاريخ والوقت
+        </label>
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange} // Date change handler
+          timeIntervals={15}
+         
+          dateFormat="MMMM d, yyyy"
+          className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+          placeholderText="اختر التاريخ والوقت"
+        />
+      </div>
 
-
-            <div className="">
+          <div className="flex flex-wrap gap-4">
+            <div className="flex-1">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-             Q4
+                Tadawal Code
               </label>
               <input
-                className="appearance-none block bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
-                type="file"
-                name="fileEn"
-                onChange={handleFileEnChange}
-                required
-              />
-              {errors.fileEn && (
-                <p className="text-red-500 text-xs">{errors.fileEn}</p>
-              )}
-            </div>
 
-            <div className="">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-             S1
-              </label>
-              <input
-                className="appearance-none block bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
-                type="file"
-                name="fileEn"
-                onChange={handleFileEnChange}
-                required
-              />
-              {errors.fileEn && (
-                <p className="text-red-500 text-xs">{errors.fileEn}</p>
-              )}
-            </div>
-            <div className="">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-              Board
-              </label>
-              <input
-                className="appearance-none block bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
-                type="file"
-                name="fileEn"
-                onChange={handleFileEnChange}
-                required
-              />
-              {errors.fileEn && (
-                <p className="text-red-500 text-xs">{errors.fileEn}</p>
-              )}
-            </div>
-          
-
-           
-            <div className="mt-8">
-              <label className="block uppercase tracking-wide p-1 text-gray-700 font-bold mb-2">
-              Tadawal Code
-              </label>
-              <input
-                className="appearance-none block bg-gray-200 p-2 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="Enter The Board"
-                name="fileEn"
                 required
               />
-              {errors.fileEn && (
-                <p className="text-red-500 text-xs">{errors.fileEn}</p>
-              )}
             </div>
-            <div className="mt-2">
-              <label className="block uppercase tracking-wide p-1 text-gray-700 font-bold mb-2">
-              Sector
+            <div className="flex-1">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                Sector
               </label>
               <input
-                className="appearance-none block bg-gray-200 p-2 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
                 type="text"
-                placeholder="Enter The Board"
-                name="fileEn"
+                placeholder="Enter The Sector"
                 required
               />
-              {errors.fileEn && (
-                <p className="text-red-500 text-xs">{errors.fileEn}</p>
-              )}
             </div>
           </div>
-          <div className="flex items-center justify-between">
+
+          <div className="flex items-center justify-between mt-4">
             <button
               type="button"
               onClick={() => navigate("/adminHomepage")}
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out "
+              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
             >
               Back
             </button>
             <button
               type="submit"
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out"
+              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
             >
               {loading ? "Uploading..." : "Upload"}
             </button>
           </div>
         </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <form
+  onSubmit={handleSubmit}
+  className="bg-white shadow-md rounded px-2 pt-2 pb-8 w-full mt-8 max-w-lg lg:max-w-4xl space-y-4"
+>
+  <h2 className="text-2xl font-bold text-center text-gray-700">
+    إضافة مستند
+  </h2>
+  <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+    <div className="w-full">
+      <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+        الاسم الكامل 
+      </label>
+      <input
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
+        type="text"
+        placeholder="الاسم الكامل"
+        value={companyNameAr}
+        onChange={handleCompanyNameArChange}
+        required
+      />
+      {errors.companyNameAr && (
+        <p className="text-red-500 text-xs">{errors.companyNameAr}</p>
+      )}
+    </div>
+    <div className="w-full">
+      <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+        الاسم المستعار 
+      </label>
+      <input
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
+        type="text"
+        placeholder="اسم الشهرة"
+        value={companyNameEn}
+        onChange={handleCompanyNameEnChange}
+        required
+      />
+      {errors.companyNameEn && (
+        <p className="text-red-500 text-xs">{errors.companyNameEn}</p>
+      )}
+    </div>
+  </div>
+
+
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {["Q1", "Q2", "Q3", "Q4", "S1", "Board", "Year"].map(
+      (label, index) => (
+        <div key={index}>
+          <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+            {label}
+          </label>
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+            type="file"
+            name="fileEn"
+            placeholder={`إرفاق ملف ${label}`}
+            onChange={handleFileEnChange}
+            required
+          />
+          {errors.fileEn && (
+            <p className="text-red-500 text-xs">{errors.fileEn}</p>
+          )}
+        </div>
+      )
+    )}
+  </div>
+  <div className="w-full">
+        <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+          اختر التاريخ والوقت
+        </label>
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange} // Date change handler
+          timeIntervals={15}
+         
+          dateFormat="MMMM d, yyyy"
+          className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+          placeholderText="اختر التاريخ والوقت"
+        />
+      </div>
+
+
+
+
+
+  <div className="flex flex-wrap gap-4">
+    <div className="flex-1">
+      <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+        رمز تداول
+      </label>
+      <input
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+        type="text"
+        placeholder="أدخل رمز تداول"
+        required
+      />
+    </div>
+
+
+    <div className="flex-1">
+      <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+        القطاع
+      </label>
+      <input
+        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+        type="text"
+        placeholder="أدخل القطاع"
+        required
+      />
+    </div>
+  </div>
+
+  <div className="flex items-center justify-between mt-4">
+    <button
+      type="button"
+      onClick={() => navigate("/adminHomepage")}
+      className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+    >
+      رجوع
+    </button>
+    
+    <button
+      type="submit"
+      className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+    >
+      {loading ? "جارٍ التحميل..." : "رفع"}
+    </button>
+  </div>
+</form>
+
       </div>
     </div>
   );

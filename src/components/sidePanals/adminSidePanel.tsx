@@ -12,28 +12,19 @@ import {
   FaFileAlt 
 } from "react-icons/fa";
 
-
-
- 
-
-
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-  const navLinks = [
 
+  const navLinks = [
     { to: "/admin/dashboard", icon: FaHome, label: "Dashboard" },
-    { to: "/adminAddDocumentEn", icon: FaFileAlt, label: "Add Document English" },
-    { to: "/adminDocumentListEn", icon: FaListAlt, label: "Document List English" },
-    { to: "/adminAddDocumentAr", icon: FaFileAlt, label: "Add Document عربي" },
-    { to: "/adminDocumentListAr", icon: FaListAlt, label: "Document List عربي " },
+    { to: "/adminAddDocument", icon: FaFileAlt, label: "Add Document" },
+    { to: "/adminDocumentList", icon: FaListAlt, label: "Document List" },
     { to: "/admin/profile", icon: FaUser, label: "Profile" },
     { to: "/admin/settings", icon: FaCog, label: "Settings" }
-
   ];
-  
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
@@ -43,7 +34,6 @@ const AdminSidebar = () => {
           ${isOpen ? 'w-64 translate-x-0' : 'w-0 -translate-x-full lg:w-64 lg:translate-x-0'}
         `}
       >
-        {/* Close Button */}
         <button
           onClick={toggleSidebar}
           className={`absolute -right-10 top-4 p-2 bg-white rounded-tr-lg rounded-br-lg shadow-lg lg:hidden
@@ -66,7 +56,6 @@ const AdminSidebar = () => {
             </div>
           </div>
         </div>
-
         {/* Navigation */}
         <nav className={` px-3 ${!isOpen && 'lg:block hidden'}`}>
           {navLinks.map((link) => (
@@ -96,10 +85,7 @@ const AdminSidebar = () => {
           onClick={toggleSidebar}
         />
       )}
-
-      {/* Main Content */}
       <main className="flex-1">
-        {/* Header */}
         <header className="bg-white shadow-sm p-4">
           <div className="flex items-center">
             <button
@@ -114,7 +100,6 @@ const AdminSidebar = () => {
           </div>
         </header>
 
-        {/* Page Content */}
         <div className="p-6">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">

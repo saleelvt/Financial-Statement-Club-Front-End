@@ -27,12 +27,9 @@ export const App: React.FC = React.memo(() => {
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={ <UserHomePage/>} />
-          {/* <Route path="/adminLogin" element={<AdminLogin />} /> */}
           <Route path="/adminLogin" element={isLogged && role === 'admin' ? <Navigate to="/adminHomepage" /> : <AdminLogin />} />
-          {/* <Route path="/adminLogin" element={ <AdminLogin />} /> */}
           <Route path="/adminHomepage" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
-          {/* <Route path="/adminHomepage" element={ <AdminHomePage /> } /> */}
-          <Route path="/adminAddDocumentEn" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
+          <Route path="/adminAddDocument" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
           <Route path="/adminDocumentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
         </Routes>
       </Suspense>

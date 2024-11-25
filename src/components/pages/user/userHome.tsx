@@ -10,6 +10,7 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 import "../../../css/userHome.css";
 
+
 interface Document {
   id: string;
   companyNameAr: string;
@@ -101,7 +102,7 @@ const UserHomePage: React.FC = () => {
     await dispatch(userLanguageChange(newLanguage));
   };
 
-  
+
 
   // const handleViewPdf = (
   //   file: { data: any; contentType: string },
@@ -157,7 +158,6 @@ const UserHomePage: React.FC = () => {
   if (error) {
     return <div className="text-red-500">Error: {error}</div>;
   }
-
   return (
     <div
       style={{ backgroundColor: "#444444" }}
@@ -172,7 +172,7 @@ const UserHomePage: React.FC = () => {
           }}
           className="py-1 px-2 items-center bg-opacity-80 text-black text-xl font- rounded-md hover:border hover:border-gray-300 hover:bg-slate-200"
         >
-          {language === "English" ? "عربي" : "English"}
+          {userLanguage === "English" ? "عربي" : "English"}
         </button>
       </div>
 

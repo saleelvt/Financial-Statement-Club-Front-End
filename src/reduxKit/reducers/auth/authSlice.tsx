@@ -36,6 +36,9 @@ const initialState: UserState = {
     : null,
 };
 
+
+
+
 export interface UserLanguageState {
   userLanguage:string|null
   error: string | null;
@@ -46,6 +49,9 @@ const initialStateForLanguage: UserLanguageState = {
   error: null,
   loading: false,
 };
+
+
+
 export const userLanguageSlice = createSlice({
   name: "/userLanguage",
   initialState: initialStateForLanguage,

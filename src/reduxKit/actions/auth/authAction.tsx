@@ -1,9 +1,9 @@
 
 import axios  from "axios";
 import { URL, createAxiosConfig ,config} from "../../../config/constants";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { IAdminLogin } from "../../../interfaces/admin/login";
-import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const axiosIn = axios.create({

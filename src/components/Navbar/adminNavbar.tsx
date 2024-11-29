@@ -63,7 +63,7 @@ export const AdminNavbar: React.FC = () => {
       <div className="container py-2 mx-auto gap-3 flex justify-between items-center">
         <div className="w-full flex items-center justify-between ">
           <h1 className=" font-semibold xs:font-bold lg:text-4xl md:text-2xl sm:1xl xs:text-2xl ">
-            Financial statment club{" "}
+            Financial statement club{" "}
           </h1>
           <button
           onClick={toggleLanguage}
@@ -86,7 +86,7 @@ export const AdminNavbar: React.FC = () => {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              
+
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

@@ -8,8 +8,6 @@ import AdminSidebar from "../../sidePanals/adminSidePanel"
 // import { Button } from "@nextui-org/react"
 
 
-
-
 function AdminHomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-200">    

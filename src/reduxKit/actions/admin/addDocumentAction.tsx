@@ -1,7 +1,12 @@
 import axios  from "axios";
 import { URL,config } from "../../../config/constants";
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import { MyObject } from "../../../interfaces/admin/addDoument";
+
+import { FieldKey } from "../../../interfaces/admin/addDoument";
+
+import { FormField } from "../../../interfaces/admin/addDoument";
+
 
 
 export const axiosIn = axios.create({
@@ -9,12 +14,22 @@ export const axiosIn = axios.create({
   });
   
 
-  export const addDocument= createAsyncThunk(
+  interface DocumentPayload {
+    fullNameEn: string;
+    nickNameEn: string;
+    tadawalCode: string;
+    sector: string;
+    formData: Record<FieldKey, FormField>;
+  }
+
+
+
+  export const addDocumentEnglish= createAsyncThunk(
     "admin/addDocument",
-    async (adminCredentials:FormData,{rejectWithValue})=>{
+    async (adminCredentials:DocumentPayload,{rejectWithValue})=>{
         try {
             console.log(
-              "this is for add the document ",
+              "this is for add the document )))))))))))))))))) ",
               adminCredentials
             );
             console.log("------------------");

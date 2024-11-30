@@ -28,6 +28,7 @@ interface FormField {
   year: string;
 }
 
+
 export const AddDocumentArabic: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -42,19 +43,10 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
     Q3: { file: null, date: null, year: "" },
     Q4: { file: null, date: null, year: "" },
     S1: { file: null, date: null, year: "" },
-    Board: { file: null, date: null, year: "" },
+    Board: { file: null, date: null, year: "" }, 
     Year: { file: null, date: null, year: "" },
   });
-  if (formData) {
-    console.log("my cnsole dat get arabic data  ", formData);
-    console.log(
-      "my cnsole dat get arabic also   ",
-      fullNameAr,
-      nickNameAr,
-      tadawalCode,
-      sector
-    );
-  }
+
 
 
 
@@ -70,10 +62,11 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
       ...prev,
       [field]: {
         ...prev[field],
-        date: date ? format(date, "dd/MM/yyyy") : null,
+        date,
       },
     }));
   };
+
 
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => ({
@@ -85,11 +78,12 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
    
 
     
-  const handleSubmitArabicDoc =   useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      console.log("Form Data: this is my rectify aria ", formData);
+  const handleSubmitArabicDoc =   async (e: React.FormEvent<HTMLFormElement>) => {
+      try {
+        e.preventDefault();
+      console.log("Form Data: this is my rectify aria ", formData,nickNameAr);
       toast.success("Document successfully added");
+
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -101,7 +95,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
         timerProgressBar: true,
       });
     }
-  },[])
+  }
 
   return (
     <div className=" mt-12">

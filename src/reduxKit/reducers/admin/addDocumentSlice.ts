@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { addDocument } from "../../actions/admin/addDocumentAction";
+import { addDocumentEnglish } from "../../actions/admin/addDocumentAction";
 // import { MyObject } from "../../../interfaces/admin/addDoument";
 
 
@@ -24,16 +24,16 @@ export const AddDocumentSlice = createSlice({
     },
     extraReducers: (builder) => {
       builder  
-      .addCase(addDocument.pending, (state) => {
+      .addCase(addDocumentEnglish.pending, (state) => {
           state.loading = true;
           state.error = null;
         })
-        .addCase(addDocument.fulfilled, (state, { payload }) => {
+        .addCase(addDocumentEnglish.fulfilled, (state, { payload }) => {
           console.log("inshaallah log of the payload ", payload);
           state.loading = false;
           state.error = null;
         })
-        .addCase(addDocument.rejected, (state, { payload }) => {
+        .addCase(addDocumentEnglish.rejected, (state, { payload }) => {
           state.loading = false;
           state.error = payload as string;
         })

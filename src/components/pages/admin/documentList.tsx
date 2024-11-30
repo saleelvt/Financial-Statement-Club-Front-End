@@ -71,7 +71,6 @@ export const DocumentList: React.FC = () => {
   const documentsPerPage = 10;
   const [modalOpen, setModalOpen] = useState(false);
   const [docToDelete, setDocToDelete] = useState<string | null>(null);
-
   const totalPages = Math.ceil(documents.length / documentsPerPage);
   const indexOfLastDoc = currentPage * documentsPerPage;
   const indexOfFirstDoc = indexOfLastDoc - documentsPerPage;
@@ -79,15 +78,15 @@ export const DocumentList: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const handleDelete = async () => {
     if (!docToDelete) return;
+
+    
     try {
       await commonRequest("DELETE", `/admin/deleteDocument/${docToDelete}`, config);
-
         toast.success("Document Successfully Deleted");
         // Optionally update state to reflect changes
         setDocuments(prevDocuments => 
           prevDocuments.filter(doc => doc._id.toString() !== docToDelete)
         );
-        // Reload the page to reflect changes
        
       
     } catch (error) {
@@ -104,7 +103,6 @@ export const DocumentList: React.FC = () => {
   if (error) {
     return <div className="text-red-500">Error: {error}</div>;
   }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <AdminNavbar />
@@ -121,7 +119,6 @@ export const DocumentList: React.FC = () => {
               Document List
             </h1>
           </div>
-
           <div className="overflow-x-auto mt-2">
             <table className="w-full text-left">
               <thead>

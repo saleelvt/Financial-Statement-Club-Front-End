@@ -1,9 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export interface MyObject {
-  companyNameAr: string | null;
-  companyNameEn: string | null;
-  yearOfReport: string | null;
-  fileAr: File | null; // File is the correct type for file inputs
-  fileEn: File | null; // File is the correct type for file inputs
+
+export type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
+
+export interface FormField {
+ file: File | null;
+ date: Date | null;
+ year: string;
+}
+
+export interface FormDataState {
+ Q1: FormField;
+ Q2: FormField;
+ Q3: FormField;
+ Q4: FormField;
+ S1: FormField;
+ Board: FormField;
+ Year: FormField;
+}
+
+export interface DocumentSlice {
+ fullNameEn: string;
+ nickNameEn: string;
+ tadawalCode: string;
+ sector: string;
+ formData: FormDataState;
 }

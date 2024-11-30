@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-// import { format } from "date-fns";
-// import { addDocument } from "../../../reduxKit/actions/admin/addDocumentAction";
+import { addDocumentEnglish } from "../../../reduxKit/actions/admin/addDocumentAction";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
@@ -12,31 +11,20 @@ import { AdminNavbar } from "../../Navbar/adminNavbar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AddDocumentArabic } from "./addDocumentAr";
+import { FieldKey } from "../../../interfaces/admin/addDoument";
+import { FormField } from "../../../interfaces/admin/addDoument";
+import { DocumentSlice } from "../../../interfaces/admin/addDoument";
 
-type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
-
-interface FormField {
-  file: File | null;
-  date: Date | null;
-  year: string;
-}
 
 
 export const AddDocument: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.admin);
-
-  // const [fullNameAr, setFullNameAr] = useState("");
-  // const [nickNameAr, setnickNameAr] = useState("");
-
   const [fullNameEn, setFullNameEn] = useState("");
   const [nickNameEn, setnickNameEn] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
   const [sector, setSector] = useState("");
-
-
-
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
     Q1: { file: null, date: null, year: "" },
     Q2: { file: null, date: null, year: "" },
@@ -48,7 +36,6 @@ export const AddDocument: React.FC = React.memo(() => {
   });
 
 
-
   const handleFileChange = (field: FieldKey, file: File | null) => {
     setFormData((prev) => ({
       ...prev,
@@ -57,20 +44,12 @@ export const AddDocument: React.FC = React.memo(() => {
   };
 
 
-
-
   const handleDateChange = (field: FieldKey, selectedDate: Date | null) => {
-
- 
-  
     setFormData((prev) => ({
       ...prev,
       [field]: { ...prev[field], date: selectedDate },
     }));
   };
-
-
-
 
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => ({
@@ -79,16 +58,20 @@ export const AddDocument: React.FC = React.memo(() => {
     }));
   };
 
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
-      console.log("Form Data: this is my rectify aria ", formData);
+      console.log("Form Data: this is my rectify aria ", formData, nickNameEn);
+      const payloadData:DocumentSlice ={
+        fullNameEn,
+        nickNameEn,
+        tadawalCode,
+        sector,
+        formData
+      }
 
-      // await dispatch(addDocument(formData)).unwrap();
+      await dispatch(addDocumentEnglish(payloadData)).unwrap();
       toast.success("Document successfully added");
-      // window.location.reload();
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -101,7 +84,6 @@ export const AddDocument: React.FC = React.memo(() => {
       });
     }
   };
-
 
   return (
     <div className="">
@@ -141,9 +123,6 @@ export const AddDocument: React.FC = React.memo(() => {
               />
             </div>
           </div>
-
-
-
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="space-y-2">
@@ -214,8 +193,6 @@ export const AddDocument: React.FC = React.memo(() => {
                 }
               />
 
-
-
               <DatePicker
                 selected={formData.Q3.date}
                 onChange={(date) => handleDateChange("Q3", date)}
@@ -231,8 +208,6 @@ export const AddDocument: React.FC = React.memo(() => {
               />
             </div>
 
-
-
             <div className="space-y-2">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Q4
@@ -244,8 +219,6 @@ export const AddDocument: React.FC = React.memo(() => {
                   handleFileChange("Q4", e.target.files?.[0] || null)
                 }
               />
-
-
 
               <DatePicker
                 selected={formData.Q4.date}
@@ -385,8 +358,8 @@ export const AddDocument: React.FC = React.memo(() => {
           </div>
         </form>
 
-        <AddDocumentArabic/>
+        <AddDocumentArabic />
       </div>
     </div>
   );
-})
+});

@@ -17,16 +17,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
+import { FieldKey } from "../../../interfaces/admin/addDoument";
+import { FormField } from "../../../interfaces/admin/addDoument";
+import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 
 
-
-type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
-
-interface FormField {
-  file: File | null;
-  date: Date | null;
-  year: string;
-}
 
 
 export const AddDocumentArabic: React.FC = React.memo(() => {
@@ -81,7 +76,19 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
   const handleSubmitArabicDoc =   async (e: React.FormEvent<HTMLFormElement>) => {
       try {
         e.preventDefault();
-      console.log("Form Data: this is my rectify aria ", formData,nickNameAr);
+        console.log("Form Data: this is my rectify aria ", formData, nickNameAr);
+        const payloadData:DocumentSliceAr ={
+            fullNameAr,
+          nickNameAr,
+          tadawalCode,
+          sector,
+          formData
+        }
+  
+        const response= await dispatch(addDocumentArabic(payloadData)).unwrap();
+        console.log("my response ", response);
+        
+      toast.success("Document successfully added");
       toast.success("Document successfully added");
 
     } catch (error: any) {
@@ -96,7 +103,6 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
       });
     }
   }
-
   return (
     <div className=" mt-12">
       <div className="flex flex-col items-center lg:py-4 min-h-screen px-4 ">

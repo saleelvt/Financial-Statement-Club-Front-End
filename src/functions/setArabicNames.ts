@@ -2,20 +2,22 @@
 
 export const setArabicNames = (documents: any) => {
     try {
-        const arabicNamesArray: { name: string, year:string}[] = [];
-        const arabicFiles: any[] = [];  // Separate array for Arabic files
+        const arabicNamesArray: { fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string}[] = [];
+        const arabicFormFiles: any[] = [];  // Separate array for Arabic files
         for (const x of documents) {
             arabicNamesArray.push({
-                name: x?.companyNameAr,
-                year:x?.yearOfReport
+                fullNameEn: x?.fullNameEn,
+                nickNameEn:x?.nickNameEn,
+                tadawalCode:x?.tadawalCode,
+                sector:x?.sector
             });
-            if (x?.fileAr) arabicFiles.push(x?.fileAr);  // Push file to Arabic files array
+            if (x?.formData) arabicFormFiles.push(x?.formData);  // Push file to Arabic files array
         }
-        arabicNamesArray.sort((a, b) => b.name.localeCompare(a.name, 'ar'));
+        arabicNamesArray.sort((a, b) => b.nickNameEn.localeCompare(a.nickNameEn, 'ar'));
 
-        return { arabicNamesArray, arabicFiles };
+        return { arabicNamesArray, arabicFormFiles };
     } catch (error: any) {
         console.log(error);
-        return { arabicNamesArray: [], arabicFiles: [] };
+        return { arabicNamesArray: [], arabicFormFiles: [] };
     }
 };

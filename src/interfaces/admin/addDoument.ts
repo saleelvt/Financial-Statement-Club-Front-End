@@ -26,3 +26,10 @@ export interface DocumentSlice {
  sector: string;
  formData: FormDataState;
 }
+export interface DocumentSliceAr {
+ fullNameAr: string;
+ nickNameAr: string;
+ tadawalCode: string;
+ sector: string;
+ formData: FormDataState;
+}

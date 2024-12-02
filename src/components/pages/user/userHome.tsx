@@ -21,10 +21,11 @@ interface Document {
 
 const UserHomePage: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
-  const [brandsEn, setBrandsEn] = useState<{ name: string; year: string }[]>(
+  const [brandsEn, setBrandsEn] = useState< { fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string}[]>(
     []
   );
-  const [brandsAr, setBrandsAr] = useState<{ name: string; year: string }[]>(
+
+  const [brandsAr, setBrandsAr] = useState<{ fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string}[]>(
     []
   );
   // const [arabicFiles, setArabicFiles] = useState<any[]>([]);
@@ -104,23 +105,9 @@ const UserHomePage: React.FC = () => {
 
 
 
-  // const handleViewPdf = (
-  //   file: { data: any; contentType: string },
-  //   companyName: string,
-  //   year: string
-  // ) => {
-  //   const blob = new Blob([Uint8Array.from(file.data.data)], {
-  //     type: file.contentType,
-  //   });
-  //   const url = URL.createObjectURL(blob);
-  //   setSelectedPdfUrl(url);
-  //   setSelectedPdfCompanyName(companyName);
-  //   setSelectedPdfYear(year);
-  // };
-
   const arrays = userLanguage === "English" ? brandsEn : brandsAr;
   const currentBrands = arrays.filter(
-    (item, index, self) => index === self.findIndex((t) => t.name === item.name)
+    (item, index, self) => index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
   );
 
 
@@ -128,7 +115,6 @@ const UserHomePage: React.FC = () => {
 
 
   // const currentFiles = userLanguage === "English" ? englishFiles : arabicFiles;
-
   // Add this new function to get the correct file index
   // const getFileIndex = (brand: { name: string; year: string }) => {
   //   return arrays.findIndex(
@@ -136,6 +122,7 @@ const UserHomePage: React.FC = () => {
   //   );
   // };
 
+  
   // Updated filtering logic to include brand selection
   // const filteredBrands = arrays.filter(
   //   (brand) =>
@@ -149,9 +136,16 @@ const UserHomePage: React.FC = () => {
   //   currentPage * rowsPerPage
   // );
 
+  if(documents){
+    console.log("()))))()())(",documents);
+    
+  }
+
   useEffect(() => {
     // setCurrentPage(1);
   }, [searchTerm, selectedBrand]);
+
+
   if (loading) {
     return <Loading />;
   }
@@ -186,14 +180,14 @@ const UserHomePage: React.FC = () => {
           .map((brand, index) => (
             <button
               key={index}
-              onClick={() => handleBrandClick(brand.name)}
+              onClick={() => handleBrandClick(brand.fullNameEn)}
               className={` font-bold hover:border focus:ring-2 transition duration-300 transform hover:scale-105 hover:border-gray-200 hover:bg-gray-300 hover:text-black rounded-sm ${
-                selectedBrand === brand.name
+                selectedBrand === brand.fullNameEn
                   ? "bg-gray-200 text-black font-medium"
                   : ""
               } ${language === "Arabic" ? "p-1" : ""}`}
             >
-              {brand.name}
+              {brand.nickNameEn}
             </button>
           ))}
       </div>

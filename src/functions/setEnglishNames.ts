@@ -2,18 +2,19 @@
 
 export const setEnglishNames = (documents: any) => {
     try {
-        const englishNamesArray: { name: string ,year:string}[] = [];
-        const englishFiles: any[] = [];  // Separate array for English files
+        const englishNamesArray: { fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string}[] = [];
+        const englishFormFiles: any[] = [];  // Separate array for English files
         for (const x of documents) {
             englishNamesArray.push({
-                name: x?.companyNameEn,
-                year:x?.yearOfReport
-                // file: x?.fileEn, // Add the English file as well
+                fullNameEn: x?.fullNameEn,
+                nickNameEn:x?.nickNameEn,
+                tadawalCode:x?.tadawalCode,
+                sector:x?.sector
             });
-            if (x?.fileEn) englishFiles.push(x?.fileEn);  // Push file to English files array
+            if (x?.formData) englishFormFiles.push(x?.formData);  // Push file to English files array
         }
-        englishNamesArray.sort((a, b) => a.name.localeCompare(b.name));
-        return { englishNamesArray, englishFiles };
+        englishNamesArray.sort((a, b) => a.nickNameEn.localeCompare(b.nickNameEn));
+        return { englishNamesArray, englishFormFiles };
     } catch (error: any) {
         console.log(error);
         return { englishNamesArray: [], englishFiles: [] };

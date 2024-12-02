@@ -32,11 +32,13 @@ export const DocumentList: React.FC = () => {
     await dispatch(userLanguageChange(newLanguage));
   };
 
+
+
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [brandsEn, setBrandsEn] = useState<{ name: string; year: string }[]>([]);
-  const [brandsAr, setBrandsAr] = useState<{ name: string; year: string }[]>([]);
+  const [brandsEn, setBrandsEn] = useState<{ fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string}[]>([]);
+  const [brandsAr, setBrandsAr] = useState<{ fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string}[]>([]);
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -54,6 +56,7 @@ export const DocumentList: React.FC = () => {
         setLoading(false);
       }
     };
+
     fetchDocuments();
   }, []);
 
@@ -78,8 +81,6 @@ export const DocumentList: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const handleDelete = async () => {
     if (!docToDelete) return;
-
-    
     try {
       await commonRequest("DELETE", `/admin/deleteDocument/${docToDelete}`, config);
         toast.success("Document Successfully Deleted");
@@ -87,8 +88,6 @@ export const DocumentList: React.FC = () => {
         setDocuments(prevDocuments => 
           prevDocuments.filter(doc => doc._id.toString() !== docToDelete)
         );
-       
-      
     } catch (error) {
       console.error("Failed to delete document:", error);
     } finally {

@@ -20,7 +20,7 @@ import { DocumentSlice } from "../../../interfaces/admin/addDoument";
 export const AddDocument: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { loading } = useSelector((state: RootState) => state.admin);
+  const { loading } = useSelector((state: RootState) => state.adminEn);
   const [fullNameEn, setFullNameEn] = useState("");
   const [nickNameEn, setnickNameEn] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");

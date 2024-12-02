@@ -1,33 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-
-
-
-
-
 import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
 
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 
-
-
-
 export const AddDocumentArabic: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { loading } = useSelector((state: RootState) => state.admin);
+  const { loading } = useSelector((state: RootState) => state.adminAr);
   const [fullNameAr, setFullNameAr] = useState("");
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
@@ -38,12 +28,9 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
     Q3: { file: null, date: null, year: "" },
     Q4: { file: null, date: null, year: "" },
     S1: { file: null, date: null, year: "" },
-    Board: { file: null, date: null, year: "" }, 
+    Board: { file: null, date: null, year: "" },
     Year: { file: null, date: null, year: "" },
   });
-
-
-
 
   const handleFileChange = (field: FieldKey, file: File | null) => {
     setFormData((prev) => ({
@@ -62,7 +49,6 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
     }));
   };
 
-
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -70,27 +56,20 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
     }));
   };
 
-   
-
-    
-  const handleSubmitArabicDoc =   async (e: React.FormEvent<HTMLFormElement>) => {
-      try {
-        e.preventDefault();
-        console.log("Form Data: this is my rectify aria ", formData, nickNameAr);
-        const payloadData:DocumentSliceAr ={
-            fullNameAr,
-          nickNameAr,
-          tadawalCode,
-          sector,
-          formData
-        }
-  
-        const response= await dispatch(addDocumentArabic(payloadData)).unwrap();
-        console.log("my response ", response);
-        
+  const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      console.log("Form Data: this is my rectify aria ", formData, nickNameAr);
+      const payloadData: DocumentSliceAr = {
+        fullNameAr,
+        nickNameAr,
+        tadawalCode,
+        sector,
+        formData,
+      };
+      const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
+      console.log("my response ", response);
       toast.success("Document successfully added");
-      toast.success("Document successfully added");
-
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -102,7 +81,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
         timerProgressBar: true,
       });
     }
-  }
+  };
   return (
     <div className=" mt-12">
       <div className="flex flex-col items-center lg:py-4 min-h-screen px-4 ">
@@ -373,4 +352,4 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
       </div>
     </div>
   );
-})
+});

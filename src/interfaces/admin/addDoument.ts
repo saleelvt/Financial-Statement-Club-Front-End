@@ -19,17 +19,28 @@ export interface FormDataState {
  Year: FormField;
 }
 
-export interface DocumentSlice {
+export interface DocumentSliceEn  {
+  _id?:string;
  fullNameEn: string;
  nickNameEn: string;
  tadawalCode: string;
  sector: string;
  formData: FormDataState;
 }
+
 export interface DocumentSliceAr {
+  _id?:string;
  fullNameAr: string;
  nickNameAr: string;
  tadawalCode: string;
  sector: string;
  formData: FormDataState;
 }
+
+export interface ShowDocumentSliceForUser {
+  fullName: string;
+ nickName: string;
+  tadawalCode: string;
+  sector: string;
+  formData: FormDataState;
+ }

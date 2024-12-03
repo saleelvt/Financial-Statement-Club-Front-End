@@ -20,17 +20,17 @@ export const AdminNavbar: React.FC = () => {
     (state: RootState) => state.adminLanguage
   );
   const { role } = useSelector((state: RootState) => state.auth);
-  const [language, setLanguage] = useState<string>("عربي");
+  // const [language, setLanguage] = useState<string>("English");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   console.log("this is my role  admin ", role);
 
   const toggleLanguage = async () => {
-    const newLanguage = language === "English" ? "Arabic" : "English";
-    setLanguage(newLanguage);
+    const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
     await dispatch(AdminLanguageChange(newLanguage));
   };
+  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

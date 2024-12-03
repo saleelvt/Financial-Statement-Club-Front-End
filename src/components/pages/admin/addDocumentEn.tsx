@@ -13,7 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { AddDocumentArabic } from "./addDocumentAr";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import { FormField } from "../../../interfaces/admin/addDoument";
-import { DocumentSlice } from "../../../interfaces/admin/addDoument";
+import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 
 
 
@@ -62,7 +62,7 @@ export const AddDocument: React.FC = React.memo(() => {
     e.preventDefault();
     try {
       console.log("Form Data: this is my rectify aria ", formData, nickNameEn);
-      const payloadData:DocumentSlice ={
+      const payloadData:DocumentSliceEn ={
         fullNameEn,
         nickNameEn,
         tadawalCode,

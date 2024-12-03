@@ -9,42 +9,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 import "../../../css/userHome.css";
+import { Error } from "../Error";
+import { DocumentSliceAr, DocumentSliceEn} from "../../../interfaces/admin/addDoument";
+import { useNavigate } from "react-router-dom";
 
 
-interface Document {
-  id: string;
-  companyNameAr: string;
-  companyNameEn: string;
-  fileAr: { data: any; contentType: string };
-  fileEn: { data: any; contentType: string };
-}
+
+// interface Document {
+//   id: string;
+//   companyNameAr: string;
+//   companyNameEn: string;
+//   fileAr: { data: any; contentType: string };
+//   fileEn: { data: any; contentType: string };
+// }
+
+
 
 const UserHomePage: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
-  const [brandsEn, setBrandsEn] = useState< { fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string}[]>(
+  const [brandsEn, setBrandsEn] = useState< { fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string ,id:string }[]>(
     []
   );
+  const navigate= useNavigate()
+  const [documents, setDocuments] = useState<(DocumentSliceAr | DocumentSliceEn)[]>([]);
+  const [brandsAr, setBrandsAr] = useState<{ fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string ,id:string}[]>([]);
 
-  const [brandsAr, setBrandsAr] = useState<{ fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string}[]>(
-    []
-  );
-  // const [arabicFiles, setArabicFiles] = useState<any[]>([]);
-  // const [englishFiles, setEnglishFiles] = useState<any[]>([]);
-  // const [selectedPdfCompanyName, setSelectedPdfCompanyName] = useState<
-  //   string | null
-  // >(null);
-  // const [selectedPdfYear, setSelectedPdfYear] = useState<string | null>(null);
-  const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [language, setLanguage] = useState<string>("عربي");
   // const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  // const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
-  const { userLanguage } = useSelector(
-    (state: RootState) => state.userLanguage
-  );
+  const { userLanguage } = useSelector((state: RootState) => state.userLanguage);
 
   // const rowsPerPage = 7;
   // const [currentPage, setCurrentPage] = useState(1);
@@ -52,46 +49,52 @@ const UserHomePage: React.FC = () => {
   useEffect(() => {
     console.log("This is the useEffect ", userLanguage);
   }, [userLanguage]);
+  
+
+
+
+
+
+
+
 
   useEffect(() => {
+
     const fetchDocuments = async () => {
       setLoading(true);
       try {
-        const response = await commonRequest(
-          "GET",
-          "/admin/getDocuments",
-          {},
-          null
-        );
-        if (response.status === 200 && response.data?.data) {
-          console.log("Fetched documents: ", response.data.data);
-          setDocuments(response.data.data);
-        } else {
-          setError("Failed to fetch documents");
-        }
-      } catch (err: any) {
+        if(userLanguage)setLanguage(userLanguage)
+        const endpoint = userLanguage === "English"? "/admin/getDocuments": "/admin/getArabicDocuments";
+          const response = await commonRequest("GET", endpoint, {}, null);
+  
+          if (response.status === 200 && response.data?.data) {
+            setDocuments(response.data.data);
+          } else {
+            setError("Failed to fetch documents");
+          }
+         
+        }catch (err: any) {
         setError(err.message || "An unexpected error occurred");
       } finally {
         setLoading(false);
       }
-    };
+    }
     fetchDocuments();
-  }, []);
+  }, [userLanguage]);
 
   useEffect(() => {
     if (documents.length > 0) {
       const { arabicNamesArray } = setArabicNames(documents);
       setBrandsAr(arabicNamesArray);
-
       const { englishNamesArray } = setEnglishNames(documents);
       setBrandsEn(englishNamesArray);
     }
   }, [documents]);
 
-  const handleBrandClick = (brand: string) => {
-    console.log(`Selected brand: ${brand}`);
-    setSelectedBrand(brand);
-    setSearchTerm("");
+  const handleBrandClick = async (brandNickName: string) => {
+    setSelectedBrand(brandNickName)
+    console.log(`Selected brand: ${brandNickName}`);
+    navigate("/UserCompanyDetails", { state: { brandNickName,userLanguage } });
   };
 
   const handleShowMore = () => setShowAll(true);
@@ -109,8 +112,6 @@ const UserHomePage: React.FC = () => {
   const currentBrands = arrays.filter(
     (item, index, self) => index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
   );
-
-
 
 
 
@@ -140,17 +141,11 @@ const UserHomePage: React.FC = () => {
     console.log("()))))()())(",documents);
     
   }
-
-  useEffect(() => {
-    // setCurrentPage(1);
-  }, [searchTerm, selectedBrand]);
-
-
   if (loading) {
     return <Loading />;
   }
   if (error) {
-    return <div className="text-red-500">Error: {error}</div>;
+    return <Error/>;
   }
   return (
     <div
@@ -180,7 +175,7 @@ const UserHomePage: React.FC = () => {
           .map((brand, index) => (
             <button
               key={index}
-              onClick={() => handleBrandClick(brand.fullNameEn)}
+              onClick={() => handleBrandClick(brand.nickNameEn)}
               className={` font-bold hover:border focus:ring-2 transition duration-300 transform hover:scale-105 hover:border-gray-200 hover:bg-gray-300 hover:text-black rounded-sm ${
                 selectedBrand === brand.fullNameEn
                   ? "bg-gray-200 text-black font-medium"

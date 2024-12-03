@@ -6,8 +6,6 @@ const instance = axios.create({
     withCredentials:true
 })
 
-
-
 export const commonRequest= async(
     method:string,
     route: any,

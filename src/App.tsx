@@ -3,6 +3,8 @@ import React, { Fragment, lazy, Suspense } from 'react';
 import { Routes, Route,Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Loading } from './components/pages/Loading';
+import { CheckDocumentDetails } from './components/pages/admin/checkDocumentDetails';
+import { UserCompanyDetails } from './components/pages/user/userCheckDetails';
 
 
 // Lazy-load each page component
@@ -31,6 +33,8 @@ export const App: React.FC = React.memo(() => {
           <Route path="/adminHomepage" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
           <Route path="/adminAddDocument" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
           <Route path="/adminDocumentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
+          <Route path="/CheckDocumentDetails" element={<CheckDocumentDetails /> } />
+          <Route path="/UserCompanyDetails" element={ <UserCompanyDetails /> } />
         </Routes>
       </Suspense>
     </Fragment>

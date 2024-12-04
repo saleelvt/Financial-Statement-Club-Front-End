@@ -30,8 +30,7 @@ export const AdminLogin = React.memo(() => {
       try {
         console.log(values,"before going to salon home page ");
         await dispatch(loginAdmin(values)).unwrap()
-        navigate("/adminHomepage")
-        
+        navigate("/home")
       } catch (error:any) {
         console.error("Login failed:", error);
         Swal.fire({

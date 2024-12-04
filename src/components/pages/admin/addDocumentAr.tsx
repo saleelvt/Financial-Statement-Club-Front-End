@@ -336,7 +336,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
           <div className="flex items-center justify-between mt-4">
             <button
               type="button"
-              onClick={() => navigate("/adminHomepage")}
+              onClick={() => navigate("/home")}
               className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
             >
               رجوع

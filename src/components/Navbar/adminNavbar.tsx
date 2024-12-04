@@ -46,7 +46,7 @@ export const AdminNavbar: React.FC = () => {
         timer: 1000,
         toast: true,
       }).then(() => {
-        navigate("/adminLogin");
+        navigate("/login");
       });
     } catch (error: any) {
       Swal.fire({
@@ -57,7 +57,6 @@ export const AdminNavbar: React.FC = () => {
       });
     }
   };
-
   return (
     <nav className="p-3">
       <div className="container py-2 mx-auto gap-3 flex justify-between items-center">

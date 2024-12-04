@@ -24,6 +24,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             onClick={onCancel}
             className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
           >
+            
             Cancel
           </button>
           <button

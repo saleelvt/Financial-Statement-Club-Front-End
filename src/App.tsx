@@ -6,9 +6,6 @@ import { Loading } from './components/pages/Loading';
 import { CheckDocumentDetails } from './components/pages/admin/checkDocumentDetails';
 import { UserCompanyDetails } from './components/pages/user/userCheckDetails';
 
-
-// Lazy-load each page component
-// import { UserHomePage } from './components/pages/user/userHome';
 const UserHomePage = lazy(() => import('./components/pages/user/userHome'));
 import { DocumentList } from './components/pages/admin/documentList';
 import { AdminLogin } from './components/forms/admin/login';
@@ -22,19 +19,19 @@ export const App: React.FC = React.memo(() => {
   const {isLogged,role,}=useSelector((state:RootState)=>state.auth)
   console.log("my role and my isLogged", isLogged,role);
 
+
   return (
     <Fragment>
       <Toaster position="top-center" />
-      {/* Wrap Routes in Suspense for lazy-loaded components */}
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={ <UserHomePage/>} />
-          <Route path="/adminLogin" element={isLogged && role === 'admin' ? <Navigate to="/adminHomepage" /> : <AdminLogin />} />
-          <Route path="/adminHomepage" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
-          <Route path="/adminAddDocument" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
-          <Route path="/adminDocumentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
-          <Route path="/CheckDocumentDetails" element={<CheckDocumentDetails /> } />
-          <Route path="/UserCompanyDetails" element={ <UserCompanyDetails /> } />
+          <Route path="/login" element={isLogged && role === 'admin' ? <Navigate to="/home" /> : <AdminLogin />} />
+          <Route path="/home" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
+          <Route path="/addDocument" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
+          <Route path="/documentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
+          <Route path="/documentDetails" element={<CheckDocumentDetails /> } />
+          <Route path="/companyDetails" element={ <UserCompanyDetails /> } />
         </Routes>
       </Suspense>
     </Fragment>

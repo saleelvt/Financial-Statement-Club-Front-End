@@ -20,8 +20,8 @@ const AdminSidebar = () => {
 
   const navLinks = [
     { to: "/admin/dashboard", icon: FaHome, label: "Dashboard" },
-    { to: "/adminAddDocument", icon: FaFileAlt, label: "Add Document" },
-    { to: "/adminDocumentList", icon: FaListAlt, label: "Document List" },
+    { to: "/addDocument", icon: FaFileAlt, label: "Add Document" },
+    { to: "/documentList", icon: FaListAlt, label: "Document List" },
     { to: "/admin/profile", icon: FaUser, label: "Profile" },
     { to: "/admin/settings", icon: FaCog, label: "Settings" }
   ];

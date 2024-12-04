@@ -4,7 +4,7 @@
 export type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
 
 export interface FormField {
- file: File | null;
+  file: string | File | null;
  date: Date | null;
  year: string;
 }
@@ -42,5 +42,4 @@ export interface ShowDocumentSliceForUser {
  nickName: string;
   tadawalCode: string;
   sector: string;
-  formData: FormDataState;
  }

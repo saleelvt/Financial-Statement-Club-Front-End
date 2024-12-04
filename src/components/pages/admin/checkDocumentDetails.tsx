@@ -7,33 +7,34 @@ import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { Loading } from "../Loading";
-import {
-  DocumentSliceEn,
-  DocumentSliceAr,
+import React from "react";
+import { DocumentSliceEn, DocumentSliceAr,
 } from "../../../interfaces/admin/addDoument";
+import { FieldKey } from "../../../interfaces/admin/addDoument";
+interface FormDataState {
+    [key: string]: any; // This allows indexing with string keys
+  }
+  
 
 export const CheckDocumentDetails = () => {
-  const [documents, setDocuments] = useState<
-    (DocumentSliceEn | DocumentSliceAr)[]
-  >([]);
+  const [documents, setDocuments] = useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const location = useLocation();
-  const { brandNickName, adminLanguage } = location.state || {};
+  const { brandNickName, language } = location.state || {};
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState(""); // state for search term
 
   useEffect(() => {
     const fetchDocuments = async () => {
       setLoading(true);
       try {
+        
         const params = new URLSearchParams({
           brandNickName,
-          adminLanguage,
+          language,
         }).toString();
-
-        console.log("before going to backend ",brandNickName,adminLanguage);
-        
 
         const response = await commonRequest(
           "GET",
@@ -41,18 +42,19 @@ export const CheckDocumentDetails = () => {
           config
         );
         if (response.status === 200 && response.data?.data) {
-          await setDocuments(response.data.data);
+          setDocuments(response.data.data);
         } else {
           setError("Failed to fetch documents");
         }
       } catch (err: any) {
+        console.error("API Error:", err);
         setError(err.message || "An unexpected error occurred");
       } finally {
         setLoading(false);
       }
     };
     fetchDocuments();
-  }, [brandNickName, adminLanguage]);
+  }, [brandNickName, language]);
 
   if (loading) {
     return <Loading />;
@@ -61,112 +63,122 @@ export const CheckDocumentDetails = () => {
     return <Error />;
   }
 
-  if(documents){
-    console.log("meeeeeeeeeeeeeeeassssssssss))))))))***********",documents);
-    
-  }
-  //   if (!doc) {
-  //     return <div className="text-center text-lg text-gray-700">No document data available</div>;
-  //   }
+  // Filter documents based on search term
+  const filteredDocuments = documents.filter((doc) => {
+    return ["Board", "Q1", "Q2", "Q3", "Q4", "S1", "Year"].some((key) => {
+      const year = doc.formData[key]?.year || "N/A";
+      return year.toString().includes(searchTerm); // check if searchTerm is included in year
+    });
+  });
 
-//   const handleViewPdf = (file: any) => {
-//     setSelectedPdf(file);
-//   };
+  const handleViewPdf = (file: any) => {
+    setSelectedPdf(file);
+  };
 
-//   const formatDate = (dateString: string | undefined): string => {
-//     if (!dateString) return "N/A";
-//     const date = new Date(dateString);
-//     return new Intl.DateTimeFormat("en-GB").format(date); // Formats as DD/MM/YYYY
-//   };
+  const formatDate = (dateString: string | undefined): string => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("en-GB").format(date); // Formats as DD/MM/YYYY
+  };
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <AdminNavbar />
       <div className="p-7">
-        <div className="bg-gray-640 shadow-lg rounded-lg p-2 ">
-          <div className="flex justify-between ">
+        <div className="bg-gray-640 shadow-lg rounded-lg p-2">
+          <div className="flex flex-wrap justify-between items-center">
             <button
               onClick={() => {
-                navigate("/adminDocumentList");
+                navigate("/documentList");
               }}
-              className="bg-gray-400 rounded-md p-2 "
+              className="bg-gray-400 rounded-md p-2 mb-4 lg:mb-0"
             >
-              Back
+              Back 
             </button>
-            <h1 className="text-4xl  text-black font-semibold text-center">
+            <h1 className="text-4xl text-black font-semibold text-center mb-4 lg:mb-0">
               Document Details
             </h1>
           </div>
 
-          {/* <table className="w-full text-black  border-collapse mt-2">
-            <thead>
-              <tr>
-                <th className="p-4 border border-gray-600 bg-gray-300 text-left">
-                  Nickname
-                </th>
-                <th className="p-4 border border-gray-600 bg-gray-300 text-left">
-                  Tadaval Code
-                </th>
-                <th className="p-4 border border-gray-600 bg-gray-300 text-left">
-                  Property
-                </th>
-                <th className="p-4 border border-gray-600 bg-gray-300 text-left">
-                  Year
-                </th>
-                <th className="p-4 border border-gray-600 bg-gray-300 text-left">
-                  Date
-                </th>
-                <th className="p-4 border border-gray-600 bg-gray-300 text-left">
-                  View PDF
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {["Board", "Q1", "Q2", "Q3", "Q4", "S1", "Year"].map(
-                (key, index) => (
-                  <tr
-                    key={index}
-                    className="hover:bg-gray-200 items-center  text-black font-medium transition duration-300"
-                  >
-                    {key === "Board" && (
-                      <>
-                        <td
-                          rowSpan={7}
-                          className="p-2  text-lg font-bold  border  border-gray-600 bg-gray-200"
-                        >
-                          {doc.nickNameEn}
-                        </td>
-                        <td
-                          rowSpan={7}
-                          className="p-2 border text-lg font-bold border-gray-600 bg-gray-200"
-                        >
-                          {doc.tadawalCode}
-                        </td>
-                      </>
-                    )}
-                    <td className="p-2 border border-gray-600">{key}</td>
-                    <td className="p-2 border border-gray-600">
-                      {doc.formData[key]?.year || "N/A"}
-                    </td>
-                    <td className="p-4 border border-gray-600">
-                      {formatDate(doc.formData[key]?.date)}
-                    </td>
-                    <td className="p-4 border border-gray-200">
-                      <button
-                        className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1 rounded-lg shadow transition duration-300"
-                        onClick={() => handleViewPdf(doc.formData[key]?.file)}
+          {/* Search Bar */}
+          <div className="flex justify-end lg:mr-8 mb-4">
+            <div className="m-2 w-full sm:w-1/2 lg:w-1/3">
+              <input
+                type="text"
+                placeholder="Search by Year"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 border bg-slate-50 border-black rounded-lg"
+              />
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="overflow-x-auto  ">
+            <table className="w-full text-black border-collapse  ">
+              <thead>
+                <tr>
+                  <th className="p-2 border border-gray-600 bg-gray-300 text-left">Nickname</th>
+                  <th className="p-2 border border-gray-600 bg-gray-300 text-left">Tadaval Code</th>
+                  <th className="p-2 border border-gray-600 bg-gray-300 text-left">Property</th>
+                  <th className="p-2 border border-gray-600 bg-gray-300 text-left">Year</th>
+                  <th className="p-2 border border-gray-600 bg-gray-300 text-left">Date</th>
+                  <th className="p-2 border border-gray-600 bg-gray-300 text-left">View PDF</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredDocuments.map((doc, docIndex) => (
+                  <React.Fragment key={doc._id}>
+                    {["Board", "Q1", "Q2", "Q3", "Q4", "S1", "Year"].map((key, index) => (
+                      <tr
+                        key={`${docIndex}-${index}`}
+                        className="hover:bg-gray-200 items-center  text-black font-medium transition duration-300"
                       >
-                        View PDF
-                      </button>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table> */}
+                        {key === "Board" && (
+                          <>
+                            <td
+                              rowSpan={7}
+                              className="p-1 text-lg font-bold border border-gray-600 bg-gray-200"
+                            >
+                              {language === "Arabic"
+                                ? (doc as DocumentSliceAr).nickNameAr
+                                : (doc as DocumentSliceEn).nickNameEn}
+                            </td>
+                            <td
+                              rowSpan={7}
+                              className="p-2 border text-lg font-bold border-gray-600 bg-gray-200"
+                            >
+                              {doc.tadawalCode}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-1 border border-gray-600">{key}</td>
+                        <td className="p-1 border border-gray-600">
+                          {doc.formData[key]?.year ??  "N/A"}
+                        </td>
+                        <td className="p-1 border border-gray-600">
+                          {formatDate(doc.formData[key]?.date)}
+                        </td>
+                        <td className="p-1 border border-gray-200">
+                          <button
+                            className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1 rounded-lg shadow transition duration-300"
+                            onClick={() => handleViewPdf(doc.formData[key]?.file)}
+                          >
+                            View PDF
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
+
+        {/* PDF Viewer */}
         {selectedPdf && (
-          <div className="mt-6 p-6 bg-gray-200 shadow-lg rounded-lg">
+          <div className="mt-6 p-1 bg-gray-200 shadow-lg rounded-lg">
             <h2 className="text-lg font-semibold mb-4">PDF Viewer</h2>
             <iframe
               src={`${selectedPdf}#toolbar=0`}

@@ -87,7 +87,7 @@ export const DocumentList: React.FC = () => {
     try {
       await commonRequest(
         "DELETE",
-        `/admin/deleteDocument/${docToDelete}`,
+        `/admin/deleteDocument/${docToDelete}?language=${language}`,
         config
       );
       toast.success("Document Successfully Deleted");
@@ -113,7 +113,7 @@ export const DocumentList: React.FC = () => {
     // Type guard to check the type of doc
     const brandNickName ="nickNameEn" in doc ? doc.nickNameEn : doc.nickNameAr;
 
-    navigate("/checkDocumentDetails", { state: { brandNickName, adminLanguage } });
+    navigate("/documentDetails", { state: { brandNickName, language } });
   }
 };
   return (
@@ -123,7 +123,7 @@ export const DocumentList: React.FC = () => {
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-6xl border border-gray-300">
         <div className="flex flex-wrap justify-between items-center mb-6">
           <button
-            onClick={() => navigate("/adminHomepage")}
+            onClick={() => navigate("/home")}
             className="px-2 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
           >
             Back

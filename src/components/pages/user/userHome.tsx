@@ -10,10 +10,11 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 import "../../../css/userHome.css";
 import { Error } from "../Error";
-import { DocumentSliceAr, DocumentSliceEn} from "../../../interfaces/admin/addDoument";
+import {
+  DocumentSliceAr,
+  DocumentSliceEn,
+} from "../../../interfaces/admin/addDoument";
 import { useNavigate } from "react-router-dom";
-
-
 
 // interface Document {
 //   id: string;
@@ -23,25 +24,40 @@ import { useNavigate } from "react-router-dom";
 //   fileEn: { data: any; contentType: string };
 // }
 
-
-
 const UserHomePage: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
-  const [brandsEn, setBrandsEn] = useState< { fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string ,id:string }[]>(
-    []
-  );
-  const navigate= useNavigate()
-  const [documents, setDocuments] = useState<(DocumentSliceAr | DocumentSliceEn)[]>([]);
-  const [brandsAr, setBrandsAr] = useState<{ fullNameEn: string ,nickNameEn:string,tadawalCode:string,sector:string ,id:string}[]>([]);
+  const [brandsEn, setBrandsEn] = useState<
+    {
+      fullNameEn: string;
+      nickNameEn: string;
+      tadawalCode: string;
+      sector: string;
+      id: string;
+    }[]
+  >([]);
+  const navigate = useNavigate();
+  const [documents, setDocuments] = useState<
+    (DocumentSliceAr | DocumentSliceEn)[]
+  >([]);
+  const [brandsAr, setBrandsAr] = useState<
+    {
+      fullNameEn: string;
+      nickNameEn: string;
+      tadawalCode: string;
+      sector: string;
+      id: string;
+    }[]
+  >([]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [language, setLanguage] = useState<string>("عربي");
+  const [language, setLanguage] = useState<string>("Arabic");
   // const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | null>(null);
   // const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
-  const { userLanguage } = useSelector((state: RootState) => state.userLanguage);
+  const { userLanguage } = useSelector( (state: RootState) => state.userLanguage);
+  // const  MYLanguage=userLanguage
 
   // const rowsPerPage = 7;
   // const [currentPage, setCurrentPage] = useState(1);
@@ -49,36 +65,29 @@ const UserHomePage: React.FC = () => {
   useEffect(() => {
     console.log("This is the useEffect ", userLanguage);
   }, [userLanguage]);
-  
-
-
-
-
-
-
-
 
   useEffect(() => {
-
     const fetchDocuments = async () => {
       setLoading(true);
       try {
-        if(userLanguage)setLanguage(userLanguage)
-        const endpoint = userLanguage === "English"? "/admin/getDocuments": "/admin/getArabicDocuments";
-          const response = await commonRequest("GET", endpoint, {}, null);
-  
-          if (response.status === 200 && response.data?.data) {
-            setDocuments(response.data.data);
-          } else {
-            setError("Failed to fetch documents");
-          }
-         
-        }catch (err: any) {
+        if (userLanguage) setLanguage(userLanguage);
+        const endpoint =
+          userLanguage === "English"
+            ? "/admin/getDocuments"
+            : "/admin/getArabicDocuments";
+        const response = await commonRequest("GET", endpoint, {}, null);
+
+        if (response.status === 200 && response.data?.data) {
+          setDocuments(response.data.data);
+        } else {
+          setError("Failed to fetch documents");
+        }
+      } catch (err: any) {
         setError(err.message || "An unexpected error occurred");
       } finally {
         setLoading(false);
       }
-    }
+    };
     fetchDocuments();
   }, [userLanguage]);
 
@@ -92,9 +101,9 @@ const UserHomePage: React.FC = () => {
   }, [documents]);
 
   const handleBrandClick = async (brandNickName: string) => {
-    setSelectedBrand(brandNickName)
+    setSelectedBrand(brandNickName);
     console.log(`Selected brand: ${brandNickName}`);
-    navigate("/UserCompanyDetails", { state: { brandNickName,userLanguage } });
+    navigate("/companyDetails", { state: { brandNickName, language } });
   };
 
   const handleShowMore = () => setShowAll(true);
@@ -106,14 +115,11 @@ const UserHomePage: React.FC = () => {
     await dispatch(userLanguageChange(newLanguage));
   };
 
-
-
   const arrays = userLanguage === "English" ? brandsEn : brandsAr;
   const currentBrands = arrays.filter(
-    (item, index, self) => index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
+    (item, index, self) =>
+      index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
   );
-
-
 
   // const currentFiles = userLanguage === "English" ? englishFiles : arabicFiles;
   // Add this new function to get the correct file index
@@ -123,7 +129,6 @@ const UserHomePage: React.FC = () => {
   //   );
   // };
 
-  
   // Updated filtering logic to include brand selection
   // const filteredBrands = arrays.filter(
   //   (brand) =>
@@ -137,15 +142,14 @@ const UserHomePage: React.FC = () => {
   //   currentPage * rowsPerPage
   // );
 
-  if(documents){
-    console.log("()))))()())(",documents);
-    
+  if (documents) {
+    console.log("()))))()())(", documents);
   }
   if (loading) {
     return <Loading />;
   }
   if (error) {
-    return <Error/>;
+    return <Error />;
   }
   return (
     <div

@@ -39,7 +39,7 @@ export const DocumentList: React.FC = () => {
           adminLanguage === "English"
             ? "/admin/getDocuments"
             : "/admin/getArabicDocuments";
-        const response = await commonRequest("GET", endpoint, {}, null);
+        const response = await commonRequest("GET", endpoint, config, null);
 
         if (response.status === 200 && response.data?.data) {
           setDocuments(response.data.data);
@@ -89,7 +89,6 @@ export const DocumentList: React.FC = () => {
   }
 
   const handleBrand = (doc: DocumentSliceAr | DocumentSliceEn) => {
-    console.log("let data", doc);
     if (doc) {
       const brandNickName =
         "nickNameEn" in doc ? doc.nickNameEn : doc.nickNameAr;

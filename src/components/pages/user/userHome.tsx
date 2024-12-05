@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import "../../../global.css";
+import { config } from "../../../config/constants";
 import { commonRequest } from "../../../config/api";
 import { Loading } from "../Loading";
 import { setArabicNames } from "../../../functions/setArabicNames";
@@ -15,14 +16,6 @@ import {
   DocumentSliceEn,
 } from "../../../interfaces/admin/addDoument";
 import { useNavigate } from "react-router-dom";
-
-// interface Document {
-//   id: string;
-//   companyNameAr: string;
-//   companyNameEn: string;
-//   fileAr: { data: any; contentType: string };
-//   fileEn: { data: any; contentType: string };
-// }
 
 const UserHomePage: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
@@ -52,20 +45,9 @@ const UserHomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [language, setLanguage] = useState<string>("Arabic");
-  // const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | null>(null);
-  // const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const { userLanguage } = useSelector( (state: RootState) => state.userLanguage);
-  // const  MYLanguage=userLanguage
-
-  // const rowsPerPage = 7;
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    console.log("This is the useEffect ", userLanguage);
-  }, [userLanguage]);
-
   useEffect(() => {
     const fetchDocuments = async () => {
       setLoading(true);
@@ -75,9 +57,7 @@ const UserHomePage: React.FC = () => {
           userLanguage === "English"
             ? "/admin/getDocuments"
             : "/admin/getArabicDocuments";
-        const response = await commonRequest("GET", endpoint, {
-            
-        }, null);
+        const response = await commonRequest("GET", endpoint, config, null);
 
         if (response.status === 200 && response.data?.data) {
           setDocuments(response.data.data);
@@ -104,7 +84,6 @@ const UserHomePage: React.FC = () => {
 
   const handleBrandClick = async (brandNickName: string) => {
     setSelectedBrand(brandNickName);
-    console.log(`Selected brand: ${brandNickName}`);
     navigate("/companyDetails", { state: { brandNickName, language } });
   };
 
@@ -122,31 +101,6 @@ const UserHomePage: React.FC = () => {
     (item, index, self) =>
       index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
   );
-
-  // const currentFiles = userLanguage === "English" ? englishFiles : arabicFiles;
-  // Add this new function to get the correct file index
-  // const getFileIndex = (brand: { name: string; year: string }) => {
-  //   return arrays.findIndex(
-  //     (item) => item.name === brand.name && item.year === brand.year
-  //   );
-  // };
-
-  // Updated filtering logic to include brand selection
-  // const filteredBrands = arrays.filter(
-  //   (brand) =>
-  //     (selectedBrand ? brand.name === selectedBrand : true) &&
-  //     brand.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-
-  // const totalPages = Math.ceil(filteredBrands.length / rowsPerPage);
-  // const paginatedData = filteredBrands.slice(
-  //   (currentPage - 1) * rowsPerPage,
-  //   currentPage * rowsPerPage
-  // );
-
-  if (documents) {
-    console.log("()))))()())(", documents);
-  }
   if (loading) {
     return <Loading />;
   }
@@ -218,8 +172,6 @@ const UserHomePage: React.FC = () => {
           </button>
         )}
       </div>
-
-      {/* Header */}
       <div className="relative w-full flex flex-col items-center p-8 bg-opacity-50 text-center">
         {/* <h1 className="text-6xl font-serif mb-6 animate-bounce text-gray-100">
           {userLanguage === "English"

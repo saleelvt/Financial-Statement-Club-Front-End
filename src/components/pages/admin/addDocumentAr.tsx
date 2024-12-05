@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {  useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
-
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
@@ -59,7 +58,6 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      console.log("Form Data: this is my rectify aria ", formData, nickNameAr);
       const payloadData: DocumentSliceAr = {
         fullNameAr,
         nickNameAr,
@@ -67,8 +65,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
         sector,
         formData,
       };
-      const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
-      console.log("my response ", response);
+   await dispatch(addDocumentArabic(payloadData)).unwrap();
       toast.success("Document successfully added");
     } catch (error: any) {
       Swal.fire({

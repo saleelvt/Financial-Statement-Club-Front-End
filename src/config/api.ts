@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import { URL,  } from "./constants";
+import { URL, } from "./constants";
 const instance = axios.create({
     baseURL:URL,
     withCredentials:true
@@ -15,10 +15,7 @@ export const commonRequest= async(
     const requestConfig = {
         method,
         url: route,
-        headers: {
-          "Content-Type": "application/json",
-          "X-Requested-With": "XMLHttpRequest",
-        },
+        headers: config,
         data: body,
       };
       try {

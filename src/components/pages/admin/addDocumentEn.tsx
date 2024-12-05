@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -61,7 +61,6 @@ export const AddDocument: React.FC = React.memo(() => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log("Form Data: this is my rectify aria ", formData, nickNameEn);
       const payloadData:DocumentSliceEn ={
         fullNameEn,
         nickNameEn,
@@ -70,9 +69,7 @@ export const AddDocument: React.FC = React.memo(() => {
         formData
       }
 
-      const response= await dispatch(addDocumentEnglish(payloadData)).unwrap();
-        console.log("my response ", response);
-        
+     await dispatch(addDocumentEnglish(payloadData)).unwrap();
       toast.success("Document successfully added");
     } catch (error: any) {
       Swal.fire({

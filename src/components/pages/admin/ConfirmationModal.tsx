@@ -5,14 +5,12 @@ interface ConfirmationModalProps {
   onConfirm: () => void;
   onCancel: () => void;
 }
-
 export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   isOpen,
   onConfirm,
   onCancel,
 }) => {
   if (!isOpen) return null;
-
   
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -24,7 +22,6 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             onClick={onCancel}
             className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
           >
-            
             Cancel
           </button>
           <button

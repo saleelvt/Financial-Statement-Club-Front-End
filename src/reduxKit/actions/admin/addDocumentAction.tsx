@@ -26,7 +26,6 @@ export const axiosIn = axios.create({
     "admin/addDocument",
     async (adminCredentials:DocumentPayload,{rejectWithValue})=>{
         try {
-            console.log( "this is for add the document )))))))))))))))))) ",adminCredentials );
             const formData = new FormData();
             for (const [key, value] of Object.entries(adminCredentials?.formData)) {
               if (value?.file) {
@@ -44,9 +43,8 @@ export const axiosIn = axios.create({
 
             console.log("FormData contents:");
 formData.forEach((value, key) => {
-  console.log(key, value);
-});
-            console.log("this is my data ++++++++++++",formData);
+  console.log(key, value);});
+            console.log("this is my data ++++++++++++");
       
             const response = await axiosIn.post(`/admin/addDocumentEnglish`,formData,createAxiosConfig(true));
             return response.data ;

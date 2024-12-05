@@ -75,7 +75,9 @@ const UserHomePage: React.FC = () => {
           userLanguage === "English"
             ? "/admin/getDocuments"
             : "/admin/getArabicDocuments";
-        const response = await commonRequest("GET", endpoint, {}, null);
+        const response = await commonRequest("GET", endpoint, {
+            
+        }, null);
 
         if (response.status === 200 && response.data?.data) {
           setDocuments(response.data.data);

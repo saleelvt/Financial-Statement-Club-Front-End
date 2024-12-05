@@ -8,14 +8,8 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { Loading } from "../Loading";
 import React from "react";
-import { DocumentSliceEn, DocumentSliceAr,
-} from "../../../interfaces/admin/addDoument";
-import { FieldKey } from "../../../interfaces/admin/addDoument";
-interface FormDataState {
-    [key: string]: any; // This allows indexing with string keys
-  }
-  
-
+import { DocumentSliceEn, DocumentSliceAr,} from "../../../interfaces/admin/addDoument";
+import { FormDataState } from "../../../interfaces/admin/addDoument";
 export const CheckDocumentDetails = () => {
   const [documents, setDocuments] = useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [loading, setLoading] = useState(false);
@@ -66,7 +60,7 @@ export const CheckDocumentDetails = () => {
   // Filter documents based on search term
   const filteredDocuments = documents.filter((doc) => {
     return ["Board", "Q1", "Q2", "Q3", "Q4", "S1", "Year"].some((key) => {
-      const year = doc.formData[key]?.year || "N/A";
+      const year = (doc.formData[key as keyof FormDataState])?.year;
       return year.toString().includes(searchTerm); // check if searchTerm is included in year
     });
   });
@@ -75,7 +69,7 @@ export const CheckDocumentDetails = () => {
     setSelectedPdf(file);
   };
 
-  const formatDate = (dateString: string | undefined): string => {
+  const formatDate = (dateString: Date | null | undefined): string => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-GB").format(date); // Formats as DD/MM/YYYY
@@ -154,15 +148,15 @@ export const CheckDocumentDetails = () => {
                         )}
                         <td className="p-1 border border-gray-600">{key}</td>
                         <td className="p-1 border border-gray-600">
-                          {doc.formData[key]?.year ??  "N/A"}
+                          { (doc.formData[key as keyof FormDataState])?.year ??  "N/A"}
                         </td>
                         <td className="p-1 border border-gray-600">
-                          {formatDate(doc.formData[key]?.date)}
+                          {formatDate((doc.formData[key as keyof FormDataState])?.date)}
                         </td>
                         <td className="p-1 border border-gray-200">
                           <button
                             className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1 rounded-lg shadow transition duration-300"
-                            onClick={() => handleViewPdf(doc.formData[key]?.file)}
+                            onClick={() => handleViewPdf((doc.formData[key as keyof FormDataState])?.file)}
                           >
                             View PDF
                           </button>

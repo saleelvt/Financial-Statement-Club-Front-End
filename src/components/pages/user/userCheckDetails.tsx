@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import {
   DocumentSliceEn,
   DocumentSliceAr,
@@ -12,8 +11,6 @@ import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import "../../../css/YearSlider.css";
-import { AppDispatch, RootState } from "../../../reduxKit/store";
-import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 
 export const UserCompanyDetails = React.memo(() => {
   const [documents, setDocuments] = useState<
@@ -33,8 +30,6 @@ export const UserCompanyDetails = React.memo(() => {
   const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | File>("");
   const navigate = useNavigate();
 
-  const dispatch = useDispatch<AppDispatch>();
-  const { userLanguage } = useSelector((state: RootState) => state.userLanguage);
   const pdfKeys = ["Q1", "Q2", "Q3", "Q4", "S1", "Board", "Year"];
 
   const handleYearClick = (year: string) => {

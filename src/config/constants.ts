@@ -11,7 +11,7 @@ export const URL="https://api.finstatements.club";
 
 export const config ={
     headers :{
-        "Content-Type":"multipart/form-data",
+        "Content-Type": "application/json",
     },
     withCredentials:true
 }

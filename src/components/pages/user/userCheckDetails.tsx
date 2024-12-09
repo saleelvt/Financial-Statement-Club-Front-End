@@ -244,7 +244,7 @@ export const UserCompanyDetails = React.memo(() => {
                   <div className="flex justify-center">
                   <iframe
                     src={iframeSrc}
-                    style={{ width: "80%", height: "100vh", border: "none",pointerEvents: "none" }}
+                    style={{ width: "80%", height: "100vh", border: "none", }}
                     title="PDF Viewer"
                   />
 

@@ -26,8 +26,8 @@ export const UserCompanyDetails = React.memo(() => {
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
-  const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | File>("");
-
+  // const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | File>("");
+  const [iframeSrc, setIframeSrc] = useState<string>("");
 
   const pdfKeys = ["Q1", "Q2", "Q3", "Q4", "S1", "Board", "Year"];
 
@@ -39,46 +39,24 @@ export const UserCompanyDetails = React.memo(() => {
     setSelectedFilteredDocWithYear(filteredYears);
   };
 
-
-
-
-  const handlePdfButtonClick = async (key: string) => {
+  const handlePdfButtonClick = (key: string) => {
     setLoading(true);
     setSelectedPdfKey(key);
-  
+
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
-      const fileUrl = document.formData[key as keyof typeof document.formData]?.file;
-  
+      const fileUrl =
+        document.formData[key as keyof typeof document.formData]?.file;
       if (fileUrl) {
-        try {
-          let blob;
-          // Check if fileUrl is a valid URL
-          if (typeof fileUrl === "string" && fileUrl.startsWith("http")) {
-            // Fetch the PDF content from the URL
-            const response = await fetch(fileUrl);
-            // if (!response.ok) throw new Error("Failed to fetch PDF file");
-            blob = await response.blob();
-          } else {
-            // Assume fileUrl is already binary data
-            blob = new Blob([fileUrl], { type: "application/pdf" });
-          }
-  
-          const url = URL.createObjectURL(blob);
-          setSelectedPdfUrl(url);
-        } catch (error) {
-          console.error("Error loading PDF:", error);
-          alert(`Error loading PDF for ${key}`);
-        } finally {
-          setLoading(false);
-        }
+        // setSelectedPdfUrl(fileUrl);
+        setIframeSrc(`${fileUrl}#toolbar=0`);
+        setLoading(false);
       } else {
         setLoading(false);
         alert(`No PDF available for ${key}`);
       }
     }
   };
-  
 
   const handleLeftClick = () => {
     if (visibleYears > 0) {
@@ -149,11 +127,10 @@ export const UserCompanyDetails = React.memo(() => {
     return <Error />;
   }
 
-
   return (
-    <div className="min-h-96 lg:p-4  p-4 ">
+    <div className="min-h-96   px-4 ">
       <div className=" m-4 xs:mx-auto">
-        <div className="bg-gradient-to-r from-blue-200 via-gray-200 rounded-md xs:bg-slate-200 xs:p-1 lg:p-4 mb-6">
+        <div className="bg-blue-50 rounded-md xs:bg-slate-200 xs:p-1 lg:p-4 mb-6">
           {document && (
             <div>
               <div className="flex  sm:flex-row justify-between items-start sm:items-center">
@@ -174,7 +151,6 @@ export const UserCompanyDetails = React.memo(() => {
                         ? document.sector
                         : document.sector}
                     </h1>
-                  
                   </div>
                 </div>
               </div>
@@ -196,8 +172,8 @@ export const UserCompanyDetails = React.memo(() => {
                 onClick={() => handleYearClick(year)}
                 className={`px-4 py-2 rounded-md  ${
                   selectedYear === year
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-200"
+                    ? "bg-blue-500 text-black"
+                    : "bg-gray-300 text-gray-700 hover:bg-gray-200"
                 }`}
               >
                 {year}
@@ -216,86 +192,87 @@ export const UserCompanyDetails = React.memo(() => {
           {selectedFilteredDocWithYear.length > 0 ? (
             <>
               <div className="flex flex-wrap gap-2 mb-4">
-              
                 {pdfKeys.map((key) => (
                   <button
                     key={key}
                     onClick={() => handlePdfButtonClick(key)}
-                    className={`px-4 py-2  rounded-md ${
+                    className={`px-4 py-2 bg-gray-200 rounded-md ${
                       selectedPdfKey === key
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-200"
+                        ? "bg-blue-700 text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
                   >
                     {key}
                   </button>
                 ))}
               </div>
-              {selectedPdfUrl ? (
-        <>
-          {loading && (
-            <div className="w-full h-96 flex items-center justify-center bg-gradient-to-r from-blue-200 via-gray-200 to-white rounded-lg">
-              <svg
-                className="animate-spin h-8 w-8 text-blue-500"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-            </div> 
-          )}
-          <iframe
-            src={`${selectedPdfUrl}#toolbar=0`}
-            className={`w-full h-96 rounded-lg border ${
-              loading ? "hidden" : ""
-            }`}
-            title="PDF Viewer"
-            onLoadStart={() => setLoading(true)} // Start loading when iframe starts to load
-            onLoad={() => setLoading(false)} // Stop loading once iframe is loaded
-          ></iframe>
-        </>
-      ) : (
-        <div className="w-full h-96 flex flex-col items-center justify-center bg-gradient-to-r from-blue-200 via-gray-200 to-white rounded-lg">
-          {loading && (
-            <svg
-              className="animate-spin h-8 w-8 text-blue-500 mb-4"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-          )}
-          <p className="text-gray-700 text-lg font-semibold">
-            SELECT PDF
-          </p>
-        </div>
-      )}
+              {iframeSrc ? (
+                <>
+                  {loading && (
+                    <div className="w-full h-96 flex items-center justify-center bg-gradient-to-r from-blue-200 via-gray-200 to-white rounded-lg">
+                      <svg
+                        className="animate-spin h-8 w-8 text-blue-500"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                    </div>
+                  )}
+                  <iframe
+                    src={iframeSrc}
+                    className={`w-full h-96 rounded-lg border ${
+                      loading ? "hidden" : ""
+                    }`}
+                    title="PDF Viewer"
+                    onLoad={() => setLoading(false)} // Stop loading once iframe is loaded
+                    onLoadStart={() => setLoading(true)} // Start loading when iframe starts to load
+                    style={{ display: iframeSrc ? "block" : "none" }}
+                  ></iframe>
+                </>
+              ) : (
+                <div className="w-full h-96 flex flex-col items-center justify-center bg-gradient-to-r from-blue-200 via-gray-200 to-white rounded-lg">
+                  {loading && (
+                    <svg
+                      className="animate-spin h-8 w-8 text-blue-500 mb-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                  )}
+                  <p className="text-gray-700 text-lg font-semibold">
+                    SELECT PDF
+                  </p>
+                </div>
+              )
+              }
             </>
           ) : (
             <p className="text-center text-gray-600">Select a valid year.</p>

@@ -131,7 +131,7 @@ const UserHomePage: React.FC = () => {
         }`}
       >
         {currentBrands
-          .slice(0, showAll ? currentBrands.length : 10)
+          .slice(0, showAll ? currentBrands.length : 30)
           .map((brand, index) => (
             <button
               key={index}
@@ -147,7 +147,7 @@ const UserHomePage: React.FC = () => {
           ))}
       </div>
 
-      <div className="mt-6" hidden={currentBrands.length < 10}>
+      <div className="mt-6" hidden={currentBrands.length < 30}>
         {!showAll ? (
           <button
             onClick={handleShowMore}

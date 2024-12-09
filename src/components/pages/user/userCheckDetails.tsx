@@ -241,18 +241,32 @@ export const UserCompanyDetails = React.memo(() => {
                       </svg>
                     </div>
                   )}
-                  <div className="flex justify-center">
-                    <iframe
-                      src={iframeSrc}
-                      style={{
-                        width: "80%",
-                        height: "100vh",
-                        border: "none",
-                        pointerEvents: "auto",
-                      }}
-                      title="PDF Viewer"
-                    />
-                  </div>
+                <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+      <iframe
+        src={iframeSrc}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          pointerEvents: "auto", // Enable scrolling and zooming
+        }}
+        title="PDF Viewer"
+      />
+      {/* Transparent overlay to block interactions (freeze everything but scroll and zoom) */}
+      <div
+      className="hover-block"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "transparent",
+          pointerEvents: "none", // Block all interactions like clicking or downloading
+        }}
+      />
+    </div>
+                  
                 </>
               ) : (
                 <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">

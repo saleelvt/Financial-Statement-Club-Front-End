@@ -126,7 +126,7 @@ const UserHomePage: React.FC = () => {
       </div>
 
       <div
-        className={`grid grid-cols-2 px-12  shadow-sm  p-12  shadow-gray-50 border rounded-lg   sm:grid-cols-3 mt-12  md:grid-cols-4 lg:grid-cols-6 gap-4  text-center ${
+        className={`grid xs:grid-cols-4 lg:grid-cols-10 p-10  shadow-sm   shadow-gray-50 border rounded-lg   sm:grid-cols-6 mt-12  md:grid-cols-8 lg:grid-cols-6 gap-4  text-center ${
           language === "Arabic" ? "text-right" : ""
         }`}
       >

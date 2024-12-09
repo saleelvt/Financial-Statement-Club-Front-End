@@ -17,6 +17,7 @@ import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 
 
 
+
 export const AddDocument: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -58,6 +59,7 @@ export const AddDocument: React.FC = React.memo(() => {
     }));
   };
 
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -83,6 +85,7 @@ export const AddDocument: React.FC = React.memo(() => {
       });
     }
   };
+
 
   return (
     <div className="">

@@ -4,9 +4,9 @@
 export type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
 
 export interface FormField {
-  file: string | File | null;
- date: Date | null;
- year: string;
+  file?: string | File | null;
+ date?: Date | null;
+ year?: string;
 }
 
 export interface FormDataState {
@@ -27,6 +27,7 @@ export interface DocumentSliceEn  {
  sector: string;
  formData: FormDataState;
 }
+
 
 export interface DocumentSliceAr {
   _id?:string;

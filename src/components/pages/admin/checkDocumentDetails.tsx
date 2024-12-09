@@ -57,11 +57,18 @@ export const CheckDocumentDetails = () => {
     return <Error />;
   }
 
+
+
+
+
+
+  
+
   // Filter documents based on search term
   const filteredDocuments = documents.filter((doc) => {
     return ["Board", "Q1", "Q2", "Q3", "Q4", "S1", "Year"].some((key) => {
       const year = (doc.formData[key as keyof FormDataState])?.year;
-      return year.toString().includes(searchTerm); // check if searchTerm is included in year
+      return year ? year.toString().includes(searchTerm) : false;// check if searchTerm is included in year
     });
   });
 
@@ -171,18 +178,43 @@ export const CheckDocumentDetails = () => {
         </div>
 
         {/* PDF Viewer */}
-        {selectedPdf && (
-          <div className="mt-6 p-1 bg-gray-200 shadow-lg rounded-lg">
-            <h2 className="text-lg font-semibold mb-4">PDF Viewer</h2>
-            <iframe
-              src={`${selectedPdf}#toolbar=0`}
-              title="Document PDF"
-              width="100%"
-              height="500px"
-              className="rounded-lg shadow-lg"
-            ></iframe>
-          </div>
-        )}
+        {selectedPdf ? (
+  <div className="mt-6 p-1 bg-gray-200 shadow-lg rounded-lg">
+    <h2 className="text-lg font-semibold mb-4">PDF Viewer</h2>
+    <iframe
+      src={`${selectedPdf}#toolbar=0`}
+      title="Document PDF"
+      width="100%"
+      height="500px"
+      className="rounded-lg shadow-lg"
+    ></iframe>
+  </div>
+) : (
+  <div className="mt-6 p-1 bg-gray-200 shadow-lg rounded-lg flex flex-col items-center justify-center h-[500px]">
+    <svg
+      className="animate-spin h-8 w-8 text-blue-500 mb-4"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+    <p className="text-gray-700 text-lg font-semibold">Loading PDF...</p>
+  </div>
+)}
+
       </div>
     </div>
   );

@@ -118,7 +118,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
               />
             </div>
           </div>
-
+  
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="space-y-2">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">

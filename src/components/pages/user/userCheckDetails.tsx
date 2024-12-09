@@ -48,9 +48,15 @@ export const UserCompanyDetails = React.memo(() => {
       const fileUrl =
         document.formData[key as keyof typeof document.formData]?.file;
       if (fileUrl) {
+        if (typeof fileUrl === "string") {
+          const encodedUrl = encodeURIComponent(fileUrl);
+          const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true`;
+          setIframeSrc(`${googleViewerUrl}#toolbar=0`);
+          setLoading(false);
+        } else {
+          console.error("fileUrl is not a valid string:", fileUrl);
+        }
         // setSelectedPdfUrl(fileUrl);
-        setIframeSrc(`${fileUrl}#toolbar=0`);
-        setLoading(false);
       } else {
         setLoading(false);
         alert(`No PDF available for ${key}`);
@@ -134,7 +140,6 @@ export const UserCompanyDetails = React.memo(() => {
           {document && (
             <div>
               <div className="flex  sm:flex-row justify-between items-start xs:items-center sm:items-center">
-               
                 <div className=" ">
                   <h1 className="  text-2xl font-normal text-gray-800">
                     {isDocumentEn(document)
@@ -154,7 +159,9 @@ export const UserCompanyDetails = React.memo(() => {
                     </h1>
                   </div>
                 </div>
-                <button className="bg-gray-500 xs:hidden text-white px-4 rounded-md py-2 ">Back</button>
+                <button className="bg-gray-500 xs:hidden text-white px-4 rounded-md py-2 ">
+                  Back
+                </button>
               </div>
             </div>
           )}
@@ -234,16 +241,14 @@ export const UserCompanyDetails = React.memo(() => {
                       </svg>
                     </div>
                   )}
+                  <div className="flex justify-center">
                   <iframe
                     src={iframeSrc}
-                    className={`w-full h-96 rounded-lg border ${
-                      loading ? "hidden" : ""
-                    }`}
+                    style={{ width: "80%", height: "100vh", border: "none",pointerEvents: "none" }}
                     title="PDF Viewer"
-                    onLoad={() => setLoading(false)} // Stop loading once iframe is loaded
-                    onLoadStart={() => setLoading(true)} // Start loading when iframe starts to load
-                    style={{ display: iframeSrc ? "block" : "none" }}
-                  ></iframe>
+                  />
+
+                  </div>
                 </>
               ) : (
                 <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">
@@ -273,8 +278,7 @@ export const UserCompanyDetails = React.memo(() => {
                     SELECT PDF
                   </p>
                 </div>
-              )
-              }
+              )}
             </>
           ) : (
             <p className="text-center text-gray-600">Select a valid year.</p>

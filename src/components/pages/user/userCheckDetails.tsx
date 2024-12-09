@@ -241,7 +241,8 @@ export const UserCompanyDetails = React.memo(() => {
                       </svg>
                     </div>
                   )}
-                <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+                  <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+      {/* Embed the Google Docs Viewer */}
       <iframe
         src={iframeSrc}
         style={{
@@ -252,22 +253,20 @@ export const UserCompanyDetails = React.memo(() => {
         }}
         title="PDF Viewer"
       />
-      {/* Transparent overlay to block interactions (freeze everything but scroll and zoom) */}
+      {/* Targeted Overlay for Blocking the External Controls (top-left) */}
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          top: "0px", // Adjust the position based on your external buttons location
+          left: "0px", // Adjust the position based on your external buttons location
+          width: "50px", // Adjust the width based on the area you want to block
+          height: "50px", // Adjust the height based on the area you want to block
           background: "transparent",
-          pointerEvents: "auto", // Allow scrolling and zooming
-          zIndex: 9999, // Make sure it's on top of the iframe
+          pointerEvents: "auto", // Block interaction with the external buttons
+          zIndex: 9999, // Ensure it is on top of the iframe
         }}
-        className="hover-block"
       />
     </div>
-                  
                 </>
               ) : (
                 <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">

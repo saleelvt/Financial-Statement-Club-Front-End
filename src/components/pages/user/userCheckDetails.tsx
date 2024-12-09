@@ -50,7 +50,7 @@ export const UserCompanyDetails = React.memo(() => {
       if (fileUrl) {
         if (typeof fileUrl === "string") {
           const encodedUrl = encodeURIComponent(fileUrl);
-          const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true`;
+          const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0`;
           setIframeSrc(`${googleViewerUrl}#toolbar=0`);
           setLoading(false);
         } else {

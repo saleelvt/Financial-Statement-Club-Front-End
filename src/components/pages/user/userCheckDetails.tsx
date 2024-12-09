@@ -254,7 +254,6 @@ export const UserCompanyDetails = React.memo(() => {
       />
       {/* Transparent overlay to block interactions (freeze everything but scroll and zoom) */}
       <div
-      className="hover-block"
         style={{
           position: "absolute",
           top: 0,

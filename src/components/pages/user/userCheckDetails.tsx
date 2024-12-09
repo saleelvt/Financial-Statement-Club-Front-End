@@ -261,8 +261,10 @@ export const UserCompanyDetails = React.memo(() => {
           right: 0,
           bottom: 0,
           background: "transparent",
-          pointerEvents: "none", // Block all interactions like clicking or downloading
+          pointerEvents: "auto", // Allow scrolling and zooming
+          zIndex: 9999, // Make sure it's on top of the iframe
         }}
+        className="hover-block"
       />
     </div>
                   

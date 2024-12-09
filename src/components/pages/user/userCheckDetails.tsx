@@ -129,39 +129,41 @@ export const UserCompanyDetails = React.memo(() => {
 
   return (
     <div className="min-h-96   px-4 ">
-      <div className=" m-4 xs:mx-auto">
-        <div className="bg-blue-50 rounded-md xs:bg-slate-200 xs:p-1 lg:p-4 mb-6">
+      <div className=" m-1 xs:mx-auto">
+        <div className=" rounded-md border xs:p-1 lg:p-2 mb-6">
           {document && (
             <div>
-              <div className="flex  sm:flex-row justify-between items-start sm:items-center">
-                <div>
-                  <h1 className="text-2xl sm:text-4xl font-bold font-serif text-gray-800">
+              <div className="flex  sm:flex-row justify-between items-start xs:items-center sm:items-center">
+               
+                <div className=" ">
+                  <h1 className="  text-2xl font-normal text-gray-800">
                     {isDocumentEn(document)
                       ? document.fullNameEn
                       : document.fullNameAr}
                   </h1>
-                  <h2 className="text-xs font-serif text-gray-600">
+                  <h2 className=" text-2xl font-normal text-gray-800 ">
                     {isDocumentEn(document)
                       ? document.nickNameEn
                       : document.nickNameAr}
                   </h2>
                   <div className=" flex gap-12 items-center ">
-                    <h1 className="text-xl font-bold text-gray-800">
+                    <h1 className="text-xl font-normal text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
                     </h1>
                   </div>
                 </div>
+                <button className="bg-gray-500 xs:hidden text-white px-4 rounded-md py-2 ">Back</button>
               </div>
             </div>
           )}
         </div>
 
-        <div className="flex justify-center gap-4 mb-4">
+        <div className="flex justify-start gap-4 mb-4">
           <button
             onClick={handleLeftClick}
-            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+            className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
           >
             {"<"}
           </button>
@@ -170,9 +172,9 @@ export const UserCompanyDetails = React.memo(() => {
               <button
                 key={year}
                 onClick={() => handleYearClick(year)}
-                className={`px-4 py-2 rounded-md  ${
+                className={` text-xs px-2 -1 rounded-md  ${
                   selectedYear === year
-                    ? "bg-blue-500 text-black"
+                    ? "bg-gray-600 text-white text-black"
                     : "bg-gray-300 text-gray-700 hover:bg-gray-200"
                 }`}
               >
@@ -182,7 +184,7 @@ export const UserCompanyDetails = React.memo(() => {
           </div>
           <button
             onClick={handleRightClick}
-            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+            className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
           >
             {">"}
           </button>
@@ -191,14 +193,14 @@ export const UserCompanyDetails = React.memo(() => {
         <div className="bg-white lg:p-6 rounded-lg shadow-lg">
           {selectedFilteredDocWithYear.length > 0 ? (
             <>
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-1 mb-4">
                 {pdfKeys.map((key) => (
                   <button
                     key={key}
                     onClick={() => handlePdfButtonClick(key)}
-                    className={`px-4 py-2 bg-gray-200 rounded-md ${
+                    className={`px-2 py-1 bg-gray-200 rounded-md ${
                       selectedPdfKey === key
-                        ? "bg-blue-700 text-white"
+                        ? "bg-gray-600 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
                   >
@@ -244,7 +246,7 @@ export const UserCompanyDetails = React.memo(() => {
                   ></iframe>
                 </>
               ) : (
-                <div className="w-full h-96 flex flex-col items-center justify-center bg-gradient-to-r from-blue-200 via-gray-200 to-white rounded-lg">
+                <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">
                   {loading && (
                     <svg
                       className="animate-spin h-8 w-8 text-blue-500 mb-4"

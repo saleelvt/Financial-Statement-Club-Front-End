@@ -151,7 +151,7 @@ export const UserCompanyDetails = React.memo(() => {
 
 
   return (
-    <div className="min-h-96   px-4 ">
+    <div className="min-h-96 lg:p-4  p-4 ">
       <div className=" m-4 xs:mx-auto">
         <div className="bg-gradient-to-r from-blue-200 via-gray-200 rounded-md xs:bg-slate-200 xs:p-1 lg:p-4 mb-6">
           {document && (

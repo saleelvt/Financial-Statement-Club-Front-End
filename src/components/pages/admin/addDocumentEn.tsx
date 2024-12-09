@@ -70,7 +70,6 @@ export const AddDocument: React.FC = React.memo(() => {
         sector,
         formData
       }
-
      await dispatch(addDocumentEnglish(payloadData)).unwrap();
       toast.success("Document successfully added");
     } catch (error: any) {

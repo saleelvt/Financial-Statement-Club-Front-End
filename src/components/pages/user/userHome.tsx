@@ -9,8 +9,11 @@ import { setEnglishNames } from "../../../functions/setEnglishNames";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
+import { GrLanguage } from "react-icons/gr";
 import "../../../css/userHome.css";
 import { Error } from "../Error";
+
+
 import {
   DocumentSliceAr,
   DocumentSliceEn,
@@ -109,7 +112,7 @@ const UserHomePage: React.FC = () => {
   }
   return (
     <div
-      style={{ backgroundColor: "#444444" }}
+      style={{ backgroundColor: "#666666" }}
       className=" text-white min-h-screen flex flex-col items-center p-4"
     >
       <div className="flex mt-12 justify-end w-3/4">
@@ -119,14 +122,14 @@ const UserHomePage: React.FC = () => {
             background:
               "linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(128, 128, 128, 0.8))",
           }}
-          className="py-1 px-2 items-center bg-opacity-80 text-black text-xl font- rounded-md hover:border hover:border-gray-300 hover:bg-slate-200"
+          className="py-1  px-2 items-center bg-opacity-80 text-black text-xl font- rounded-md hover:border hover:border-gray-300 hover:bg-slate-200"
         >
-          {userLanguage === "English" ? "عربي" : "English"}
+         <GrLanguage />
         </button>
       </div>
 
       <div
-        className={`grid xs:grid-cols-4 lg:grid-cols-10 p-10  shadow-sm   shadow-gray-50 border rounded-lg   sm:grid-cols-6 mt-12  md:grid-cols-8 lg:grid-cols-6 gap-4  text-center ${
+        className={`grid xs:grid-cols-4 lg:grid-cols-10 p-10  shadow-sm    rounded-lg   sm:grid-cols-6 mt-12  md:grid-cols-8 lg:grid-cols-6 gap-4  text-center ${
           language === "Arabic" ? "text-right" : ""
         }`}
       >
@@ -136,7 +139,7 @@ const UserHomePage: React.FC = () => {
             <button
               key={index}
               onClick={() => handleBrandClick(brand.nickNameEn)}
-              className={` font-bold hover:border focus:ring-2 transition duration-300 transform hover:scale-105 hover:border-gray-200 hover:bg-gray-300 hover:text-black rounded-sm ${
+              className={` font-bold hover:border-b-2 hover:border-red-600 focus:ring-2 px-2 py-0.5 transition duration-300 transform hover:scale-105   hover:text-red-600 rounded-sm ${
                 selectedBrand === brand.fullNameEn
                   ? "bg-gray-200 text-black font-medium"
                   : ""

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState, } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   DocumentSliceEn,
   DocumentSliceAr,
@@ -13,7 +13,7 @@ import { config } from "../../../config/constants";
 import "../../../css/YearSlider.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
-
+import { FaArrowCircleLeft } from "react-icons/fa";
 export const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
     (state: RootState) => state.userLanguage
@@ -34,8 +34,18 @@ export const UserCompanyDetails = React.memo(() => {
   const [selectedYear, setSelectedYear] = useState<string>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
   const [iframeSrc, setIframeSrc] = useState<string>("");
+  const navigate = useNavigate();
 
-  const pdfKeys: (keyof FormDataState)[] = [ "Q1", "Q2", "Q3","Q4","S1", "Board", "Year",];
+
+  const pdfKeys: (keyof FormDataState)[] = [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "S1",
+    "Board",
+    "Year",
+  ];
 
   const handleYearClick = (year: string) => {
     setSelectedYear(year);
@@ -50,7 +60,8 @@ export const UserCompanyDetails = React.memo(() => {
     setSelectedPdfKey(key);
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
-      const fileUrl =document.formData[key as keyof typeof document.formData]?.file;
+      const fileUrl =
+        document.formData[key as keyof typeof document.formData]?.file;
       if (fileUrl) {
         if (typeof fileUrl === "string") {
           const encodedUrl = encodeURIComponent(fileUrl);
@@ -79,8 +90,6 @@ export const UserCompanyDetails = React.memo(() => {
       setVisibleYears(visibleYears + 1);
     }
   };
-
-  
 
   const isDocumentEn = (
     document: DocumentSliceEn | DocumentSliceAr
@@ -141,43 +150,59 @@ export const UserCompanyDetails = React.memo(() => {
   }
 
   return (
-    <div className="min-h-96   px-4 ">
-      <div className=" xs:mx-auto">
+    <div
+      dir={userLanguage === "English" ? "ltr" : "rtl"}
+      className="min-h-96  text-2xl font-semibold  flex  "
+    >
+      <div className="   w-[35%]">
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className={`rounded-md border xs:p-1 lg:p-2 mb-1 `}
+          className={`rounded-md  flex
+              xs:p-1 lg:p-2 mb-1 `}
         >
+          <div className=" flex  items-center">
+            <FaArrowCircleLeft
+              className="text-3xl"
+              onClick={() => {
+                navigate(-1);
+              }}
+            />
+          </div>
+
           {document && (
             <div>
-              <div className="flex  sm:flex-row justify-between items-start xs:items-center sm:items-center">
-                <div className=" ">
-                  <h1 className="  text-2xl font-normal text-gray-800">
-                    {isDocumentEn(document)
-                      ? document.fullNameEn
-                      : document.fullNameAr}
-                  </h1>
-                  <h2 className=" text-2xl font-normal text-gray-800 ">
-                    {isDocumentEn(document)
-                      ? document.nickNameEn
-                      : document.nickNameAr}
-                  </h2>
-                  <div className=" flex gap-12 items-center ">
-                    <h1 className="text-xl font-normal text-gray-800">
+              <div className="flex  sm:flex-row     w-2/3 items-start ">
+                <div className="ml-4 ">
+                  <div className="flex gap-2 text-2xl font-semibold ">
+                    <h1 className="   text-gray-800">
+                      {isDocumentEn(document)
+                        ? document.fullNameEn
+                        : document.fullNameAr}
+                    </h1>
+                    <h2 className="    text-gray-800 ">
+                      {"(" +
+                        (isDocumentEn(document)
+                          ? document.nickNameEn
+                          : document.nickNameAr) +
+                        ")"}
+                    </h2>
+                  </div>
+                  <div className=" flex gap-12  lg:w-96 items-center ">
+                    <h1 className="  text-2xl  text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
                     </h1>
                   </div>
                 </div>
-                <button className="bg-gray-500  lg:shadow-sm  text-white px-4 rounded-md py-2 ">
-                  Back 
-                </button>
-
               </div>
             </div>
           )}
         </div>
-        <div  dir={userLanguage === "English" ? "ltr" : "rtl"} className="flex justify-start gap-4 text-xs mt-2  ">
+        <div
+          dir={userLanguage === "English" ? "ltr" : "rtl"}
+          className="flex lg:px-12  justify-start gap-4 text-xs mt-2  "
+        >
           <button
             onClick={handleLeftClick}
             className=" bg-gray-200 rounded-full p-1 px-1 ml-2 text-xs  hover:bg-gray-300"
@@ -206,10 +231,13 @@ export const UserCompanyDetails = React.memo(() => {
             {">"}
           </button>
         </div>
-        <div  dir={userLanguage === "English" ? "ltr" : "rtl"}  className="bg-white lg:p-6 rounded-lg   xs:text-xs shadow-lg">
+        <div
+          dir={userLanguage === "English" ? "ltr" : "rtl"}
+          className="  lg:px-14 mt-1 rounded-lg    xs:text-xs "
+        >
           {selectedFilteredDocWithYear.length > 0 ? (
             <>
-              <div className="flex flex-wrap gap-1">
+              <div className="flex flex-wrap gap-3">
                 {pdfKeys.map((key) => {
                   const isFileAvailable = documents.some(
                     (doc) => doc.formData[key].file !== null
@@ -232,65 +260,69 @@ export const UserCompanyDetails = React.memo(() => {
                   );
                 })}
               </div>
-              {iframeSrc ? (
-                <>
-                  <div
-                    className="   border border-gray-200 shadow-md rounded-md p-12 mt-2"
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      height: "100vh",
-                    }}
-                  >
-                    {/* Embed the Google Docs Viewer */}
-                   
-                    <iframe
-                      src={iframeSrc}
-                      
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        border: "none",
-                        pointerEvents: "auto", // Enable scrolling and zooming
-                      }}
-                      title="PDF Viewer"
-                    />
-                  </div>
-                </>
-              ) : (
-                <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">
-                  {pdfLoading  && (
-                    <svg
-                      className="animate-spin h-8 w-8 text-blue-500 mb-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                  )}
-                  <p className="text-gray-700 text-lg font-semibold">
-                    SELECT PDF
-                  </p>
-                </div>
-              )}
             </>
           ) : (
-            <p className="text-center text-gray-600">Select a valid year.</p>
+            <p className="text-center text-gray-600"></p>
           )}
         </div>
+      </div>
+      <div className="w-[100%]">
+        {iframeSrc ? (
+          <>
+            <div
+              className=" rounded-md p-3 mt-2"
+              style={{
+                position: "relative",
+                width: "100%",
+                height: "100vh",
+              }}
+            >
+              {/* Embed the Google Docs Viewer */}
+
+              <iframe
+                src={iframeSrc}
+                style={
+                  {
+                    width: "100%",
+                    height: "100vh", // Full height of the viewport
+                    border: "none",
+                    pointerEvents: "auto", // Allow interaction with the iframe
+                    overflow: "hidden", // Hide scrollbar for the iframe
+                    "scrollbar-width": "none", // Hide scrollbar for Firefox
+                    "-ms-overflow-style": "none", // Hide scrollbar for IE and Edge
+                  } as React.CSSProperties
+                }
+                title="PDF Viewer"
+                frameBorder="0"
+              />
+            </div>
+          </>
+        ) : (
+          <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">
+            {pdfLoading && (
+              <svg
+                className="animate-spin h-8 w-8 text-blue-500 mb-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

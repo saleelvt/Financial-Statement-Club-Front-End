@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, } from "react";
 import { useLocation } from "react-router-dom";
 import {
   DocumentSliceEn,
@@ -21,6 +21,7 @@ export const UserCompanyDetails = React.memo(() => {
   const [documents, setDocuments] = useState<
     (DocumentSliceEn | DocumentSliceAr)[]
   >([]);
+  const [pdfLoading, setPdfLoading] = useState(false);
   const [document, setDocument] = useState<DocumentSliceEn | DocumentSliceAr>();
   const location = useLocation();
   const { brandNickName, language } = location.state || {};
@@ -45,13 +46,11 @@ export const UserCompanyDetails = React.memo(() => {
   };
 
   const handlePdfButtonClick = (key: string) => {
-    setLoading(true);
-    
+    setPdfLoading(true);
     setSelectedPdfKey(key);
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
-      const fileUrl =
-        document.formData[key as keyof typeof document.formData]?.file;
+      const fileUrl =document.formData[key as keyof typeof document.formData]?.file;
       if (fileUrl) {
         if (typeof fileUrl === "string") {
           const encodedUrl = encodeURIComponent(fileUrl);
@@ -236,7 +235,7 @@ export const UserCompanyDetails = React.memo(() => {
               {iframeSrc ? (
                 <>
                   <div
-                    className="mt-4 border border-gray-50 p-4"
+                    className="   border border-gray-200 shadow-md rounded-md p-12 mt-2"
                     style={{
                       position: "relative",
                       width: "100%",
@@ -244,6 +243,7 @@ export const UserCompanyDetails = React.memo(() => {
                     }}
                   >
                     {/* Embed the Google Docs Viewer */}
+                   
                     <iframe
                       src={iframeSrc}
                       
@@ -259,7 +259,7 @@ export const UserCompanyDetails = React.memo(() => {
                 </>
               ) : (
                 <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">
-                  {loading && (
+                  {pdfLoading  && (
                     <svg
                       className="animate-spin h-8 w-8 text-blue-500 mb-4"
                       xmlns="http://www.w3.org/2000/svg"

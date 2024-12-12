@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 import { Loading } from "../Loading";
 import { Error } from "../Error";
+import { FaArrowCircleLeft } from "react-icons/fa";
 import {
   DocumentSliceAr,
   DocumentSliceEn,
@@ -101,16 +102,17 @@ export const DocumentList: React.FC = () => {
       <div className="flex justify-center items-center py-3 px-2 sm:px-18 lg:px-12">
         <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-6xl border border-gray-300">
           <div className="flex flex-wrap justify-between items-center mb-6">
-            <button
+            <FaArrowCircleLeft className="text-3xl" onClick={() => navigate("/home")} />
+            {/* <button
               onClick={() => navigate("/home")}
               className="px-2 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
             >
               Back
-            </button>
+            </button> */}
 
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-700">
+            <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
               {language === "Arabic" ? "قائمة المستندات " : "Document List"}
-            </h1>
+            </h4>
           </div>
           <div className="overflow-x-auto">
             <table className="table-auto w-full border-collapse border border-gray-300 text-left">
@@ -174,8 +176,8 @@ export const DocumentList: React.FC = () => {
                         className="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 text-xs sm:text-sm"
                       >
                         {language === "Arabic"
-                          ? "التحقق من التفاصيل"
-                          : "CheckDetails"}
+                          ? " التفاصيل"
+                          : "Details"}
                       </button>
                     </td>
                   </tr>

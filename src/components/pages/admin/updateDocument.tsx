@@ -16,10 +16,6 @@ import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 
-
-
-
-
 export const UpdateDocument: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -151,6 +147,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
         sector,
         formData
       }
+
       console.log("my data is",adminCredentials)
     const response =   await dispatch(UpdateDocumentEnglish({id,language,adminCredentials})).unwrap();
     console.log("this is my last console log!!!!!!!!!!!!!!!!! ", response.data);

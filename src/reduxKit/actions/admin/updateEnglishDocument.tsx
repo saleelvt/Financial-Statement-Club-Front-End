@@ -22,12 +22,10 @@ export const UpdateDocumentEnglish = createAsyncThunk(
     try {
 
         console.log("adminCredentials", adminCredentials);
-        
       const formData = new FormData();
       for (const [key, value] of Object.entries(
         adminCredentials?.formData
       )) {
-
         if (
           value &&
           typeof value === "object" &&
@@ -39,7 +37,6 @@ export const UpdateDocumentEnglish = createAsyncThunk(
           } else {
             console.warn(`Invalid file type for key: ${key}`);
           }
-          
           if (value.date instanceof Date) {
             formData.append(`${key}Date`, value.date.toISOString());
           } else {
@@ -55,6 +52,7 @@ export const UpdateDocumentEnglish = createAsyncThunk(
         }
       }
 
+      
       // Append other data
       formData.append("fullNameEn", adminCredentials?.fullNameEn);
       formData.append("nickNameEn", adminCredentials?.nickNameEn);

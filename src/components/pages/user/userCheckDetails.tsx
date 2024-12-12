@@ -174,25 +174,25 @@ export const UserCompanyDetails = React.memo(() => {
               <div className="flex  sm:flex-row     w-2/3 items-start ">
                 <div className="ml-4 ">
                   <div className="flex gap-2 text-2xl font-semibold ">
-                    <h1 className="   text-gray-800">
+                    <h4 className="   text-gray-800">
                       {isDocumentEn(document)
                         ? document.fullNameEn
                         : document.fullNameAr}
-                    </h1>
-                    <h2 className="    text-gray-800 ">
+                    </h4>
+                    <h4 className="    text-gray-800 ">
                       {"(" +
                         (isDocumentEn(document)
                           ? document.nickNameEn
                           : document.nickNameAr) +
                         ")"}
-                    </h2>
+                    </h4>
                   </div>
                   <div className=" flex gap-12  lg:w-96 items-center ">
-                    <h1 className="  text-2xl  text-gray-800">
+                    <h4 className="  text-2xl  text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
-                    </h1>
+                    </h4>
                   </div>
                 </div>
               </div>

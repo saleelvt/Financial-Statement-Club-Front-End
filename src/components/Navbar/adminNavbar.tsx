@@ -14,7 +14,8 @@ import { adminLogout } from "../../reduxKit/actions/auth/authAction";
 import { useSelector } from "react-redux";
 import { RootState } from "../../reduxKit/store";
 import { AdminLanguageChange } from "../../reduxKit/actions/admin/adminLanguage";
-// import { GrLanguage } from "react-icons/gr";
+import { GrLanguage } from "react-icons/gr";
+<GrLanguage />
 
 export const AdminNavbar: React.FC = () => {
   const { adminLanguage } = useSelector(
@@ -63,18 +64,15 @@ export const AdminNavbar: React.FC = () => {
     <nav className="p-3">
       <div className="container py-2 mx-auto gap-3 flex justify-between items-center">
         <div className="w-full flex items-center justify-between ">
-          <h1 className=" font-semibold xs:font-bold lg:text-4xl md:text-2xl sm:1xl xs:text-2xl ">
+          <h4 className=" font-semibold xs:font-bold lg:text-2xl md:text-2xl sm:1xl xs:text-2xl ">
             Financial statement club{" "}
-          </h1>
+          </h4>
           <button
           onClick={toggleLanguage}
-          style={{
-            background:
-              "linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(128, 128, 128, 0.8))",
-          }}
-          className="py-1 px-2  items-center    bg-opacity-80 text-black text-xl font- rounded-md hover:border hover:border-gray-300 hover:bg-slate-200"
+          
+          className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
         >
-          {adminLanguage === "English" ? "عربي" : "English"}
+         <GrLanguage />
         </button>  
         </div>
         <div className="lg:hidden">

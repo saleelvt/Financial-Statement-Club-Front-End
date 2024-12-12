@@ -46,6 +46,7 @@ export const UserCompanyDetails = React.memo(() => {
 
   const handlePdfButtonClick = (key: string) => {
     setLoading(true);
+    
     setSelectedPdfKey(key);
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
@@ -169,8 +170,8 @@ export const UserCompanyDetails = React.memo(() => {
                     </h1>
                   </div>
                 </div>
-                <button className="bg-gray-500 xs:hidden text-white px-4 rounded-md py-2 ">
-                  Back
+                <button className="bg-gray-500  lg:shadow-sm  text-white px-4 rounded-md py-2 ">
+                  Back 
                 </button>
 
               </div>
@@ -245,6 +246,7 @@ export const UserCompanyDetails = React.memo(() => {
                     {/* Embed the Google Docs Viewer */}
                     <iframe
                       src={iframeSrc}
+                      
                       style={{
                         width: "100%",
                         height: "100%",

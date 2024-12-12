@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation, useNavigate } from "react-router-dom";
-import { AdminNavbar } from "../../Navbar/adminNavbar";
+
 import { useEffect, useState } from "react";
 import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";

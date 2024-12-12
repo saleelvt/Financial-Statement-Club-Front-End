@@ -4,14 +4,20 @@ import { useLocation } from "react-router-dom";
 import {
   DocumentSliceEn,
   DocumentSliceAr,
+  FormDataState,
 } from "../../../interfaces/admin/addDoument";
 import { Loading } from "../Loading";
 import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import "../../../css/YearSlider.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../reduxKit/store";
 
 export const UserCompanyDetails = React.memo(() => {
+  const { userLanguage } = useSelector(
+    (state: RootState) => state.userLanguage
+  );
   const [documents, setDocuments] = useState<
     (DocumentSliceEn | DocumentSliceAr)[]
   >([]);
@@ -26,10 +32,9 @@ export const UserCompanyDetails = React.memo(() => {
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
-  // const [selectedPdfUrl, setSelectedPdfUrl] = useState<string | File>("");
   const [iframeSrc, setIframeSrc] = useState<string>("");
 
-  const pdfKeys = ["Q1", "Q2", "Q3", "Q4", "S1", "Board", "Year"];
+  const pdfKeys: (keyof FormDataState)[] = [ "Q1", "Q2", "Q3","Q4","S1", "Board", "Year",];
 
   const handleYearClick = (year: string) => {
     setSelectedYear(year);
@@ -42,7 +47,6 @@ export const UserCompanyDetails = React.memo(() => {
   const handlePdfButtonClick = (key: string) => {
     setLoading(true);
     setSelectedPdfKey(key);
-
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
       const fileUrl =
@@ -50,7 +54,7 @@ export const UserCompanyDetails = React.memo(() => {
       if (fileUrl) {
         if (typeof fileUrl === "string") {
           const encodedUrl = encodeURIComponent(fileUrl);
-          const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0`;
+          const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
           setIframeSrc(`${googleViewerUrl}#toolbar=0`);
           setLoading(false);
         } else {
@@ -75,6 +79,8 @@ export const UserCompanyDetails = React.memo(() => {
       setVisibleYears(visibleYears + 1);
     }
   };
+
+  
 
   const isDocumentEn = (
     document: DocumentSliceEn | DocumentSliceAr
@@ -112,6 +118,7 @@ export const UserCompanyDetails = React.memo(() => {
           `/admin/getDocumetnByNickName?${params}`,
           config
         );
+
         if (response.status === 200 && response.data?.data) {
           await setDocuments(response.data.data);
         } else {
@@ -135,8 +142,11 @@ export const UserCompanyDetails = React.memo(() => {
 
   return (
     <div className="min-h-96   px-4 ">
-      <div className=" m-1 xs:mx-auto">
-        <div className=" rounded-md border xs:p-1 lg:p-2 mb-6">
+      <div className=" xs:mx-auto">
+        <div
+          dir={userLanguage === "English" ? "ltr" : "rtl"}
+          className={`rounded-md border xs:p-1 lg:p-2 mb-1 `}
+        >
           {document && (
             <div>
               <div className="flex  sm:flex-row justify-between items-start xs:items-center sm:items-center">
@@ -162,19 +172,19 @@ export const UserCompanyDetails = React.memo(() => {
                 <button className="bg-gray-500 xs:hidden text-white px-4 rounded-md py-2 ">
                   Back
                 </button>
+
               </div>
             </div>
           )}
         </div>
-
-        <div className="flex justify-start gap-4 mb-4">
+        <div  dir={userLanguage === "English" ? "ltr" : "rtl"} className="flex justify-start gap-4 text-xs mt-2  ">
           <button
             onClick={handleLeftClick}
-            className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
+            className=" bg-gray-200 rounded-full p-1 px-1 ml-2 text-xs  hover:bg-gray-300"
           >
             {"<"}
           </button>
-          <div className="flex overflow-x-auto gap-2">
+          <div className="flex overflow-x-auto gap-2 ">
             {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
                 key={year}
@@ -196,77 +206,54 @@ export const UserCompanyDetails = React.memo(() => {
             {">"}
           </button>
         </div>
-
-        <div className="bg-white lg:p-6 rounded-lg shadow-lg">
+        <div  dir={userLanguage === "English" ? "ltr" : "rtl"}  className="bg-white lg:p-6 rounded-lg   xs:text-xs shadow-lg">
           {selectedFilteredDocWithYear.length > 0 ? (
             <>
-              <div className="flex flex-wrap gap-1 mb-4">
-                {pdfKeys.map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => handlePdfButtonClick(key)}
-                    className={`px-2 py-1 bg-gray-200 rounded-md ${
-                      selectedPdfKey === key
-                        ? "bg-gray-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    {key}
-                  </button>
-                ))}
+              <div className="flex flex-wrap gap-1">
+                {pdfKeys.map((key) => {
+                  const isFileAvailable = documents.some(
+                    (doc) => doc.formData[key].file !== null
+                  );
+
+                  return (
+                    isFileAvailable && (
+                      <button
+                        key={key}
+                        onClick={() => handlePdfButtonClick(key)}
+                        className={`px-2 py-1 bg-gray-200 rounded-md  ${
+                          selectedPdfKey === key
+                            ? "bg-gray-600 text-white"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
+                      >
+                        {key}
+                      </button>
+                    )
+                  );
+                })}
               </div>
               {iframeSrc ? (
                 <>
-                  {loading && (
-                    <div className="w-full h-96 flex items-center justify-center bg-gradient-to-r from-blue-200 via-gray-200 to-white rounded-lg">
-                      <svg
-                        className="animate-spin h-8 w-8 text-blue-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                    </div>
-                  )}
-                  <div style={{ position: "relative", width: "100%", height: "100vh" }}>
-      {/* Embed the Google Docs Viewer */}
-      <iframe
-        src={iframeSrc}
-        style={{
-          width: "100%",
-          height: "100%",
-          border: "none",
-          pointerEvents: "auto", // Enable scrolling and zooming
-        }}
-        title="PDF Viewer"
-      />
-      {/* Targeted Overlay for Blocking the External Controls (top-left) */}
-      <div
-        style={{
-          position: "absolute",
-          top: "0px", // Adjust the position based on your external buttons location
-          left: "0px", // Adjust the position based on your external buttons location
-          width: "50px", // Adjust the width based on the area you want to block
-          height: "50px", // Adjust the height based on the area you want to block
-          background: "transparent",
-          pointerEvents: "auto", // Block interaction with the external buttons
-          zIndex: 9999, // Ensure it is on top of the iframe
-        }}
-      />
-    </div>
+                  <div
+                    className="mt-4 border border-gray-50 p-4"
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: "100vh",
+                    }}
+                  >
+                    {/* Embed the Google Docs Viewer */}
+                    <iframe
+                      src={iframeSrc}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        border: "none",
+                        pointerEvents: "auto", // Enable scrolling and zooming
+                      }}
+                      title="PDF Viewer"
+                    />
+                  </div>
                 </>
               ) : (
                 <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">

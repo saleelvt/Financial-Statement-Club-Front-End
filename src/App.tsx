@@ -5,12 +5,13 @@ import { Toaster } from 'react-hot-toast';
 import { Loading } from './components/pages/Loading';
 import { CheckDocumentDetails } from './components/pages/admin/checkDocumentDetails';
 import { UserCompanyDetails } from './components/pages/user/userCheckDetails';
-
+import { UpdateDocumentAr } from './components/pages/admin/updateDocumentAr';
 const UserHomePage = lazy(() => import('./components/pages/user/userHome'));
 import { DocumentList } from './components/pages/admin/documentList';
 import { AdminLogin } from './components/forms/admin/login';
 import AdminHomePage from './components/pages/admin/adminDashBoard';
 import { AddDocument } from './components/pages/admin/addDocumentEn';
+import {UpdateDocument} from './components/pages/admin/updateDocument';
 import { useSelector } from 'react-redux';
 import { RootState } from './reduxKit/store';
 
@@ -31,6 +32,8 @@ export const App: React.FC = React.memo(() => {
           <Route path="/home" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
           <Route path="/addDocument" element={isLogged &&  role === 'admin' ? <AddDocument /> : <AdminLogin />}/>
           <Route path="/documentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
+          <Route path="/updateDocument" element={isLogged &&  role === 'admin' ? <UpdateDocument /> : <AdminLogin />} />
+          <Route path="/updateDocumentAr" element={isLogged &&  role === 'admin' ? <UpdateDocumentAr /> : <AdminLogin />} />
           <Route path="/documentDetails" element={<CheckDocumentDetails /> } />
           <Route path="/companyDetails" element={ <UserCompanyDetails /> } />
         </Routes>

@@ -1,16 +1,15 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-import { addDocumentEnglish } from "../../../reduxKit/actions/admin/addDocumentAction";
+import { UpdateDocumentEnglish } from "../../../reduxKit/actions/admin/updateEnglishDocument";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { AdminNavbar } from "../../Navbar/adminNavbar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { AddDocumentArabic } from "./addDocumentAr";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
@@ -19,7 +18,9 @@ import { config } from "../../../config/constants";
 
 
 
-export const AddDocument: React.FC = React.memo(() => {
+
+
+export const UpdateDocument: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.adminEn);
@@ -29,6 +30,9 @@ export const AddDocument: React.FC = React.memo(() => {
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [document, setDocument] = useState<DocumentSliceEn | null| undefined>();
+  const location = useLocation();
+  const { id, language } = location.state || {}; 
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
     Q1: { file: null, date: null, year: "" },
     Q2: { file: null, date: null, year: "" },
@@ -39,7 +43,44 @@ export const AddDocument: React.FC = React.memo(() => {
     Year: { file: null, date: null, year: "" },
   });
 
+  
 
+  useEffect(() => {
+    // Fetch document details by ID and Language
+    const fetchDocument = async () => {
+      try {
+        const response = await commonRequest(
+          "GET",
+          `/admin/getDocumentById/${id}?language=${language}`, // Include language as a query parameter
+          config,
+          {}
+        );
+        const data = response.data.data[0];
+        console.log("...................................",data);
+        setDocument(data); // Ensure you have the latest value for document
+      } catch (error) {
+        console.error("Error fetching document details:", error);
+      }
+    };
+
+    if (id && language) fetchDocument(); // Ensure both `id` and `language` are present
+  }, [id, language])
+
+  useEffect(() => {
+    if (document) {
+      setFullNameEn(document.fullNameEn);
+      setnickNameEn(document.nickNameEn);
+      setTadawalCode(document.tadawalCode);
+      setSector(document.sector);
+      setFormData(document.formData);
+      
+    }
+  }, [document]);
+
+
+
+  console.log("my language is::::::::::",id,language);
+  
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setnickNameEn(value);
@@ -103,15 +144,19 @@ export const AddDocument: React.FC = React.memo(() => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const payloadData:DocumentSliceEn ={
+      const adminCredentials:DocumentSliceEn ={
         fullNameEn,
         nickNameEn,
         tadawalCode,
         sector,
         formData
       }
-     await dispatch(addDocumentEnglish(payloadData)).unwrap();
-      toast.success("Document successfully added");
+      console.log("my data is",adminCredentials)
+    const response =   await dispatch(UpdateDocumentEnglish({id,language,adminCredentials})).unwrap();
+    console.log("this is my last console log!!!!!!!!!!!!!!!!! ", response.data);
+    
+      toast.success("Document updated successfully");
+      navigate("/documentList");
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -125,17 +170,17 @@ export const AddDocument: React.FC = React.memo(() => {
     }
   };
 
+  
 
   return (
     <div className="">
-      <AdminNavbar />
       <div className="flex flex-col items-center lg:py-4 min-h-screen px-4">
         <form
           onSubmit={handleSubmit}
           className="bg-white shadow-md rounded px-2 pt-2 pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
         >
           <h2 className="text-2xl font-bold text-center text-gray-700">
-            Upload Documents
+            Update Document
           </h2>
           <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
             <div className="w-full">
@@ -408,12 +453,11 @@ export const AddDocument: React.FC = React.memo(() => {
               type="submit"
               className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
             >
-              {loading ? "Uploading..." : "Upload"}
+              {loading ? "Updating..." : "Update"}
             </button>
           </div>
         </form>
 
-        <AddDocumentArabic />
       </div>
     </div>
   );

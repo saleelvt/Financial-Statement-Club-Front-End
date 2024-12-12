@@ -17,13 +17,15 @@ export const CheckDocumentDetails = () => {
   const location = useLocation();
   const { brandNickName, language } = location.state || {};
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
-  const navigate = useNavigate();
+
   const [searchTerm, setSearchTerm] = useState(""); // state for search term
+  const navigate=useNavigate();
 
   useEffect(() => {
     const fetchDocuments = async () => {
       setLoading(true);
       try {
+
         
         const params = new URLSearchParams({
           brandNickName,
@@ -59,11 +61,6 @@ export const CheckDocumentDetails = () => {
 
 
 
-
-
-
-  
-
   // Filter documents based on search term
   const filteredDocuments = documents.filter((doc) => {
     return ["Board", "Q1", "Q2", "Q3", "Q4", "S1", "Year"].some((key) => {
@@ -82,9 +79,26 @@ export const CheckDocumentDetails = () => {
     return new Intl.DateTimeFormat("en-GB").format(date); // Formats as DD/MM/YYYY
   };
 
+
+
+  const handleUpdateDocument= async (id:any) => {
+    try {
+      console.log('id for updaq', id );
+      if(id){
+        if(language==="English"){
+          navigate("/updateDocument", { state: { id,language  } });
+        }else if(language==="Arabic"){ 
+          navigate("/updateDocumentAr", { state: { id,language  } });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="min-h-screen">
-      <AdminNavbar />
+      {/* <AdminNavbar /> */}
       <div className="p-7">
         <div className="bg-gray-640 shadow-lg rounded-lg p-2">
           <div className="flex flex-wrap justify-between items-center">
@@ -121,6 +135,7 @@ export const CheckDocumentDetails = () => {
                 <tr>
                   <th className="p-2 border border-gray-600 bg-gray-300 text-left">Nickname</th>
                   <th className="p-2 border border-gray-600 bg-gray-300 text-left">Tadaval Code</th>
+                  <th className="p-2 border  border-gray-600 bg-gray-300 text-left">Action</th>
                   <th className="p-2 border border-gray-600 bg-gray-300 text-left">Property</th>
                   <th className="p-2 border border-gray-600 bg-gray-300 text-left">Year</th>
                   <th className="p-2 border border-gray-600 bg-gray-300 text-left">Date</th>
@@ -151,6 +166,12 @@ export const CheckDocumentDetails = () => {
                             >
                               {doc.tadawalCode}
                             </td>
+                            <td
+                              rowSpan={7}
+                              className="p-2 border text-lg font-bold border-gray-600 bg-gray-200"
+                            >
+                               <button onClick={()=>{handleUpdateDocument(doc?._id)}} className="bg-gray-400 border border-gray-600 hover:bg-gray-800 text-white px-4 py-1 rounded-lg shadow transition duration-300">Update</button>
+                            </td>
                           </>
                         )}
                         <td className="p-1 border border-gray-600">{key}</td>
@@ -180,38 +201,22 @@ export const CheckDocumentDetails = () => {
         {/* PDF Viewer */}
         {selectedPdf ? (
   <div className="mt-6 p-1 bg-gray-200 shadow-lg rounded-lg">
-    <h2 className="text-lg font-semibold mb-4">PDF Viewer</h2>
+   <div className=" flex justify-between"> <h2 className="text-lg font-semibold  mb-4">PDF Viewer</h2>
+   <button onClick={()=>{setSelectedPdf(null)}} className="bg-red-600 px-2 m-2 py-0.5 rounded-md text-xs lg:mr-3 text-white">Close</button>
+   </div>
     <iframe
       src={`${selectedPdf}#toolbar=0`}
       title="Document PDF"
       width="100%"
       height="500px"
       className="rounded-lg shadow-lg"
+      
     ></iframe>
   </div>
 ) : (
   <div className="mt-6 p-1 bg-gray-200 shadow-lg rounded-lg flex flex-col items-center justify-center h-[500px]">
-    <svg
-      className="animate-spin h-8 w-8 text-blue-500 mb-4"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      ></circle>
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      ></path>
-    </svg>
-    <p className="text-gray-700 text-lg font-semibold">Loading PDF...</p>
+   
+    <p className="text-gray-700 text-lg font-semibold">Select Pdf ...</p>
   </div>
 )}
 

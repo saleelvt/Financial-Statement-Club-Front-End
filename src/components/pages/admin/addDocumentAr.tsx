@@ -12,6 +12,9 @@ import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentAr
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
+import { commonRequest } from "../../../config/api";
+import { config } from "../../../config/constants";
+
 
 export const AddDocumentArabic: React.FC = React.memo(() => {
   const navigate = useNavigate();
@@ -21,6 +24,8 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
   const [sector, setSector] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
     Q1: { file: null, date: null, year: "" },
     Q2: { file: null, date: null, year: "" },
@@ -30,6 +35,42 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
     Board: { file: null, date: null, year: "" },
     Year: { file: null, date: null, year: "" },
   });
+
+
+
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setnickNameAr(value);
+
+    if (value.length > 0) { // Fetch suggestions only if input has 3 or more characters
+      setIsLoading(true);
+      try {
+        const adminLanguage = "Arabic";
+        const response = await commonRequest("GET",`/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,config,{});
+        setSuggestions(response.data.suggestions || []);
+      } catch (error) {
+        console.error('Error fetching suggestions:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = async (suggestion: string) => {
+    const adminLanguage = "Arabic";
+    const response = await commonRequest("GET",`/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
+    console.log('data with the suggetin __________',response.data.data);
+    const mydata= response.data.data
+    setnickNameAr(suggestion);
+    setFullNameAr(mydata.fullNameAr)
+    setTadawalCode(mydata.tadawalCode)
+    setSector(mydata.sector)
+    setSuggestions([]); // Clear suggestions after selecting one
+  };
+
+
 
   const handleFileChange = (field: FieldKey, file: File | null) => {
     setFormData((prev) => ({
@@ -114,8 +155,22 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
                 type="text"
                 placeholder="الاسم المختصر"
                 value={nickNameAr}
-                onChange={(e) => setnickNameAr(e.target.value)}
+                onChange={handleInputChange}
               />
+               {isLoading && <p className="text-sm text-gray-500 mt-1">Loading suggestions...</p>}
+      {suggestions.length > 0 && (
+        <ul className="border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white">
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      )}
             </div>
           </div>
   

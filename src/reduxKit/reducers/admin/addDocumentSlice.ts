@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { addDocumentEnglish } from "../../actions/admin/addDocumentAction";
+import { UpdateDocumentEnglish } from "../../actions/admin/updateEnglishDocument";
 // import { MyObject } from "../../../interfaces/admin/addDoument";
 
 
@@ -37,6 +38,24 @@ export const AddDocumentSlice = createSlice({
           state.loading = false;
           state.error = payload as string;
         })
+
+
+      .addCase(UpdateDocumentEnglish.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(UpdateDocumentEnglish.fulfilled, (state, { payload }) => {
+          console.log("updateDocumentEnglish log of the payload ", payload);
+          state.loading = false;
+          state.error = null;
+        })
+        .addCase(UpdateDocumentEnglish.rejected, (state, { payload }) => {
+          state.loading = false;
+          state.error = payload as string;
+        })
+
+
+
   
     },
   });

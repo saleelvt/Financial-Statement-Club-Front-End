@@ -53,6 +53,7 @@ export const UserCompanyDetails = React.memo(() => {
       .filter((doc) => doc.formData?.Year?.year === year)
       .filter(Boolean);
     setSelectedFilteredDocWithYear(filteredYears);
+    setSelectedYear("");
   };
 
   const handlePdfButtonClick = (key: string) => {
@@ -99,9 +100,7 @@ export const UserCompanyDetails = React.memo(() => {
 
   useEffect(() => {
     const TakeYears = () => {
-      const years: string[] = documents
-        .map((doc) => doc.formData?.Year?.year)
-        .filter((year): year is string => year !== undefined);
+      const years: string[] = documents.map((doc) => doc.formData?.Q1?.year) .filter((year): year is string => year !== undefined);
       setYearList(years);
     };
     TakeYears();

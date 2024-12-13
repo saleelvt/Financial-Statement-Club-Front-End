@@ -12,49 +12,62 @@ import { RootState } from "../../../reduxKit/store";
 import { Loading } from "../Loading";
 import { Error } from "../Error";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import {
-  DocumentSliceAr,
-  DocumentSliceEn,
-} from "../../../interfaces/admin/addDoument";
+import {DocumentSliceAr,DocumentSliceEn,} from "../../../interfaces/admin/addDoument";
 
 export const DocumentList: React.FC = () => {
-  const { adminLanguage } = useSelector(
-    (state: RootState) => state.adminLanguage
-  );
+  const { adminLanguage } = useSelector( (state: RootState) => state.adminLanguage);
   const [language, setLanguage] = useState<string>("Arabic");
   const navigate = useNavigate();
-  const [documents, setDocuments] = useState<
-    (DocumentSliceAr | DocumentSliceEn)[]
-  >([]);
-
+  const [documents, setDocuments] = useState< (DocumentSliceAr | DocumentSliceEn)[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      setLoading(true);
-      try {
-        if (adminLanguage) setLanguage(adminLanguage);
+  const [uniqeDocument,setUniqueDocument]=useState< (DocumentSliceAr | DocumentSliceEn)[]>([]);
 
-        const endpoint =
-          adminLanguage === "English"
-            ? "/admin/getDocuments"
-            : "/admin/getArabicDocuments";
-        const response = await commonRequest("GET", endpoint, config, null);
+ useEffect(() => {
+  const fetchDocuments = async () => {
+    setLoading(true);
+    try {
+      if (adminLanguage) setLanguage(adminLanguage);
 
-        if (response.status === 200 && response.data?.data) {
-          setDocuments(response.data.data);
-        } else {
-          setError("Failed to fetch documents");
-        }
-      } catch (err: any) {
-        setError(err.message || "An unexpected error occurred");
-      } finally {
-        setLoading(false);
+      const endpoint =
+        adminLanguage === "English"
+          ? "/admin/getDocuments"
+          : "/admin/getArabicDocuments";
+      const response = await commonRequest("GET", endpoint, config, null);
+
+      if (response.status === 200 && response.data?.data) {
+        const fetchedDocuments = response.data.data;
+
+        // Filter unique documents based on nickNameEn or nickNameAr
+        const uniqueDocs = fetchedDocuments.filter((doc: DocumentSliceAr | DocumentSliceEn, index: number, self: any[]) => {
+          const nickname =
+            "nickNameEn" in doc ? doc.nickNameEn : doc.nickNameAr;
+          return (
+            index ===
+            self.findIndex((d) =>
+              "nickNameEn" in d
+                ? d.nickNameEn === nickname
+                : d.nickNameAr === nickname
+            )
+          );
+        });
+
+        setDocuments(fetchedDocuments);
+        setUniqueDocument(uniqueDocs);
+      } else {
+        setError("Failed to fetch documents");
       }
-    };
-    fetchDocuments();
-  }, [adminLanguage]);
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchDocuments();
+}, [adminLanguage]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const documentsPerPage = 10;
   const [modalOpen, setModalOpen] = useState(false);
@@ -62,7 +75,7 @@ export const DocumentList: React.FC = () => {
   const totalPages = Math.ceil(documents.length / documentsPerPage);
   const indexOfLastDoc = currentPage * documentsPerPage;
   const indexOfFirstDoc = indexOfLastDoc - documentsPerPage;
-  const currentDocuments = documents.slice(indexOfFirstDoc, indexOfLastDoc);
+  const currentDocuments = uniqeDocument.slice(indexOfFirstDoc, indexOfLastDoc);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const handleDelete = async () => {
@@ -89,6 +102,7 @@ export const DocumentList: React.FC = () => {
     return <Error />;
   }
 
+
   const handleBrand = (doc: DocumentSliceAr | DocumentSliceEn) => {
     if (doc) {
       const brandNickName =
@@ -96,20 +110,14 @@ export const DocumentList: React.FC = () => {
       navigate("/documentDetails", { state: { brandNickName, language } });
     }
   };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <AdminNavbar />
       <div className="flex justify-center items-center py-3 px-2 sm:px-18 lg:px-12">
         <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-6xl border border-gray-300">
           <div className="flex flex-wrap justify-between items-center mb-6">
-            <FaArrowCircleLeft className="text-3xl" onClick={() => navigate("/home")} />
-            {/* <button
-              onClick={() => navigate("/home")}
-              className="px-2 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-            >
-              Back
-            </button> */}
-
+            <FaArrowCircleLeft className="text-3xl text-gray-500" onClick={() => navigate("/home")} />
             <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
               {language === "Arabic" ? "قائمة المستندات " : "Document List"}
             </h4>
@@ -137,6 +145,7 @@ export const DocumentList: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="text-xs xs:text-sm">
+
                 {currentDocuments.map((doc, index) => (
                   <tr
                     key={index}

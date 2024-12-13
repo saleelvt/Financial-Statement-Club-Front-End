@@ -1,6 +1,5 @@
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { UpdateDocumentArabic } from "../../../reduxKit/actions/admin/updateArabicDocument";
@@ -15,8 +14,7 @@ import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
-
-
+import { FaArrowCircleRight } from "react-icons/fa";
 
 export const UpdateDocumentAr: React.FC = React.memo(() => {
   const navigate = useNavigate();
@@ -28,9 +26,11 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [document, setDocument] = useState<DocumentSliceAr | null| undefined>();
+  const [document, setDocument] = useState<
+    DocumentSliceAr | null | undefined
+  >();
   const location = useLocation();
-  const { id, language } = location.state || {}; 
+  const { id, language } = location.state || {};
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
     Q1: { file: null, date: null, year: "" },
     Q2: { file: null, date: null, year: "" },
@@ -40,8 +40,6 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
     Board: { file: null, date: null, year: "" },
     Year: { file: null, date: null, year: "" },
   });
-
-  
 
   useEffect(() => {
     // Fetch document details by ID and Language
@@ -54,7 +52,7 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
           {}
         );
         const data = response.data.data[0];
-        console.log("...................................",data);
+        console.log("...................................", data);
         setDocument(data); // Ensure you have the latest value for document
       } catch (error) {
         console.error("Error fetching document details:", error);
@@ -62,7 +60,7 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
     };
 
     if (id && language) fetchDocument(); // Ensure both `id` and `language` are present
-  }, [id, language])
+  }, [id, language]);
 
   useEffect(() => {
     if (document) {
@@ -71,26 +69,29 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
       setTadawalCode(document.tadawalCode);
       setSector(document.sector);
       setFormData(document.formData);
-      
     }
   }, [document]);
 
+  console.log("my language is::::::::::", id, language);
 
-
-  console.log("my language is::::::::::",id,language);
-  
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setnickNameAr(value);
 
-    if (value.length > 0) { // Fetch suggestions only if input has 3 or more characters
+    if (value.length > 0) {
+      // Fetch suggestions only if input has 3 or more characters
       setIsLoading(true);
       try {
         const adminLanguage = "English";
-        const response = await commonRequest("GET",`/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,config,{});
+        const response = await commonRequest(
+          "GET",
+          `/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,
+          config,
+          {}
+        );
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
-        console.error('Error fetching suggestions:', error);
+        console.error("Error fetching suggestions:", error);
       } finally {
         setIsLoading(false);
       }
@@ -101,17 +102,20 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
 
   const handleSuggestionClick = async (suggestion: string) => {
     const adminLanguage = "English";
-    const response = await commonRequest("GET",`/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
-    console.log('data with the suggetin __________',response.data.data);
-    const mydata= response.data.data
+    const response = await commonRequest(
+      "GET",
+      `/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,
+      config,
+      {}
+    );
+    console.log("data with the suggetin __________", response.data.data);
+    const mydata = response.data.data;
     setnickNameAr(suggestion);
-    setFullNameAr(mydata.fullNameEn)
-    setTadawalCode(mydata.tadawalCode)
-    setSector(mydata.sector)
+    setFullNameAr(mydata.fullNameEn);
+    setTadawalCode(mydata.tadawalCode);
+    setSector(mydata.sector);
     setSuggestions([]); // Clear suggestions after selecting one
   };
-
-  
 
   const handleFileChange = (field: FieldKey, file: File | null) => {
     setFormData((prev) => ({
@@ -120,15 +124,12 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
     }));
   };
 
-
   const handleDateChange = (field: FieldKey, selectedDate: Date | null) => {
     setFormData((prev) => ({
       ...prev,
       [field]: { ...prev[field], date: selectedDate },
     }));
   };
-
-
 
   // Handle Year Change
   const handleYearChange = (field: FieldKey, year: string) => {
@@ -138,21 +139,25 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
     }));
   };
 
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const adminCredentials:DocumentSliceAr ={
+      const adminCredentials: DocumentSliceAr = {
         fullNameAr,
         nickNameAr,
         tadawalCode,
         sector,
-        formData
-      }
-      console.log("my data is",adminCredentials)
-    const response =   await dispatch(UpdateDocumentArabic({id,language,adminCredentials})).unwrap();
-    console.log("this is my last console log!!!!!!!!!!!!!!!!! ", response.data);
-    
+        formData,
+      };
+      console.log("my data is", adminCredentials);
+      const response = await dispatch(
+        UpdateDocumentArabic({ id, language, adminCredentials })
+      ).unwrap();
+      console.log(
+        "this is my last console log!!!!!!!!!!!!!!!!! ",
+        response.data
+      );
+
       toast.success("Document updated successfully");
       navigate("/documentList");
     } catch (error: any) {
@@ -168,23 +173,29 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
     }
   };
 
-  
-
   return (
     <div className="">
       <div className="flex flex-col items-center lg:py-4 min-h-screen px-4">
         <form
-        dir="rtl"
+          dir="rtl"
           onSubmit={handleSubmit}
           className="bg-white shadow-md rounded px-2 pt-2 pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
         >
-          <h2 className="text-2xl font-bold text-center text-gray-700">
-            Update Document
-          </h2>
+          <div className="flex justify-between">
+            <FaArrowCircleRight
+              className="text-3xl text-gray-500"
+              onClick={() => navigate("/home")}
+            />
+
+            <h2 className="text-2xl font-bold text-center text-gray-700">
+              Update Document
+            </h2>
+          </div>
           <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
-            <div className="w-full">
+            <div className="w-full ml-2">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-              الاسم الكامل<span className="font-mono text-xs"> (بالعربية)</span>
+                الاسم الكامل
+                <span className="font-mono text-xs"> (بالعربية)</span>
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
@@ -196,32 +207,66 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
             </div>
 
             <div className="w-full">
-      <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-      الاسم المختصر<span className="text-xs font-mono">(بالعربية)</span>
-      </label>
-      <input
-        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
-        type="text"
-        placeholder="الاسم المختصر"
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                الاسم المختصر
+                <span className="text-xs font-mono">(بالعربية)</span>
+              </label>
+              <input
+                className="appearance-none block w-1/2  bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
+                type="text"
+                placeholder="الاسم المختصر"
+                value={nickNameAr}
+                onChange={handleInputChange}
+              />
+              {isLoading && (
+                <p className="text-sm text-gray-500 mt-1">
+                  Loading suggestions...
+                </p>
+              )}
+              {suggestions.length > 0 && (
+                <ul className="border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white">
+                  {suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                      onClick={() => handleSuggestionClick(suggestion)}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
 
-        value={nickNameAr}
-        onChange={handleInputChange}
-      />
-      {isLoading && <p className="text-sm text-gray-500 mt-1">Loading suggestions...</p>}
-      {suggestions.length > 0 && (
-        <ul className="border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white">
-          {suggestions.map((suggestion, index) => (
-            <li
-              key={index}
-              className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSuggestionClick(suggestion)}
-            >
-              {suggestion}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+
+          <div className="flex flex-wrap gap-4">
+            <div className="flex-1">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                كود التداول
+              </label>
+              <input
+                className="appearance-none block w-1/3 bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                type="text"
+                placeholder="التداول"
+                value={tadawalCode}
+                required
+                onChange={(e) => setTadawalCode(e.target.value)}
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                القطاع
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                type="text"
+                placeholder="القطاع"
+                required
+                value={sector}
+                onChange={(e) => setSector(e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -410,42 +455,9 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
               />
             </div>
           </div>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex-1">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-              كود التداول
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="التداول"
-                value={tadawalCode}
-                required
-                onChange={(e) => setTadawalCode(e.target.value)}
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-              القطاع
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="القطاع"
-                required
-                value={sector}
-                onChange={(e) => setSector(e.target.value)}
-              />
-            </div>
-          </div>
+
+       
           <div className="flex items-center justify-between mt-4">
-            <button
-              type="button"
-              onClick={() => navigate("/home")}
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-            >
-              رجوع
-            </button>
             <button
               type="submit"
               className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
@@ -454,7 +466,6 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );

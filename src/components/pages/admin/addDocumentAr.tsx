@@ -14,7 +14,7 @@ import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
-
+import { FaArrowCircleRight } from "react-icons/fa";
 
 export const AddDocumentArabic: React.FC = React.memo(() => {
   const navigate = useNavigate();
@@ -128,9 +128,12 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
           className="bg-white shadow-md rounded px-2 pt-2 pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
           dir="rtl"
         >
-          <h2 className="text-2xl font-bold text-center text-gray-700">
+          <div className="flex   ">
+          <FaArrowCircleRight  className="text-3xl" onClick={() => navigate("/home")}/>
+          <h2 className="text-2xl lg:mr-12 font-bold text-center text-gray-700">
             إضافة مستند
           </h2>
+          </div>
           <div className="flex gap-3 flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
             <div className="w-full">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
@@ -151,7 +154,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
                 <span className="text-xs font-mono"> (بالعربية)</span>
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="الاسم المختصر"
                 value={nickNameAr}
@@ -171,6 +174,34 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
           ))}
         </ul>
       )}
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <div className="flex-1">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                كود التداول
+              </label>
+              <input
+                className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                type="text"
+                placeholder="أدخل كود التداول"
+                value={tadawalCode}
+                required
+                onChange={(e) => setTadawalCode(e.target.value)}
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                القطاع
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                type="text"
+                placeholder="أدخل القطاع"
+                required
+                value={sector}
+                onChange={(e) => setSector(e.target.value)}
+              />
             </div>
           </div>
   
@@ -213,7 +244,6 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
                   handleFileChange("Q2", e.target.files?.[0] || null)
                 }
               />
-
               <DatePicker
                 selected={formData.Q2.date}
                 onChange={(date) => handleDateChange("Q2", date)}
@@ -357,47 +387,17 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
               />
             </div>
           </div>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex-1">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                كود التداول
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="أدخل كود التداول"
-                value={tadawalCode}
-                required
-                onChange={(e) => setTadawalCode(e.target.value)}
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                القطاع
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="أدخل القطاع"
-                required
-                value={sector}
-                onChange={(e) => setSector(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="flex items-center justify-between mt-4">
-            <button
-              type="button"
-              onClick={() => navigate("/home")}
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-            >
-              رجوع
-            </button>
+
+         
+
+          <div className="flex items-center justify-end mt-4">
+          
+          
             <button
               type="submit"
               className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
             >
-              {loading ? "جاري التحميل..." : "رفع"}
+              {loading ? "جاري التحميل..." : "يُقدِّم"}
             </button>
           </div>
         </form>

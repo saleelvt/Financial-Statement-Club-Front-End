@@ -15,6 +15,7 @@ import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 export const UpdateDocument: React.FC = React.memo(() => {
   const navigate = useNavigate();
@@ -176,9 +177,23 @@ export const UpdateDocument: React.FC = React.memo(() => {
           onSubmit={handleSubmit}
           className="bg-white shadow-md rounded px-2 pt-2 pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
         >
-          <h2 className="text-2xl font-bold text-center text-gray-700">
+
+        <div className="flex justify-between ">
+        {/* <button
+              type="button"
+              onClick={() => navigate("/home")}
+              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+            >
+              Back
+            </button> */}
+            <FaArrowCircleLeft className="text-3xl text-gray-500" onClick={() => navigate("/home")} />
+
+          <h2 className="text-2xl font-semibold text-center text-gray-700">
             Update Document
           </h2>
+        </div>
+
+          
           <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
             <div className="w-full">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
@@ -193,12 +208,18 @@ export const UpdateDocument: React.FC = React.memo(() => {
               />
             </div>
 
+
+
+
+          
+
+
             <div className="w-full">
       <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
         Nick Name <span className="text-xs font-mono">(English)</span>
       </label>
       <input
-        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
+        className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
         type="text"
         placeholder="Nick Name"
         value={nickNameEn}
@@ -219,6 +240,36 @@ export const UpdateDocument: React.FC = React.memo(() => {
         </ul>
       )}
     </div>
+          </div>
+
+
+          <div className="flex flex-wrap gap-4">
+            <div className="flex-1">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                Tadawal Code
+              </label>
+              <input
+                className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                type="text"
+                placeholder="Enter The Board"
+                value={tadawalCode}
+                required
+                onChange={(e) => setTadawalCode(e.target.value)}
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                Sector
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                type="text"
+                placeholder="Enter The Sector"
+                required
+                value={sector}
+                onChange={(e) => setSector(e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -358,6 +409,33 @@ export const UpdateDocument: React.FC = React.memo(() => {
               />
             </div>
 
+            
+            <div className="space-y-2">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                Annual
+              </label>
+              <input
+                type="file"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                onChange={(e) =>
+                  handleFileChange("Year", e.target.files?.[0] || null)
+                }
+              />
+              <DatePicker
+                selected={formData.Year.date}
+                onChange={(date) => handleDateChange("Year", date)}
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                placeholderText="Choose Date"
+              />
+              <input
+                type="text"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                placeholder="Enter Year"
+                value={formData.Year.year}
+                onChange={(e) => handleYearChange("Year", e.target.value)}
+              />
+            </div>
+
             <div className="space-y-2">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Board
@@ -384,73 +462,16 @@ export const UpdateDocument: React.FC = React.memo(() => {
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                Year
-              </label>
-              <input
-                type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Year", e.target.files?.[0] || null)
-                }
-              />
-              <DatePicker
-                selected={formData.Year.date}
-                onChange={(date) => handleDateChange("Year", date)}
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="Choose Date"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                placeholder="Enter Year"
-                value={formData.Year.year}
-                onChange={(e) => handleYearChange("Year", e.target.value)}
-              />
-            </div>
           </div>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex-1">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                Tadawal Code
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="Enter The Board"
-                value={tadawalCode}
-                required
-                onChange={(e) => setTadawalCode(e.target.value)}
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                Sector
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="Enter The Sector"
-                required
-                value={sector}
-                onChange={(e) => setSector(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="flex items-center justify-between mt-4">
-            <button
-              type="button"
-              onClick={() => navigate("/home")}
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-            >
-              Back
-            </button>
+        
+
+          <div className="flex justify-end mt-4">
+        
             <button
               type="submit"
               className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
             >
-              {loading ? "Updating..." : "Update"}
+              {loading ? "Submiting..." : "Submit"}
             </button>
           </div>
         </form>

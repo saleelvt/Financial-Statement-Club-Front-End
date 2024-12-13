@@ -8,6 +8,7 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { Loading } from "../Loading";
 import React from "react";
+import { FaArrowCircleLeft } from "react-icons/fa";
 import { DocumentSliceEn, DocumentSliceAr,} from "../../../interfaces/admin/addDoument";
 import { FormDataState } from "../../../interfaces/admin/addDoument";
 export const CheckDocumentDetails = () => {
@@ -102,14 +103,7 @@ export const CheckDocumentDetails = () => {
       <div className="p-7">
         <div className="bg-gray-640 shadow-lg rounded-lg p-2">
           <div className="flex flex-wrap justify-between items-center">
-            <button
-              onClick={() => {
-                navigate("/documentList");
-              }}
-              className="bg-gray-400 rounded-md p-2 mb-4 lg:mb-0"
-            >
-              Back 
-            </button>
+             <FaArrowCircleLeft className="text-3xl text-gray-500" onClick={() => navigate("/home")} />
             <h1 className="text-4xl text-black font-semibold text-center mb-4 lg:mb-0">
               Document Details
             </h1>

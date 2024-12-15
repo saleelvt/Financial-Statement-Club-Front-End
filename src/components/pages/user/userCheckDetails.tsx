@@ -29,8 +29,7 @@ export const UserCompanyDetails = React.memo(() => {
   const [error, setError] = useState("");
   const [yearList, setYearList] = useState<string[]>([]);
   const [selectedPdfKey, setSelectedPdfKey] = useState<string | null>(null);
-  const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
-    useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
+  const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
   const [iframeSrc, setIframeSrc] = useState<string>("");
@@ -38,7 +37,7 @@ export const UserCompanyDetails = React.memo(() => {
 
 
   const pdfKeys: (keyof FormDataState)[] = [
-    "Q1",
+  "Q1",
     "Q2",
     "Q3",
     "Q4",
@@ -49,11 +48,9 @@ export const UserCompanyDetails = React.memo(() => {
 
   const handleYearClick = (year: string) => {
     setSelectedYear(year);
-    const filteredYears = documents
-      .filter((doc) => doc.formData?.Year?.year === year)
-      .filter(Boolean);
-    setSelectedFilteredDocWithYear(filteredYears);
-    setSelectedYear("");
+    const filteredYears = documents.filter((doc) => doc.formData?.Q1?.year === year).filter(Boolean);
+      setSelectedFilteredDocWithYear(filteredYears);
+     
   };
 
   const handlePdfButtonClick = (key: string) => {
@@ -80,17 +77,20 @@ export const UserCompanyDetails = React.memo(() => {
     }
   };
 
+
   const handleLeftClick = () => {
     if (visibleYears > 0) {
       setVisibleYears(visibleYears - 1);
     }
   };
 
+
   const handleRightClick = () => {
     if (visibleYears < yearList.length - 1) {
       setVisibleYears(visibleYears + 1);
     }
   };
+
 
   const isDocumentEn = (
     document: DocumentSliceEn | DocumentSliceAr
@@ -100,7 +100,7 @@ export const UserCompanyDetails = React.memo(() => {
 
   useEffect(() => {
     const TakeYears = () => {
-      const years: string[] = documents.map((doc) => doc.formData?.Q1?.year) .filter((year): year is string => year !== undefined);
+      const years: string[] = documents.map((doc) => doc.formData?.Q1?.year).filter((year): year is string => year !== undefined);
       setYearList(years);
     };
     TakeYears();

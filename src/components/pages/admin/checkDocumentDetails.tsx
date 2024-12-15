@@ -80,8 +80,6 @@ export const CheckDocumentDetails = () => {
     return new Intl.DateTimeFormat("en-GB").format(date); // Formats as DD/MM/YYYY
   };
 
-
-
   const handleUpdateDocument= async (id:any) => {
     try {
       console.log('id for updaq', id );

@@ -7,7 +7,6 @@ import { addDocumentEnglish } from "../../../reduxKit/actions/admin/addDocumentA
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { AdminNavbar } from "../../Navbar/adminNavbar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AddDocumentArabic } from "./addDocumentAr";
@@ -127,7 +126,7 @@ export const AddDocument: React.FC = React.memo(() => {
 
   return (
     <div className="">
-      <AdminNavbar />
+ 
       <div className="flex flex-col items-center lg:py-4 min-h-screen px-4">
         <form
           onSubmit={handleSubmit}
@@ -144,7 +143,7 @@ export const AddDocument: React.FC = React.memo(() => {
             >
               Back
             </button> */}
-            <FaArrowCircleLeft  className="text-3xl" onClick={() => navigate(-1)}/>
+            <FaArrowCircleLeft  className="text-3xl  text-gray-600" onClick={() => navigate(-1)}/>
           <h4 className="text-2xl font-bold text-center text-gray-700">
             Upload Documents
           </h4>  
@@ -412,7 +411,7 @@ export const AddDocument: React.FC = React.memo(() => {
 
 
          
-          <div className="flex justify-end   mt-4">
+          <div className="flex justify-end   m">
             
             <button
               type="submit"

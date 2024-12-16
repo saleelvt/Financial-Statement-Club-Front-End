@@ -2,7 +2,7 @@
 // src/components/Navbar.tsx
 
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { Button } from "@nextui-org/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../reduxKit/store";
 import { AdminLanguageChange } from "../../reduxKit/actions/admin/adminLanguage";
 import { GrLanguage } from "react-icons/gr";
+import { MdMiscellaneousServices } from "react-icons/md";
 <GrLanguage />
 
 export const AdminNavbar: React.FC = () => {
@@ -22,7 +23,6 @@ export const AdminNavbar: React.FC = () => {
     (state: RootState) => state.adminLanguage
   );
   const { role } = useSelector((state: RootState) => state.auth);
-  // const [language, setLanguage] = useState<string>("English");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -64,15 +64,15 @@ export const AdminNavbar: React.FC = () => {
     <nav className="p-3">
       <div className="container py-2 mx-auto gap-3 flex justify-between items-center">
         <div className="w-full flex items-center justify-between ">
-          <h4 className=" font-semibold xs:font-bold lg:text-2xl md:text-2xl sm:1xl xs:text-2xl ">
-            Financial statement club{" "}
+          <h4 className=" font-semibold xs:font-semibold  lg:text-2xl md:text-2xl sm:1xl xs:text-xl ">
+          Financial Statements Club{" "}
           </h4>
           <button
           onClick={toggleLanguage}
           
           className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
         >
-         <GrLanguage />
+         <GrLanguage className=" text-gray-600" />
         </button>  
         </div>
         <div className="lg:hidden">
@@ -98,23 +98,13 @@ export const AdminNavbar: React.FC = () => {
         <div
           className={`lg:flex lg:items-center ${isOpen ? "block" : "hidden"}`}
         >
-          <Link
-            to="/services"
-            className="block font-semibold px-4 py-2 hover:bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-black hover:text-white  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out mr-6 rounded"
-          >
-            Services
-          </Link>
-          <Link
-            to="/about"
-            className="block px-4 py-2 font-semibold hover:bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out mr-6 rounded"
-          >
-            About
-          </Link>
+         <MdMiscellaneousServices  className="text-gray-600 mr-8 text-2xl"/>    
+   
           <button
             onClick={handledata}
-            className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out text-white shadow-lg px-4 flex items-center py-2  rounded-md"
+            className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out text-white shadow-lg  flex items-center  rounded-md"
           >
-            <FaSignOutAlt className="mr-3" /> Logout
+            <FaSignOutAlt className="mr-2 text-white"  /> Logout
           </button>
         </div>
       </div>

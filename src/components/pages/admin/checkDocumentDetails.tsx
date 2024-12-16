@@ -97,17 +97,14 @@ export const CheckDocumentDetails = () => {
 
   return (
     <div className="min-h-screen">
-      {/* <AdminNavbar /> */}
       <div className="p-7">
         <div className="bg-gray-640 shadow-lg rounded-lg p-2">
           <div className="flex flex-wrap justify-between items-center">
-             <FaArrowCircleLeft className="text-3xl text-gray-500" onClick={() => navigate("/home")} />
+             <FaArrowCircleLeft className="text-3xl text-gray-600" onClick={() => navigate(-1)} />
             <h1 className="text-4xl text-black font-semibold text-center mb-4 lg:mb-0">
               Document Details
             </h1>
           </div>
-
-          {/* Search Bar */}
           <div className="flex justify-end lg:mr-8 mb-4">
             <div className="m-2 w-full sm:w-1/2 lg:w-1/3">
               <input
@@ -133,7 +130,7 @@ export const CheckDocumentDetails = () => {
                   <th className="p-2 border border-gray-600 bg-gray-300 text-left">Date</th>
                   <th className="p-2 border border-gray-600 bg-gray-300 text-left">View PDF</th>
                 </tr>
-              </thead>
+              </thead>  
               <tbody>
                 {filteredDocuments.map((doc, docIndex) => (
                   <React.Fragment key={doc._id}>

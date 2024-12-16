@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AdminNavbar } from "../../Navbar/adminNavbar";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
@@ -110,14 +109,12 @@ export const DocumentList: React.FC = () => {
       navigate("/documentDetails", { state: { brandNickName, language } });
     }
   };
-
   return (
     <div className="min-h-screen bg-gray-100">
-      <AdminNavbar />
       <div className="flex justify-center items-center py-3 px-2 sm:px-18 lg:px-12">
         <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-6xl border border-gray-300">
           <div className="flex flex-wrap justify-between items-center mb-6">
-            <FaArrowCircleLeft className="text-3xl text-gray-500" onClick={() => navigate("/home")} />
+            <FaArrowCircleLeft className="text-3xl text-gray-600" onClick={() => navigate("/home")} />
             <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
               {language === "Arabic" ? "قائمة المستندات " : "Document List"}
             </h4>

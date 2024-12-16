@@ -51,13 +51,13 @@ const AdminSidebar = () => {
                 <FaUser className="text-white" />
               </div>
               <div className="text-white">
-                <h2 className="font-medium">Admin Panel</h2>
-                <p className="text-sm opacity-80">admin@example.com</p>
+                <h2 className="font-medium">Mr: Ahmad (KSA)</h2>
+                <p className="text-sm opacity-80">admin@13.com</p>
+        
               </div>
             </div>
           </div>
         </div>
-        {/* Navigation */}
         <nav className={` px-3 ${!isOpen && 'lg:block hidden'}`}>
           {navLinks.map((link) => (
             <NavLink

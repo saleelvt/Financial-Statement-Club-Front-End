@@ -16,6 +16,7 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
 
+
 export const AddDocumentArabic: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -121,7 +122,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
     }
   };
   return (
-    <div className=" mt-12">
+    <div className=" mt-4">
       <div className="flex flex-col items-center lg:py-4 min-h-screen px-4 ">
         <form
           onSubmit={handleSubmitArabicDoc}
@@ -129,7 +130,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
           dir="rtl"
         >
           <div className="flex   ">
-          <FaArrowCircleRight  className="text-3xl" onClick={() => navigate("/home")}/>
+          <FaArrowCircleRight  className="text-3xl text-gray-600" onClick={() => navigate(-1)}/>
           <h2 className="text-2xl lg:mr-12 font-bold text-center text-gray-700">
             إضافة مستند
           </h2>
@@ -337,6 +338,32 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
 
             <div className="space-y-2">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                Annual
+              </label>
+              <input
+                type="file"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                onChange={(e) =>
+                  handleFileChange("Year", e.target.files?.[0] || null)
+                }
+              />
+              <DatePicker
+                selected={formData.Year.date}
+                onChange={(date) => handleDateChange("Year", date)}
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                placeholderText="اختر التاريخ"
+              />
+              <input
+                type="text"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                placeholder="أدخل السنة"
+                value={formData.Year.year}
+                onChange={(e) => handleYearChange("Year", e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Board
               </label>
               <input
@@ -361,37 +388,12 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                Year
-              </label>
-              <input
-                type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Year", e.target.files?.[0] || null)
-                }
-              />
-              <DatePicker
-                selected={formData.Year.date}
-                onChange={(date) => handleDateChange("Year", date)}
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="اختر التاريخ"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                placeholder="أدخل السنة"
-                value={formData.Year.year}
-                onChange={(e) => handleYearChange("Year", e.target.value)}
-              />
-            </div>
+            
           </div>
 
          
 
           <div className="flex items-center justify-end mt-4">
-          
           
             <button
               type="submit"

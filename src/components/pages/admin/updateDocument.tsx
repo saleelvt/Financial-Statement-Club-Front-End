@@ -186,7 +186,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
             >
               Back
             </button> */}
-            <FaArrowCircleLeft className="text-3xl text-gray-500" onClick={() => navigate("/home")} />
+            <FaArrowCircleLeft className="text-3xl text-gray-500" onClick={() => navigate(-1)} />
 
           <h2 className="text-2xl font-semibold text-center text-gray-700">
             Update Document

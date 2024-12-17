@@ -54,6 +54,7 @@ export const axiosIn = axios.create({
             formData.append("nickNameAr", adminCredentials?.nickNameAr);
             formData.append("tadawalCode", adminCredentials?.tadawalCode);
             formData.append("sector", adminCredentials?.sector);
+            formData.append("", adminCredentials?.sector);
             console.log("got hte datas in arabic side}}}}}}}}}}} ",adminCredentials);
             
             const response = await axiosIn.post(`/admin/addDocumentArabic`,formData,createAxiosConfig(true));

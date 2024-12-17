@@ -19,8 +19,7 @@ import { MdMiscellaneousServices } from "react-icons/md";
 <GrLanguage />
 
 export const AdminNavbar: React.FC = () => {
-  const { adminLanguage } = useSelector(
-    (state: RootState) => state.adminLanguage
+  const { adminLanguage } = useSelector( (state: RootState) => state.adminLanguage
   );
   const { role } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
@@ -65,7 +64,7 @@ export const AdminNavbar: React.FC = () => {
       <div className="container py-2 mx-auto gap-3 flex justify-between items-center">
         <div className="w-full flex items-center justify-between ">
           <h4 className=" font-semibold xs:font-semibold  lg:text-2xl md:text-2xl sm:1xl xs:text-xl ">
-          Financial Statements Club{" "}
+       {adminLanguage ==="Arabic" ?"نادي القوائم المالية ":"Financial Statements Club"}
           </h4>
           <button
           onClick={toggleLanguage}
@@ -73,7 +72,7 @@ export const AdminNavbar: React.FC = () => {
           className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
         >
          <GrLanguage className=" text-gray-600" />
-        </button>  
+        </button>
         </div>
         <div className="lg:hidden">
        
@@ -85,6 +84,7 @@ export const AdminNavbar: React.FC = () => {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
+
 
               <path
                 strokeLinecap="round"

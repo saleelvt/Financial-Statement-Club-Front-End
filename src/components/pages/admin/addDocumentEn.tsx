@@ -1,53 +1,138 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { addDocumentEnglish } from "../../../reduxKit/actions/admin/addDocumentAction";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { AddDocumentArabic } from "./addDocumentAr";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 
-import { FaArrowCircleLeft } from "react-icons/fa";
 
-export const AddDocument: React.FC = React.memo(() => {
-  const navigate = useNavigate();
+
+interface AddDocumentEnglishProps {
+  formDataEn: Record<FieldKey, FormField>
+  tadawalCodeEn: string 
+};
+
+
+
+export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formDataEn,tadawalCodeEn}) => {
+
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.adminEn);
   const [fullNameEn, setFullNameEn] = useState("");
   const [nickNameEn, setnickNameEn] = useState("");
-  const [tadawalCode, setTadawalCode] = useState("");
+  const [tadawalCode, setTadawalCode] = useState<string>(tadawalCodeEn || "");
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
-    Q1: { file: null, date: null, year: "" },
-    Q2: { file: null, date: null, year: "" },
-    Q3: { file: null, date: null, year: "" },
-    Q4: { file: null, date: null, year: "" },
-    S1: { file: null, date: null, year: "" },
-    Board: { file: null, date: null, year: "" },
-    Year: { file: null, date: null, year: "" },
-  });
+  const [formData, setFormData] = useState<Record<FieldKey, FormField>>(() => {
+
+
+
+    return {
+      Q1: {
+        file: null,
+        date: formDataEn.Q1.date || null,
+        year: formDataEn.Q1.year || "",
+      },
+      Q2: {
+        file: null,
+        date: formDataEn.Q2.date || null,
+        year: formDataEn.Q2.year || "",
+      },
+      Q3: {
+        file: null,
+        date: formDataEn.Q3.date || null,
+        year: formDataEn.Q3.year || "",
+      },
+      Q4: {
+        file: null,
+        date: formDataEn.Q4.date || null,
+        year: formDataEn.Q4.year || "",
+      },
+      S1: {
+        file: null,
+        date: formDataEn.S1.date || null,
+        year: formDataEn.S1.year || "",
+      },
+      Board: {
+        file: null,
+        date: formDataEn.Board.date || null,
+        year: formDataEn.Board.year || "",
+      },
+      Year: {
+        file: null,
+        date: formDataEn.Year.date || null,
+        year: formDataEn.Year.year || "",
+      },
+    };
+  })
+
+  useEffect(()=>{
+
+    console.log("my form data is from the english document  ", formDataEn);
+
+    if (tadawalCodeEn !== undefined && tadawalCodeEn !== tadawalCode) {
+      setTadawalCode(tadawalCodeEn || ""); // Only update if the value is different
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      Q1: {
+        date: formDataEn?.Q1?.date || null,  // Only update date
+        year: formDataEn?.Q1?.year || "",    // Only update year
+      },
+      Q2: {
+        date: formDataEn?.Q2?.date || null,  // Only update date
+        year: formDataEn?.Q2?.year || "",    // Only update year
+      },
+      Q3: {
+        date: formDataEn?.Q3?.date || null,  // Only update date
+        year: formDataEn?.Q3?.year || "",    // Only update year
+      },
+      Q4: {
+        date: formDataEn?.Q4?.date || null,  // Only update date
+        year: formDataEn?.Q4?.year || "",    // Only update year
+      },
+      S1: {
+        date: formDataEn?.S1?.date || null,  // Only update date
+        year: formDataEn?.S1?.year || "",    // Only update year
+      },
+      Board: {
+        date: formDataEn?.Board?.date || null,  // Only update date
+        year: formDataEn?.Board?.year || "",    // Only update year
+      },
+      Year: {
+        date: formDataEn?.Year?.date || null,  // Only update date
+        year: formDataEn?.Year?.year || "",    // Only update year
+      },
+    }));
+    
+
+  }, [formDataEn,tadawalCodeEn])
+
+
+
+  
+
 
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setnickNameEn(value);
-
+    setTadawalCode(value);
     if (value.length > 0) { // Fetch suggestions only if input has 3 or more characters
       setIsLoading(true);
       try {
         const adminLanguage = "English";
-        const response = await commonRequest("GET",`/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,config,{});
+        const response = await commonRequest("GET",`/admin/tadawalCodeSuggestions?name=${value}&language=${adminLanguage}`,config,{});
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
         console.error('Error fetching suggestions:', error);
@@ -59,14 +144,16 @@ export const AddDocument: React.FC = React.memo(() => {
     }
   };
 
+
+
   const handleSuggestionClick = async (suggestion: string) => {
     const adminLanguage = "English";
     const response = await commonRequest("GET",`/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
     console.log('data with the suggetin __________',response.data.data);
     const mydata= response.data.data
-    setnickNameEn(suggestion);
+    setnickNameEn(mydata.nickNameEn);
     setFullNameEn(mydata.fullNameEn)
-    setTadawalCode(mydata.tadawalCode)
+    setTadawalCode(suggestion)
     setSector(mydata.sector)
     setSuggestions([]); // Clear suggestions after selecting one
   };
@@ -87,7 +174,6 @@ export const AddDocument: React.FC = React.memo(() => {
       [field]: { ...prev[field], date: selectedDate },
     }));
   };
-
 
 
   // Handle Year Change
@@ -123,32 +209,17 @@ export const AddDocument: React.FC = React.memo(() => {
     }
   };
 
+  
 
   return (
     <div className="">
- 
-      <div className="flex flex-col items-center lg:py-4 min-h-screen px-4">
+      <div className="flex flex-col items-center  min-h-screen px-4">
         <form
           onSubmit={handleSubmit}
-          className="bg-white shadow-md rounded px-2 pt-2 pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
+          className="bg-white shadow-md rounded px-2  pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
         >
-
-          <div className="flex  justify-between">
-
         
-          {/* <button
-              type="button"
-              onClick={() => navigate("/home")}
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-            >
-              Back
-            </button> */}
-            <FaArrowCircleLeft  className="text-3xl  text-gray-600" onClick={() => navigate(-1)}/>
-          <h4 className="text-2xl font-bold text-center text-gray-700">
-            Upload Documents
-          </h4>  
-          </div>
-          <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+          <div className="flex flex-col  lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
             <div className="w-full">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Full Name <span className="font-mono text-xs"> (English)</span>
@@ -171,22 +242,9 @@ export const AddDocument: React.FC = React.memo(() => {
         type="text"
         placeholder="Nick Name"
         value={nickNameEn}
-        onChange={handleInputChange}
+        onChange={(e) => setnickNameEn(e.target.value)}
       />
-      {isLoading && <p className="text-sm text-gray-500 mt-1">Loading suggestions...</p>}
-      {suggestions.length > 0 && (
-        <ul className="border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white">
-          {suggestions.map((suggestion, index) => (
-            <li
-              key={index}
-              className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSuggestionClick(suggestion)}
-            >
-              {suggestion}
-            </li>
-          ))}
-        </ul>
-      )}
+     
     </div>
           </div>
           <div className="flex flex-wrap gap-4">
@@ -200,8 +258,25 @@ export const AddDocument: React.FC = React.memo(() => {
                 placeholder="Enter The Tadawul"
                 value={tadawalCode}
                 required
-                onChange={(e) => setTadawalCode(e.target.value)}
+                onChange={handleInputChange}
               />
+
+{isLoading && <p className="text-sm font-serif text-gray-600 mt-1">Loading suggestions...</p>}
+      {suggestions.length > 0 && (
+        <ul className="border border-gray-300 w-1/2 rounded mt-1 max-h-40 overflow-y-auto bg-white">
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              className="px-2 text-sm font-semibold  py-1 cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      )}
+
+
             </div>
             <div className="flex-1">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
@@ -411,7 +486,7 @@ export const AddDocument: React.FC = React.memo(() => {
 
 
          
-          <div className="flex justify-end   m">
+          <div className="flex justify-end   mt-4">
             
             <button
               type="submit"
@@ -421,8 +496,7 @@ export const AddDocument: React.FC = React.memo(() => {
             </button>
           </div>
         </form>
-
-        <AddDocumentArabic />
+        {/* <AddDocumentArabic formDataEn={formData} tadawalCodeEn={tadawalCode}  /> */}
       </div>
     </div>
   );

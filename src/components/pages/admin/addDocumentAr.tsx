@@ -8,16 +8,20 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import { FormField } from "../../../interfaces/admin/addDoument";
+import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { AddDocument } from "./addDocumentEn";
 
 
-export const AddDocumentArabic: React.FC = React.memo(() => {
+
+
+
+export const AddDocumentArabic: React.FC= React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.adminAr);
@@ -27,27 +31,27 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
-    Q1: { file: null, date: null, year: "" },
-    Q2: { file: null, date: null, year: "" },
-    Q3: { file: null, date: null, year: "" },
-    Q4: { file: null, date: null, year: "" },
-    S1: { file: null, date: null, year: "" },
-    Board: { file: null, date: null, year: "" },
-    Year: { file: null, date: null, year: "" },
-  });
-
-
+    const [formData, setFormData] = useState< Record<FieldKey, FormField>>({
+      Q1: { file: null, date: null, year: "" },
+      Q2: { file: null, date: null, year: "" },
+      Q3: { file: null, date: null, year: "" },
+      Q4: { file: null, date: null, year: "" },
+      S1: { file: null, date: null, year: "" },
+      Board: { file: null, date: null, year: "" },
+      Year: { file: null, date: null, year: "" },
+    });
+  
+  
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setnickNameAr(value);
+    setTadawalCode(value);
 
     if (value.length > 0) { // Fetch suggestions only if input has 3 or more characters
       setIsLoading(true);
       try {
         const adminLanguage = "Arabic";
-        const response = await commonRequest("GET",`/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,config,{});
+        const response = await commonRequest("GET",`/admin/tadawalCodeSuggestions?name=${value}&language=${adminLanguage}`,config,{});
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
         console.error('Error fetching suggestions:', error);
@@ -58,6 +62,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
       setSuggestions([]);
     }
   };
+
 
   const handleSuggestionClick = async (suggestion: string) => {
     const adminLanguage = "Arabic";
@@ -97,6 +102,7 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
     }));
   };
 
+  
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
@@ -159,22 +165,9 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
                 type="text"
                 placeholder="الاسم المختصر"
                 value={nickNameAr}
-                onChange={handleInputChange}
+                onChange={(e) => setnickNameAr(e.target.value)}
+                
               />
-               {isLoading && <p className="text-sm text-gray-500 mt-1">Loading suggestions...</p>}
-      {suggestions.length > 0 && (
-        <ul className="border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white">
-          {suggestions.map((suggestion, index) => (
-            <li
-              key={index}
-              className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSuggestionClick(suggestion)}
-            >
-              {suggestion}
-            </li>
-          ))}
-        </ul>
-      )}
             </div>
           </div>
           <div className="flex flex-wrap gap-4">
@@ -188,9 +181,27 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
                 placeholder="أدخل كود التداول"
                 value={tadawalCode}
                 required
-                onChange={(e) => setTadawalCode(e.target.value)}
+                onChange={handleInputChange}
               />
+              {isLoading && <p className="text-sm font-serif text-gray-600 mt-1">Loading suggestions...</p>}
+         {suggestions.length > 0 && (
+        <ul className="border border-gray-300 w-1/2 rounded mt-1 max-h-40 overflow-y-auto bg-white">
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              className="px-2 text-sm font-semibold  py-1 cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      )}
+
             </div>
+
+
+
             <div className="flex-1">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 القطاع
@@ -403,6 +414,10 @@ export const AddDocumentArabic: React.FC = React.memo(() => {
             </button>
           </div>
         </form>
+
+
+                  <AddDocument formDataEn={formData} tadawalCodeEn={tadawalCode} />
+
       </div>
     </div>
   );

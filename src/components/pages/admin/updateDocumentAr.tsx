@@ -184,7 +184,7 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
           <div className="flex justify-between">
             <FaArrowCircleRight
               className="text-3xl text-gray-500"
-              onClick={() => navigate("/home")}
+              onClick={() => navigate(-1)}
             />
 
             <h2 className="text-2xl font-bold text-center text-gray-700">

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FaArrowCircleRight } from "react-icons/fa"
 import {
   DocumentSliceEn,
   DocumentSliceAr,
@@ -29,15 +30,15 @@ export const UserCompanyDetails = React.memo(() => {
   const [error, setError] = useState("");
   const [yearList, setYearList] = useState<string[]>([]);
   const [selectedPdfKey, setSelectedPdfKey] = useState<string | null>(null);
-  const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
+  const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
+    useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
   const [iframeSrc, setIframeSrc] = useState<string>("");
   const navigate = useNavigate();
 
-
   const pdfKeys: (keyof FormDataState)[] = [
-  "Q1",
+    "Q1",
     "Q2",
     "Q3",
     "Q4",
@@ -48,9 +49,10 @@ export const UserCompanyDetails = React.memo(() => {
 
   const handleYearClick = (year: string) => {
     setSelectedYear(year);
-    const filteredYears = documents.filter((doc) => doc.formData?.Q1?.year === year).filter(Boolean);
-      setSelectedFilteredDocWithYear(filteredYears);
-     
+    const filteredYears = documents
+      .filter((doc) => doc.formData?.Q1?.year === year)
+      .filter(Boolean);
+    setSelectedFilteredDocWithYear(filteredYears);
   };
 
   const handlePdfButtonClick = (key: string) => {
@@ -77,20 +79,17 @@ export const UserCompanyDetails = React.memo(() => {
     }
   };
 
-
   const handleLeftClick = () => {
     if (visibleYears > 0) {
       setVisibleYears(visibleYears - 1);
     }
   };
 
-
   const handleRightClick = () => {
     if (visibleYears < yearList.length - 1) {
       setVisibleYears(visibleYears + 1);
     }
   };
-
 
   const isDocumentEn = (
     document: DocumentSliceEn | DocumentSliceAr
@@ -100,7 +99,9 @@ export const UserCompanyDetails = React.memo(() => {
 
   useEffect(() => {
     const TakeYears = () => {
-      const years: string[] = documents.map((doc) => doc.formData?.Q1?.year).filter((year): year is string => year !== undefined);
+      const years: string[] = documents
+        .map((doc) => doc.formData?.Q1?.year)
+        .filter((year): year is string => year !== undefined).sort((a, b) => parseInt(a) - parseInt(b));
       setYearList(years);
     };
     TakeYears();
@@ -151,17 +152,17 @@ export const UserCompanyDetails = React.memo(() => {
   return (
     <div
       dir={userLanguage === "English" ? "ltr" : "rtl"}
-      className="min-h-96  text-2xl font-semibold  flex  "
+      className="min-h-96 text-2xl font-semibold flex flex-col lg:flex-row"
     >
-      <div className="   w-[35%]">
+      <div className="w-full  lg:w-[30%]">
+
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className={`rounded-md  flex
-              xs:p-1 lg:p-2 mb-1 `}
+          className="rounded-md flex xs:p-1 lg:p-2 mb-4"
         >
-          <div className=" flex  items-center">
+          <div className="flex items-center">
             <FaArrowCircleLeft
-              className="text-3xl"
+              className="text-3xl text-gray-600"
               onClick={() => {
                 navigate(-1);
               }}
@@ -170,15 +171,15 @@ export const UserCompanyDetails = React.memo(() => {
 
           {document && (
             <div>
-              <div className="flex  sm:flex-row     w-2/3 items-start ">
-                <div className="ml-4 ">
-                  <div className="flex gap-2 text-2xl font-semibold ">
-                    <h4 className="   text-gray-800">
+              <div className="flex flex-col sm:flex-row w-full items-start">
+                <div className="ml-4">
+                  <div className="flex gap-2 text-2xl font-semibold">
+                    <h4 className="text-gray-800">
                       {isDocumentEn(document)
-                        ? document.fullNameEn
+                        ? document.fullNameEn 
                         : document.fullNameAr}
                     </h4>
-                    <h4 className="    text-gray-800 ">
+                    <h4 className="text-gray-800">
                       {"(" +
                         (isDocumentEn(document)
                           ? document.nickNameEn
@@ -186,8 +187,8 @@ export const UserCompanyDetails = React.memo(() => {
                         ")"}
                     </h4>
                   </div>
-                  <div className=" flex gap-12  lg:w-96 items-center ">
-                    <h4 className="  text-2xl  text-gray-800">
+                  <div className="flex gap-12 items-center mt-2">
+                    <h4 className="text-2xl text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
@@ -198,24 +199,25 @@ export const UserCompanyDetails = React.memo(() => {
             </div>
           )}
         </div>
+
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="flex lg:px-12  justify-start gap-4 text-xs mt-2  "
+          className="flex justify-start gap-4 text-xs mt-4  ml-14"
         >
           <button
             onClick={handleLeftClick}
-            className=" bg-gray-200 rounded-full p-1 px-1 ml-2 text-xs  hover:bg-gray-300"
+            className="  p-1 px-2 text-xs "
           >
-            {"<"}
+            <FaArrowCircleLeft className="text-lg text-gray-600" />
           </button>
-          <div className="flex overflow-x-auto gap-2 ">
+          <div className="flex overflow-x-auto gap-2">
             {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
                 key={year}
                 onClick={() => handleYearClick(year)}
-                className={` text-xs px-2 -1 rounded-md  ${
+                className={`text-xs px-2 py-1 rounded-md ${
                   selectedYear === year
-                    ? "bg-gray-600 text-white text-black"
+                    ? "bg-gray-600 text-white"
                     : "bg-gray-300 text-gray-700 hover:bg-gray-200"
                 }`}
               >
@@ -225,79 +227,70 @@ export const UserCompanyDetails = React.memo(() => {
           </div>
           <button
             onClick={handleRightClick}
-            className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
+            className="p-1 "
           >
-            {">"}
+          <FaArrowCircleRight  className="text-lg text-gray-600"/>
           </button>
         </div>
+
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="  lg:px-14 mt-1 rounded-lg    xs:text-xs "
+          className="mt-4 ml-14 rounded-lg text-xs"
         >
           {selectedFilteredDocWithYear.length > 0 ? (
-            <>
-              <div className="flex flex-wrap gap-3">
-                {pdfKeys.map((key) => {
-                  const isFileAvailable = documents.some(
-                    (doc) => doc.formData[key].file !== null
-                  );
+            <div className="flex flex-wrap gap-1">
+              {pdfKeys.map((key) => {
+                const isFileAvailable = documents.some(
+                  (doc) => doc.formData[key].file !== null
+                );
 
-                  return (
-                    isFileAvailable && (
-                      <button
-                        key={key}
-                        onClick={() => handlePdfButtonClick(key)}
-                        className={`px-2 py-1 bg-gray-200 rounded-md  ${
-                          selectedPdfKey === key
-                            ? "bg-gray-600 text-white"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}
-                      >
-                        {key}
-                      </button>
-                    )
-                  );
-                })}
-              </div>
-            </>
+                return (
+                  isFileAvailable && (
+                    <button
+                      key={key}
+                      onClick={() => handlePdfButtonClick(key)}
+                      className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
+                        selectedPdfKey === key
+                          ? "bg-gray-600 text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      {key}
+                    </button>
+                  )
+                );
+              })}
+            </div>
           ) : (
             <p className="text-center text-gray-600"></p>
           )}
         </div>
       </div>
-      <div className="w-[100%]">
-        {iframeSrc ? (
-          <>
-            <div
-              className=" rounded-md p-3 mt-2"
-              style={{
-                position: "relative",
-                width: "100%",
-                height: "100vh",
-              }}
-            >
-              {/* Embed the Google Docs Viewer */}
 
-              <iframe
-                src={iframeSrc}
-                style={
-                  {
-                    width: "100%",
-                    height: "100vh", // Full height of the viewport
-                    border: "none",
-                    pointerEvents: "auto", // Allow interaction with the iframe
-                    overflow: "hidden", // Hide scrollbar for the iframe
-                    "scrollbar-width": "none", // Hide scrollbar for Firefox
-                    "-ms-overflow-style": "none", // Hide scrollbar for IE and Edge
-                  } as React.CSSProperties
-                }
-                title="PDF Viewer"
-                frameBorder="0"
-              />
-            </div>
-          </>
+      <div className="w-full lg:w-[65%]  mt-4 lg:mt-0">
+
+        {iframeSrc ? (
+          <div
+            className="rounded-md "
+            style={{
+              position: "relative",
+              width: "100%",
+              height: "100vh", // Adjust height for mobile responsiveness
+            }}
+          >
+            <iframe
+              src={iframeSrc}
+              style={{
+                width: "100%",
+                height: "100%",
+                border: "none",
+              }}
+              title="PDF Viewer"
+              frameBorder="0"
+            />
+          </div>
         ) : (
-          <div className="w-full h-96 flex flex-col items-center justify-center  via-gray-200 to-white rounded-lg">
+          <div className="w-full h-96 flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg">
             {pdfLoading && (
               <svg
                 className="animate-spin h-8 w-8 text-blue-500 mb-4"

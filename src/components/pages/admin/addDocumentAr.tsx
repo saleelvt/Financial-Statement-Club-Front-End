@@ -86,21 +86,15 @@ export const AddDocumentArabic: React.FC= React.memo(() => {
   };
 
   const handleDateChange = (field: FieldKey, date: Date | null) => {
-    setFormData((prev) => {
-      const updatedFields: Record<FieldKey, FormField> = {} as Record<FieldKey, FormField>;
-  
-      // Update all fields if Q1 is updated
-      (Object.keys(prev) as FieldKey[]).forEach((key) => {
-        updatedFields[key] = {
-          ...prev[key],
-          date: field === "Q1" ? date : prev[key].date || date, // Propagate Q1's date
-        };
-      });
-  
-      return updatedFields;
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        date,
+      },
+    }));
   };
-  
+
 
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => {

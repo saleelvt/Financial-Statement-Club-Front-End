@@ -219,7 +219,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
           className="bg-white shadow-md rounded px-2  pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
         >
         
-          <div className="flex flex-col  lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+          <div className="flex flex-col m lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
             <div className="w-full">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Full Name <span className="font-mono text-xs"> (English)</span>

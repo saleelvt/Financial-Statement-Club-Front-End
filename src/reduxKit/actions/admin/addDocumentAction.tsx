@@ -20,6 +20,18 @@ export const addDocumentEnglish = createAsyncThunk(
   "admin/addDocument",
   async (adminCredentials: DocumentPayload, { rejectWithValue }) => {
     try {
+
+
+      const formDataf = adminCredentials.formData;
+
+      // Validate Q1 field
+      const q1Field = formDataf?.Q1;
+      if (!q1Field || !q1Field.file || !q1Field.date || !q1Field.year) {
+        return rejectWithValue({
+          message: "The Q1 field is required. Please fill in all details for Q1.",
+        });
+      }
+
       const formData = new FormData();
       for (const [key, value] of Object.entries(
         adminCredentials?.formData || {}
@@ -49,7 +61,7 @@ export const addDocumentEnglish = createAsyncThunk(
           console.warn(`Skipping key: ${key}, value is null or invalid`);
         }
       }
-      
+
 
       // Append other data
       formData.append("fullNameEn", adminCredentials?.fullNameEn);

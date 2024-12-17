@@ -176,7 +176,7 @@ export const UserCompanyDetails = React.memo(() => {
 
           {document && (
             <div>
-              <div className="flex flex-col   lg:ml-3  sm:flex-row w-full items-start">
+              <div className="flex flex-col   xs:ml-20 md:ml-16 sm:ml-20  sm:flex-row w-full items-start">
                 <div className="  flex flex-col justify-center ">
 
 
@@ -196,7 +196,7 @@ export const UserCompanyDetails = React.memo(() => {
                   </div>
 
 
-                  <div className="flex justify-center xs:ml-22   lg:justify-start items-center ">
+                  <div className="flex justify-center    lg:justify-start items-center ">
                     <h4 className=" lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
@@ -220,7 +220,7 @@ export const UserCompanyDetails = React.memo(() => {
           </button>
 
           <div className="flex  gap-1 ">
-            {yearList.slice(visibleYears, visibleYears + 55).map((year) => (
+            {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
                 key={year}
                 onClick={() => handleYearClick(year)}

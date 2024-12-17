@@ -246,6 +246,7 @@ export const CheckDocumentDetails = () => {
                           >
                             View 
                           </button> */}
+                          <div className="flex justify-center items-center">
                             <IoEyeSharp
                               className="text-2xl   text-center text-gray-600"
                               onClick={() =>
@@ -254,6 +255,7 @@ export const CheckDocumentDetails = () => {
                                 )
                               }
                             />
+                            </div>
                           </td>
                           {key === "Board" && (
                             <>
@@ -262,7 +264,9 @@ export const CheckDocumentDetails = () => {
                                 className=" flex justify-center border  gap-3 font-semibold border-gray-300 bg-gray-200"
                               >
                                 {/* <button className="bg-gray-400 border border-gray-600 hover:bg-gray-800 text-white text-sm  rounded-lg shadow transition duration-300">Update</button> */}
+                                <div className="flex gap-5">
                                 <FaTrash
+                                  
                                   onClick={() => {
                                     setDocToDelete(doc._id);
                                     setModalOpen(true);
@@ -275,6 +279,7 @@ export const CheckDocumentDetails = () => {
                                   className="text-xl text-gray-600 transition duration-200  transform hover:scale-125"/>
                              
                                 {/* <button onClick={()=>{handleUpdateDocument(doc?._id)}} className="bg-gray-400 border border-gray-600 hover:bg-gray-800 text-white px-4 py-1 rounded-lg shadow transition duration-300">Update</button> */}
+                                </div>
                               </td>
                             </>
                           )}

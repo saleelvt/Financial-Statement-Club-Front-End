@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useLocation,  } from "react-router-dom";
+import { useLocation, useNavigate,  } from "react-router-dom";
 
 import {
   DocumentSliceEn,
@@ -12,6 +12,7 @@ import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import "../../../css/YearSlider.css";
+import { FaArrowCircleLeft } from "react-icons/fa"
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 
@@ -30,6 +31,7 @@ export const UserCompanyDetails = React.memo(() => {
   const [error, setError] = useState("");
   const [yearList, setYearList] = useState<string[]>([]);
   const [selectedPdfKey, setSelectedPdfKey] = useState<string | null>(null);
+  const navigate=useNavigate()
   const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("");
@@ -163,20 +165,22 @@ export const UserCompanyDetails = React.memo(() => {
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="rounded-md flex xs:p-1 lg:p-2 mb-4"
         >
-          {/* <div className="flex items-center">
+          <div className="flex  items-center">
             <FaArrowCircleLeft
-              className="text-3xl text-gray-600"
+              className="text-3xl xs:hidden sm:hidden md:hidden lg:block text-gray-600"
               onClick={() => {
                 navigate(-1);
               }}
             />
-          </div> */}
+          </div>
 
           {document && (
             <div>
-              <div className="flex flex-col  xs:ml-20 sm:ml-16   sm:flex-row w-full items-start">
-                <div className="">
-                  <div className="flex justify-center lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold">
+              <div className="flex flex-col   lg:ml-3  sm:flex-row w-full items-start">
+                <div className="  flex flex-col justify-center ">
+
+
+                  <div className="flex lg:justify-start  justify-center lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold">
                     <h4 className="text-gray-800">
                       {isDocumentEn(document)
                         ? document.fullNameEn
@@ -190,13 +194,17 @@ export const UserCompanyDetails = React.memo(() => {
                         ")"}
                     </h4>
                   </div>
-                  <div className="flex justify-center items-center ">
-                    <h4 className=" text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold text-gray-800">
+
+
+                  <div className="flex justify-center xs:ml-22   lg:justify-start items-center ">
+                    <h4 className=" lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
                     </h4>
                   </div>
+
+
                 </div>
               </div>
             </div>
@@ -205,18 +213,18 @@ export const UserCompanyDetails = React.memo(() => {
 
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="flex justify-center  gap-1 text-xs mt-4 "
+          className="flex justify-center     gap-1 text-xs  "
         >
           <button onClick={handleRightClick} className="p-1 px-2  hover:border rounded-3xl hover:bg-gray-300 text-xl text-gray-600 ">
           {"<"}
           </button>
 
-          <div className="flex overflow-x-auto gap-2 ">
-            {yearList.slice(visibleYears, visibleYears + 4).map((year) => (
+          <div className="flex  gap-1 ">
+            {yearList.slice(visibleYears, visibleYears + 55).map((year) => (
               <button
                 key={year}
                 onClick={() => handleYearClick(year)}
-                className={`text-xs px-2 py-1 rounded-md ${
+                className={`text-xs  m-1 px-1  rounded-md ${
                   selectedYear === year
                     ? "bg-gray-600 text-white"
                     : "bg-gray-300 text-gray-700 hover:bg-gray-400"
@@ -235,7 +243,7 @@ export const UserCompanyDetails = React.memo(() => {
 
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="mt-4   flex justify-center rounded-lg text-xs"
+          className="mt-2   flex justify-center rounded-lg text-xs"
         >
           {selectedFilteredDocWithYear.length > 0 ? (
             <div className="flex flex-wrap gap-3">

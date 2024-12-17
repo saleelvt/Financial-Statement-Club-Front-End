@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { FaArrowCircleRight } from "react-icons/fa";
+import { useLocation,  } from "react-router-dom";
+
 import {
   DocumentSliceEn,
   DocumentSliceAr,
@@ -14,7 +14,7 @@ import { config } from "../../../config/constants";
 import "../../../css/YearSlider.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
-import { FaArrowCircleLeft } from "react-icons/fa";
+
 export const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
     (state: RootState) => state.userLanguage
@@ -35,7 +35,6 @@ export const UserCompanyDetails = React.memo(() => {
   const [selectedYear, setSelectedYear] = useState<string>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
   const [iframeSrc, setIframeSrc] = useState<string>("");
-  const navigate = useNavigate();
 
   const pdfKeys: (keyof FormDataState)[] = [
     "Q1",
@@ -158,31 +157,32 @@ export const UserCompanyDetails = React.memo(() => {
       dir={userLanguage === "English" ? "ltr" : "rtl"}
       className="min-h-96 text-2xl font-semibold flex flex-col lg:flex-row"
     >
-      <div className="w-full  lg:w-[30%]">
+      <div className="w-full  
+       lg:w-[32%]">
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="rounded-md flex xs:p-1 lg:p-2 mb-4"
         >
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <FaArrowCircleLeft
               className="text-3xl text-gray-600"
               onClick={() => {
                 navigate(-1);
               }}
             />
-          </div>
+          </div> */}
 
           {document && (
             <div>
-              <div className="flex flex-col sm:flex-row w-full items-start">
-                <div className="ml-4">
-                  <div className="flex gap-2 text-2xl font-semibold">
+              <div className="flex flex-col  xs:ml-20 sm:ml-16   sm:flex-row w-full items-start">
+                <div className="">
+                  <div className="flex justify-center lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold">
                     <h4 className="text-gray-800">
                       {isDocumentEn(document)
                         ? document.fullNameEn
                         : document.fullNameAr}
                     </h4>
-                    <h4 className="text-gray-800">
+                    <h4 className="text-gray-800 ">
                       {"(" +
                         (isDocumentEn(document)
                           ? document.nickNameEn
@@ -190,8 +190,8 @@ export const UserCompanyDetails = React.memo(() => {
                         ")"}
                     </h4>
                   </div>
-                  <div className="flex gap-12 items-center mt-2">
-                    <h4 className="text-2xl text-gray-800">
+                  <div className="flex justify-center items-center ">
+                    <h4 className=" text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
@@ -205,21 +205,21 @@ export const UserCompanyDetails = React.memo(() => {
 
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="flex justify-start gap-2 text-xs mt-4  ml-12 lg:ml-14"
+          className="flex justify-center  gap-1 text-xs mt-4 "
         >
-          <button onClick={handleRightClick} className="p-1 ">
-            <FaArrowCircleLeft className="text-lg text-gray-600" />
+          <button onClick={handleRightClick} className="p-1 px-2  hover:border rounded-3xl hover:bg-gray-300 text-xl text-gray-600 ">
+          {"<"}
           </button>
 
-          <div className="flex overflow-x-auto gap-1">
-            {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
+          <div className="flex overflow-x-auto gap-2 ">
+            {yearList.slice(visibleYears, visibleYears + 4).map((year) => (
               <button
                 key={year}
                 onClick={() => handleYearClick(year)}
                 className={`text-xs px-2 py-1 rounded-md ${
                   selectedYear === year
                     ? "bg-gray-600 text-white"
-                    : "bg-gray-300 text-gray-700 hover:bg-gray-200"
+                    : "bg-gray-300 text-gray-700 hover:bg-gray-400"
                 }`}
               >
                 {year}
@@ -227,17 +227,18 @@ export const UserCompanyDetails = React.memo(() => {
             ))}
           </div>
 
-          <button onClick={handleLeftClick} className="  p-1 px-2 text-xs ">
-            <FaArrowCircleRight className="text-lg text-gray-600" />
+          <button onClick={handleLeftClick} className="text-xl  hover:border rounded-3xl hover:bg-gray-300 text-gray-600 p-1 px-2  ">
+            {/* <FaArrowCircleRight className="text-lg text-gray-600" /> */}
+            {">"}
           </button>
         </div>
 
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="mt-4 ml-12 lg:ml-14 rounded-lg text-xs"
+          className="mt-4   flex justify-center rounded-lg text-xs"
         >
           {selectedFilteredDocWithYear.length > 0 ? (
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-3">
               {pdfKeys.map((key) => {
                 const isFileAvailable = selectedFilteredDocWithYear.some(
                   (doc) => doc.formData[key].file !== null
@@ -251,7 +252,7 @@ export const UserCompanyDetails = React.memo(() => {
                       className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
                         selectedPdfKey === key
                           ? "bg-gray-600 text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-300"
                       }`}
                     >
                       {key}
@@ -266,7 +267,7 @@ export const UserCompanyDetails = React.memo(() => {
         </div>
       </div>
 
-      <div className="w-full lg:w-[65%]  mt-4 lg:mt-0">
+      <div className="lg:w-[75%]  mt-2  ">
         {iframeSrc ? (
           <div
             className="rounded-md "

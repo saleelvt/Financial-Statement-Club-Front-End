@@ -7,14 +7,13 @@ import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { IoEyeSharp } from "react-icons/io5";
-import { FaEyeSlash } from "react-icons/fa";
+// import { FaEyeSlash } from "react-icons/fa";
 import { Loading } from "../Loading";
 import React from "react";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import {
-  DocumentSliceEn,
-  DocumentSliceAr,
+import { FaPen } from "react-icons/fa"
+import {DocumentSliceEn,DocumentSliceAr,
 } from "../../../interfaces/admin/addDoument";
 import { GrUpdate } from "react-icons/gr";
 import { FormDataState } from "../../../interfaces/admin/addDoument";
@@ -130,9 +129,9 @@ export const CheckDocumentDetails = () => {
       console.log(error);
     }
   };
-  const handleViewCondition = () => {
-    handleViewPdf(null);
-  };
+  // const handleViewCondition = () => {
+  //   handleViewPdf(null);
+  // };
 
   return (
     <div className="min-h-screen">
@@ -260,7 +259,7 @@ export const CheckDocumentDetails = () => {
                             <>
                               <td
                                 rowSpan={7}
-                                className=" flex place-content-center justify-between border  font-semibold border-gray-300 bg-gray-200"
+                                className=" flex justify-center border  gap-3 font-semibold border-gray-300 bg-gray-200"
                               >
                                 {/* <button className="bg-gray-400 border border-gray-600 hover:bg-gray-800 text-white text-sm  rounded-lg shadow transition duration-300">Update</button> */}
                                 <FaTrash
@@ -268,14 +267,13 @@ export const CheckDocumentDetails = () => {
                                     setDocToDelete(doc._id);
                                     setModalOpen(true);
                                   }}
-                                  className="text-2xl text-gray-600"
+                                  className="text-xl transition duration-200 transform hover:scale-125 text-gray-600"
                                 />
-                                <GrUpdate
-                                  onClick={() => {
+                                <FaPen  onClick={() => {
                                     handleUpdateDocument(doc?._id);
                                   }}
-                                  className="text-2xl text-gray-600"
-                                />
+                                  className="text-xl text-gray-600 transition duration-200  transform hover:scale-125"/>
+                             
                                 {/* <button onClick={()=>{handleUpdateDocument(doc?._id)}} className="bg-gray-400 border border-gray-600 hover:bg-gray-800 text-white px-4 py-1 rounded-lg shadow transition duration-300">Update</button> */}
                               </td>
                             </>
@@ -294,14 +292,14 @@ export const CheckDocumentDetails = () => {
         {/* PDF Viewer */}
         {selectedPdf ? (
           <div className="mt-6 p-1 bg-gray-200 shadow-lg rounded-lg">
-            <div className="flex justify-between items-center">
+            {/* <div className="flex justify-between items-center">
               <h2 className="text-lg font-semibold mb-4">PDF Viewer</h2>
               <FaEyeSlash
                 onClick={handleViewCondition}
                 className="text-2xl text-red-600 cursor-pointer"
                 title="Close PDF"
               />
-            </div>
+            </div> */}
             <iframe
               src={`${selectedPdf}#toolbar=0`}
               title="Document PDF"

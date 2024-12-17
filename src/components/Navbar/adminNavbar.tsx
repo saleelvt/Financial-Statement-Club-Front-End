@@ -64,7 +64,7 @@ export const AdminNavbar: React.FC = () => {
       <div className="container py-2 mx-auto gap-3 flex justify-between items-center">
         <div className="w-full flex items-center justify-between ">
           <h4 className=" font-semibold xs:font-semibold  lg:text-2xl md:text-2xl sm:1xl xs:text-xl ">
-       {adminLanguage ==="Arabic" ?"نادي القوائم المالية ":"Financial Statements Club"}
+       {adminLanguage ==="Arabic" ?"نادي القوائم المالية ":"FinStatements Club"}
           </h4>
           <button
           onClick={toggleLanguage}

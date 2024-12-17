@@ -205,13 +205,13 @@ export const UserCompanyDetails = React.memo(() => {
 
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="flex justify-start gap-4 text-xs mt-4  ml-14"
+          className="flex justify-start gap-2 text-xs mt-4  ml-12 lg:ml-14"
         >
           <button onClick={handleRightClick} className="p-1 ">
             <FaArrowCircleLeft className="text-lg text-gray-600" />
           </button>
 
-          <div className="flex overflow-x-auto gap-2">
+          <div className="flex overflow-x-auto gap-1">
             {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
                 key={year}
@@ -234,7 +234,7 @@ export const UserCompanyDetails = React.memo(() => {
 
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="mt-4 ml-14 rounded-lg text-xs"
+          className="mt-4 ml-12 lg:ml-14 rounded-lg text-xs"
         >
           {selectedFilteredDocWithYear.length > 0 ? (
             <div className="flex flex-wrap gap-1">

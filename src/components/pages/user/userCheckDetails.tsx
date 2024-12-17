@@ -204,12 +204,14 @@ export const UserCompanyDetails = React.memo(() => {
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="flex justify-start gap-4 text-xs mt-4  ml-14"
         >
-          <button
-            onClick={handleLeftClick}
-            className="  p-1 px-2 text-xs "
+           <button
+            onClick={handleRightClick}
+            className="p-1 "
           >
-            <FaArrowCircleLeft className="text-lg text-gray-600" />
+              <FaArrowCircleLeft className="text-lg text-gray-600" />
+     
           </button>
+         
           <div className="flex overflow-x-auto gap-2">
             {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
@@ -225,12 +227,18 @@ export const UserCompanyDetails = React.memo(() => {
               </button>
             ))}
           </div>
-          <button
+          {/* <button
             onClick={handleRightClick}
             className="p-1 "
           >
-          <FaArrowCircleRight  className="text-lg text-gray-600"/>
+          </button> */}
+           <button
+            onClick={handleLeftClick}
+            className="  p-1 px-2 text-xs "
+          >
+            <FaArrowCircleRight  className="text-lg text-gray-600"/>
           </button>
+        
         </div>
 
         <div

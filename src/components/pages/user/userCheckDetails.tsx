@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaArrowCircleRight } from "react-icons/fa"
+import { FaArrowCircleRight } from "react-icons/fa";
 import {
   DocumentSliceEn,
   DocumentSliceAr,
@@ -101,7 +101,8 @@ export const UserCompanyDetails = React.memo(() => {
     const TakeYears = () => {
       const years: string[] = documents
         .map((doc) => doc.formData?.Q1?.year)
-        .filter((year): year is string => year !== undefined).sort((a, b) => parseInt(a) - parseInt(b));
+        .filter((year): year is string => year !== undefined)
+        .sort((a, b) => parseInt(a) - parseInt(b));
       setYearList(years);
     };
     TakeYears();
@@ -155,7 +156,6 @@ export const UserCompanyDetails = React.memo(() => {
       className="min-h-96 text-2xl font-semibold flex flex-col lg:flex-row"
     >
       <div className="w-full  lg:w-[30%]">
-
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="rounded-md flex xs:p-1 lg:p-2 mb-4"
@@ -176,7 +176,7 @@ export const UserCompanyDetails = React.memo(() => {
                   <div className="flex gap-2 text-2xl font-semibold">
                     <h4 className="text-gray-800">
                       {isDocumentEn(document)
-                        ? document.fullNameEn 
+                        ? document.fullNameEn
                         : document.fullNameAr}
                     </h4>
                     <h4 className="text-gray-800">
@@ -204,14 +204,10 @@ export const UserCompanyDetails = React.memo(() => {
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="flex justify-start gap-4 text-xs mt-4  ml-14"
         >
-           <button
-            onClick={handleRightClick}
-            className="p-1 "
-          >
-              <FaArrowCircleLeft className="text-lg text-gray-600" />
-     
+          <button onClick={handleRightClick} className="p-1 ">
+            <FaArrowCircleLeft className="text-lg text-gray-600" />
           </button>
-         
+
           <div className="flex overflow-x-auto gap-2">
             {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
@@ -227,18 +223,10 @@ export const UserCompanyDetails = React.memo(() => {
               </button>
             ))}
           </div>
-          {/* <button
-            onClick={handleRightClick}
-            className="p-1 "
-          >
-          </button> */}
-           <button
-            onClick={handleLeftClick}
-            className="  p-1 px-2 text-xs "
-          >
-            <FaArrowCircleRight  className="text-lg text-gray-600"/>
+
+          <button onClick={handleLeftClick} className="  p-1 px-2 text-xs ">
+            <FaArrowCircleRight className="text-lg text-gray-600" />
           </button>
-        
         </div>
 
         <div
@@ -248,7 +236,7 @@ export const UserCompanyDetails = React.memo(() => {
           {selectedFilteredDocWithYear.length > 0 ? (
             <div className="flex flex-wrap gap-1">
               {pdfKeys.map((key) => {
-                const isFileAvailable = documents.some(
+                const isFileAvailable = selectedFilteredDocWithYear.some(
                   (doc) => doc.formData[key].file !== null
                 );
 
@@ -276,7 +264,6 @@ export const UserCompanyDetails = React.memo(() => {
       </div>
 
       <div className="w-full lg:w-[65%]  mt-4 lg:mt-0">
-
         {iframeSrc ? (
           <div
             className="rounded-md "

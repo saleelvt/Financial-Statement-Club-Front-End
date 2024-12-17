@@ -21,11 +21,11 @@ import { FormDataState } from "../../../interfaces/admin/addDoument";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 import { FaTrash } from "react-icons/fa";
-import { boolean } from "yup";
+
 import toast from "react-hot-toast";
 
 export const CheckDocumentDetails = () => {
-  const [showEye, setShowEye] = useState(false);
+
   const [documents, setDocuments] = useState<
     (DocumentSliceEn | DocumentSliceAr)[]
   >([]);
@@ -106,7 +106,7 @@ export const CheckDocumentDetails = () => {
   });
 
   const handleViewPdf = (file: any) => {
-    setShowEye(true);
+
     setSelectedPdf(file);
   };
 

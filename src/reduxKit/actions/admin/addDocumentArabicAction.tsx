@@ -27,6 +27,14 @@ export const axiosIn = axios.create({
     "admin/addDocumentArabic",
     async (adminCredentials:DocumentPayload,{rejectWithValue})=>{
         try {
+          const formDataf = adminCredentials.formData;
+          const q1Field = formDataf?.Q1;
+          if (!q1Field || !q1Field.file || !q1Field.date || !q1Field.year) {
+            return rejectWithValue({
+              message: "The Q1 field is required. Please fill in all Details Of Q1 .",
+            });
+          }
+    
            const formData = new FormData();
             for (const [key, value] of Object.entries(adminCredentials?.formData || {})) {
               if (value && typeof value === 'object' && 'file' in value && value.file) {

@@ -98,6 +98,18 @@ export const CheckDocumentDetails = () => {
       const year = doc.formData[key as keyof FormDataState]?.year;
       return year ? year.toString().includes(searchTerm) : false; // check if searchTerm is included in year
     });
+  }).sort((a, b) => {
+    // Extract years for sorting
+    const getYear = (doc: typeof documents[number]) => {
+      return Math.min(
+        ...["Board", "Q1", "Q2", "Q3", "Q4", "S1", "Year"]
+          .map((key) => parseInt(doc.formData[key as keyof FormDataState]?.year || "", 10))
+          .filter((year) => !isNaN(year)) // Ignore invalid numbers
+      );
+    };
+    const yearA = getYear(a);
+    const yearB = getYear(b);
+    return yearA - yearB; // Sort by ascending order
   });
 
   const handleViewPdf = (file: any) => {

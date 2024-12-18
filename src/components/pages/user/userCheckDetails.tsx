@@ -239,10 +239,11 @@ export const UserCompanyDetails = React.memo(() => {
               </button>
             ))}
           </div>
+          
 
           <button
             onClick={handleLeftClick}
-            className="text-xl  hover:border rounded-3xl  text-gray-600 p-1 px-2  "
+            className="text-xl   rounded-3xl  text-gray-600 p-1 px-2  "
           >
             {/* <FaArrowCircleRight className="text-lg text-gray-600" /> */}
             {">"}

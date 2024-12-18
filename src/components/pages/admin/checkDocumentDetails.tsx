@@ -244,7 +244,7 @@ export const CheckDocumentDetails = () => {
                           </button> */}
                           <div className="flex justify-center items-center">
                             <IoEyeSharp
-                              className="text-2xl   text-center text-gray-600"
+                              className="text-2xl   text-center text-gray-800"
                               onClick={() =>
                                 handleViewPdf(
                                   doc.formData[key as keyof FormDataState]?.file
@@ -267,12 +267,12 @@ export const CheckDocumentDetails = () => {
                                     setDocToDelete(doc._id);
                                     setModalOpen(true);
                                   }}
-                                  className="text-xl transition duration-200 transform hover:scale-125 text-gray-600"
+                                  className="text-xl  text-gray-800"
                                 />
                                 <FaPen  onClick={() => {
                                     handleUpdateDocument(doc?._id);
                                   }}
-                                  className="text-xl text-gray-600 transition duration-200  transform hover:scale-125"/>
+                                  className="text-xl text-gray-800 "/>
                              
                                 {/* <button onClick={()=>{handleUpdateDocument(doc?._id)}} className="bg-gray-400 border border-gray-600 hover:bg-gray-800 text-white px-4 py-1 rounded-lg shadow transition duration-300">Update</button> */}
                                 </div>

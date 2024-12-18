@@ -153,7 +153,7 @@ export const DocumentList: React.FC = () => {
               <thead>
                 <tr className="bg-gray-300 text-gray-700 text-xs sm:text-sm md:text-base">
                   <th className="py-2 px-2 sm:px-4 border border-gray-300">
-                    {language === "Arabic" ? "كود تداول" : "Tadawu                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               l Code"}
+                    {language === "Arabic" ? "كود تداول" : "Tadawul Code"}
                   </th>
                   <th className="py-2 px-2 sm:px-4 border border-gray-300">
                     {" "}

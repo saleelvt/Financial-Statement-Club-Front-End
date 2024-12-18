@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate,  } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   DocumentSliceEn,
@@ -12,7 +12,8 @@ import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import "../../../css/YearSlider.css";
-import { FaArrowCircleLeft } from "react-icons/fa"
+import { FaArrowCircleLeft } from "react-icons/fa";
+import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 
@@ -31,7 +32,7 @@ export const UserCompanyDetails = React.memo(() => {
   const [error, setError] = useState("");
   const [yearList, setYearList] = useState<string[]>([]);
   const [selectedPdfKey, setSelectedPdfKey] = useState<string | null>(null);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("");
@@ -60,7 +61,6 @@ export const UserCompanyDetails = React.memo(() => {
   };
 
   const handlePdfButtonClick = (key: string) => {
-   
     setSelectedPdfKey(key);
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
@@ -159,27 +159,36 @@ export const UserCompanyDetails = React.memo(() => {
       dir={userLanguage === "English" ? "ltr" : "rtl"}
       className="min-h-96 text-2xl font-semibold flex flex-col lg:flex-row"
     >
-      <div className="w-full  
-       lg:w-[32%]">
+      <div
+        className="w-full  
+       lg:w-[32%]"
+      >
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="rounded-md flex xs:p-1 lg:p-2 mb-4"
         >
           <div className="flex  items-center">
-            <FaArrowCircleLeft
-              className="text-3xl xs:hidden sm:hidden md:hidden lg:block text-gray-600"
-              onClick={() => {
-                navigate(-1);
-              }}
-            />
+            {userLanguage === "Arabic" ? (
+              <FaArrowCircleRight
+                className="text-3xl  m-4  xs:hidden sm:hidden md:hidden lg:block text-gray-600"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              />
+            ) : (
+              <FaArrowCircleLeft
+                className="text-3xl xs:hidden sm:hidden md:hidden lg:block text-gray-600"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              />
+            )}
           </div>
 
           {document && (
             <div>
               <div className="flex flex-col   xs:ml-20 md:ml-16 sm:ml-20  sm:flex-row w-full items-start">
                 <div className="  flex flex-col justify-center ">
-
-
                   <div className="flex lg:justify-start  justify-center lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold">
                     <h4 className="text-gray-800">
                       {isDocumentEn(document)
@@ -195,7 +204,6 @@ export const UserCompanyDetails = React.memo(() => {
                     </h4>
                   </div>
 
-
                   <div className="flex justify-center    lg:justify-start items-center ">
                     <h4 className=" lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold text-gray-800">
                       {isDocumentEn(document)
@@ -203,8 +211,6 @@ export const UserCompanyDetails = React.memo(() => {
                         : document.sector}
                     </h4>
                   </div>
-
-
                 </div>
               </div>
             </div>
@@ -215,8 +221,11 @@ export const UserCompanyDetails = React.memo(() => {
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="flex justify-center     gap-1 text-xs  "
         >
-          <button onClick={handleRightClick} className="p-1 px-2  hover:border rounded-3xl hover:bg-gray-300 text-xl text-gray-600 ">
-          {"<"}
+          <button
+            onClick={handleRightClick}
+            className="p-1 px-2  hover:border rounded-3xl hover:bg-gray-300 text-xl text-gray-600 "
+          >
+            {"<"}
           </button>
 
           <div className="flex  gap-1 ">
@@ -235,7 +244,10 @@ export const UserCompanyDetails = React.memo(() => {
             ))}
           </div>
 
-          <button onClick={handleLeftClick} className="text-xl  hover:border rounded-3xl hover:bg-gray-300 text-gray-600 p-1 px-2  ">
+          <button
+            onClick={handleLeftClick}
+            className="text-xl  hover:border rounded-3xl hover:bg-gray-300 text-gray-600 p-1 px-2  "
+          >
             {/* <FaArrowCircleRight className="text-lg text-gray-600" /> */}
             {">"}
           </button>
@@ -297,8 +309,7 @@ export const UserCompanyDetails = React.memo(() => {
             />
           </div>
         ) : (
-          <div className="w-full  flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg">
-          </div>
+          <div className="w-full  flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg"></div>
         )}
       </div>
     </div>

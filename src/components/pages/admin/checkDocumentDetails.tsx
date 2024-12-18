@@ -178,7 +178,7 @@ export const CheckDocumentDetails = () => {
               <thead>
                 <tr>
                   <th className="p-1 border border-gray-600 bg-gray-300 ">
-                    Tadaval Code
+                  {adminLanguage ==="Arabic" ?"كود تادافال":"Tadawul Code"}
                   </th>
                   <th className="p-1 border border-gray-600 bg-gray-300 ">
                     Nickname

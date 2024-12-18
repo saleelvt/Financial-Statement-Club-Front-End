@@ -31,14 +31,9 @@ export const addDocumentEnglish = createAsyncThunk(
       }
 
       const formData = new FormData();
-      for (const [key, value] of Object.entries(
-        adminCredentials?.formData || {}
-      )) {
+      for (const [key, value] of Object.entries(adminCredentials?.formData || {} )) {
         if (
-          value &&
-          typeof value === "object" &&
-          "file" in value &&
-          value.file
+          value && typeof value === "object" && "file" in value && value.file
         ) {
           if (typeof value.file === "string" || value.file instanceof File) {
             formData.append(key, value.file);
@@ -59,8 +54,6 @@ export const addDocumentEnglish = createAsyncThunk(
           console.warn(`Skipping key: ${key}, value is null or invalid`);
         }
       }
-
-
       // Append other data
       formData.append("fullNameEn", adminCredentials?.fullNameEn);
       formData.append("nickNameEn", adminCredentials?.nickNameEn);
@@ -72,10 +65,7 @@ export const addDocumentEnglish = createAsyncThunk(
         console.log(key, value);
       });
       console.log("this is my data ++++++++++++");
-      const response = await axiosIn.post(
-        `/admin/addDocumentEnglish`,
-        formData,
-        createAxiosConfig(true)
+      const response = await axiosIn.post(`/admin/addDocumentEnglish`,  formData, createAxiosConfig(true)
       );
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

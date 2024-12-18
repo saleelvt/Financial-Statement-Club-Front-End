@@ -33,7 +33,7 @@ export const axiosIn = axios.create({
             return rejectWithValue({
               message: "The Q1 field is required. Please fill in all Details Of Q1 .",
             });
-          }
+          } 
     
            const formData = new FormData();
             for (const [key, value] of Object.entries(adminCredentials?.formData || {})) {
@@ -62,7 +62,6 @@ export const axiosIn = axios.create({
             formData.append("nickNameAr", adminCredentials?.nickNameAr);
             formData.append("tadawalCode", adminCredentials?.tadawalCode);
             formData.append("sector", adminCredentials?.sector);
-            formData.append("", adminCredentials?.sector);
             console.log("got hte datas in arabic side}}}}}}}}}}} ",adminCredentials);
             
             const response = await axiosIn.post(`/admin/addDocumentArabic`,formData,createAxiosConfig(true));

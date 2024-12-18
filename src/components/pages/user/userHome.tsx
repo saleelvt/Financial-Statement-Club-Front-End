@@ -88,9 +88,9 @@ const UserHomePage: React.FC = () => {
     }
   }, [documents]);
 
-  const handleBrandClick = async (brandNickName: string) => {
-    setSelectedBrand(brandNickName);
-    navigate("/companyDetails", { state: { brandNickName, language } });
+  const handleBrandClick = async (tadawalCode: string) => {
+    setSelectedBrand(tadawalCode);
+    navigate("/companyDetails", { state: {tadawalCode, language } });
   };
 
   const handleShowMore = () => setShowAll(true);
@@ -141,9 +141,9 @@ const UserHomePage: React.FC = () => {
           .map((brand, index) => (
             <button
               key={index}
-              onClick={() => handleBrandClick(brand.nickNameEn)}
+              onClick={() => handleBrandClick(brand.tadawalCode)}
               className={` font-bold hover:border-b-2 hover:border-red-600 focus:ring-2 px-2 py-0.5 transition duration-300 transform hover:scale-105   hover:text-red-600 rounded-sm ${
-                selectedBrand === brand.fullNameEn
+                selectedBrand === brand.tadawalCode
                   ? "bg-gray-200 text-black font-medium"
                   : ""
               } ${language === "Arabic" ? "p-1" : ""}`}

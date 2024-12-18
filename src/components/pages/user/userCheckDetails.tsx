@@ -27,7 +27,7 @@ export const UserCompanyDetails = React.memo(() => {
 
   const [document, setDocument] = useState<DocumentSliceEn | DocumentSliceAr>();
   const location = useLocation();
-  const { brandNickName, language } = location.state || {};
+  const { language,tadawalCode } = location.state || {};
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [yearList, setYearList] = useState<string[]>([]);
@@ -123,13 +123,12 @@ export const UserCompanyDetails = React.memo(() => {
       setLoading(true);
       try {
         const params = new URLSearchParams({
-          brandNickName,
-          language,
+          language,tadawalCode
         }).toString();
 
         const response = await commonRequest(
           "GET",
-          `/admin/getDocumetnByNickName?${params}`,
+          `/admin/getDocumetnBytadawalCode?${params}`,
           config
         );
 
@@ -145,7 +144,7 @@ export const UserCompanyDetails = React.memo(() => {
       }
     };
     fetchDocuments();
-  }, [brandNickName, language]);
+  }, [language]);
 
   if (loading) {
     return <Loading />;

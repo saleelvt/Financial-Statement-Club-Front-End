@@ -105,9 +105,8 @@ export const DocumentList: React.FC = () => {
 
   const handleBrand = (doc: DocumentSliceAr | DocumentSliceEn) => {
     if (doc) {
-      const brandNickName =
-        "nickNameEn" in doc ? doc.nickNameEn : doc.nickNameAr;
-      navigate("/documentDetails", { state: { brandNickName, language } });
+      const tadawalCode ="tadawalCode" in doc ? doc.tadawalCode : "" ;
+      navigate("/documentDetails", { state: { tadawalCode, language } });
     }
   };
 
@@ -154,7 +153,7 @@ export const DocumentList: React.FC = () => {
               <thead>
                 <tr className="bg-gray-300 text-gray-700 text-xs sm:text-sm md:text-base">
                   <th className="py-2 px-2 sm:px-4 border border-gray-300">
-                    {language === "Arabic" ? "كود تداول" : "Tadawal Code"}
+                    {language === "Arabic" ? "كود تداول" : "Tadawu                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               l Code"}
                   </th>
                   <th className="py-2 px-2 sm:px-4 border border-gray-300">
                     {" "}

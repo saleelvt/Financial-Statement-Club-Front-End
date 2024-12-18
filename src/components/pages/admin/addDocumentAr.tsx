@@ -95,22 +95,13 @@ export const AddDocumentArabic: React.FC= React.memo(() => {
     }));
   };
 
-
   const handleYearChange = (field: FieldKey, year: string) => {
-    setFormData((prev) => {
-      const updatedFields: Record<FieldKey, FormField> = {} as Record<FieldKey, FormField>;
-  
-      // Update all fields if Q1 is updated
-      (Object.keys(prev) as FieldKey[]).forEach((key) => {
-        updatedFields[key] = {
-          ...prev[key],
-          year: field === "Q1" ? year : prev[key].year || year, // Propagate Q1's year
-        };
-      });
-  
-      return updatedFields;
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [field]: { ...prev[field], year },
+    }));
   };
+
   
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {

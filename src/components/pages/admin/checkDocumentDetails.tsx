@@ -31,10 +31,9 @@ export const CheckDocumentDetails = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const location = useLocation();
-  const { brandNickName, language } = location.state || {};
+  const { tadawalCode, language } = location.state || {};
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
-  const { adminLanguage } = useSelector(
-    (state: RootState) => state.adminLanguage
+  const { adminLanguage } = useSelector( (state: RootState) => state.adminLanguage
   );
   const [docToDelete, setDocToDelete] = useState<any>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -46,14 +45,11 @@ export const CheckDocumentDetails = () => {
     const fetchDocuments = async () => {
       setLoading(true);
       try {
-        const params = new URLSearchParams({
-          brandNickName,
-          language,
-        }).toString();
+        const params = new URLSearchParams({ tadawalCode,  language,}).toString();
 
         const response = await commonRequest(
           "GET",
-          `/admin/getDocumetnByNickName?${params}`,
+          `/admin/getDocumetnBytadawalCode?${params}`,
           config
         );
         if (response.status === 200 && response.data?.data) {
@@ -69,7 +65,7 @@ export const CheckDocumentDetails = () => {
       }
     };
     fetchDocuments();
-  }, [brandNickName, language]);
+  }, [tadawalCode, language]);
 
   if (loading) {
     return <Loading />;

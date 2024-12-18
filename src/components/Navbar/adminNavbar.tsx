@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/Navbar.tsx
 
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 // import { Button } from "@nextui-org/react";
@@ -16,8 +17,10 @@ import { RootState } from "../../reduxKit/store";
 import { AdminLanguageChange } from "../../reduxKit/actions/admin/adminLanguage";
 import { GrLanguage } from "react-icons/gr";
 import { MdMiscellaneousServices } from "react-icons/md";
-<GrLanguage />
 
+
+
+<GrLanguage />
 export const AdminNavbar: React.FC = () => {
   const { adminLanguage } = useSelector( (state: RootState) => state.adminLanguage
   );
@@ -32,15 +35,12 @@ export const AdminNavbar: React.FC = () => {
     await dispatch(AdminLanguageChange(newLanguage));
   };
 
-  
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
   const handledata = async () => {
     try {
       await dispatch(adminLogout()).unwrap();
-
       Swal.fire({
         icon: "success",
         title: "Logged out successfully!",
@@ -60,12 +60,11 @@ export const AdminNavbar: React.FC = () => {
     }
   };
   return (
-    
     <nav className="p-3">
       <div className="container py-2 mx-auto gap-3 flex justify-between items-center">
         <div className="w-full flex items-center justify-between ">
           <h4 className=" font-semibold xs:font-semibold  lg:text-2xl md:text-2xl sm:1xl xs:text-xl ">
-       {adminLanguage ==="Arabic" ?"نادي القوائم المالية ":"FinStatements Club"}
+       {adminLanguage ==="Arabic" ?"نادي القوائم المالية ":"FinStatements Club"}
           </h4>
           <button
           onClick={toggleLanguage}

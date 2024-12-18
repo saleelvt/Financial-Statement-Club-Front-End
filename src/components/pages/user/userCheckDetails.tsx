@@ -165,12 +165,18 @@ export const UserCompanyDetails = React.memo(() => {
       >
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="rounded-md flex xs:p-1 lg:p-2 mb-4"
+          className="rounded-md   xs:p-1 lg:p-2 mb-4"
         >
-          <div className="flex  items-center">
-            {userLanguage === "Arabic" ? (
+       
+
+          {document && (
+            <div>
+
+              <div className="flex flex-col lg:justify-start justify-center items-center gap-4   sm:flex-row w-full items-start">
+              <div className="flex    items-center ">
+              {userLanguage === "Arabic" ? (
               <FaArrowCircleRight
-                className="text-3xl  m-4  xs:hidden sm:hidden md:hidden lg:block text-gray-600"
+                className="text-3xl   xs:hidden sm:hidden md:hidden lg:block text-gray-600"
                 onClick={() => {
                   navigate(-1);
                 }}
@@ -184,12 +190,9 @@ export const UserCompanyDetails = React.memo(() => {
               />
             )}
           </div>
-
-          {document && (
-            <div>
-              <div className="flex flex-col   xs:ml-20 md:ml-16 sm:ml-20  sm:flex-row w-full items-start">
                 <div className="  flex flex-col justify-center ">
-                  <div className="flex lg:justify-start  justify-center lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold">
+
+                  <div className="flex lg:justify-start    justify-center lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold">
                     <h4 className="text-gray-800">
                       {isDocumentEn(document)
                         ? document.fullNameEn

@@ -165,7 +165,7 @@ export const UserCompanyDetails = React.memo(() => {
         >
           {document && (
             <div>
-              <div className="flex flex-col lg:justify-start justify-center  gap-4   sm:flex-row w-full items-start">
+              <div className="flex flex-col lg:justify-start sm:justify-center  md:justify-center xs:justify-center gap-4   sm:flex-row w-full items-start">
                 <div className="flex   mt-3   ">
                   {userLanguage === "Arabic" ? (
                     <FaArrowCircleRight
@@ -215,21 +215,21 @@ export const UserCompanyDetails = React.memo(() => {
 
                   <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="flex justify-center     text-xs  "
+          className="flex justify-start gap-2    text-xs  "
         >
           <button
             onClick={handleRightClick}
-            className="p-1 px-2   rounded-3xl  text-xl text-gray-600 "
+            className="px-2 py-1 text-xs rounded-lg bg-gray-300  text-xl text-gray-600 "
           >
             {"<"}
           </button>
 
-          <div className="flex     ">
+          <div className="flex  gap-2    ">
             {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
                 key={year}
                 onClick={() => handleYearClick(year)}
-                className={`text-xs  m-2  px-1  rounded-md ${
+                className={`px-2 py-1 text-xs  rounded-md ${
                   selectedYear === year
                     ? "bg-gray-600 text-white"
                     : "bg-gray-300 text-gray-700 "
@@ -239,16 +239,18 @@ export const UserCompanyDetails = React.memo(() => {
               </button>
             ))}
           </div>
-          
+
 
           <button
             onClick={handleLeftClick}
-            className="text-xl   rounded-3xl  text-gray-600 p-1 px-2  "
+            className="text-xl   rounded-lg bg-gray-300  text-gray-600 px-2 py-1 text-xs  "
           >
             {/* <FaArrowCircleRight className="text-lg text-gray-600" /> */}
             {">"}
           </button>
         </div>
+
+        
                   <div dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="mt-2  flex justify-center rounded-lg text-xs"
         >

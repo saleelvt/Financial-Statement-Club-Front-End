@@ -179,21 +179,12 @@ export const UpdateDocument: React.FC = React.memo(() => {
         >
 
         <div className="flex justify-between ">
-        {/* <button
-              type="button"
-              onClick={() => navigate("/home")}
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-            >
-              Back
-            </button> */}
             <FaArrowCircleLeft className="text-3xl text-gray-500" onClick={() => navigate(-1)} />
 
           <h2 className="text-2xl font-semibold text-center text-gray-700">
             Update Document
           </h2>
         </div>
-
-          
           <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
             <div className="w-full">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
@@ -254,6 +245,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
                 placeholder="Enter The Board"
                 value={tadawalCode}
                 required
+            
                 onChange={(e) => setTadawalCode(e.target.value)}
               />
             </div>

@@ -132,7 +132,7 @@ const UserHomePage: React.FC = () => {
       </div>
 
       <div
-        className={`grid xs:grid-cols-4  lg:grid-cols-10  p-10  shadow-sm    rounded-lg   sm:grid-cols-6 mt-12  md:grid-cols-8 lg:grid-cols-6 gap-4  text-center ${
+        className={`grid xs:grid-cols-4  lg:grid-cols-10  p-10    rounded-lg   sm:grid-cols-6 mt-12  md:grid-cols-8 lg:grid-cols-6 gap-4  text-center ${
           language === "Arabic" ? "text-right" : ""
         }`}
       >

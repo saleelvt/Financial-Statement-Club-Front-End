@@ -5,20 +5,24 @@ import { useNavigate } from "react-router-dom";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { TbListDetails } from "react-icons/tb";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../reduxKit/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { Loading } from "../Loading";
 import { Error } from "../Error";
 import { FaArrowCircleLeft } from "react-icons/fa";
+import { GrLanguage } from "react-icons/gr";
 import {
   DocumentSliceAr,
   DocumentSliceEn,
 } from "../../../interfaces/admin/addDoument";
+import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
 
 export const DocumentList: React.FC = () => {
   const { adminLanguage } = useSelector(
     (state: RootState) => state.adminLanguage
   );
+  const dispatch = useDispatch<AppDispatch>();
+
   const [language, setLanguage] = useState<string>("Arabic");
   const navigate = useNavigate();
   const [documents, setDocuments] = useState<
@@ -81,10 +85,7 @@ export const DocumentList: React.FC = () => {
     fetchDocuments();
   }, [adminLanguage]);
 
-  // const toggleLanguage = async () => {
-  //     const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
-  //    await dispatch(AdminLanguageChange(newLanguage));
-  //   };
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const documentsPerPage = 10;
@@ -109,6 +110,10 @@ export const DocumentList: React.FC = () => {
       navigate("/documentDetails", { state: { tadawalCode, language } });
     }
   };
+    const toggleLanguage = async () => {
+      const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
+      await dispatch(AdminLanguageChange(newLanguage));
+    };
 
   return (
     <div className="min-h-screen  bg-gray-100">
@@ -142,6 +147,22 @@ export const DocumentList: React.FC = () => {
                   🔍
                 </button>
               </div> */}
+               {/* <button
+                        onClick={toggleLanguage}
+                        style={{
+                          background:
+                            "linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(128, 128, 128, 0.8))",
+                        }}
+                        className="py-1  px-2 items-center bg-opacity-80 text-black text-xl  rounded-md "
+                      > */}
+                            <button
+                               onClick={toggleLanguage}
+                               
+                               className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
+                             >
+                              <GrLanguage className=" text-gray-600" />
+                             </button>
+                      {/* </button> */}
               <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
                 {language === "Arabic" ? "قائمة المستندات " : "Document List"}
               </h4>

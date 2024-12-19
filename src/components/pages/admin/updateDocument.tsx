@@ -154,7 +154,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
     console.log("this is my last console log!!!!!!!!!!!!!!!!! ", response.data);
     
       toast.success("Document updated successfully");
-      navigate("/documentList");
+      navigate(-1);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -173,7 +173,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
   return (
     <div className="">
       <div className="flex flex-col items-center lg:py-4 min-h-screen px-4">
-        <form
+        <form 
           onSubmit={handleSubmit}
           className="bg-white shadow-md rounded px-2 pt-2 pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
         >

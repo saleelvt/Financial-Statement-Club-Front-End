@@ -45,8 +45,9 @@ export const UserCompanyDetails = React.memo(() => {
     "Q3",
     "Q4",
     "S1",
-    "Board",
     "Year",
+    "Board",
+    
   ];
 
   const handleYearClick = (year: string) => {
@@ -153,20 +154,18 @@ export const UserCompanyDetails = React.memo(() => {
     return <Error />;
   }
 
+
   return (
     <div
       dir={userLanguage === "English" ? "ltr" : "rtl"} 
-      className="min-h-96 text-2xl font-semibold  flex flex-col lg:flex-row"
+      className="min-h-96 text-2xl font-semibold    flex flex-col lg:flex-row"
     >
-      <div className="w-full    lg:w-[32%]">
-        <div
-          dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="rounded-md    xs:p-1 lg:p-2 mb-4 "
-        >
+      <div className="w-full  lg:w-[60%]">
+        <div dir={userLanguage === "English" ? "ltr" : "rtl"} className="rounded-md   xs:p-1 lg:p-2 mb-4 ">
           {document && (
-            <div>
-              <div className="flex flex-col lg:justify-start sm:justify-center  md:justify-center xs:justify-center gap-4   sm:flex-row w-full items-start">
-                <div className="flex   mt-3   ">
+            <div >
+              <div className="flex lg;flex-col flex-row lg:justify-start sm:justify-center  md:justify-center xs:justify-center   sm:flex-row w-full items-start">
+                <div className="flex   mt-3  mr-4  ">
                   {userLanguage === "Arabic" ? (
                     <FaArrowCircleRight
                       className="text-3xl   xs:hidden sm:hidden md:hidden lg:block text-gray-600"
@@ -174,6 +173,7 @@ export const UserCompanyDetails = React.memo(() => {
                         navigate(-1);
                       }}
                     />
+
                   ) : (
                     <FaArrowCircleLeft
                       className="text-3xl xs:hidden sm:hidden md:hidden lg:block text-gray-600"
@@ -184,52 +184,53 @@ export const UserCompanyDetails = React.memo(() => {
                   )}
                 </div>
 
-                <div className="  flex flex-col justify-center ">
-                  <div className="flex lg:justify-start    justify-center lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold">
-                    <h4 className="text-gray-800">
+
+                <div className="  flex  flex-col justify-center    ">
+                   <div className="flex  text-[14px] font-serif     justify-center lg:justify-start ">
+                   <h3 className="text-gray-800  text-center ">
+                      {
+                        (isDocumentEn(document)
+                          ? document.nickNameEn
+                          : document.nickNameAr) 
+                        }
+                    </h3>
+                   </div>
+                  <div className="flex flex-col md:flex-row  text-[14px] font-serif    justify-center lg:justify-start ">
+                    
+                    <h3 className="text-gray-800 text-center ">
                       {isDocumentEn(document)
                         ? document.fullNameEn
                         : document.fullNameAr}
-                    </h4>
-                    <h4 className="text-gray-800 ">
-                      {"(" +
-                        (isDocumentEn(document)
-                          ? document.nickNameEn
-                          : document.nickNameAr) +
-                        ")"}
-                    </h4>
+                    </h3>
+                    
                   </div>
-
-                  <div className="flex justify-center      lg:justify-start items-center ">
-                    <h4 className=" lg:text-2xl md:text-xl sm:text-xl xs:text-lg font-semibold text-gray-800">
+                  <div className="flex    justify-center lg:justify-start items-center ">
+                    <h3 className=" text-[14px] font-serif  text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
-                    </h4>
+                    </h3>
                   </div>
-
-
-
 
 
 
                   <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="flex justify-start gap-2    text-xs  "
-        >
-          <button
-            onClick={handleRightClick}
-            className="px-2 py-1 text-xs rounded-lg bg-gray-300  text-xl text-gray-600 "
-          >
-            {"<"}
-          </button>
+          className="flex justify-start gap-2 justify-center lg:justify-start ">
 
-          <div className="flex  gap-2    ">
+     <div className="flex items-center text-xl  ">
+          <button onClick={handleRightClick} className="text-gray-600 items-center text-xl bg-gray-300 rounded-lg px-1   "> {"<"}</button>
+          </div>
+            {/* <div className="flex items-center">
+         <FaArrowCircleLeft  onClick={handleRightClick} className="text-gray-600 items-center text-xl  "/>
+         </div> */}
+
+          <div className="flex  gap-2 text-xs justify-center lg:justify-start ">
             {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
                 key={year}
                 onClick={() => handleYearClick(year)}
-                className={`px-2 py-1 text-xs  rounded-md ${
+                className={`px-1 py-0.5 rounded-md ${
                   selectedYear === year
                     ? "bg-gray-600 text-white"
                     : "bg-gray-300 text-gray-700 "
@@ -239,20 +240,20 @@ export const UserCompanyDetails = React.memo(() => {
               </button>
             ))}
           </div>
-
-
-          <button
-            onClick={handleLeftClick}
-            className="text-xl   rounded-lg bg-gray-300  text-gray-600 px-2 py-1 text-xs  "
-          >
+ <div className="flex items-center ">
+<button  onClick={handleLeftClick} className="text-gray-600 flex  items-center text-xl bg-gray-300 rounded-lg px-1  "> {">"}</button>
+</div>
+        
             {/* <FaArrowCircleRight className="text-lg text-gray-600" /> */}
-            {">"}
-          </button>
+           {/* <div className="flex items-center">
+           < FaArrowCircleRight  onClick={handleLeftClick} className="text-gray-600   items-center text-xl " />
+           </div> */}
+         
         </div>
 
         
                   <div dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="mt-2  flex justify-center rounded-lg text-xs"
+          className="mt-2  flex justify-center lg:justify-start rounded-lg text-xs"
         >
           {selectedFilteredDocWithYear.length > 0 ? (
             <div className="flex flex-wrap gap-3">
@@ -298,7 +299,7 @@ export const UserCompanyDetails = React.memo(() => {
 
       </div>
 
-      <div className="lg:w-[75%]  mt-2  ">
+      <div className="lg:w-[75%]   mt-2  ">
         {iframeSrc ? (
           <div
             className="rounded-md "

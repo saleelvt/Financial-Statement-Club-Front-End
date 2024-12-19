@@ -159,7 +159,7 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
       );
 
       toast.success("Document updated successfully");
-      navigate("/documentList");
+      navigate(-1);
     } catch (error: any) {
       Swal.fire({
         icon: "error",

@@ -116,7 +116,7 @@ const UserHomePage: React.FC = () => {
   return (
     <div
       style={{ backgroundColor: "#666666" }}
-      className=" text-white min-h-screen flex flex-col items-center p-4"
+      className=" text-white min-h-screen flex flex-col items-center xs:p-4 lg:p-12"
     >
       <div className="flex mt-3 justify-end w-3/4">
         <button
@@ -125,14 +125,14 @@ const UserHomePage: React.FC = () => {
             background:
               "linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(128, 128, 128, 0.8))",
           }}
-          className="py-1  px-2 items-center bg-opacity-80 text-black text-xl font- rounded-md hover:border hover:border-gray-300 hover:bg-slate-200"
+          className="py-1  px-2 items-center bg-opacity-80 text-black text-xl  rounded-md "
         >
          <GrLanguage />
         </button>
       </div>
 
       <div
-        className={`grid xs:grid-cols-4  lg:grid-cols-10  p-10    rounded-lg   sm:grid-cols-6 mt-12  md:grid-cols-8 lg:grid-cols-6 gap-4  text-center ${
+        className={`grid xs:grid-cols-4  lg:grid-cols-8  lg:p-4 xs:p-2     rounded-lg   sm:grid-cols-5 mt-8  md:grid-cols-6  gap-4  text-center ${
           language === "Arabic" ? "text-right" : ""
         }`}
       >
@@ -142,7 +142,7 @@ const UserHomePage: React.FC = () => {
             <button
               key={index}
               onClick={() => handleBrandClick(brand.tadawalCode)}
-              className={` font-bold hover:border-b-2 hover:border-red-600 focus:ring-2 px-2 py-0.5 transition duration-300 transform hover:scale-105   hover:text-red-600 rounded-sm ${
+              className={` font-bold hover:border-b-2        rounded-sm ${
                 selectedBrand === brand.tadawalCode
                   ? "bg-gray-200 text-black font-medium"
                   : ""

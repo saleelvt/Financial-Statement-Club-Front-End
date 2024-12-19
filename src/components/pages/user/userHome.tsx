@@ -116,9 +116,9 @@ const UserHomePage: React.FC = () => {
   return (
     <div
       style={{ backgroundColor: "#666666" }}
-      className=" text-white min-h-screen flex flex-col items-center xs:p-4 lg:p-12"
+      className=" text-white min-h-screen flex flex-col items-center xs:p-3 lg:p-8"
     >
-      <div className="flex mt-3 justify-end w-3/4">
+      <div className="flex  justify-end w-3/4">
         <button
           onClick={toggleLanguage}
           style={{

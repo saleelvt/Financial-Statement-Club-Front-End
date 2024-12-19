@@ -214,34 +214,44 @@ export const UserCompanyDetails = React.memo(() => {
 
 
 
-                  <div
-          dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="flex justify-start gap-2 justify-center lg:justify-start ">
 
-     <div className="flex items-center text-xl  ">
-          <button onClick={handleRightClick} className="text-gray-600 items-center text-xl bg-gray-300 rounded-lg px-1   "> {"<"}</button>
+
+
+
+
+
+                  <div dir={userLanguage === "English" ? "ltr" : "rtl"} className="flex justify-start gap-[6px]  text-xs justify-center lg:justify-start ">
+               <div className="flex  items-center   ">
+          <button onClick={handleRightClick} className="text-gray-600 flex  items-center   justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md     "> {"<"}</button>
           </div>
+
+
             {/* <div className="flex items-center">
          <FaArrowCircleLeft  onClick={handleRightClick} className="text-gray-600 items-center text-xl  "/>
          </div> */}
 
-          <div className="flex  gap-2 text-xs justify-center lg:justify-start ">
+          <div className="flex flex-wrap gap-4 py-1 items-center justify-center lg:justify-start ">
+
+
             {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
               <button
                 key={year}
                 onClick={() => handleYearClick(year)}
-                className={`px-1 py-0.5 rounded-md ${
+                className={`px-2  py-1 rounded-md ${
                   selectedYear === year
                     ? "bg-gray-600 text-white"
-                    : "bg-gray-300 text-gray-700 "
+                    : "bg-gray-200 text-gray-700 "
                 }`}
               >
                 {year}
               </button>
             ))}
           </div>
+
+
+
  <div className="flex items-center ">
-<button  onClick={handleLeftClick} className="text-gray-600 flex  items-center text-xl bg-gray-300 rounded-lg px-1  "> {">"}</button>
+<button  onClick={handleLeftClick} className="text-gray-600 flex  items-center justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md   "> {">"}</button>
 </div>
         
             {/* <FaArrowCircleRight className="text-lg text-gray-600" /> */}
@@ -252,8 +262,7 @@ export const UserCompanyDetails = React.memo(() => {
         </div>
 
         
-                  <div dir={userLanguage === "English" ? "ltr" : "rtl"}
-          className="mt-2  flex justify-center lg:justify-start rounded-lg text-xs"
+    <div dir={userLanguage === "English" ? "ltr" : "rtl"}   className="mt-2  flex justify-center lg:justify-start rounded-lg text-xs"
         >
           {selectedFilteredDocWithYear.length > 0 ? (
             <div className="flex flex-wrap gap-3">

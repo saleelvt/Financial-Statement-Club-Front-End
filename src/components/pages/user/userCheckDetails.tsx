@@ -197,7 +197,7 @@ export const UserCompanyDetails = React.memo(() => {
                    </div>
                   <div className="flex flex-col md:flex-row  text-[14px] font-serif    justify-center lg:justify-start ">
                     
-                    <h3 className="text-gray-800 text-center ">
+                    <h3 className="text-gray-800 text-cente ">
                       {isDocumentEn(document)
                         ? document.fullNameEn
                         : document.fullNameAr}
@@ -300,12 +300,6 @@ export const UserCompanyDetails = React.memo(() => {
             </div>
           )}
         </div>
-
-        
-
-       
-
-
       </div>
 
       <div className="lg:w-[75%]   mt-2  ">

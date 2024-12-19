@@ -142,7 +142,7 @@ const UserHomePage: React.FC = () => {
             <button
               key={index}
               onClick={() => handleBrandClick(brand.tadawalCode)}
-              className={` font-bold hover:border-b-2        rounded-sm ${
+              className={` font-bold       rounded-sm ${
                 selectedBrand === brand.tadawalCode
                   ? "bg-gray-200 text-black font-medium"
                   : ""
@@ -161,7 +161,7 @@ const UserHomePage: React.FC = () => {
               background:
                 "linear-gradient(to right, rgba(96, 125, 139, 0.8), rgba(33, 150, 243, 0.8))",
             }}
-            className="px-6 py-2 bg-b-500 font-bold border border-gray-150 text-white rounded-lg hover:bg-gray-700 transition-all"
+            className="px-6 py-2 bg-b-500 font-bold text-white rounded-lg hover:bg-gray-700 transition-all"
           >
             {userLanguage === "English" ? "Show more" : "استعراض المزيد"}
           </button>

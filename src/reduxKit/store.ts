@@ -14,6 +14,11 @@ export const store = configureStore({
         adminLanguage:adminLanguageSlice.reducer,
     }
 })
+
+
+
+
+
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
 export type ExtendedAppDispatch = (action: any) => any;

@@ -28,13 +28,16 @@ export const AdminLogin = React.memo(() => {
     validationSchema: ValidationLogin,
     onSubmit: async (values) => {
       try {
+
         console.log(values,"before going to salon home page ");
         await dispatch(loginAdmin(values)).unwrap()
         navigate("/home")
+        
       } catch (error:any) {
         console.error("Login failed:", error);
         Swal.fire({
           icon: "error",
+          
           title: "Error!",
           text: error.message,
           timer: 3000,

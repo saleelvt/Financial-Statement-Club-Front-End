@@ -9,16 +9,11 @@ export interface AdminLanguageState {
     error: string | null;
     loading: boolean;
   }
-
-
   const initialStateForLanguage: AdminLanguageState = {
     adminLanguage:JSON.parse(localStorage.getItem("adminLanguage") || `"English"`),
     error: null,
     loading: false,
   };
-  
-
-  
   export const adminLanguageSlice = createSlice({
     name: "/adminLanguage",
     initialState: initialStateForLanguage,
@@ -27,6 +22,7 @@ export interface AdminLanguageState {
         state.error = payload;
       },
     },
+    
 
     extraReducers: (builder) => {
       builder

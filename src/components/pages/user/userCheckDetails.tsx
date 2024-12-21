@@ -168,12 +168,11 @@ export const UserCompanyDetails = React.memo(() => {
                 <div className="flex   mt-3  mr-4  ">
                   {userLanguage === "Arabic" ? (
                     <FaArrowCircleRight
-                      className="text-3xl   xs:hidden sm:hidden md:hidden lg:block text-gray-600"
+                      className="text-3xl  ml-4  xs:hidden sm:hidden md:hidden lg:block text-gray-600"
                       onClick={() => {
                         navigate(-1);
                       }}
                     />
-
                   ) : (
                     <FaArrowCircleLeft
                       className="text-3xl xs:hidden sm:hidden md:hidden lg:block text-gray-600"
@@ -300,6 +299,11 @@ export const UserCompanyDetails = React.memo(() => {
             </div>
           )}
         </div>
+
+        
+
+  
+
       </div>
 
       <div className="lg:w-[75%]   mt-2  ">

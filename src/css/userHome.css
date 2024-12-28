@@ -8,3 +8,24 @@
     font-family: "Your English Font", sans-serif;
     direction: ltr;
 }
+.nickName {
+   grid-template-columns: repeat(10, auto);
+}
+@media(max-width: 1024px ){
+    .nickName {
+        grid-template-columns: repeat(9, auto);
+     }
+     
+}
+@media(max-width: 750px ){
+    .nickName {
+        grid-template-columns: repeat(5, auto);
+     }
+     
+}
+@media(max-width: 450px ){
+    .nickName {
+        grid-template-columns: repeat(4, auto);
+     }
+     
+}

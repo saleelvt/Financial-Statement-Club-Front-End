@@ -11,7 +11,8 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 import { GrLanguage } from "react-icons/gr";
 <GrLanguage />
-import "../../../css/userHome.css";import { Error } from "../Error";
+import "../../../css/userHome.css";
+import { Error } from "../Error";
 
 
 
@@ -25,8 +26,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserHomePage: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
-  const [brandsEn, setBrandsEn] = useState<
-    {
+  const [brandsEn, setBrandsEn] = useState< {
       fullNameEn: string;
       nickNameEn: string;
       tadawalCode: string;
@@ -95,7 +95,6 @@ const UserHomePage: React.FC = () => {
 
   const handleShowMore = () => setShowAll(true);
   const handleShowLess = () => setShowAll(false);
-
   const toggleLanguage = async () => {
     const newLanguage = language === "English" ? "Arabic" : "English";
     setLanguage(newLanguage);
@@ -106,6 +105,10 @@ const UserHomePage: React.FC = () => {
   const currentBrands = arrays.filter(
     (item, index, self) =>
       index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
+  ) .sort((a, b) =>
+    userLanguage === "English"
+      ? a.nickNameEn.localeCompare(b.nickNameEn, "en", { sensitivity: "base" })
+      : a.nickNameEn.localeCompare(b.nickNameEn, "ar", { sensitivity: "base" })
   );
   if (loading) {
     return <Loading />;
@@ -118,9 +121,9 @@ const UserHomePage: React.FC = () => {
       style={{ backgroundColor: "#666666" }}
       className=" text-white min-h-screen flex flex-col items-center xs:p-3 lg:p-4"
     >
-      <div className="flex  justify-end w-3/4">
+      <div className="flex   justify-end w-3/4">
         <button
-          onClick={toggleLanguage}
+          onClick={toggleLanguage} 
           style={{
             background:
               "linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(128, 128, 128, 0.8))",
@@ -130,11 +133,11 @@ const UserHomePage: React.FC = () => {
          <GrLanguage />
         </button>
       </div>
-
       <div
-        className={`grid xs:grid-cols-4  lg:grid-cols-8  lg:p-4 xs:p-2     rounded-lg   sm:grid-cols-5 mt-8  md:grid-cols-6  gap-4  text-center ${
-          language === "Arabic" ? "text-right" : ""
-        }`}
+      dir={ language === "Arabic" ? "rtl" : "ltr"}
+        className={`nickName grid xs:grid-cols-6    lg:grid-cols-10  lg:text-[12px]  md:text-[10px]  sm:text-[12px]  xs:text-[10px]  xs:gap-2 w-auto lg:gap-[20px] md:lg:gap-[15px]  sm:gap-[10px] xs:gap-[5px]   xs:p-2      rounded-lg   sm:grid-cols-6 mt-8  md:grid-cols-8  ${
+          language === "Arabic" ? "text-right" : ""    
+        }`} 
       >
         {currentBrands
           .slice(0, showAll ? currentBrands.length : 30)
@@ -142,9 +145,9 @@ const UserHomePage: React.FC = () => {
             <button
               key={index}
               onClick={() => handleBrandClick(brand.tadawalCode)}
-              className={` font-bold       rounded-sm ${
+              className={` font-serif    flex w-auto justify-start  items-center   ${
                 selectedBrand === brand.tadawalCode
-                  ? "bg-gray-200 text-black font-medium"
+                  ? "bg-gray-200  text-black"
                   : ""
               } ${language === "Arabic" ? "p-1" : ""}`}
             >
@@ -153,7 +156,7 @@ const UserHomePage: React.FC = () => {
           ))}
       </div>
 
-      <div className="mt-6" hidden={currentBrands.length < 30}>
+      <div className="mt-6" hidden={currentBrands.length < 40}>
         {!showAll ? (
           <button
             onClick={handleShowMore}

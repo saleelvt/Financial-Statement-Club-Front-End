@@ -69,7 +69,7 @@ export const AddDocumentArabic: React.FC= React.memo(() => {
     const response = await commonRequest("GET",`/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
     console.log('data with the suggetin __________',response.data.data);
     const mydata= response.data.data
-    setnickNameAr(suggestion);
+    setnickNameAr(mydata.nickNameAr);
     setFullNameAr(mydata.fullNameAr)
     setTadawalCode(mydata.tadawalCode)
     setSector(mydata.sector)
@@ -114,7 +114,17 @@ export const AddDocumentArabic: React.FC= React.memo(() => {
         formData,
       };
    await dispatch(addDocumentArabic(payloadData)).unwrap();
+  
       toast.success("Document successfully added");
+      setFormData((prevFormData) =>
+        Object.fromEntries(
+          Object.entries(prevFormData).map(([key, value]) => [
+            key as keyof typeof prevFormData, // Explicitly assert key type
+            { ...value, file: null },
+          ])
+        ) as Record< FieldKey, FormField>
+      );
+      
     } catch (error: any) {
       Swal.fire({
         icon: "error",

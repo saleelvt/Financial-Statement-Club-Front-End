@@ -170,19 +170,18 @@ export const UserCompanyDetails = React.memo(() => {
                     <FaArrowCircleRight
                       className="text-3xl  ml-4  xs:hidden sm:hidden md:hidden lg:block text-gray-600"
                       onClick={() => {
-                        navigate(-1);
+                        navigate("/");
                       }}
                     />
                   ) : (
                     <FaArrowCircleLeft
                       className="text-3xl xs:hidden sm:hidden md:hidden lg:block text-gray-600"
                       onClick={() => {
-                        navigate(-1);
+                        navigate("/");
                       }}
                     />
                   )}
                 </div>
-
 
                 <div className="  flex  flex-col justify-center    ">
                    <div className="flex  text-[14px] font-serif     justify-center lg:justify-start ">

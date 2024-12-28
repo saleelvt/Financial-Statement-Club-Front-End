@@ -83,7 +83,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
     if (tadawalCodeEn !== undefined && tadawalCodeEn !== tadawalCode) {
       setTadawalCode(tadawalCodeEn || ""); // Only update if the value is different
     }
-
     setFormData((prev) => ({
       ...prev,
       Q1: {
@@ -121,7 +120,11 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
 
 
 
-  
+   useEffect(()=>{
+
+     handleSuggestionClick(tadawalCodeEn)
+
+   },[tadawalCodeEn])
 
 
 
@@ -152,7 +155,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
     console.log('data with the suggetin __________',response.data.data);
     const mydata= response.data.data
     setnickNameEn(mydata.nickNameEn);
-    setFullNameEn(mydata.fullNameEn)
+    setFullNameEn(mydata.fullNameEn);
     setTadawalCode(suggestion)
     setSector(mydata.sector)
     setSuggestions([]); // Clear suggestions after selecting one

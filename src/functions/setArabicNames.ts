@@ -15,7 +15,7 @@ export const setArabicNames = (documents: any) => {
             });
             if (x?.formData) arabicFormFiles.push(x?.formData);  // Push file to Arabic files array
         }
-        arabicNamesArray.sort((a, b) => b.nickNameEn.localeCompare(a.nickNameEn, 'ar'));
+        // arabicNamesArray.sort((a, b) => b.nickNameEn.localeCompare(a.nickNameEn, 'ar'));
 
         return { arabicNamesArray, arabicFormFiles };
     } catch (error: any) {

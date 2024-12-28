@@ -91,9 +91,9 @@ export const DocumentList: React.FC = () => {
   const documentsPerPage = 10;
 
   const totalPages = Math.ceil(documents.length / documentsPerPage);
-  const indexOfLastDoc = currentPage * documentsPerPage;
-  const indexOfFirstDoc = indexOfLastDoc - documentsPerPage;
-  const currentDocuments = uniqeDocument.slice(indexOfFirstDoc, indexOfLastDoc);
+  // const indexOfLastDoc = currentPage * documentsPerPage;
+  // const indexOfFirstDoc = indexOfLastDoc - documentsPerPage;
+  // const currentDocuments = uniqeDocument.slice(indexOfFirstDoc, indexOfLastDoc);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
 
@@ -192,7 +192,7 @@ export const DocumentList: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="text-xs xs:text-sm">
-                {currentDocuments.map((doc, index) => (
+                {uniqeDocument.map((doc, index) => (
                   <tr
                     key={index}
                     className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition-colors"

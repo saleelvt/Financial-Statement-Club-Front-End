@@ -16,7 +16,7 @@ export const setEnglishNames = (documents: any) => {
             });
             if (x?.formData) englishFormFiles.push(x?.formData);  // Push file to English files array
         }
-        englishNamesArray.sort((a, b) => a.nickNameEn.localeCompare(b.nickNameEn));
+    
         return { englishNamesArray, englishFormFiles };
     } catch (error: any) {
         console.log(error);

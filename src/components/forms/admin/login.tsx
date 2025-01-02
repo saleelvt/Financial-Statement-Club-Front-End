@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import { ValidationLogin } from "../../../validation/admin/adminLogin";
 import { IAdminLogin } from "../../../interfaces/admin/login";
+import { loginAdmin } from "../../../reduxKit/actions/auth/authAction";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-import { loginAdmin } from "../../../reduxKit/actions/auth/authAction";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -37,7 +37,6 @@ export const AdminLogin = React.memo(() => {
         console.error("Login failed:", error);
         Swal.fire({
           icon: "error",
-          
           title: "Error!",
           text: error.message,
           timer: 3000,
@@ -155,5 +154,6 @@ export const AdminLogin = React.memo(() => {
         </form>
       </div>
     </div>
+  
   );
 });

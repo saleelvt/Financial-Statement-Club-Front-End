@@ -71,6 +71,7 @@ export const AddDocumentArabic: React.FC= React.memo(() => {
     const mydata= response.data.data
     setnickNameAr(mydata.nickNameAr);
     setFullNameAr(mydata.fullNameAr)
+    
     setTadawalCode(mydata.tadawalCode)
     setSector(mydata.sector)
     setSuggestions([]); // Clear suggestions after selecting one

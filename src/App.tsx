@@ -10,6 +10,7 @@ const UserHomePage = lazy(() => import('./components/pages/user/userHome'));
 import { DocumentList } from './components/pages/admin/documentList';
 import { AdminLogin } from './components/forms/admin/login';
 import AdminHomePage from './components/pages/admin/adminDashBoard';
+import EmailVerification from './components/forms/admin/otpVerifiy';
 
 import { AddDocumentArabic } from './components/pages/admin/addDocumentAr';
 import {UpdateDocument} from './components/pages/admin/updateDocument';
@@ -21,20 +22,23 @@ export const App: React.FC = React.memo(() => {
   const {isLogged,role,}=useSelector((state:RootState)=>state.auth)
   console.log("my role and my isLogged", isLogged,role);
   
+
+
   return (
     <Fragment>
       <Toaster position="top-center" />
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={ <UserHomePage/>} />
+          <Route path="/verify" element={ <EmailVerification/>} />
+          <Route path="/companyDetails" element={ <UserCompanyDetails /> } />
           <Route path="/login" element={isLogged && role === 'admin' ? <Navigate to="/home" /> : <AdminLogin />} />
           <Route path="/home" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
           <Route path="/addDocument" element={isLogged &&  role === 'admin' ? <AddDocumentArabic /> : <AdminLogin />}/>
           <Route path="/documentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
           <Route path="/updateDocument" element={isLogged &&  role === 'admin' ? <UpdateDocument /> : <AdminLogin />} />
           <Route path="/updateDocumentAr" element={isLogged &&  role === 'admin' ? <UpdateDocumentAr /> : <AdminLogin />} />
-          <Route path="/documentDetails" element={<CheckDocumentDetails /> } />
-          <Route path="/companyDetails" element={ <UserCompanyDetails /> } />
+          <Route path="/documentDetails" element={isLogged &&  role === 'admin' ? <CheckDocumentDetails /> : <AdminLogin />} />
         </Routes>
       </Suspense>
     </Fragment>

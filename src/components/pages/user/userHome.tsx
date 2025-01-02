@@ -135,7 +135,7 @@ const UserHomePage: React.FC = () => {
       </div>
       <div
       dir={ language === "Arabic" ? "rtl" : "ltr"}
-        className={`nickName grid xs:grid-cols-6    lg:grid-cols-10  lg:text-[12px]  md:text-[10px]  sm:text-[12px]  xs:text-[10px]  xs:gap-2 w-auto lg:gap-[20px] md:lg:gap-[15px]  sm:gap-[10px] xs:gap-[5px]   xs:p-2      rounded-lg   sm:grid-cols-6 mt-8  md:grid-cols-8  ${
+        className={`nickName grid xs:grid-cols-6  mx-[15px] my-[25px]    lg:grid-cols-10  lg:text-[12px]  md:text-[10px]  sm:text-[12px]  xs:text-[13px]  xs:gap-4 lg:gap-[20px] md:lg:gap-[15px]  sm:gap-[10px]   xs:p-1      rounded-lg   sm:grid-cols-6 mt-8  md:grid-cols-8  ${
           language === "Arabic" ? "text-right" : ""    
         }`} 
       >
@@ -145,11 +145,11 @@ const UserHomePage: React.FC = () => {
             <button
               key={index}
               onClick={() => handleBrandClick(brand.tadawalCode)}
-              className={` font-serif    flex w-auto justify-start  items-center   ${
+              className={` font-serif  text-left  flex  justify-start  items-center   ${
                 selectedBrand === brand.tadawalCode
                   ? "bg-gray-200  text-black"
                   : ""
-              } ${language === "Arabic" ? "p-1" : ""}`}
+              } ${language === "Arabic" ? "py-[4px] px-[0px] " : ""}`}
             >
               {brand.nickNameEn}
             </button>

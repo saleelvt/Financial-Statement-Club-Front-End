@@ -97,6 +97,7 @@ export const DocumentList: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
 
+  
   if (loading) {
     return <Loading />;
   }

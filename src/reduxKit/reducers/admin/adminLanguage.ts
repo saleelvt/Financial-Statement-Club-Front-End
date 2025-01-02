@@ -22,7 +22,6 @@ export interface AdminLanguageState {
         state.error = payload;
       },
     },
-    
 
     extraReducers: (builder) => {
       builder

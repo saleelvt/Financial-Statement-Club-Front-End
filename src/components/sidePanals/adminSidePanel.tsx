@@ -43,6 +43,7 @@ const AdminSidebar = () => {
         >
           <FaTimes className="h-6 w-6 text-gray-600" />
         </button>
+        
         {/* Profile Section */}
         <div className={`p-4 ${!isOpen && 'lg:block hidden'}`}>
           <div className=" bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-gray-300 hover:text-white font-semibold focus:ring-2 focus:ring-gray-400 transition duration-300 transform hover:scale-105 rounded-lg p-4">

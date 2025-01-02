@@ -1,56 +1,48 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
-
-import { loginAdmin , adminLogout,userLanguageChange} from "../../actions/auth/authAction";
-
+import { loginAdmin, adminLogout, userLanguageChange } from "../../actions/auth/authAction";
 
 export interface UserState {
   userData: UserState | null;
   error: string | null;
   loading: boolean;
-  role: null;
+  role: string | null;
   status?: string | null;
   isLogged: boolean;
   _id?: string | null;
 }
 
-
-const initialState: UserState = {
-  userData: localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user")!)
-    : null,
-  error: null,
-  loading: false,
-  role: localStorage.getItem("role")
-    ? JSON.parse(localStorage.getItem("role")!)
-    : null,
-  
-  isLogged: localStorage.getItem("isLogged")
-    ? JSON.parse(localStorage.getItem("isLogged")!)
-    : false,
-  status: localStorage.getItem("status")
-    ? JSON.parse(localStorage.getItem("status")!)
-    : null,
-  _id: localStorage.getItem("_id")
-    ? JSON.parse(localStorage.getItem("_id")!)
-    : null,
+const safeParse = (key: string, fallback: any = null) => {
+  const value = localStorage.getItem(key);
+  try {
+    return value ? JSON.parse(value) : fallback;
+  } catch (error) {
+    console.error(`Error parsing localStorage key "${key}":`, error);
+    return fallback;
+  }
 };
 
-
-
+const initialState: UserState = {
+  userData: safeParse("user"),
+  error: null,
+  loading: false,
+  role: safeParse("role"),
+  isLogged: safeParse("isLogged", false),
+  status: safeParse("status"),
+  _id: safeParse("_id"),
+};
 
 export interface UserLanguageState {
-  userLanguage:string|null
+  userLanguage: string | null;
   error: string | null;
   loading: boolean;
 }
+
 const initialStateForLanguage: UserLanguageState = {
-  userLanguage:JSON.parse(localStorage.getItem("userLanguage") || `"English"`),
+  userLanguage: safeParse("userLanguage", "English"), // Default to "English"
   error: null,
   loading: false,
 };
-
-
 
 export const userLanguageSlice = createSlice({
   name: "/userLanguage",
@@ -71,7 +63,6 @@ export const userLanguageSlice = createSlice({
         console.log("Payload after language change:", payload);
         state.loading = false;
         state.error = null;
-       
         state.userLanguage = payload;
         localStorage.setItem("userLanguage", JSON.stringify(state.userLanguage));
       })
@@ -81,19 +72,6 @@ export const userLanguageSlice = createSlice({
       });
   },
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export const authSlice = createSlice({
   name: "user",
@@ -105,12 +83,12 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(loginAdmin.pending, (state) => {
+      .addCase(loginAdmin.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(loginAdmin.fulfilled, (state, { payload }) => {
-        console.log("inshaallah log of the payload ", payload);
+        console.log("Login payload:", payload);
         state.loading = false;
         state.error = null;
         state.userData = payload;
@@ -119,8 +97,7 @@ export const authSlice = createSlice({
         localStorage.setItem("role", JSON.stringify(state.role));
         localStorage.setItem("isLogged", JSON.stringify(state.isLogged));
         localStorage.setItem("user", JSON.stringify(state.userData));
-        localStorage.setItem("status",JSON.stringify(state.status))
-        console.log(payload, "login state inside slice");
+        localStorage.setItem("status", JSON.stringify(payload.status));
       })
       .addCase(loginAdmin.rejected, (state, { payload }) => {
         state.loading = false;
@@ -128,34 +105,24 @@ export const authSlice = createSlice({
         state.role = null;
         state.error = payload as string;
       })
-
-
-
-
-
       .addCase(adminLogout.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-
       .addCase(adminLogout.fulfilled, (state) => {
-        state.loading=false
-        state.isLogged = false,
-          state.error = null,
-          state.role = null,
-          state.userData = null;
+        state.loading = false;
+        state.isLogged = false;
+        state.error = null;
+        state.role = null;
+        state.userData = null;
         localStorage.clear();
       })
       .addCase(adminLogout.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload as string;
-      })
-      
-
+      });
   },
 });
 
-
-
-export const {updateError}= authSlice.actions
-export default authSlice
+export const { updateError } = authSlice.actions;
+export default authSlice;

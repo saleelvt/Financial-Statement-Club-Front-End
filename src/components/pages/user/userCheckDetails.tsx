@@ -195,7 +195,7 @@ export const UserCompanyDetails = React.memo(() => {
                    </div>
                   <div className="flex flex-col md:flex-row  text-[14px] font-serif    justify-center lg:justify-start ">
                     
-                    <h3 className="text-gray-800 text-cente ">
+                    <h3 className="text-gray-800 text-center ">
                       {isDocumentEn(document)
                         ? document.fullNameEn
                         : document.fullNameAr}

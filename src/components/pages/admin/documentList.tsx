@@ -43,8 +43,8 @@ export const DocumentList: React.FC = () => {
 
         const endpoint =
           adminLanguage === "English"
-            ? "/admin/getDocuments"
-            : "/admin/getArabicDocuments";
+            ? "/api/v1/admin/getDocuments"
+            : "/api/v1/admin/getArabicDocuments";
         const response = await commonRequest("GET", endpoint, config, null);
 
         if (response.status === 200 && response.data?.data) {
@@ -85,8 +85,6 @@ export const DocumentList: React.FC = () => {
     fetchDocuments();
   }, [adminLanguage]);
 
-
-
   const [currentPage, setCurrentPage] = useState(1);
   const documentsPerPage = 10;
 
@@ -97,7 +95,7 @@ export const DocumentList: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
 
-  
+
   if (loading) {
     return <Loading />;
   }

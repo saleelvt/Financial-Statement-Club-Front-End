@@ -135,7 +135,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
       setIsLoading(true);
       try {
         const adminLanguage = "English";
-        const response = await commonRequest("GET",`/admin/tadawalCodeSuggestions?name=${value}&language=${adminLanguage}`,config,{});
+        const response = await commonRequest("GET",`/api/v1/admin/tadawalCodeSuggestions?name=${value}&language=${adminLanguage}`,config,{});
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
         console.error('Error fetching suggestions:', error);
@@ -151,7 +151,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
 
   const handleSuggestionClick = async (suggestion: string) => {
     const adminLanguage = "English";
-    const response = await commonRequest("GET",`/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
+    const response = await commonRequest("GET",`/api/v1/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
     console.log('data with the suggetin __________',response.data.data);
     const mydata= response.data.data
     setnickNameEn(mydata.nickNameEn);

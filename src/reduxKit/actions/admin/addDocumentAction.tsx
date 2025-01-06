@@ -65,7 +65,7 @@ export const addDocumentEnglish = createAsyncThunk(
         console.log(key, value);
       });
       console.log("this is my data ++++++++++++");
-      const response = await axiosIn.post(`/admin/addDocumentEnglish`,  formData, createAxiosConfig(true)
+      const response = await axiosIn.post(`/api/v1/admin/addDocumentEnglish`,  formData, createAxiosConfig(true)
       );
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -49,7 +49,7 @@ export const CheckDocumentDetails = () => {
 
         const response = await commonRequest(
           "GET",
-          `/admin/getDocumetnBytadawalCode?${params}`,
+          `/api/v1/admin/getDocumetnBytadawalCode?${params}`,
           config
         );
         if (response.status === 200 && response.data?.data) {
@@ -79,7 +79,7 @@ export const CheckDocumentDetails = () => {
     try {
       await commonRequest(
         "DELETE",
-        `/admin/deleteDocument/${docToDelete}?language=${language}`,
+        `/api/v1/admin/deleteDocument/${docToDelete}?language=${language}`,
         config
       );
       toast.success("Document Successfully Deleted");

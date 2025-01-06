@@ -129,7 +129,7 @@ export const UserCompanyDetails = React.memo(() => {
 
         const response = await commonRequest(
           "GET",
-          `/admin/getDocumetnBytadawalCode?${params}`,
+          `/api/v1/admin/getDocumetnBytadawalCode?${params}`,
           config
         );
 

@@ -64,7 +64,7 @@ export const axiosIn = axios.create({
             formData.append("sector", adminCredentials?.sector);
             console.log("got hte datas in arabic side}}}}}}}}}}} ",adminCredentials);
             
-            const response = await axiosIn.post(`/admin/addDocumentArabic`,formData,createAxiosConfig(true));
+            const response = await axiosIn.post(`/api/v1/admin/addDocumentArabic`,formData,createAxiosConfig(true));
             return response.data ;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (error: any) {

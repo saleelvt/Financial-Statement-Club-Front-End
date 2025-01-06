@@ -48,7 +48,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
       try {
         const response = await commonRequest(
           "GET",
-          `/admin/getDocumentById/${id}?language=${language}`, // Include language as a query parameter
+          `/api/v1/admin/getDocumentById/${id}?language=${language}`, // Include language as a query parameter
           config,
           {}
         );
@@ -86,7 +86,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
       setIsLoading(true);
       try {
         const adminLanguage = "English";
-        const response = await commonRequest("GET",`/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,config,{});
+        const response = await commonRequest("GET",`/api/v1/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,config,{});
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
         console.error('Error fetching suggestions:', error);
@@ -100,7 +100,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
 
   const handleSuggestionClick = async (suggestion: string) => {
     const adminLanguage = "English";
-    const response = await commonRequest("GET",`/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
+    const response = await commonRequest("GET",`/api/v1/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
     console.log('data with the suggetin __________',response.data.data);
     const mydata= response.data.data
     setnickNameEn(suggestion);
@@ -136,7 +136,7 @@ export const UpdateDocument: React.FC = React.memo(() => {
       [field]: { ...prev[field], year },
     }));
   };
-  
+
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -153,7 +153,6 @@ export const UpdateDocument: React.FC = React.memo(() => {
       console.log("my data is",adminCredentials)
     const response =   await dispatch(UpdateDocumentEnglish({id,language,adminCredentials})).unwrap();
     console.log("this is my last console log!!!!!!!!!!!!!!!!! ", response.data);
-    
       toast.success("Document updated successfully");
       navigate(-1);
     } catch (error: any) {

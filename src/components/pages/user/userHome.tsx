@@ -18,6 +18,7 @@ import { Error } from "../Error";
 
 
 
+
 import {
   DocumentSliceAr,
   DocumentSliceEn,
@@ -61,8 +62,8 @@ const UserHomePage: React.FC = () => {
         if (userLanguage) setLanguage(userLanguage);
         const endpoint =
           userLanguage === "English"
-            ? "/admin/getDocuments"
-            : "/admin/getArabicDocuments";
+            ? "/api/v1/admin/getDocuments"
+            : "/api/v1/admin/getArabicDocuments";
         const response = await commonRequest("GET", endpoint, config, null);
 
         if (response.status === 200 && response.data?.data) {

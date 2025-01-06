@@ -63,7 +63,7 @@ export const UpdateDocumentEnglish = createAsyncThunk(
         console.log(key, value);
       });
       console.log("this is my data ++++++++++++ updating " , formData);
-      const response = await axiosIn.put(`/admin/updateDocumentEnglish?id=${id}&language=${language}`,formData,createAxiosConfig(true)
+      const response = await axiosIn.put(`/api/v1/admin/updateDocumentEnglish?id=${id}&language=${language}`,formData,createAxiosConfig(true)
       );
 
       return response.data;

@@ -47,7 +47,7 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
       try {
         const response = await commonRequest(
           "GET",
-          `/admin/getDocumentById/${id}?language=${language}`, // Include language as a query parameter
+          `/api/v1/admin/getDocumentById/${id}?language=${language}`, // Include language as a query parameter
           config,
           {}
         );
@@ -85,7 +85,7 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
         const adminLanguage = "English";
         const response = await commonRequest(
           "GET",
-          `/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,
+          `/api/v1/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,
           config,
           {}
         );
@@ -104,7 +104,7 @@ export const UpdateDocumentAr: React.FC = React.memo(() => {
     const adminLanguage = "English";
     const response = await commonRequest(
       "GET",
-      `/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,
+      `/api/v1/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,
       config,
       {}
     );

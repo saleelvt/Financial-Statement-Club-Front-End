@@ -4,6 +4,15 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { adminVerifyOtp } from "../../../reduxKit/actions/auth/authAction";
+
+interface VerifyOtpResponse {
+  payload: {
+    data: {
+      success: boolean;
+    };
+  };
+}
 
 const EmailVerification: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
@@ -11,20 +20,24 @@ const EmailVerification: React.FC = () => {
   const [timer, setTimer] = useState<number>(60);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { loading } = useSelector((state: RootState) => state.auth);
+  const { loading, email } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    console.log("%%%%%%%%%%%%%%%%%%%%%", email);
+  }, [email]);
 
   // Handle OTP input change
   const handleInputChange = (value: string, index: number): void => {
     if (isNaN(Number(value))) return; // Ignore non-numeric input
     const newOtp = [...otp];
     newOtp[index] = value;
-
     setOtp(newOtp);
     setFinalOtp(newOtp.join("")); // Update finalOtp instantly
-
     // Automatically focus on the next input field
     if (value && index < otp.length - 1) {
-      const nextInput = document.getElementById(`otp-input-${index + 1}`) as HTMLInputElement;
+      const nextInput = document.getElementById(
+        `otp-input-${index + 1}`
+      ) as HTMLInputElement;
       nextInput?.focus();
     }
   };
@@ -33,10 +46,9 @@ const EmailVerification: React.FC = () => {
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const clipboardData = e.clipboardData.getData("Text");
-
     // Only allow numeric values and ensure length matches OTP input count
-    if (!/^\d+$/.test(clipboardData) || clipboardData.length !== otp.length) return;
-
+    if (!/^\d+$/.test(clipboardData) || clipboardData.length !== otp.length)
+      return;
     const newOtp = clipboardData.split("").slice(0, otp.length); // Ensure correct length
     setOtp(newOtp);
     setFinalOtp(newOtp.join("")); // Update finalOtp instantly
@@ -51,22 +63,140 @@ const EmailVerification: React.FC = () => {
   }, [timer]);
 
   // Resend OTP
-  const handleResend = (): void => {
-    setTimer(60); // Reset timer
+  const handleResend = async() => {
+    setTimer(70); // Reset timer
     setOtp(["", "", "", "", "", ""]); // Clear OTP inputs
-    Swal.fire("OTP Resent!", "Please check your email for the new OTP.", "success");
+    Swal.fire(
+      "OTP Resent!",
+      "Please check your email for the new OTP.",
+      "success"
+    );
+
+
+
+    const response = ( await dispatch(
+      adminVerifyOtp({ email, otp: finalOtp })
+    )) as VerifyOtpResponse;
+    if (response.payload?.data?.success === true) {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "OTP Verified successfully!",
+        timer: 3000,
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        background: "#d4edda", // Light green background for success
+        color: "#155724", // Darker green text color
+        iconColor: "#28a745", // Custom color for the success icon
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer); // Pause timer on hover
+          toast.addEventListener("mouseleave", Swal.resumeTimer); // Resume timer on mouse leave
+        },
+        showClass: {
+          popup: "animate__animated animate__fadeInDown", // Animation when the toast appears
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp", // Animation when the toast disappears
+        },
+      });
+      navigate("/home");
+    }else{
+      Swal.fire({
+        icon: "error", // Corrected to lowercase "error"
+        title: "Error",
+        text: "OTP Verification failed!",
+        timer: 3000,
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        background: "#fff",
+        color: "#000",
+        iconColor: "#ff0000",
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+      localStorage.clear()
+      navigate("/login")
+    }
+    console.log("This is the OTP verify section for verify:", response);
+
   };
 
-   const handleCancel=()=>{
-    navigate("/login")
-    Swal.fire("Cancelled", "You have cancelled the OTP verification.", "info")
 
-  }
 
-  
+  const handleCancel = () => {
+    navigate("/login");
+    Swal.fire("Cancelled", "You have cancelled the OTP verification.", "info");
+  };
+
+
+
+
   const handleOtpSubmit = async () => {
     Swal.fire("Submitted OTP", finalOtp, "success");
-    console.log("This is the OTP verify section for verify:", finalOtp);
+    const response = (await dispatch(
+      adminVerifyOtp({ email, otp: finalOtp })
+    )) as VerifyOtpResponse;
+    if (response.payload?.data?.success === true) {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "OTP Verified successfully!",
+        timer: 3000,
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        background: "#d4edda", // Light green background for success
+        color: "#155724", // Darker green text color
+        iconColor: "#28a745", // Custom color for the success icon
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer); // Pause timer on hover
+          toast.addEventListener("mouseleave", Swal.resumeTimer); // Resume timer on mouse leave
+        },
+        showClass: {
+          popup: "animate__animated animate__fadeInDown", // Animation when the toast appears
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp", // Animation when the toast disappears
+        },
+      });
+      navigate("/home");
+    }else{
+      Swal.fire({
+        icon: "error", // Corrected to lowercase "error"
+        title: "Error",
+        text: "OTP Verification failed!",
+        timer: 3000,
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        background: "#fff",
+        color: "#000",
+        iconColor: "#ff0000",
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+      localStorage.clear()
+      navigate("/login")
+    }
+    console.log("This is the OTP verify section for verify:", response);
   };
 
   return (
@@ -95,7 +225,10 @@ const EmailVerification: React.FC = () => {
               Verify Email OTP
             </h2>
             <p className="mb-6 text-center text-gray-600">
-              OTP code sent to <span className="font-medium text-green-600">example@example.com</span>
+              OTP code sent to{" "}
+              <span className="font-medium text-green-600">
+                example@example.com
+              </span>
             </p>
             <div className="flex justify-center space-x-2 mb-6">
               {otp.map((digit, index) => (
@@ -112,7 +245,17 @@ const EmailVerification: React.FC = () => {
               ))}
             </div>
             <p className="mb-6 text-center text-sm text-gray-500">
-              Request in {timer > 0 ? `${timer} sec` : <button onClick={handleResend} className=" text-blue-700 hover:underline">Resend</button>}
+              Request in{" "}
+              {timer > 0 ? (
+                `${timer} sec`
+              ) : (
+                <button
+                  onClick={handleResend}
+                  className=" text-blue-700 hover:underline"
+                >
+                  Resend
+                </button>
+              )}
             </p>
             <div className="flex justify-between">
               <button
@@ -130,7 +273,9 @@ const EmailVerification: React.FC = () => {
                 }`}
                 onClick={handleOtpSubmit}
               >
-                <span className="relative">{loading ? "Verifying..." : "Continue"}</span>
+                <span className="relative">
+                  {loading ? "Verifying..." : "Continue"}
+                </span>
               </button>
             </div>
           </div>

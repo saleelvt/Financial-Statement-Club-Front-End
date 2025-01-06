@@ -51,7 +51,7 @@ export const AddDocumentArabic: React.FC= React.memo(() => {
       setIsLoading(true);
       try {
         const adminLanguage = "Arabic";
-        const response = await commonRequest("GET",`/admin/tadawalCodeSuggestions?name=${value}&language=${adminLanguage}`,config,{});
+        const response = await commonRequest("GET",`/api/v1/admin/tadawalCodeSuggestions?name=${value}&language=${adminLanguage}`,config,{});
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
         console.error('Error fetching suggestions:', error);
@@ -66,12 +66,12 @@ export const AddDocumentArabic: React.FC= React.memo(() => {
 
   const handleSuggestionClick = async (suggestion: string) => {
     const adminLanguage = "Arabic";
-    const response = await commonRequest("GET",`/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
+    const response = await commonRequest("GET",`/api/v1/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,config,{});
     console.log('data with the suggetin __________',response.data.data);
     const mydata= response.data.data
     setnickNameAr(mydata.nickNameAr);
     setFullNameAr(mydata.fullNameAr)
-    
+
     setTadawalCode(mydata.tadawalCode)
     setSector(mydata.sector)
     setSuggestions([]); // Clear suggestions after selecting one

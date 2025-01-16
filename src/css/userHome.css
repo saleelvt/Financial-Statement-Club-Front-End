@@ -9,11 +9,11 @@
     direction: ltr;
 }
 .nickName {
-   grid-template-columns: repeat(10, auto);
+   grid-template-columns: repeat(7, auto);
 }
 @media(max-width: 1024px ){
     .nickName {
-        grid-template-columns: repeat(9, auto);
+        grid-template-columns: repeat(6, auto);
      }
      
 }
@@ -25,7 +25,7 @@
 }
 @media(max-width: 450px ){
     .nickName {
-        grid-template-columns: repeat(4, auto);
+        grid-template-columns: repeat(3, auto);
      }
      
 }

@@ -26,7 +26,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const UserHomePage: React.FC = () => {
-  const [showAll, setShowAll] = useState(false);
+  // const [showAll, setShowAll] = useState(false);
   const [brandsEn, setBrandsEn] = useState< {
       fullNameEn: string;
       nickNameEn: string;
@@ -94,8 +94,6 @@ const UserHomePage: React.FC = () => {
     navigate("/companyDetails", { state: {tadawalCode, language } });
   };
 
-  const handleShowMore = () => setShowAll(true);
-  const handleShowLess = () => setShowAll(false);
   const toggleLanguage = async () => {
     const newLanguage = language === "English" ? "Arabic" : "English";
     setLanguage(newLanguage);
@@ -120,7 +118,7 @@ const UserHomePage: React.FC = () => {
   return (
     <div
       style={{ backgroundColor: "#666666" }}
-      className=" text-white min-h-screen flex flex-col items-center xs:p-3 lg:p-4"
+      className=" text-white min-h-screen flex flex-col items-center xs:p-2 lg:px-24 lg:p-4"
     >
       <div className="flex   justify-end w-3/4">
         <button
@@ -136,12 +134,15 @@ const UserHomePage: React.FC = () => {
       </div>
       <div
       dir={ language === "Arabic" ? "rtl" : "ltr"}
-        className={`nickName grid xs:grid-cols-6  mx-[15px] my-[25px]    lg:grid-cols-10  lg:text-[12px]  md:text-[10px]  sm:text-[12px]  xs:text-[13px]  xs:gap-4 lg:gap-[20px] md:lg:gap-[15px]  sm:gap-[10px]   xs:p-1      rounded-lg   sm:grid-cols-6 mt-8  md:grid-cols-8  ${
+        className={`nickName grid xs:grid-cols-6  mx-[1px]   lg:grid-cols-10  lg:text-[15px]  md:text-[15px]  sm:text-[15px]  xs:text-[13px]  xs:gap-2 lg:gap-[14px] md:lg:gap-[15px]  sm:gap-[13px]         rounded-lg   sm:grid-cols-6 mt-8  md:grid-cols-8  ${
           language === "Arabic" ? "text-right" : ""    
         }`} 
       >
+
+
+
+
         {currentBrands
-          .slice(0, showAll ? currentBrands.length : 30)
           .map((brand, index) => (
             <button
               key={index}
@@ -157,30 +158,8 @@ const UserHomePage: React.FC = () => {
           ))}
       </div>
 
-      <div className="mt-6" hidden={currentBrands.length < 40}>
-        {!showAll ? (
-          <button
-            onClick={handleShowMore}
-            style={{
-              background:
-                "linear-gradient(to right, rgba(96, 125, 139, 0.8), rgba(33, 150, 243, 0.8))",
-            }}
-            className="px-6 py-2 bg-b-500 font-bold text-white rounded-lg hover:bg-gray-700 transition-all"
-          >
-            {userLanguage === "English" ? "Show more" : "استعراض المزيد"}
-          </button>
-        ) : (
-          <button
-            onClick={handleShowLess}
-            style={{
-              background:
-                "linear-gradient(to right, rgba(96, 125, 139, 0.8), rgba(33, 150, 243, 0.8))",
-            }}
-            className="px-6 py-2 bg-gray-300 font-bold text-white rounded-lg hover:bg-gray-700 transition-all"
-          >
-            {userLanguage === "English" ? "Show Less" : "عرض أقل"}
-          </button>
-        )}
+      <div className="mt-6" >
+       
       </div>
       <div className="relative w-full flex flex-col items-center p-8 bg-opacity-50 text-center">
         {/* <h1 className="text-6xl font-serif mb-6 animate-bounce text-gray-100">

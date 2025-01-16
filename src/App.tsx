@@ -11,7 +11,6 @@ import { DocumentList } from './components/pages/admin/documentList';
 import { AdminLogin } from './components/forms/admin/login';
 import AdminHomePage from './components/pages/admin/adminDashBoard';
 import EmailVerification from './components/forms/admin/otpVerifiy';
-
 import { AddDocumentArabic } from './components/pages/admin/addDocumentAr';
 import {UpdateDocument} from './components/pages/admin/updateDocument';
 import { useSelector } from 'react-redux';
@@ -22,7 +21,6 @@ export const App: React.FC = React.memo(() => {
   const {isLogged,role,}=useSelector((state:RootState)=>state.auth)
   console.log("my role and my isLogged", isLogged,role);
   
-
 
   return (
     <Fragment>

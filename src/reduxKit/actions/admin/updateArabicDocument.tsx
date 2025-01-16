@@ -8,6 +8,9 @@ import { FormField } from "../../../interfaces/admin/addDoument";
 export const axiosIn = axios.create({
   baseURL: URL,
 });
+
+
+
 interface DocumentPayload {
   fullNameAr: string;
   nickNameAr: string;
@@ -15,6 +18,7 @@ interface DocumentPayload {
   sector: string;
   formData: Record<FieldKey, FormField>;
 }
+
 
 export const UpdateDocumentArabic = createAsyncThunk(
   "admin/updateDocumentArabic ",
@@ -51,6 +55,8 @@ export const UpdateDocumentArabic = createAsyncThunk(
           console.warn(`Skipping key: ${key}, value is null or invalid`);
         }
       }
+
+
 
       // Append other data
       formData.append("fullNameAr", adminCredentials?.fullNameAr);

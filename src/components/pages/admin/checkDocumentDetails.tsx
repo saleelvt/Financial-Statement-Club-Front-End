@@ -148,7 +148,7 @@ export const CheckDocumentDetails = () => {
           <div className="flex justify-between items-center">
             <FaArrowCircleLeft
               className="text-3xl text-gray-600"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/documentList")}
             />
             <h1 className="text-3xl text-black font-semibold text-center">
               {adminLanguage === "Arabic"
@@ -163,6 +163,7 @@ export const CheckDocumentDetails = () => {
                   placeholder={
                     adminLanguage === "English" ? "Search..." : "بحث..."
                   }
+                  
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full p-1 text-gray-700 focus:outline-none rounded-l-full border-2 border-gray-300 focus:border-gray-600 placeholder-gray-700 transition-all"

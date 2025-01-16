@@ -24,10 +24,12 @@ export const UserCompanyDetails = React.memo(() => {
   const [documents, setDocuments] = useState<
     (DocumentSliceEn | DocumentSliceAr)[]
   >([]);
-
-  const [document, setDocument] = useState<DocumentSliceEn | DocumentSliceAr>();
   const location = useLocation();
-  const { language,tadawalCode } = location.state || {};
+  const queryParams = new URLSearchParams(location.search);
+  const [document, setDocument] = useState<DocumentSliceEn | DocumentSliceAr>();
+  const tadawalCode = queryParams.get("tadawalCode") || "";
+  const language = queryParams.get("language") || "";
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [yearList, setYearList] = useState<string[]>([]);
@@ -101,7 +103,6 @@ export const UserCompanyDetails = React.memo(() => {
   ): document is DocumentSliceEn => {
     return (document as DocumentSliceEn).fullNameEn !== undefined;
   };
-
   useEffect(() => {
     const TakeYears = () => {
       const years: string[] = documents

@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { adminVerifyOtp } from "../../../reduxKit/actions/auth/authAction";
 
+
+
 interface VerifyOtpResponse {
   payload: {
     data: {
@@ -13,6 +15,8 @@ interface VerifyOtpResponse {
     };
   };
 }
+
+
 
 const EmailVerification: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
@@ -25,9 +29,8 @@ const EmailVerification: React.FC = () => {
   useEffect(() => {
     console.log("%%%%%%%%%%%%%%%%%%%%%", email);
   }, [email]);
-
   // Handle OTP input change
-  const handleInputChange = (value: string, index: number): void => {
+  const handleInputChange = (value: string, index: number): void => { 
     if (isNaN(Number(value))) return; // Ignore non-numeric input
     const newOtp = [...otp];
     newOtp[index] = value;

@@ -134,7 +134,7 @@ const UserHomePage: React.FC = () => {
       </div>
       <div
       dir={ language === "Arabic" ? "rtl" : "ltr"}
-        className={`nickName grid xs:grid-cols-6  mx-[10px]    lg:grid-cols-10  lg:text-[15px]  md:text-[15px]  sm:text-[15px]  xs:text-[13px]  xs:gap-2 lg:gap-[14px] md:lg:gap-[15px]  sm:gap-[13px]         rounded-lg   sm:grid-cols-6 mt-2  md:grid-cols-8  ${
+        className={`nickName grid xs:grid-cols-6  mx-[14px]    lg:grid-cols-10  lg:text-[15px]  md:text-[15px]  sm:text-[15px]  xs:text-[13px]  xs:gap-6 lg:gap-[14px] md:lg:gap-[15px]  sm:gap-[15px]         rounded-lg   sm:grid-cols-6 mt-2  md:grid-cols-8  ${
           language === "Arabic" ? "text-right" : ""    
         }`} 
       >

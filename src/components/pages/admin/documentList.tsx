@@ -17,7 +17,7 @@ import {
 } from "../../../interfaces/admin/addDoument";
 import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
 
-export const DocumentList: React.FC = () => {
+ const DocumentList: React.FC = React.memo(() => {
   const { adminLanguage } = useSelector(
     (state: RootState) => state.adminLanguage
   );
@@ -106,7 +106,7 @@ export const DocumentList: React.FC = () => {
   const handleBrand = (doc: DocumentSliceAr | DocumentSliceEn) => {
     if (doc) {
       const tadawalCode ="tadawalCode" in doc ? doc.tadawalCode : "" ;
-      navigate("/documentDetails", { state: { tadawalCode, language } });
+      navigate(`/documentDetails?tadawalCode=${tadawalCode}&language=${language}`);
     }
   };
     const toggleLanguage = async () => {
@@ -278,4 +278,6 @@ export const DocumentList: React.FC = () => {
 
     </div>
   );
-};
+})
+
+export default DocumentList;

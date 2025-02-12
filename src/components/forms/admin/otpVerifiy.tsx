@@ -18,7 +18,7 @@ interface VerifyOtpResponse {
 
 
 
-const EmailVerification: React.FC = () => {
+const EmailVerification: React.FC = React.memo(() => {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const [finalOtp, setFinalOtp] = useState("");
   const [timer, setTimer] = useState<number>(60);
@@ -154,7 +154,7 @@ const EmailVerification: React.FC = () => {
         icon: "success",
         title: "Success",
         text: "OTP Verified successfully!",
-        timer: 3000,
+        timer: 1000,
         toast: true,
         showConfirmButton: false,
         timerProgressBar: true,
@@ -228,9 +228,9 @@ const EmailVerification: React.FC = () => {
               Verify Email OTP
             </h2>
             <p className="mb-6 text-center text-gray-600">
-              OTP code sent to{" "}
+              OTP code sent to 
               <span className="font-medium text-green-600">
-                example@example.com
+              {email}
               </span>
             </p>
             <div className="flex justify-center space-x-2 mb-6">
@@ -286,6 +286,6 @@ const EmailVerification: React.FC = () => {
       </div>
     </div>
   );
-};
+})
 
 export default EmailVerification;

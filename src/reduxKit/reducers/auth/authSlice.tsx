@@ -19,8 +19,7 @@ const safeParse = (key: string, fallback: any = null) => {
     return value ? JSON.parse(value) : fallback;
   } catch (error) {
    console.log("Error while parsing local storage value for key: ", error);
-   
-    return fallback;
+ return fallback;
   }
 };
 

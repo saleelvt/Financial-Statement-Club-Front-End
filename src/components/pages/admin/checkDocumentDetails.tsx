@@ -22,8 +22,7 @@ import { RootState } from "../../../reduxKit/store";
 import { FaTrash } from "react-icons/fa";
 
 import toast from "react-hot-toast";
-
-export const CheckDocumentDetails = () => {
+ const CheckDocumentDetails = () => {
 
   const [documents, setDocuments] = useState<
     (DocumentSliceEn | DocumentSliceAr)[]
@@ -31,7 +30,9 @@ export const CheckDocumentDetails = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const location = useLocation();
-  const { tadawalCode, language } = location.state || {};
+  const queryParams = new URLSearchParams(location.search);
+  const tadawalCode = queryParams.get("tadawalCode") || "";
+  const language = queryParams.get("language") || "";
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const { adminLanguage } = useSelector( (state: RootState) => state.adminLanguage
   );
@@ -343,3 +344,5 @@ export const CheckDocumentDetails = () => {
     </div>
   );
 };
+
+export default CheckDocumentDetails;

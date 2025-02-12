@@ -3,16 +3,16 @@ import React, { Fragment, lazy, Suspense } from 'react';
 import { Routes, Route,Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Loading } from './components/pages/Loading';
-import { CheckDocumentDetails } from './components/pages/admin/checkDocumentDetails';
-import { UserCompanyDetails } from './components/pages/user/userCheckDetails';
+const CheckDocumentDetails = lazy(() => import('./components/pages/admin/checkDocumentDetails'));
+const UserCompanyDetails = lazy(() => import('./components/pages/user/userCheckDetails'));
 import { UpdateDocumentAr } from './components/pages/admin/updateDocumentAr';
 const UserHomePage = lazy(() => import('./components/pages/user/userHome'));
-import { DocumentList } from './components/pages/admin/documentList';
+const DocumentList = lazy(() => import('./components/pages/admin/documentList'));
 import { AdminLogin } from './components/forms/admin/login';
 import AdminHomePage from './components/pages/admin/adminDashBoard';
-import EmailVerification from './components/forms/admin/otpVerifiy';
+const EmailVerification = lazy(() => import('./components/forms/admin/otpVerifiy'));
 import { AddDocumentArabic } from './components/pages/admin/addDocumentAr';
-import {UpdateDocument} from './components/pages/admin/updateDocument';
+import {UpdateDocument} from './components/pages/admin/updateDocument'
 import { useSelector } from 'react-redux';
 import { RootState } from './reduxKit/store';
 

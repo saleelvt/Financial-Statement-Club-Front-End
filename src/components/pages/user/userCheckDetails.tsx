@@ -17,7 +17,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 
-export const UserCompanyDetails = React.memo(() => {
+ const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
     (state: RootState) => state.userLanguage
   );
@@ -49,18 +49,15 @@ export const UserCompanyDetails = React.memo(() => {
     "S1",
     "Year",
     "Board",
-    
   ];
 
-  const handleYearClick = (year: string) => {
+  const handleYearClick = async(year: string) => {
     setSelectedYear(year);
     setSelectedFilteredDocWithYear([]); // Clear previously filtered documents
     setSelectedPdfKey(null); // Reset the selected PDF key
     setIframeSrc(""); // Reset the iframe source
-    const filteredYears = documents
-      .filter((doc) => doc.formData?.Q1?.year === year)
-      .filter(Boolean);
-    setSelectedFilteredDocWithYear(filteredYears);
+    const filteredYears = documents.filter((doc) => doc.formData?.Q1?.year === year) .filter(Boolean);
+    await  setSelectedFilteredDocWithYear(filteredYears);
   };
 
   const handlePdfButtonClick = (key: string) => {
@@ -98,19 +95,14 @@ export const UserCompanyDetails = React.memo(() => {
     }
   };
 
-  const isDocumentEn = (
-    document: DocumentSliceEn | DocumentSliceAr
-  ): document is DocumentSliceEn => {
+  const isDocumentEn = (  document: DocumentSliceEn | DocumentSliceAr): document is DocumentSliceEn => {
     return (document as DocumentSliceEn).fullNameEn !== undefined;
   };
   useEffect(() => {
     const TakeYears = () => {
       const years: string[] = documents
-        .map((doc) => doc.formData?.Q1?.year)
-        .filter((year): year is string => year !== undefined)
-        .sort((a, b) => parseInt(a) - parseInt(b));
-      setYearList(years);
-    };
+        .map((doc) => doc.formData?.Q1?.year) .filter((year): year is string => year !== undefined)
+        .sort((a, b) => parseInt(a) - parseInt(b)); setYearList(years)};
     TakeYears();
   }, [documents]);
 
@@ -124,9 +116,7 @@ export const UserCompanyDetails = React.memo(() => {
     const fetchDocuments = async () => {
       setLoading(true);
       try {
-        const params = new URLSearchParams({
-          language,tadawalCode
-        }).toString();
+        const params = new URLSearchParams({ language,tadawalCode }).toString();
 
         const response = await commonRequest(
           "GET",
@@ -334,3 +324,5 @@ export const UserCompanyDetails = React.memo(() => {
     </div>
   );
 });
+
+export default UserCompanyDetails;

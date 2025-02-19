@@ -1,7 +1,7 @@
 
 
-export const URL="https://api.finstatements.club";
-// export const URL="http://localhost:2002";
+// export const URL="https://api.finstatements.club";
+export const URL="http://localhost:2002";
 
 
 export const createAxiosConfig = (isFileUpload = false) => ({
@@ -11,7 +11,6 @@ export const createAxiosConfig = (isFileUpload = false) => ({
     },
     withCredentials: true,
 });
-
 export const config ={
     headers :{
         "Content-Type": "application/json", 
@@ -19,4 +18,3 @@ export const config ={
     },
     withCredentials:true
 }
-

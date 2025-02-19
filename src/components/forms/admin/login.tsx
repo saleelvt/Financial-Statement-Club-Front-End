@@ -17,7 +17,7 @@ export const AdminLogin = React.memo(() => {
   const {loading}=useSelector((state:RootState)=>state.auth)
   const initialValues: IAdminLogin = {
     email: "",
-    password: "",
+    password: "", 
   };
 
   const [showPassword, setShowPassword] = useState(false);

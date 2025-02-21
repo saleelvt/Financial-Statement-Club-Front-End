@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"; 
 
 
 export const AdminLogin = React.memo(() => {
@@ -63,7 +63,7 @@ export const AdminLogin = React.memo(() => {
   
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white p-4">
+    <div  className="flex items-center justify-center min-h-screen bg-white p-4">
       <div className="flex flex-col items-center p-6 w-full max-w-lg shadow-lg  border border-gray-300 rounded-lg bg-white transform transition-all duration-500 hover:scale-105">
         <h2 className="text-3xl font-serif mb-6 text-center text-gray-800 animate-pulse">
           LogIn Account

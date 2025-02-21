@@ -11,9 +11,10 @@ const DocumentList = lazy(() => import('./components/pages/admin/documentList'))
 import { AdminLogin } from './components/forms/admin/login';
 import AdminHomePage from './components/pages/admin/adminDashBoard';
 const EmailVerification = lazy(() => import('./components/forms/admin/otpVerifiy'));
-import { AddTable } from './components/pages/admin/addTable';
+import  AddTable  from './components/pages/admin/addTable';
 import { AddDocumentArabic } from './components/pages/admin/addDocumentAr';
 import {UpdateDocument} from './components/pages/admin/updateDocument'
+const AdminProfilePage = lazy(()=> import('./components/pages/admin/adminProfile'))
 import { useSelector } from 'react-redux';
 import { RootState } from './reduxKit/store';
 
@@ -39,6 +40,7 @@ export const App: React.FC = React.memo(() => {
           <Route path="/updateDocument" element={isLogged &&  role === 'admin' ? <UpdateDocument /> : <AdminLogin />} />
           <Route path="/updateDocumentAr" element={isLogged &&  role === 'admin' ? <UpdateDocumentAr /> : <AdminLogin />} />
           <Route path="/documentDetails" element={isLogged &&  role === 'admin' ? <CheckDocumentDetails /> : <AdminLogin />} />
+          <Route path="/admin/profile" element={isLogged &&  role === 'admin' ? <AdminProfilePage /> : <AdminLogin />} />
         </Routes>
       </Suspense>
     </Fragment>

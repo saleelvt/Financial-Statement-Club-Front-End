@@ -197,6 +197,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
         sector,
         formData
       }
+      
      await dispatch(addDocumentEnglish(payloadData)).unwrap();
       toast.success("Document successfully added");
     } catch (error: any) {
@@ -272,9 +273,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
               key={index}
               className="px-2 text-sm font-semibold  py-1 cursor-pointer hover:bg-gray-100"
               onClick={() => handleSuggestionClick(suggestion)}
-            >
+            > 
               {suggestion}
-            </li>
+            </li> 
           ))}
         </ul>
       )}

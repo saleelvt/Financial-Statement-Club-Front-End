@@ -96,15 +96,13 @@ export const authSlice = createSlice({
         console.log("Login payload:", payload);
         state.loading = false;
         state.error = null;
-        state.userData = payload;
         state.email = payload.email;
         state.role = payload.role;
         state.isLogged = false;
         localStorage.setItem("email", JSON.stringify(state.email));
         localStorage.setItem("role", JSON.stringify(state.role));
         localStorage.setItem("isLogged", JSON.stringify(state.isLogged));
-        localStorage.setItem("user", JSON.stringify(state.userData));
-        localStorage.setItem("status", JSON.stringify(payload.status));
+
       })
 
       .addCase(loginAdmin.rejected, (state, { payload }) => {

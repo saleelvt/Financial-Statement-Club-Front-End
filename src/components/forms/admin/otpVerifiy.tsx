@@ -14,7 +14,7 @@ interface VerifyOtpResponse {
       success: boolean;
     };
   };
-}
+} 
 
 
 
@@ -153,7 +153,7 @@ const EmailVerification: React.FC = React.memo(() => {
       Swal.fire({
         icon: "success",
         title: "Success",
-        text: "OTP Verified successfully!",
+        text: "OTP Verified successfully!", 
         timer: 1000,
         toast: true,
         showConfirmButton: false,

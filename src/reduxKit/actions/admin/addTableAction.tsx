@@ -1,7 +1,8 @@
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { URL } from "../../../config/constants";
+import { URL,createAxiosConfig } from "../../../config/constants";
+
 
 
 export const axiosIn = axios.create({
@@ -19,7 +20,7 @@ export const AdminAddTableAction = createAsyncThunk(
       try {
         console.log("the current tghe data aof hte ", data );
         
-           const response= await axiosIn.post(`/api/v1/admin/addTable`)
+           const response= await axiosIn.post(`/api/v1/admin/addTable`,data,createAxiosConfig(true))
            console.log("the response ",response);
            
         return response.data  

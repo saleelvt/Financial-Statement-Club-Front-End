@@ -100,7 +100,7 @@ import { RootState } from "../../../reduxKit/store";
   };
   useEffect(() => {
     const TakeYears = () => {
-      const years: string[] = documents
+      const years: string[] = documents 
         .map((doc) => doc.formData?.Q1?.year) .filter((year): year is string => year !== undefined)
         .sort((a, b) => parseInt(a) - parseInt(b)); setYearList(years)};
     TakeYears();

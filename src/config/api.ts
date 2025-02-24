@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { URL, } from "./constants";
-const instance = axios.create({
+ export const instance = axios.create({
     baseURL:URL,
     withCredentials:true
 })

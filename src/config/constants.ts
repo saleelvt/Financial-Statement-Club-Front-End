@@ -11,7 +11,7 @@ export const createAxiosConfig = (isFileUpload = false) => ({
     },
     withCredentials: true,
 });
-export const config ={
+export const config ={  
     headers :{
         "Content-Type": "application/json", 
         "X-Requested-With": "XMLHttpRequest",

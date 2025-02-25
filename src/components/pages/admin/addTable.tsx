@@ -289,7 +289,7 @@ const AddTable = () => {
       <div id="capture-area" className="border mt-3 p-1 no-scrollbar">
         <div className="flex-1">
           <input
-            className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-1/4 bg-gray-100 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white m-1"
             type="text"
             placeholder="Tadawal Code"
             value={tadawalCode}
@@ -317,7 +317,7 @@ const AddTable = () => {
             </ul>
           )}
         </div>
-        <div className="flex justify-center p-1 bg-yellow-50">
+        <div className="flex justify-center p-1  ">
           <h1 className="text-lg text-black font-bold">{nickName}</h1>
         </div>
 
@@ -326,14 +326,16 @@ const AddTable = () => {
             <table className="w-full border-collapse border border-gray-300">
               <thead>
                 <tr>
-                  <th className="border border-gray-300 p-2 text-left"></th>
-                  <th className="border bg-slate-400 border-gray-300 p-2 text-center w-24">
+                  <th className="border bg-slate-300 border-white p-2 text-left">
+                    Contents
+                  </th>
+                  <th className="border bg-slate-300 border-white p-2 text-center w-24">
                     Notes
                   </th>
-                  <th className="border bg-slate-400 border-gray-300 p-2 text-center w-40">
+                  <th className="border bg-slate-300 border-white p-2 text-center w-40">
                     Date 1
                   </th>
-                  <th className="border bg-slate-400 border-gray-300 p-2 text-center w-40">
+                  <th className="border bg-slate-300 border-white p-2 text-center w-40">
                     Date 2
                   </th>
                 </tr>
@@ -341,15 +343,15 @@ const AddTable = () => {
 
               <tbody>
                 {/* Main Name Row */}
-                <tr className="bg-gray-50">
-                  <td className="border border-gray-300">
-                    <div className="flex justify-start items-center w-1/2 bg-blue-600 p-2">
+                <tr className=" ">
+                  <td className="">
+                    <div className="flex justify-start items-center w-1/2  ">
                       <input
                         type="text"
                         name="mainName"
                         value={formData.mainName}
                         onChange={handleMainNameChange}
-                        className="text-sm px-4 py-1 border rounded"
+                        className="text-sm px-4 py-2 border border-gray-200"
                         placeholder="Main Name"
                       />
 
@@ -358,7 +360,7 @@ const AddTable = () => {
                         name="mainNameArabic"
                         value={formData.mainNameArabic}
                         onChange={handleMainNameChange}
-                        className="text-sm px-4 py-1 border rounded"
+                        className="text-sm px-4 py-2 border border-gray-200"
                         placeholder="Main Name Arabic"
                       />
                       {!takeShot && ( // Hide buttons while taking a screenshot
@@ -366,14 +368,14 @@ const AddTable = () => {
                           <button
                             type="button"
                             onClick={addSubSection}
-                            className="ml-2 hover:bg-gray-300 font-bold text-lg"
+                            className="ml-2 hover:bg-gray-100 p-2 rounded-full font-semibold text-[17px]"
                           >
                             <FaPlus />
                           </button>
                           <button
                             type="button"
                             onClick={removeSubSection}
-                            className="ml-2 hover:bg-gray-300 font-bold text-lg"
+                            className="ml-2  hover:bg-gray-100 p-1 rounded-full font-semibold text-[17px]"
                           >
                             <HiMinusSm className="text-2xl" />
                           </button>
@@ -390,9 +392,9 @@ const AddTable = () => {
                 {formData.subSections.map((subSection, subIndex) => (
                   <React.Fragment key={subIndex}>
                     {/* Sub Section Header */}
-                    <tr className="bg-gray-50">
-                      <td className="border border-gray-300">
-                        <div className="flex justify-between items-center w-1/2 bg-red-200 p-2">
+                    <tr className=" ">
+                      <td className=" ">
+                        <div className="flex justify-between items-center w-1/2    ">
                           <input
                             type="text"
                             value={subSection.subName}
@@ -403,7 +405,7 @@ const AddTable = () => {
                                 e.target.value
                               )
                             }
-                            className="text-sm px-4 py-1 border rounded"
+                            className="text-sm px-4 py-2   border border-gray-200"
                             placeholder="SubName"
                           />
                           <input
@@ -416,7 +418,7 @@ const AddTable = () => {
                                 e.target.value
                               )
                             }
-                            className="text-sm px-4 py-1 border rounded"
+                            className="text-sm px-4 py-2   border border-gray-200"
                             placeholder="SubName Arabic"
                           />
                           {!takeShot && ( // Hide buttons while taking a screenshot
@@ -424,7 +426,7 @@ const AddTable = () => {
                               <button
                                 type="button"
                                 onClick={() => addProperty(subIndex)}
-                                className="ml-2"
+                                 className="ml-2 hover:bg-gray-100 p-2 rounded-full font-semibold text-[17px]"
                               >
                                 <FaPlus />
                               </button>
@@ -433,7 +435,7 @@ const AddTable = () => {
                                 onClick={() =>
                                   removeProperty(subIndex, subIndex)
                                 }
-                                className="ml-2 hover:bg-gray-300"
+                                 className="ml-2 hover:bg-gray-100 p-1 rounded-full font-semibold text-[17px]"
                               >
                                 <HiMinusSm className="text-2xl" />
                               </button>
@@ -449,7 +451,7 @@ const AddTable = () => {
                     {/* Properties */}
                     {subSection.properties.map((property, propIndex) => (
                       <tr key={`${subIndex}-${propIndex}`}>
-                        <td className="border border-gray-300 px-1">
+                        <td className="border  ">
                           <input
                             type="text"
                             value={property.propertyName}
@@ -461,7 +463,7 @@ const AddTable = () => {
                                 e.target.value
                               )
                             }
-                            className="px-4 text-sm border rounded"
+                            className="px-4 text-sm   py-2   border-l border-r  border-gray-200"
                             placeholder="properties"
                           />
                         </td>
@@ -477,7 +479,7 @@ const AddTable = () => {
                                 e.target.value
                               )
                             }
-                            className="w-full border rounded"
+                            className="w-full border border-transparent px-1"
                             placeholder="Notes"
                           />
                         </td>
@@ -493,7 +495,7 @@ const AddTable = () => {
                                 Number(e.target.value)
                               )
                             }
-                            className="w-full p-1 border rounded"
+                            className="    border  border-transparent w-full py-1 pl-2"
                             placeholder="0"
                           />
                         </td>
@@ -509,7 +511,7 @@ const AddTable = () => {
                                 Number(e.target.value)
                               )
                             }
-                            className="w-full p-1 border rounded"
+                            className=" border  border-transparent w-full py-1  pl-2"
                             placeholder="0"
                           />
                         </td>
@@ -517,7 +519,7 @@ const AddTable = () => {
                     ))}
 
                     {/* Sub Section Total */}
-                    <tr className="bg-gray-300">
+                    <tr className="bg-slate-300">
                       <td className="border border-gray-300 p-2 pl-4  text-md font-semibold">
                         Total {subSection.subName}
                       </td>
@@ -551,7 +553,7 @@ const AddTable = () => {
           <div className="mt-12 flex justify-end">
             {" "}
             <button
-              className="bg-gray-600  text-white p-2 rounded-lg font-serif text-sm"
+              className="bg-slate-300  text-black  px-4 py-3 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
               onClick={captureScreen}
               disabled={takeShot}
             >

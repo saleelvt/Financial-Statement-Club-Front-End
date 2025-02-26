@@ -32,13 +32,14 @@ interface FormData {
 
 const AddTable = () => {
   const [tadawalCode, setTadawalCode] = useState("");
+  const [documents,setDocuments]=useState()
   const [nickName, setNickName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [takeShot, setTakeShot] = useState<boolean>(false);
 
-  const [formData, setFormData] = useState<FormData>({
+ const [formData, setFormData] = useState<FormData>({
     mainName: "",
     mainNameArabic: "",
     subSections: [
@@ -98,10 +99,8 @@ const AddTable = () => {
       downloadLink.download = "screenshot.png";
       downloadLink.click(); // Triggers download
       // Dispatch action with tadawalCode, nickName, and the screenshot file
-      await dispatch(
-        AdminAddTableAction({ tadawalCode, nickName, screenshotFile })
-      );
-  
+      await dispatch( AdminAddTableAction({ tadawalCode, nickName, screenshotFile }) );
+      setTakeShot(false);
       console.log("Screenshot captured and passed to Redux action.");
     } catch (error) {
       console.error("Error capturing screenshot:", error);
@@ -228,12 +227,7 @@ const AddTable = () => {
       setIsLoading(true);
       try {
         const adminLanguage = "Arabic";
-        const response = await commonRequest(
-          "GET",
-          `/api/v1/admin/tadawalCodeSuggestions?name=${value}&language=${adminLanguage}`,
-          config,
-          {}
-        );
+        const response = await commonRequest( "GET",   `/api/v1/admin/tadawalCodeSuggestions?name=${value}&language=${adminLanguage}`,   config,  {}   );
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
         console.error("Error fetching suggestions:", error);
@@ -248,16 +242,16 @@ const AddTable = () => {
     const adminLanguage = "English";
     const response = await commonRequest(
       "GET",
-      `/api/v1/admin/getDataWithSuggestions?name=${suggestion}&language=${adminLanguage}`,
+      `/api/v1/admin/getDataWithSuggestionsForTable?name=${suggestion}&language=${adminLanguage}`,
       config,
       {}
-    );
+    ); 
     const mydata = response.data.data;
-    console.log("tawadal code response : now ", response);
+    console.log("tawadal code response : now ", mydata);
 
-    setTadawalCode(mydata.tadawalCode);
-    setNickName(mydata.nickNameEn);
-
+    setTadawalCode(mydata[0].tadawalCode);
+    setNickName(mydata[0].nickNameEn);
+    setDocuments(mydata)
     setSuggestions([]); // Clear suggestions after selecting one
   };
 
@@ -278,6 +272,10 @@ const AddTable = () => {
   //     });
   //   }
   // };
+  if(documents){
+    console.log("keeekooooooooooooooooooo: ",documents);
+    
+  }
 
   return (
     <div className="p-4">

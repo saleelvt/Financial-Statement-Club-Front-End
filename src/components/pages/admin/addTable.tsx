@@ -10,6 +10,9 @@ import { config } from "../../../config/constants";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../reduxKit/store";
+import { useEffect, useRef } from "react";
+ 
+
 
 interface PropertyRow {
   propertyName: string;
@@ -35,11 +38,16 @@ const AddTable = () => {
   const [documents,setDocuments]=useState()
   const [nickName, setNickName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [years, setYears] = useState<string[]>([]); // List of years
+const [selectedYear, setSelectedYear] = useState<string | null>(null); // Selected year
+const [quarterYear, setQuarterYear] = useState<string | null>(null); // Year being hovered
+const [quarters, setQuarters] = useState<{ [key: string]: Array<{ quarter: string; date: string }> }>({}); // Quarters and their dates for each year
+const [isYearDropdownOpen, setIsYearDropdownOpen] = useState<boolean>(false); // Manage year dropdown visibility
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [takeShot, setTakeShot] = useState<boolean>(false);
 
- const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormData>({
     mainName: "",
     mainNameArabic: "",
     subSections: [
@@ -58,6 +66,8 @@ const AddTable = () => {
     ],
   });
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const calculateMainTotal = () => {
     let totalDate1 = 0;
     let totalDate2 = 0;
@@ -71,14 +81,26 @@ const AddTable = () => {
     return { totalDate1, totalDate2 };
   };
 
+  const handleYearSelect = (year: string) => {
+    setSelectedYear(year);
+    console.log("Selected Year:", year);
+    // setIsYearDropdownOpen(false);
+     // Close the year dropdown after selection
+  };
+
+  const handleQuarterYear = (quarter: string) => {
+    setQuarterYear(quarter);
+    console.log('Selected Quarter', quarter)
+    setIsYearDropdownOpen(false);
+    setQuarterYear(null);
+  };
+
   const captureScreen = async () => {
     const node = document.getElementById("capture-area");
     if (!node) return;
   
     setTakeShot(true); // Hide UI elements while capturing
     console.log("Taking Screenshot...");
-  
-    // Add the class to hide the scrollbar on the parent and child elements
     node.classList.add("no-scrollbar");
     const childElements = node.querySelectorAll("*");
     childElements.forEach((element) => element.classList.add("no-scrollbar"));
@@ -245,14 +267,40 @@ const AddTable = () => {
       `/api/v1/admin/getDataWithSuggestionsForTable?name=${suggestion}&language=${adminLanguage}`,
       config,
       {}
-    ); 
+    );
     const mydata = response.data.data;
-    console.log("tawadal code response : now ", mydata);
-
+    console.log("Tadawal code response:", mydata);
+  
     setTadawalCode(mydata[0].tadawalCode);
     setNickName(mydata[0].nickNameEn);
-    setDocuments(mydata)
+    setDocuments(mydata);
     setSuggestions([]); // Clear suggestions after selecting one
+  
+    // Extract years and quarters from formData
+    const yearsSet = new Set<string>();
+    const quartersMap: { [key: string]: Array<{ quarter: string; date: string }> } = {};
+  
+    mydata.forEach((doc: any) => {
+      const formData = doc.formData;
+      Object.keys(formData).forEach((key) => {
+        if (formData[key].year) {
+          yearsSet.add(formData[key].year);
+          if (!quartersMap[formData[key].year]) {
+            quartersMap[formData[key].year] = [];
+          }
+          if (formData[key].date) {
+            quartersMap[formData[key].year].push({
+              quarter: key,
+              date: new Date(formData[key].date).toLocaleDateString(), // Format date
+            });
+          }
+        }
+      });
+    });
+  
+    setYears(Array.from(yearsSet));
+    setQuarters(quartersMap);
+    // setIsDropdownOpen(true); // Open the year dropdown
   };
 
   // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -277,6 +325,21 @@ const AddTable = () => {
     
   }
 
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsYearDropdownOpen(false);
+        setQuarterYear(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="p-4">
     <div className="p-2">
@@ -285,7 +348,7 @@ const AddTable = () => {
       </Link>
 
       <div id="capture-area" className="border mt-3 p-1 no-scrollbar">
-        <div className="flex-1">
+      <div className="flex-1">
           <input
             className="appearance-none block w-1/4 bg-gray-100 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white m-1"
             type="text"
@@ -301,12 +364,13 @@ const AddTable = () => {
               Loading suggestions...
             </p>
           )}
+
           {suggestions.length > 0 && (
             <ul className="border border-gray-300 w-1/2 rounded mt-1 max-h-40 overflow-y-auto bg-white">
               {suggestions.map((suggestion, index) => (
                 <li
                   key={index}
-                  className="px-2 text-sm font-semibold  py-1 cursor-pointer hover:bg-gray-100"
+                  className="px-2 text-sm font-semibold py-1 cursor-pointer hover:bg-gray-100"
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   {suggestion}
@@ -314,7 +378,53 @@ const AddTable = () => {
               ))}
             </ul>
           )}
+
+          {years.length > 0 && (
+            <div ref={dropdownRef} className="relative mt-2">
+              <label className="block text-sm font-medium text-gray-700">Year</label>
+              <div
+                className="mt-1 block w-1/4 p-2 border border-gray-300 rounded-md shadow-sm cursor-pointer"
+                onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
+              >
+                {selectedYear || "Select a year"}
+              </div>
+
+              {isYearDropdownOpen && (
+                <div className="absolute z-10 mt-1 w-1/4 bg-white border border-gray-300 rounded-md shadow-lg">
+                  {years.map((year) => (
+                    <div
+                      key={year}
+                      className="relative p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleYearSelect(year)}
+                     
+                      onMouseLeave={() => setQuarterYear(null)}
+                    >
+                      {year}
+
+                      {(quarterYear === year || selectedYear === year) && quarters[year] && (
+                        <div className="absolute left-full ml-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
+                          <div className="py-1">
+                            {quarters[year].map((item) => (
+                              <div
+                                key={item.quarter}
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                onClick={() => handleQuarterYear(item.quarter)}
+                              >
+                                <div>{item.quarter}</div>
+                                 
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
+
         <div className="flex justify-center p-1  ">
           <h1 className="text-lg text-black font-bold">{nickName}</h1>
         </div>

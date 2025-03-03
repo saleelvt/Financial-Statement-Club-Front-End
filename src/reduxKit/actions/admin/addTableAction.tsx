@@ -13,6 +13,9 @@ export const axiosIn = axios.create({
     tadawalCode :string,
      nickName:string
       screenshotFile:File
+      selectedYear:string
+      quarterYear:string
+      selectedTableType:string
   }
 export const AdminAddTableAction = createAsyncThunk(
     "admin/addTable",

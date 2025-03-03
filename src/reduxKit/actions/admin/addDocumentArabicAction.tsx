@@ -27,14 +27,20 @@ export const axiosIn = axios.create({
     "admin/addDocumentArabic",
     async (adminCredentials:DocumentPayload,{rejectWithValue})=>{
         try {
+          console.log("the form data of the data : ", adminCredentials);
+          
           const formDataf = adminCredentials.formData;
-          const q1Field = formDataf?.Q1;
-          if (!q1Field || !q1Field.file || !q1Field.date || !q1Field.year) {
-            return rejectWithValue({
-              message: "The Q1 field is required. Please fill in all Details Of Q1 .",
-            });
-          } 
+          // Check if at least one field is fully filled
+          const isAnyFieldValid = Object.values(formDataf).some(
+            (field) => field.file && field.date && field.year
+          );
     
+          if (!isAnyFieldValid) {
+            return rejectWithValue({
+              message:
+                "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year.",
+            });
+          }
            const formData = new FormData();
             for (const [key, value] of Object.entries(adminCredentials?.formData || {})) {
               if (value && typeof value === 'object' && 'file' in value && value.file) {

@@ -5,8 +5,13 @@ export type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
 
 export interface FormField {
   file?: string | File | null;
- date?: Date | null;
- year?: string;
+  date?: Date | null;
+  year?: string;
+  table?: {
+    BalanceSheet?: string |null; 
+    CashFlow?: string|null
+    ProfitLoss?: string|null
+  };
 }
 
 export interface FormDataState {
@@ -17,6 +22,7 @@ export interface FormDataState {
  S1: FormField;
  Board: FormField;
  Year: FormField;
+ [key: string]: FormField; // Add this line
 }
 
 export interface DocumentSliceEn  {

@@ -25,7 +25,7 @@ import {
 } from "../../../interfaces/admin/addDoument";
 import { useNavigate } from "react-router-dom";
 
-const UserHomePage: React.FC = () => {
+const UserHomePage: React.FC = React.memo(() => {
   // const [showAll, setShowAll] = useState(false);
   const [brandsEn, setBrandsEn] = useState< {
       fullNameEn: string;
@@ -162,6 +162,6 @@ const UserHomePage: React.FC = () => {
     </div>
   );
 
-};
+})
 
 export default UserHomePage;

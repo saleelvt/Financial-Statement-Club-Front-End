@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { FormField } from "../../../interfaces/admin/addDoument";
+import { FieldKey } from "../../../interfaces/admin/addDoument";
 import {
   DocumentSliceEn,
   DocumentSliceAr,
@@ -17,7 +18,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 
- const UserCompanyDetails = React.memo(() => {
+const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
     (state: RootState) => state.userLanguage
   );
@@ -29,17 +30,19 @@ import { RootState } from "../../../reduxKit/store";
   const [document, setDocument] = useState<DocumentSliceEn | DocumentSliceAr>();
   const tadawalCode = queryParams.get("tadawalCode") || "";
   const language = queryParams.get("language") || "";
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [yearList, setYearList] = useState<string[]>([]);
-  const [selectedPdfKey, setSelectedPdfKey] = useState<string | null>(null);
+  const [selectedPdfKey, setSelectedPdfKey] = useState<FieldKey | null>(null);
+  type TableKey = keyof NonNullable<FormField["table"]>; // "BalanceSheet" | "CashFlow" | "ProfitLoss"
+  const [selectedTableKey, setSelectedTableKey] = useState<TableKey | null>( null);
   const navigate = useNavigate();
   const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
   const [iframeSrc, setIframeSrc] = useState<string>("");
+  const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
 
   const pdfKeys: (keyof FormDataState)[] = [
     "Q1",
@@ -50,18 +53,26 @@ import { RootState } from "../../../reduxKit/store";
     "Year",
     "Board",
   ];
+  const tableKeys: (keyof NonNullable<FormField["table"]>)[] = [
+    "BalanceSheet",
+    "ProfitLoss",
+    "CashFlow",
+  ];
 
-  const handleYearClick = async(year: string) => {
+  const handleYearClick = async (year: string) => {
     setSelectedYear(year);
     setSelectedFilteredDocWithYear([]); // Clear previously filtered documents
     setSelectedPdfKey(null); // Reset the selected PDF key
     setIframeSrc(""); // Reset the iframe source
-    const filteredYears = documents.filter((doc) => doc.formData?.Q1?.year === year) .filter(Boolean);
-    await  setSelectedFilteredDocWithYear(filteredYears);
+    const filteredYears = documents
+      .filter((doc) => doc.formData?.Q1?.year === year)
+      .filter(Boolean);
+    await setSelectedFilteredDocWithYear(filteredYears);
   };
 
-  const handlePdfButtonClick = (key: string) => {
+  const handlePdfButtonClick = (key: FieldKey) => {
     setSelectedPdfKey(key);
+    setSelectedTableKey(null);
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
       const fileUrl =
@@ -83,6 +94,34 @@ import { RootState } from "../../../reduxKit/store";
     }
   };
 
+  const handleTableViewButtonClick = (tableKey: TableKey) => {
+    setSelectedTableKey(tableKey);
+
+    if (selectedFilteredDocWithYear.length > 0) {
+      const document = selectedFilteredDocWithYear[0];
+      // Validate if selectedYear is a valid FieldKey
+      // if (!Object.keys(document.formData).includes(selectedYear)) {
+      //   console.error(`Invalid selectedYear: ${selectedYear}`);
+      //   alert(`Invalid year selection.`);
+      //   return;
+      // }
+
+      console.log("the screen short url is : ");
+      // Use optional chaining with nullish coalescing to handle the null case
+
+      const screenshotUrl =
+        document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
+
+      console.log("the screen short url is : ", screenshotUrl);
+      if (screenshotUrl && typeof screenshotUrl === "string") {
+        setTableIframeSrc(screenshotUrl);
+        setIframeSrc(screenshotUrl);
+      } else {
+        alert(`No screenshot available for ${tableKey}`);
+      }
+    }
+  };
+
   const handleLeftClick = () => {
     if (visibleYears > 0) {
       setVisibleYears(visibleYears - 1);
@@ -95,14 +134,30 @@ import { RootState } from "../../../reduxKit/store";
     }
   };
 
-  const isDocumentEn = (  document: DocumentSliceEn | DocumentSliceAr): document is DocumentSliceEn => {
+  const isDocumentEn = (
+    document: DocumentSliceEn | DocumentSliceAr
+  ): document is DocumentSliceEn => {
     return (document as DocumentSliceEn).fullNameEn !== undefined;
   };
   useEffect(() => {
     const TakeYears = () => {
-      const years: string[] = documents 
-        .map((doc) => doc.formData?.Q1?.year) .filter((year): year is string => year !== undefined)
-        .sort((a, b) => parseInt(a) - parseInt(b)); setYearList(years)};
+      const years: string[] = documents
+        .map((doc) => {
+          return (
+            doc.formData?.Q1?.year ||
+            doc.formData?.Q2?.year ||
+            doc.formData?.Q3?.year ||
+            doc.formData?.Q4?.year ||
+            doc.formData?.S1?.year ||
+            doc.formData?.Board?.year ||
+            doc.formData?.Year?.year
+          );
+        })
+        .filter((year): year is string => !!year) // Ensure the year is not null or undefined
+        .sort((a, b) => parseInt(a) - parseInt(b)); // Sort numerically
+
+      setYearList(years);
+    };
     TakeYears();
   }, [documents]);
 
@@ -116,7 +171,10 @@ import { RootState } from "../../../reduxKit/store";
     const fetchDocuments = async () => {
       setLoading(true);
       try {
-        const params = new URLSearchParams({ language,tadawalCode }).toString();
+        const params = new URLSearchParams({
+          language,
+          tadawalCode,
+        }).toString();
 
         const response = await commonRequest(
           "GET",
@@ -137,24 +195,39 @@ import { RootState } from "../../../reduxKit/store";
     };
     fetchDocuments();
   }, [language]);
-
+  if (document) {
+    console.log("the document:", document);
+  }
+  if (tableIframeSrc) {
+    console.log("the tableIframeSrc:", tableIframeSrc);
+  }
+  if (selectedFilteredDocWithYear) {
+    console.log(
+      "the selectedFilteredDocWithYear:",
+      selectedFilteredDocWithYear
+    );
+  }
+  if (selectedPdfKey) {
+    console.log("the selectedPdfKey:", selectedPdfKey);
+  }
   if (loading) {
     return <Loading />;
   }
   if (error) {
     return <Error />;
   }
-
-
   return (
     <div
-      dir={userLanguage === "English" ? "ltr" : "rtl"} 
+      dir={userLanguage === "English" ? "ltr" : "rtl"}
       className="min-h-96 text-2xl font-semibold    flex flex-col lg:flex-row"
     >
       <div className="w-full  lg:w-[60%]">
-        <div dir={userLanguage === "English" ? "ltr" : "rtl"} className="rounded-md   xs:p-1 lg:p-2 mb-4 ">
+        <div
+          dir={userLanguage === "English" ? "ltr" : "rtl"}
+          className="rounded-md   xs:p-1 lg:p-2 mb-4 "
+        >
           {document && (
-            <div >
+            <div>
               <div className="flex lg;flex-col flex-row lg:justify-start sm:justify-center  md:justify-center xs:justify-center   sm:flex-row w-full items-start">
                 <div className="flex   mt-3  mr-4  ">
                   {userLanguage === "Arabic" ? (
@@ -173,25 +246,20 @@ import { RootState } from "../../../reduxKit/store";
                     />
                   )}
                 </div>
-
                 <div className="  flex  flex-col justify-center    ">
-                   <div className="flex  text-[14px] font-serif     justify-center lg:justify-start ">
-                   <h3 className="text-gray-800  text-center ">
-                      {
-                        (isDocumentEn(document)
-                          ? document.nickNameEn
-                          : document.nickNameAr) 
-                        }
+                  <div className="flex  text-[14px] font-serif     justify-center lg:justify-start ">
+                    <h3 className="text-gray-800  text-center ">
+                      {isDocumentEn(document)
+                        ? document.nickNameEn
+                        : document.nickNameAr}
                     </h3>
-                   </div>
+                  </div>
                   <div className="flex flex-col md:flex-row  text-[14px] font-serif    justify-center lg:justify-start ">
-                    
                     <h3 className="text-gray-800 text-center ">
                       {isDocumentEn(document)
                         ? document.fullNameEn
                         : document.fullNameAr}
                     </h3>
-                    
                   </div>
                   <div className="flex    justify-center lg:justify-start items-center ">
                     <h3 className=" text-[14px] font-serif  text-gray-800">
@@ -200,104 +268,142 @@ import { RootState } from "../../../reduxKit/store";
                         : document.sector}
                     </h3>
                   </div>
-
-
-
-
-
-
-
-
-
-                  <div dir={userLanguage === "English" ? "ltr" : "rtl"} className="flex justify-start gap-[6px]  text-xs justify-center lg:justify-start ">
-               <div className="flex  items-center   ">
-          <button onClick={handleRightClick} className="text-gray-600 flex  items-center   justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md     "> {"<"}</button>
-          </div>
-
-
-            {/* <div className="flex items-center">
-         <FaArrowCircleLeft  onClick={handleRightClick} className="text-gray-600 items-center text-xl  "/>
-         </div> */}
-
-          <div className="flex flex-wrap gap-4 py-1 items-center justify-center lg:justify-start ">
-
-
-            {yearList.slice(visibleYears, visibleYears + 5).map((year) => (
-              <button
-                key={year}
-                onClick={() => handleYearClick(year)}
-                className={`px-2  py-1 rounded-md ${
-                  selectedYear === year
-                    ? "bg-gray-600 text-white"
-                    : "bg-gray-200 text-gray-700 "
-                }`}
-              >
-                {year}
-              </button>
-            ))}
-          </div>
-
-
-
- <div className="flex items-center ">
-<button  onClick={handleLeftClick} className="text-gray-600 flex  items-center justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md   "> {">"}</button>
-</div>
-        
-            {/* <FaArrowCircleRight className="text-lg text-gray-600" /> */}
-           {/* <div className="flex items-center">
-           < FaArrowCircleRight  onClick={handleLeftClick} className="text-gray-600   items-center text-xl " />
-           </div> */}
-         
-        </div>
-
-        
-    <div dir={userLanguage === "English" ? "ltr" : "rtl"}   className="mt-2  flex justify-center lg:justify-start rounded-lg text-xs"
-        >
-          {selectedFilteredDocWithYear.length > 0 ? (
-            <div className="flex flex-wrap gap-3">
-
-              {pdfKeys.map((key) => {
-                const isFileAvailable = selectedFilteredDocWithYear.some(
-                  (doc) => doc.formData[key].file !== null
-                );
-
-
-                return (
-                  isFileAvailable && (
-                    <button
-                      key={key}
-                      onClick={() => handlePdfButtonClick(key)}
-                      className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
-                        selectedPdfKey === key
-                          ? "bg-gray-600 text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-300"
-                      }`}
+                  <div className="bg-red-200   ">
+                    <div
+                      dir={userLanguage === "English" ? "ltr" : "rtl"}
+                      className="flex justify-start gap-[6px] bg-yellow-200  text-xs justify-center lg:justify-start "
                     >
-                      {key}
-                    </button>
-                  )
-                );
-              })}
-            </div>
-          ) : (
-            <p className="text-center text-gray-600"></p>
-          )}
-          
-        </div>
+                      <div className="flex  items-center bg-green-300  ">
+                        <button
+                          onClick={handleRightClick}
+                          className="text-gray-600 flex  items-center   justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md     "
+                        >
+                          {" "}
+                          {"<"}
+                        </button>
+                      </div>
+                      <div className="flex flex-wrap gap-4 py-1 items-center justify-center lg:justify-start ">
+                        {yearList
+                          .slice(visibleYears, visibleYears + 5)
+                          .map((year) => (
+                            <button
+                              key={year}
+                              onClick={() => handleYearClick(year)}
+                              className={`px-2  py-1 rounded-md ${
+                                selectedYear === year
+                                  ? "bg-gray-600 text-white"
+                                  : "bg-gray-200 text-gray-700 "
+                              }`}
+                            >
+                              {year}
+                            </button>
+                          ))}
+                      </div>
+                      <div className="flex items-center ">
+                        <button
+                          onClick={handleLeftClick}
+                          className="text-gray-600 flex  items-center justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md   "
+                        >
+                          {" "}
+                          {">"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    dir={userLanguage === "English" ? "ltr" : "rtl"}
+                    className="mt-2  flex justify-center  bg-purple-400 lg:justify-start rounded-lg text-xs"
+                  >
+                    {selectedFilteredDocWithYear.length > 0 ? (
+                      <div className="flex flex-wrap gap-3">
+                        <button className="text-white flex text-xs   items-center   justify-center text-[16px] px-2 py-1   bg-gray-600 rounded-md     ">
+                          {" "}
+                          {"PDF"}
+                        </button>
+                        {pdfKeys.map((key) => {
+                          const isFileAvailable =
+                            selectedFilteredDocWithYear.some(
+                              (doc) => doc.formData[key].file !== null
+                            );
+                          return (
+                            isFileAvailable && (
+                              <button
+                                key={key}
+                                onClick={() =>
+                                  handlePdfButtonClick(key as FieldKey)
+                                }
+                                className={`px-2 py-1 lg:ml-2 text-xs bg-gray-200 rounded-md ${
+                                  selectedPdfKey === key
+                                    ? "bg-gray-500 text-white"
+                                    : "bg-gray-100 text-gray-700 hover:bg-gray-300"
+                                }`}
+                              >
+                                {key}
+                              </button>
+                            )
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <p className="text-center text-gray-600"></p>
+                    )}
+                  </div>
+
+                  {selectedPdfKey &&
+                    pdfKeys.includes(selectedPdfKey as keyof FormDataState) && (
+                      <div
+                        dir={userLanguage === "English" ? "ltr" : "rtl"}
+                        className="mt-2 flex justify-center bg-purple-200 lg:justify-start rounded-lg text-xs"
+                      >
+                        {selectedFilteredDocWithYear.length > 0 ? (
+                          <div className="flex flex-wrap gap-3">
+                            <button className="text-white flex text-xs items-center justify-center text-[16px] px-2 py-1 bg-gray-600 rounded-md">
+                              Table
+                            </button>
+                            {tableKeys
+                              .filter((key) =>
+                                selectedFilteredDocWithYear.some(
+                                  (doc) =>
+                                    doc.formData[
+                                      selectedPdfKey as keyof FormDataState
+                                    ]?.table?.[key] !== null &&
+                                    doc.formData[
+                                      selectedPdfKey as keyof FormDataState
+                                    ]?.table?.[key] !== undefined
+                                )
+                              )
+                              .map((key) => (
+                                <button
+                                  key={key}
+                                  onClick={() =>
+                                    handleTableViewButtonClick(key)
+                                  }
+                                  className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
+                                    selectedTableKey === key
+                                      ? "bg-gray-500 text-white"
+                                      : "bg-gray-100 text-gray-700 hover:bg-gray-300"
+                                  }`}
+                                >
+                                  {key}
+                                </button>
+                              ))}
+                          </div>
+                        ) : (
+                          <p className="text-center text-gray-600">
+                            No Data Available
+                          </p>
+                        )}
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
           )}
         </div>
-
-        
-
-  
-
       </div>
-
       <div className="lg:w-[75%]   mt-2  ">
-        {iframeSrc ? (
+        {iframeSrc ||tableIframeSrc ? (
           <div
             className="rounded-md "
             style={{
@@ -314,13 +420,13 @@ import { RootState } from "../../../reduxKit/store";
                 border: "none",
               }}
               title="PDF Viewer"
-              frameBorder="0"
             />
           </div>
         ) : (
           <div className="w-full  flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg"></div>
         )}
       </div>
+     
     </div>
   );
 });

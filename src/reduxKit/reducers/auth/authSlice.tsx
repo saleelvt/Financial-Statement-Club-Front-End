@@ -9,6 +9,7 @@ export interface UserState {
   role: string | null;
   status?: string | null;
   isLogged: boolean;
+  accessTokenFins:string| null
   _id?: string | null;
   email?: string | null;
 }
@@ -29,6 +30,7 @@ const initialState: UserState = {
   loading: false,
   role: safeParse("role"),
   email: safeParse("email"),
+  accessTokenFins:safeParse("accessTokenFins"),
   isLogged: safeParse("isLogged", false),
   status: safeParse("status"),
   _id: safeParse("_id"),
@@ -54,8 +56,6 @@ export const userLanguageSlice = createSlice({
       state.error = payload;
     },
   },
-
-
   extraReducers: (builder) => {
     builder
       .addCase(userLanguageChange.pending, (state) => {
@@ -122,13 +122,10 @@ export const authSlice = createSlice({
         console.log("Login payload:", payload);
         state.loading = false;
         state.error = null;
-        // state.userData = payload;
-        // state.role = payload.role;
         state.isLogged = true;
-        // localStorage.setItem("role", JSON.stringify(state.role));
+        state.accessTokenFins = payload.data.accessToken;
+        localStorage.setItem("accessTokenFins", JSON.stringify(state.accessTokenFins));
         localStorage.setItem("isLogged", JSON.stringify(state.isLogged));
-        // localStorage.setItem("user", JSON.stringify(state.userData));
-        // localStorage.setItem("status", JSON.stringify(payload.status));
       })
 
       .addCase(adminVerifyOtp.rejected, (state, { payload }) => {

@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 import { GrLanguage } from "react-icons/gr";
-<GrLanguage />
 import "../../../css/userHome.css";
 import { Error } from "../Error";
 

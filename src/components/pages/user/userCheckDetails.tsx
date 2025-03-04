@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState,lazy } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
@@ -35,12 +35,15 @@ const UserCompanyDetails = React.memo(() => {
   const [yearList, setYearList] = useState<string[]>([]);
   const [selectedPdfKey, setSelectedPdfKey] = useState<FieldKey | null>(null);
   type TableKey = keyof NonNullable<FormField["table"]>; // "BalanceSheet" | "CashFlow" | "ProfitLoss"
-  const [selectedTableKey, setSelectedTableKey] = useState<TableKey | null>( null);
+  const [selectedTableKey, setSelectedTableKey] = useState<TableKey | null>(
+    null
+  );
   const navigate = useNavigate();
   const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
+
   const [iframeSrc, setIframeSrc] = useState<string>("");
   const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
 
@@ -106,13 +109,10 @@ const UserCompanyDetails = React.memo(() => {
       //   return;
       // }
 
-      console.log("the screen short url is : ");
-      // Use optional chaining with nullish coalescing to handle the null case
-
       const screenshotUrl =
         document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
 
-      console.log("the screen short url is : ", screenshotUrl);
+      console.log("the screen short for the user  url is : ", screenshotUrl);
       if (screenshotUrl && typeof screenshotUrl === "string") {
         setTableIframeSrc(screenshotUrl);
         setIframeSrc(screenshotUrl);
@@ -217,11 +217,8 @@ const UserCompanyDetails = React.memo(() => {
     return <Error />;
   }
   return (
-    <div
-      dir={userLanguage === "English" ? "ltr" : "rtl"}
-      className="min-h-96 text-2xl font-semibold    flex flex-col lg:flex-row"
-    >
-      <div className="w-full  lg:w-[60%]">
+    <div dir={userLanguage === "English" ? "ltr" : "rtl"} className="min-h-96 text-2xl font-semibold    flex flex-col lg:flex-row" >
+      <div className="w-full  lg:w-[40%]">
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="rounded-md   xs:p-1 lg:p-2 mb-4 "
@@ -268,12 +265,12 @@ const UserCompanyDetails = React.memo(() => {
                         : document.sector}
                     </h3>
                   </div>
-                  <div className="bg-red-200   ">
+                  <div className="">
                     <div
                       dir={userLanguage === "English" ? "ltr" : "rtl"}
-                      className="flex justify-start gap-[6px] bg-yellow-200  text-xs justify-center lg:justify-start "
+                      className="flex justify-start gap-[6px]  text-xs justify-center lg:justify-start "
                     >
-                      <div className="flex  items-center bg-green-300  ">
+                      <div className="flex  items-center ">
                         <button
                           onClick={handleRightClick}
                           className="text-gray-600 flex  items-center   justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md     "
@@ -313,7 +310,7 @@ const UserCompanyDetails = React.memo(() => {
 
                   <div
                     dir={userLanguage === "English" ? "ltr" : "rtl"}
-                    className="mt-2  flex justify-center  bg-purple-400 lg:justify-start rounded-lg text-xs"
+                    className="mt-2  flex justify-center  lg:justify-start rounded-lg text-xs"
                   >
                     {selectedFilteredDocWithYear.length > 0 ? (
                       <div className="flex flex-wrap gap-3">
@@ -354,7 +351,7 @@ const UserCompanyDetails = React.memo(() => {
                     pdfKeys.includes(selectedPdfKey as keyof FormDataState) && (
                       <div
                         dir={userLanguage === "English" ? "ltr" : "rtl"}
-                        className="mt-2 flex justify-center bg-purple-200 lg:justify-start rounded-lg text-xs"
+                        className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
                       >
                         {selectedFilteredDocWithYear.length > 0 ? (
                           <div className="flex flex-wrap gap-3">
@@ -402,31 +399,34 @@ const UserCompanyDetails = React.memo(() => {
           )}
         </div>
       </div>
-      <div className="lg:w-[75%]   mt-2  ">
-        {iframeSrc ||tableIframeSrc ? (
-          <div
-            className="rounded-md "
-            style={{
-              position: "relative",
-              width: "100%",
-              height: "100vh", // Adjust height for mobile responsiveness
-            }}
-          >
-            <iframe
-              src={iframeSrc}
-              style={{
-                width: "100%",
-                height: "100%",
-                border: "none",
-              }}
-              title="PDF Viewer"
-            />
-          </div>
-        ) : (
-          <div className="w-full  flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg"></div>
-        )}
+      <div className="lg:w-[75%] mt-2">
+    {iframeSrc || tableIframeSrc ? (
+      <div
+        className="rounded-md"
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100vh",
+          overflow: "hidden", // Prevent horizontal scrolling
+        }}
+      >
+        <iframe
+          src={iframeSrc || tableIframeSrc}
+          style={{
+            width: "100%",
+            height: "100%",
+            border: "none",
+            overflow: "auto", // Allow vertical scrolling only if needed
+            display: "block",
+            objectFit: "contain", // Ensures full visibility inside container
+          }}
+          title="PDF Viewer"
+        />
       </div>
-     
+    ) : (
+      <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg"></div>
+    )}
+  </div>
     </div>
   );
 });

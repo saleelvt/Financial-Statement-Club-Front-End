@@ -1,9 +1,9 @@
 // /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect,lazy } from "react";
+import React, { useState, useEffect, lazy } from "react";
 import { useNavigate } from "react-router-dom";
 import { commonRequest } from "../../../config/api";
-import { config } from "../../../config/constants";
+import { configWithToken} from "../../../config/constants";
 import { TbListDetails } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
@@ -11,16 +11,18 @@ const Loading = lazy(() => import("../Loading"));
 import { Error } from "../Error";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { GrLanguage } from "react-icons/gr";
-import { DocumentSliceAr, DocumentSliceEn,} from "../../../interfaces/admin/addDoument";
+import {
+  DocumentSliceAr,
+  DocumentSliceEn,
+} from "../../../interfaces/admin/addDoument";
 import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
 
- const DocumentList: React.FC = React.memo(() => {
+const DocumentList: React.FC = React.memo(() => {
   const { adminLanguage } = useSelector(
     (state: RootState) => state.adminLanguage
   );
-  const dispatch = useDispatch<AppDispatch>();
-
   const [language, setLanguage] = useState<string>("Arabic");
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [documents, setDocuments] = useState<
     (DocumentSliceAr | DocumentSliceEn)[]
@@ -42,7 +44,7 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
           adminLanguage === "English"
             ? "/api/v1/admin/getDocuments"
             : "/api/v1/admin/getArabicDocuments";
-        const response = await commonRequest("GET", endpoint, config, null);
+        const response = await commonRequest("GET", endpoint, configWithToken(), null);
 
         if (response.status === 200 && response.data?.data) {
           const fetchedDocuments = response.data.data;
@@ -91,8 +93,6 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
   // const currentDocuments = uniqeDocument.slice(indexOfFirstDoc, indexOfLastDoc);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-
-
   if (loading) {
     return <Loading />;
   }
@@ -102,14 +102,16 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
 
   const handleBrand = (doc: DocumentSliceAr | DocumentSliceEn) => {
     if (doc) {
-      const tadawalCode ="tadawalCode" in doc ? doc.tadawalCode : "" ;
-      navigate(`/documentDetails?tadawalCode=${tadawalCode}&language=${language}`);
+      const tadawalCode = "tadawalCode" in doc ? doc.tadawalCode : "";
+      navigate(
+        `/documentDetails?tadawalCode=${tadawalCode}&language=${language}`
+      );
     }
   };
-    const toggleLanguage = async () => {
-      const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
-      await dispatch(AdminLanguageChange(newLanguage));
-    };
+  const toggleLanguage = async () => {
+    const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
+    await dispatch(AdminLanguageChange(newLanguage));
+  };
 
   return (
     <div className="min-h-screen  bg-gray-100">
@@ -119,7 +121,7 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
             <FaArrowCircleLeft
               className="text-3xl  text-gray-500"
               onClick={() => navigate("/home")}
-            />  
+            />
 
             <div className="flex gap-4 items-center ">
               {/* <div className="flex items-center  bg-white rounded-full shadow-lg overflow-hidden ">
@@ -143,7 +145,7 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
                   🔍
                 </button>
               </div> */}
-               {/* <button
+              {/* <button
                         onClick={toggleLanguage}
                         style={{
                           background:
@@ -151,19 +153,17 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
                         }}
                         className="py-1  px-2 items-center bg-opacity-80 text-black text-xl  rounded-md "
                       > */}
-                            <button
-                               onClick={toggleLanguage}
-                               
-                               className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
-                             >
-                              <GrLanguage className=" text-gray-600" />
-                             </button>
-                      {/* </button> */}
+              <button
+                onClick={toggleLanguage}
+                className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
+              >
+                <GrLanguage className=" text-gray-600" />
+              </button>
+              {/* </button> */}
               <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
                 {language === "Arabic" ? "قائمة المستندات " : "Document List"}
               </h4>
             </div>
-
           </div>
           <div className="overflow-x-auto">
             <table className="table-auto w-full border-collapse border border-gray-300 text-left">
@@ -212,7 +212,6 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
                     </td>
 
                     <td className="py-1  sm:px-4 border flex justify-center border-gray-300 flex space-x-4">
-                     
                       {/* <button
                         onClick={() => {
                           handleBrand(doc);
@@ -221,9 +220,12 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
                       >
                         {language === "Arabic" ? " التفاصيل" : "Details"}
                       </button> */}
-                      <TbListDetails  onClick={() => {
+                      <TbListDetails
+                        onClick={() => {
                           handleBrand(doc);
-                        }} className="text-3xl text-gray-600"/>
+                        }}
+                        className="text-3xl text-gray-600"
+                      />
                     </td>
                   </tr>
                 ))}
@@ -272,9 +274,8 @@ import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLangua
           </div>
         </div>
       </div>
-
     </div>
   );
-})
+});
 
 export default DocumentList;

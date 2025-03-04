@@ -2,8 +2,9 @@
 import React, { Fragment, lazy, Suspense } from 'react';
 import { Routes, Route,Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from './reduxKit/store';
+import {  RootState } from './reduxKit/store';
 import { Toaster } from 'react-hot-toast';
+
 const Loading = lazy(() => import("./components/pages/Loading"));
 const CheckDocumentDetails = lazy(() => import("./components/pages/admin/checkDocumentDetails"));
 const UserCompanyDetails = lazy(() => import("./components/pages/user/userCheckDetails"));
@@ -23,8 +24,7 @@ export const App: React.FC = React.memo(() => {
 
   const {isLogged,role,}=useSelector((state:RootState)=>state.auth)
   console.log("my role and my isLogged", isLogged,role);
-   
-
+  
   
   return (
     <Fragment>

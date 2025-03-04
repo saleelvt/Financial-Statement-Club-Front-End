@@ -2,20 +2,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState,lazy } from "react";
 import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { IoEyeSharp } from "react-icons/io5";
 // import { FaEyeSlash } from "react-icons/fa";
-import { Loading } from "../Loading";
+const Loading = lazy(() => import("../Loading"));
 import React from "react";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaPen } from "react-icons/fa"
-import {DocumentSliceEn,DocumentSliceAr,
-} from "../../../interfaces/admin/addDoument";
-
+import {DocumentSliceEn,DocumentSliceAr,} from "../../../interfaces/admin/addDoument";
 import { FormDataState } from "../../../interfaces/admin/addDoument";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";

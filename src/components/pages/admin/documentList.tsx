@@ -1,20 +1,17 @@
 // /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,lazy } from "react";
 import { useNavigate } from "react-router-dom";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { TbListDetails } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-import { Loading } from "../Loading";
+const Loading = lazy(() => import("../Loading"));
 import { Error } from "../Error";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { GrLanguage } from "react-icons/gr";
-import {
-  DocumentSliceAr,
-  DocumentSliceEn,
-} from "../../../interfaces/admin/addDoument";
+import { DocumentSliceAr, DocumentSliceEn,} from "../../../interfaces/admin/addDoument";
 import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
 
  const DocumentList: React.FC = React.memo(() => {

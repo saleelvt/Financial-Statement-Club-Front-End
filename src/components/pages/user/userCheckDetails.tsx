@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,lazy } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
@@ -8,7 +8,7 @@ import {
   DocumentSliceAr,
   FormDataState,
 } from "../../../interfaces/admin/addDoument";
-import { Loading } from "../Loading";
+const Loading = lazy(() => import("../Loading"));
 import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";

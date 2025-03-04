@@ -4,14 +4,17 @@ import { FaPlus } from "react-icons/fa";
 import { HiMinusSm } from "react-icons/hi";
 import domtoimage from "dom-to-image";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../reduxKit/store";
+import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
+import { GrLanguage } from "react-icons/gr";
+import { useSelector } from "react-redux";
+import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
 
 interface PropertyRow {
   propertyName: string;
@@ -33,6 +36,11 @@ interface FormData {
 }
 
 const AddTable = React.memo(() => {
+  const { adminLanguage } = useSelector(
+    (state: RootState) => state.adminLanguage
+  );
+  const [language, setLanguage] = useState<string>("Arabic");
+
   const [tadawalCode, setTadawalCode] = useState("");
   const [documents, setDocuments] = useState();
   const [nickName, setNickName] = useState("");
@@ -40,11 +48,14 @@ const AddTable = React.memo(() => {
   const [years, setYears] = useState<string[]>([]); // List of years
   const [selectedYear, setSelectedYear] = useState("");
   const [quarterYear, setQuarterYear] = useState("");
-  const [quarters, setQuarters] = useState<{ [key: string]: Array<{ quarter: string; date: string }>; }>({}); // Quarters and their dates for each year
+  const [quarters, setQuarters] = useState<{
+    [key: string]: Array<{ quarter: string; date: string }>;
+  }>({}); // Quarters and their dates for each year
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState<boolean>(false); // Manage year dropdown visibility
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [takeShot, setTakeShot] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [selectedTableType, setTableType] = useState("");
   const TableTypeArr = ["BalanceSheet", "ProfitLoss", "CashFlow"];
   const [formData, setFormData] = useState<FormData>({
@@ -65,6 +76,11 @@ const AddTable = React.memo(() => {
       },
     ],
   });
+
+  const toggleLanguage = async () => {
+    const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
+    await dispatch(AdminLanguageChange(newLanguage));
+  };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const calculateMainTotal = () => {
@@ -88,11 +104,9 @@ const AddTable = React.memo(() => {
     // Close the year dropdown after selection
   };
 
-  const handleQuarterYear = async(quarter: string) => {
-   await setQuarterYear(quarter);
+  const handleQuarterYear = async (quarter: string) => {
+    await setQuarterYear(quarter);
     console.log("Selected Quarter", quarter);
-
-
   };
 
   const captureScreen = async () => {
@@ -107,7 +121,7 @@ const AddTable = React.memo(() => {
 
     try {
       const dataUrl = await domtoimage.toPng(node);
-
+      if (adminLanguage) setLanguage(adminLanguage);
       // Convert the base64 image to a File object
       const response = await fetch(dataUrl);
       const blob = await response.blob();
@@ -119,16 +133,24 @@ const AddTable = React.memo(() => {
       const downloadLink = document.createElement("a");
       downloadLink.href = dataUrl;
       downloadLink.download = "screenshot.png";
-      // downloadLink.click(); // Triggers download
-      // Dispatch action with tadawalCode, nickName, and the screenshot file
-     const responseTow= await dispatch(AdminAddTableAction({ tadawalCode, nickName, screenshotFile,selectedYear, quarterYear,selectedTableType })  );
-     if (responseTow.payload?.success === true) {
-      toast.success(responseTow.payload.message);
-    }
+      downloadLink.click(); // Triggers download
+
+      const responseTow = await dispatch( AdminAddTableAction({
+          tadawalCode,
+          screenshotFile,
+          selectedYear,
+          quarterYear,
+          selectedTableType,
+          language,
+        })
+      );
+      if (responseTow.payload?.success === true) {
+        toast.success(responseTow.payload.message);
+      }
       setTakeShot(false);
     } catch (error) {
       console.error("Error capturing screenshot:", error);
-    } finally {                                       
+    } finally {
       // Remove the class to restore the scrollbar on the parent and child elements
       node.classList.remove("no-scrollbar");
       const childElements = node.querySelectorAll("*");
@@ -313,7 +335,6 @@ const AddTable = React.memo(() => {
     // setIsDropdownOpen(true); // Open the year dropdown
   };
 
-
   if (documents) {
     console.log("keeekooooooooooooooooooo: ", documents);
   }
@@ -325,7 +346,6 @@ const AddTable = React.memo(() => {
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsYearDropdownOpen(false);
-       
       }
     };
 
@@ -334,13 +354,31 @@ const AddTable = React.memo(() => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  useEffect(()=>{
+    if (adminLanguage) setLanguage(adminLanguage);
+  },[adminLanguage])
 
   return (
     <div className="p-4">
       <div className="p-2">
-        <Link to="/home" className="flex items-center">
-          <FaArrowCircleLeft className="text-gray-600 text-3xl" />
-        </Link>
+        <div className="flex flex-wrap justify-between items-center ">
+                   <FaArrowCircleLeft
+                     className="text-3xl  text-gray-700"
+                     onClick={() => navigate("/home")}
+                   />      
+                   <div className="flex gap-4 items-center ">          
+                     <button
+                       onClick={toggleLanguage}
+                       className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
+                     >
+                       <GrLanguage className=" text-gray-700" />
+                     </button> 
+                     {/* </button> */}
+                     <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
+                     {language === "Arabic" ? "قسم الجدول"  : "Table Section"}
+                     </h4>
+                   </div>
+                 </div>
 
         <div className="border mt-3 p-1 no-scrollbar">
           <div className="flex-1">
@@ -393,7 +431,6 @@ const AddTable = React.memo(() => {
                         key={year}
                         className="relative p-2 hover:bg-gray-100 cursor-pointer"
                         onClick={() => handleYearSelect(year)}
-                       
                       >
                         {year}
 
@@ -422,9 +459,8 @@ const AddTable = React.memo(() => {
               </div>
             )}
 
-{selectedYear && (
+            {selectedYear && (
               <div className="p-2 w-44 mt-3 flex justify-center rounded-sm border border-gray-300 bg-slate-200">
-              
                 <select
                   id="tableType"
                   value={selectedTableType || ""}
@@ -439,20 +475,23 @@ const AddTable = React.memo(() => {
                     </option>
                   ))}
                 </select>
-                
               </div>
             )}
-
-            
           </div>
 
           <div className="flex justify-center p-1  ">
-            <h1 className="text-lg text-black font-bold"> {`${nickName} ${selectedYear} ${quarterYear} ${selectedTableType}`} </h1>
+            <h1 className="text-lg text-black font-bold">
+              {" "}
+              {`${nickName} ${selectedYear} ${quarterYear} ${selectedTableType}`}{" "}
+            </h1>
           </div>
 
           <form className="bg-white shadow-md rounded pb-8 w-full max-w-7xl">
             <div className="overflow-x-auto">
-              <table  id="capture-area" className="w-full border-collapse border border-gray-300">
+              <table
+                id="capture-area"
+                className="w-full border-collapse border border-gray-300"
+              >
                 <thead>
                   <tr>
                     <th className="border bg-slate-300 border-white p-2 text-left">
@@ -694,6 +733,6 @@ const AddTable = React.memo(() => {
       </div>
     </div>
   );
-})
+});
 
 export default AddTable;

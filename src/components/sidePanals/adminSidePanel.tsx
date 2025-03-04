@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Bar } from "react-chartjs-2";
+
 import "chart.js/auto";
 import {
   FaBars,
@@ -18,35 +18,32 @@ const AdminSidebar = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {}, []);
-
   const arabicDocuments = new Array(932).fill("Arabic Doc"); // Replace with real data
   const englishDocuments = new Array(934).fill("English Doc"); // Replace with real data
   const totalTables = 10; // Dummy table count
 
   // Dummy Graph Data
-  const chartData = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    datasets: [
-      {
-        label: "New Documents",
-        data: [5, 12, 8, 15, 10, 6, 9],
-        backgroundColor: "#D1D5DB", // Gray-300
-        borderColor: "#6B7280", // Gray-500
-        borderWidth: 1.5,
-        borderRadius: 8,
-      },
-      {
-        label: "Traffic",
-        data: [20, 30, 25, 40, 35, 50, 45],
-        backgroundColor: "#9CA3AF", // Gray-400
-        borderColor: "#374151", // Gray-700
-        borderWidth: 1.5,
-        borderRadius: 8,
-      },
-    ],
-  };
+  // const chartData = {
+  //   labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  //   datasets: [
+  //     {
+  //       label: "New Documents",
+  //       data: [5, 12, 8, 15, 10, 6, 9],
+  //       backgroundColor: "#D1D5DB", // Gray-300
+  //       borderColor: "#6B7280", // Gray-500
+  //       borderWidth: 1.5,
+  //       borderRadius: 8,
+  //     },
+  //     {
+  //       label: "Traffic",
+  //       data: [20, 30, 25, 40, 35, 50, 45],
+  //       backgroundColor: "#9CA3AF", // Gray-400
+  //       borderColor: "#374151", // Gray-700
+  //       borderWidth: 1.5,
+  //       borderRadius: 8,
+  //     },
+  //   ],
+  // };
 
   const navLinks = [
     { to: "/home", icon: FaHome, label: "Dashboard" },
@@ -164,7 +161,7 @@ const AdminSidebar = () => {
               <h3 className="text-xl font-semibold text-gray-700 mb-4">
                 Document Growth & Traffic
               </h3>
-              <Bar data={chartData} />
+              {/* <Bar data={chartData} /> */}
             </div>
           </div>
         </div>

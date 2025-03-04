@@ -47,10 +47,9 @@ export const axiosIn = axios.create({
     "admin/verifyOtp",
     async ( { email,  otp}:IAdminVerifyOtp, { rejectWithValue }) => {
       try {
-
-        console.log('otp data)))) ', email);
-        const  data= axiosIn.post(`/api/v1/admin/verifyOtp`,{email:email!,otp}, config )
-        return data;
+        const  response= await axiosIn.post(`/api/v1/admin/verifyOtp`,{email:email!,otp}, config )
+        console.log("the otp verification data : ", response );       
+        return response;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         if (error.response && error.response.data) {

@@ -1,29 +1,30 @@
 // src/App.tsx
 import React, { Fragment, lazy, Suspense } from 'react';
 import { Routes, Route,Navigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import { Loading } from './components/pages/Loading';
-const CheckDocumentDetails = lazy(() => import('./components/pages/admin/checkDocumentDetails'));
-const UserCompanyDetails = lazy(() => import('./components/pages/user/userCheckDetails'));
-import { UpdateDocumentAr } from './components/pages/admin/updateDocumentAr';
-const UserHomePage = lazy(() => import('./components/pages/user/userHome'));
-const DocumentList = lazy(() => import('./components/pages/admin/documentList'));
-import { AdminLogin } from './components/forms/admin/login';
-import AdminHomePage from './components/pages/admin/adminDashBoard';
-const EmailVerification = lazy(() => import('./components/forms/admin/otpVerifiy'));
-import  AddTable  from './components/pages/admin/addTable';
-import { AddDocumentArabic } from './components/pages/admin/addDocumentAr';
-import {UpdateDocument} from './components/pages/admin/updateDocument'
-const AdminProfilePage = lazy(()=> import('./components/pages/admin/adminProfile'))
 import { useSelector } from 'react-redux';
-import { RootState } from './reduxKit/store';
+import {  RootState } from './reduxKit/store';
+import { Toaster } from 'react-hot-toast';
+
+const Loading = lazy(() => import("./components/pages/Loading"));
+const CheckDocumentDetails = lazy(() => import("./components/pages/admin/checkDocumentDetails"));
+const UserCompanyDetails = lazy(() => import("./components/pages/user/userCheckDetails"));
+const UpdateDocumentAr = lazy(() => import("./components/pages/admin/updateDocumentAr"));
+const UserHomePage = lazy(() => import("./components/pages/user/userHome"));
+const DocumentList = lazy(() => import("./components/pages/admin/documentList"));
+const AdminLogin = lazy(() => import("./components/forms/admin/login"));
+const AdminHomePage = lazy(() => import("./components/pages/admin/adminDashBoard"));
+const EmailVerification = lazy(() => import("./components/forms/admin/otpVerifiy"));
+const AddTable = lazy(() => import("./components/pages/admin/addTable"));
+const AddDocumentArabic = lazy(() => import("./components/pages/admin/addDocumentAr"));
+const UpdateDocument = lazy(() => import("./components/pages/admin/updateDocument"));
+const AdminProfilePage = lazy(() => import("./components/pages/admin/adminProfile"));
+
 
 export const App: React.FC = React.memo(() => {
 
   const {isLogged,role,}=useSelector((state:RootState)=>state.auth)
   console.log("my role and my isLogged", isLogged,role);
-   
-
+  
   
   return (
     <Fragment>

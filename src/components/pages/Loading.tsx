@@ -1,7 +1,7 @@
 // src/components/pages/Loading.tsx
 import React from 'react';
 
-export const Loading: React.FC = () => {
+ const Loading: React.FC = React.memo(() => {
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-b from-gray-300 via-gray-100 to-white">
     <div className=" flex items-center flex-col">
@@ -15,4 +15,5 @@ export const Loading: React.FC = () => {
     </div>
   </div>
   );
-};
+})
+export default  Loading

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,lazy } from "react";
 import "../../../global.css";
 import { config } from "../../../config/constants";
 import { commonRequest } from "../../../config/api";
-import { Loading } from "../Loading";
+const Loading = lazy(() => import("../Loading"));
 import { setArabicNames } from "../../../functions/setArabicNames";
 import { setEnglishNames } from "../../../functions/setEnglishNames";
 import { useDispatch, useSelector } from "react-redux";

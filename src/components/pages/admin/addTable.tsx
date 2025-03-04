@@ -32,7 +32,7 @@ interface FormData {
   subSections: SubSection[];
 }
 
-const AddTable = () => {
+const AddTable = React.memo(() => {
   const [tadawalCode, setTadawalCode] = useState("");
   const [documents, setDocuments] = useState();
   const [nickName, setNickName] = useState("");
@@ -67,11 +67,9 @@ const AddTable = () => {
   });
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-
   const calculateMainTotal = () => {
     let totalDate1 = 0;
     let totalDate2 = 0;
-
     formData.subSections.forEach((subSection) => {
       const subTotal = calculateSubSectionTotal(
         formData.subSections.indexOf(subSection)
@@ -696,6 +694,6 @@ const AddTable = () => {
       </div>
     </div>
   );
-};
+})
 
 export default AddTable;

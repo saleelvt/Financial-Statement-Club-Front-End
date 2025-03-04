@@ -1,12 +1,14 @@
 // src/main.tsx
 import { createRoot } from 'react-dom/client';
+import { lazy } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './reduxKit/store';
 import './global.css';
 import { App } from './App';
 import { Suspense } from 'react';
-import { Loading } from './components/pages/Loading';
+
+const Loading = lazy(() => import("../src/components/pages/Loading"));
 
 createRoot(document.getElementById('root')!).render(
   <Router>

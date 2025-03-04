@@ -17,7 +17,7 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { FaArrowCircleLeft } from "react-icons/fa";
 
-export const UpdateDocument: React.FC = React.memo(() => {
+ const UpdateDocument: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.adminEn);
@@ -472,3 +472,5 @@ export const UpdateDocument: React.FC = React.memo(() => {
     </div>
   );
 });
+
+export default UpdateDocument

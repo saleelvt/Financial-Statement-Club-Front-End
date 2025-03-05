@@ -27,19 +27,18 @@ import { AddDocument } from "./addDocumentEn";
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
-    Q1: { file: null, date: null, year: "" },
-    Q2: { file: null, date: null, year: "" },
-    Q3: { file: null, date: null, year: "" },
-    Q4: { file: null, date: null, year: "" },
-    S1: { file: null, date: null, year: "" },
-    Board: { file: null, date: null, year: "" },
-    Year: { file: null, date: null, year: "" },
-  });
+    Q1: { file: null, date: null, year: "", createAt: "" },
+    Q2: { file: null, date: null, year: "", createAt: "" },
+    Q3: { file: null, date: null, year: "" , createAt: ""},
+    Q4: { file: null, date: null, year: "" , createAt: ""},
+    S1: { file: null, date: null, year: "" , createAt: ""},
+    Board: { file: null, date: null, year: "", createAt: "" },
+    Year: { file: null, date: null, year: "" , createAt: ""},
+  }); 
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setTadawalCode(value);
-
     if (value.length > 0) {
       // Fetch suggestions only if input has 3 or more characters
       setIsLoading(true);
@@ -112,6 +111,7 @@ import { AddDocument } from "./addDocumentEn";
         tadawalCode,
         sector,
         formData,
+        createdAt: new Date().toISOString(), // Example value
       };
       await dispatch(addDocumentArabic(payloadData)).unwrap();
 

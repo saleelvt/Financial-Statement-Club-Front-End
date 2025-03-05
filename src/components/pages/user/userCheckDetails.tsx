@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, lazy } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -124,9 +124,9 @@ const UserCompanyDetails = React.memo(() => {
     console.log("The form data for latest file:", formDataforLatest);
   
     if (selectedFilteredDocWithYear.length > 0 && selectedFilteredDocWithYear[0]?.formData) {
-      // Extract formData entries as key-value pairs
+
       const latestFileEntry = Object.entries(selectedFilteredDocWithYear[0].formData)
-        .filter(([key, entry]) => entry.file !== null && entry.file !== undefined) // Exclude null/undefined files
+        .filter(([, entry]) => entry.file !== null && entry.file !== undefined) // Exclude null/undefined files
         .sort((a, b) => {
           const dateA = a[1].date ? new Date(a[1].date).getTime() : 0; // Convert to timestamp or default to 0
           const dateB = b[1].date ? new Date(b[1].date).getTime() : 0;

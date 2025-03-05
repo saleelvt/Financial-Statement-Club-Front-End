@@ -9,7 +9,7 @@ export interface FormField {
   year?: string;
   table?: {
     BalanceSheet?: string |null; 
-    CashFlow?: string|null
+    CashFlow?: string|null  
     ProfitLoss?: string|null
   };
 }
@@ -32,6 +32,8 @@ export interface DocumentSliceEn  {
  tadawalCode: string;
  sector: string;
  formData: FormDataState;
+ createdAt: string; // Add this line
+
 }
 
 
@@ -42,6 +44,8 @@ export interface DocumentSliceAr {
  tadawalCode: string;
  sector: string;
  formData: FormDataState;
+ createdAt: string; // Add this line
+
 }
 
 export interface ShowDocumentSliceForUser {

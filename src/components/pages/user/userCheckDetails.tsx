@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, lazy } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import {
@@ -39,12 +42,11 @@ const UserCompanyDetails = React.memo(() => {
     null
   );
   const navigate = useNavigate();
-  const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
-    useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
-  const [selectedYear, setSelectedYear] = useState<string>("");
+  const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] = useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
+  const [selectedYear, setSelectedYear] = useState<any>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
 
-  const [iframeSrc, setIframeSrc] = useState<string>("");
+  const [iframeSrc, setIframeSrc] = useState<any>("");
   const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
 
   const pdfKeys: (keyof FormDataState)[] = [
@@ -70,12 +72,15 @@ const UserCompanyDetails = React.memo(() => {
     const filteredYears = documents
       .filter((doc) => doc.formData?.Q1?.year === year)
       .filter(Boolean);
+      console.log('keeeesha finded ;',filteredYears);
+      
     await setSelectedFilteredDocWithYear(filteredYears);
   };
 
-  const handlePdfButtonClick = (key: FieldKey) => {
-    setSelectedPdfKey(key);
-    setSelectedTableKey(null);
+  const handlePdfButtonClick = async (key: FieldKey) => {
+    await setTableIframeSrc("")
+    await setSelectedTableKey(null);
+    await setSelectedPdfKey(key);
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
       const fileUrl =
@@ -102,25 +107,51 @@ const UserCompanyDetails = React.memo(() => {
 
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
-      // Validate if selectedYear is a valid FieldKey
-      // if (!Object.keys(document.formData).includes(selectedYear)) {
-      //   console.error(`Invalid selectedYear: ${selectedYear}`);
-      //   alert(`Invalid year selection.`);
-      //   return;
-      // }
-
       const screenshotUrl =
         document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
 
       console.log("the screen short for the user  url is : ", screenshotUrl);
       if (screenshotUrl && typeof screenshotUrl === "string") {
         setTableIframeSrc(screenshotUrl);
-        setIframeSrc(screenshotUrl);
       } else {
         alert(`No screenshot available for ${tableKey}`);
       }
     }
   };
+
+  useEffect(() => {
+    const formDataforLatest = selectedFilteredDocWithYear?.[0]?.formData;
+    console.log("The form data for latest file:", formDataforLatest);
+  
+    if (selectedFilteredDocWithYear.length > 0 && selectedFilteredDocWithYear[0]?.formData) {
+      // Extract formData entries as key-value pairs
+      const latestFileEntry = Object.entries(selectedFilteredDocWithYear[0].formData)
+        .filter(([key, entry]) => entry.file !== null && entry.file !== undefined) // Exclude null/undefined files
+        .sort((a, b) => {
+          const dateA = a[1].date ? new Date(a[1].date).getTime() : 0; // Convert to timestamp or default to 0
+          const dateB = b[1].date ? new Date(b[1].date).getTime() : 0;
+          return dateB - dateA; // Sort by latest date
+        })[0]; // Get the latest entry
+  
+      if (latestFileEntry) {
+        const [latestKey, latestData] = latestFileEntry as [FieldKey, FormField];
+        console.log("Latest FieldKey:", latestKey);
+        console.log("Latest File:", latestData.file);
+        setSelectedPdfKey(latestKey);
+        if (latestData.file) {
+          if (typeof latestData.file === "string") {
+            const encodedUrl = encodeURIComponent(latestData.file);
+            const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
+            setIframeSrc(`${googleViewerUrl}#toolbar=0`);
+            setLoading(false);
+          } else {
+            console.error("fileUrl is not a valid string:", latestData.file);
+          }
+      } 
+    }
+  }
+  }, [selectedYear, selectedFilteredDocWithYear])
+  
 
   const handleLeftClick = () => {
     if (visibleYears > 0) {
@@ -140,7 +171,7 @@ const UserCompanyDetails = React.memo(() => {
     return (document as DocumentSliceEn).fullNameEn !== undefined;
   };
   useEffect(() => {
-    const TakeYears = () => {
+    const TakeYears = async() => {
       const years: string[] = documents
         .map((doc) => {
           return (
@@ -155,14 +186,37 @@ const UserCompanyDetails = React.memo(() => {
         })
         .filter((year): year is string => !!year) // Ensure the year is not null or undefined
         .sort((a, b) => parseInt(a) - parseInt(b)); // Sort numerically
-
       setYearList(years);
+
+      const latestDocument = [...documents].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )[0];
+  
+      if (latestDocument) {
+        // Find the first available year from the latest document's formData
+        const latestYear =
+          latestDocument.formData?.Q1?.year ||
+          latestDocument.formData?.Q2?.year ||
+          latestDocument.formData?.Q3?.year ||
+          latestDocument.formData?.Q4?.year ||
+          latestDocument.formData?.S1?.year ||
+          latestDocument.formData?.Board?.year ||
+          latestDocument.formData?.Year?.year;
+  
+        console.log("Latest Year from Latest Document:", latestYear);
+        setSelectedYear(latestYear)
+        const data=[latestDocument]
+      await  setSelectedFilteredDocWithYear(data)
+      }
+
     };
     TakeYears();
   }, [documents]);
 
   useEffect(() => {
     if (documents.length > 0) {
+      console.log('kaalan documents : ',documents );
+      
       setDocument(documents[0]);
     }
   }, [documents]);
@@ -217,8 +271,11 @@ const UserCompanyDetails = React.memo(() => {
     return <Error />;
   }
   return (
-    <div dir={userLanguage === "English" ? "ltr" : "rtl"} className="min-h-96 text-2xl font-semibold    flex flex-col lg:flex-row" >
-      <div className="w-full  lg:w-[30%]">
+    <div
+      dir={userLanguage === "English" ? "ltr" : "rtl"}
+      className="min-h-96 text-2xl font-semibold    flex flex-col lg:flex-row"
+    >
+      <div className="w-full  lg:w-[40%]">
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="rounded-md   xs:p-1 lg:p-2 mb-4 "
@@ -386,7 +443,6 @@ const UserCompanyDetails = React.memo(() => {
                                 </button>
                               ))}
                           </div>
-                          
                         ) : (
                           <p className="text-center text-gray-600">
                             No Data Available
@@ -401,33 +457,48 @@ const UserCompanyDetails = React.memo(() => {
         </div>
       </div>
       <div className="lg:w-[70%] mt-2">
-    {iframeSrc || tableIframeSrc ? (
-      <div
-        className="rounded-md"
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "100vh",
-          overflow: "hidden", // Prevent horizontal scrolling
-        }}
-      >
-        <iframe
-          src={iframeSrc || tableIframeSrc}
-          style={{
-            width: "100%",
-            height: "100%",
-            border: "none",
-            overflow: "auto", // Allow vertical scrolling only if needed
-            display: "block",
-            objectFit: "contain", // Ensures full visibility inside container
-          }}
-          title="PDF Viewer"
-        />
+        {tableIframeSrc ? (
+          // Show Image in PhotoProvider with Zoom
+          <PhotoProvider>
+            <PhotoView src={tableIframeSrc}>
+              <img
+                src={tableIframeSrc}
+                alt="S3 Image"
+                style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
+              />
+            </PhotoView>
+          </PhotoProvider>
+        ) : iframeSrc ? (
+          // Show PDF in an iframe
+          <div
+            className="rounded-md"
+            style={{
+              position: "relative",
+              width: "100%",
+              height: "100vh",
+              overflow: "hidden",
+            }}
+          >
+            <iframe
+              src={iframeSrc}
+              style={{
+                width: "100%",
+                height: "100%",
+                border: "none",
+                overflow: "auto",
+                display: "block",
+                objectFit: "contain",
+              }}
+              title="PDF Viewer"
+            />
+          </div>
+        ) : (
+          // Fallback UI when both sources are missing
+          <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg">
+            <p className="text-gray-500">No content available</p>
+          </div>
+        )}
       </div>
-    ) : (
-      <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg"></div>
-    )}
-  </div>
     </div>
   );
 });

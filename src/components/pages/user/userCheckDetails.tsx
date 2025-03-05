@@ -218,7 +218,7 @@ const UserCompanyDetails = React.memo(() => {
   }
   return (
     <div dir={userLanguage === "English" ? "ltr" : "rtl"} className="min-h-96 text-2xl font-semibold    flex flex-col lg:flex-row" >
-      <div className="w-full  lg:w-[40%]">
+      <div className="w-full  lg:w-[30%]">
         <div
           dir={userLanguage === "English" ? "ltr" : "rtl"}
           className="rounded-md   xs:p-1 lg:p-2 mb-4 "
@@ -386,6 +386,7 @@ const UserCompanyDetails = React.memo(() => {
                                 </button>
                               ))}
                           </div>
+                          
                         ) : (
                           <p className="text-center text-gray-600">
                             No Data Available
@@ -399,7 +400,7 @@ const UserCompanyDetails = React.memo(() => {
           )}
         </div>
       </div>
-      <div className="lg:w-[75%] mt-2">
+      <div className="lg:w-[70%] mt-2">
     {iframeSrc || tableIframeSrc ? (
       <div
         className="rounded-md"

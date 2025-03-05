@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,lazy } from "react";
 import "../../../global.css";
 import { config } from "../../../config/constants";
 import { commonRequest } from "../../../config/api";
-import { Loading } from "../Loading";
+const Loading = lazy(() => import("../Loading"));
 import { setArabicNames } from "../../../functions/setArabicNames";
 import { setEnglishNames } from "../../../functions/setEnglishNames";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 import { GrLanguage } from "react-icons/gr";
-<GrLanguage />
 import "../../../css/userHome.css";
 import { Error } from "../Error";
 
@@ -25,7 +24,7 @@ import {
 } from "../../../interfaces/admin/addDoument";
 import { useNavigate } from "react-router-dom";
 
-const UserHomePage: React.FC = () => {
+const UserHomePage: React.FC = React.memo(() => {
   // const [showAll, setShowAll] = useState(false);
   const [brandsEn, setBrandsEn] = useState< {
       fullNameEn: string;
@@ -162,6 +161,6 @@ const UserHomePage: React.FC = () => {
     </div>
   );
 
-};
+})
 
 export default UserHomePage;

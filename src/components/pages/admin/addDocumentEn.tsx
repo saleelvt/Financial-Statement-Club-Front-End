@@ -78,7 +78,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(({formD
 
   useEffect(()=>{
 
-    console.log("my form data is from the english document  ", formDataEn);
+    // console.log("my form data is from the english document  ", formDataEn);
 
     if (tadawalCodeEn !== undefined && tadawalCodeEn !== tadawalCode) {
       setTadawalCode(tadawalCodeEn || ""); // Only update if the value is different

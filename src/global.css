@@ -13,6 +13,10 @@ html {
     scroll-behavior: smooth;
   }
 
+  html, body {
+    overflow-x: hidden;
+  }
+
 
   .no-scrollbar {
     overflow: hidden;
@@ -21,6 +25,8 @@ html {
     display: none; /* Hide scrollbar for WebKit browsers */
   }
 
+
+  
 
   /* Bounce animation on the text */
   @keyframes bounce {

@@ -9,6 +9,7 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { useDispatch } from "react-redux";
+ 
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
@@ -46,6 +47,7 @@ const AddTable = React.memo(() => {
   const [nickName, setNickName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [years, setYears] = useState<string[]>([]); // List of years
+ 
   const [selectedYear, setSelectedYear] = useState("");
   const [quarterYear, setQuarterYear] = useState("");
   const [quarters, setQuarters] = useState<{
@@ -77,6 +79,7 @@ const AddTable = React.memo(() => {
     ],
   });
 
+ 
   const toggleLanguage = async () => {
     const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
     await dispatch(AdminLanguageChange(newLanguage));
@@ -101,6 +104,7 @@ const AddTable = React.memo(() => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
     // setIsYearDropdownOpen(false);
+ 
     // Close the year dropdown after selection
   };
 
@@ -301,11 +305,12 @@ const AddTable = React.memo(() => {
     );
     const mydata = response.data.data;
     console.log("Tadawal code response:", mydata);
-
+ 
     setTadawalCode(mydata[0].tadawalCode);
     setNickName(mydata[0].nickNameEn);
     setDocuments(mydata);
     setSuggestions([]); // Clear suggestions after selecting one
+ 
     // Extract years and quarters from formData
     const yearsSet = new Set<string>();
     const quartersMap: {
@@ -329,7 +334,7 @@ const AddTable = React.memo(() => {
         }
       });
     });
-
+ 
     setYears(Array.from(yearsSet));
     setQuarters(quartersMap);
     // setIsDropdownOpen(true); // Open the year dropdown
@@ -339,6 +344,7 @@ const AddTable = React.memo(() => {
     console.log("keeekooooooooooooooooooo: ", documents);
   }
 
+ 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -346,6 +352,7 @@ const AddTable = React.memo(() => {
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsYearDropdownOpen(false);
+ 
       }
     };
 
@@ -354,9 +361,11 @@ const AddTable = React.memo(() => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+ 
   useEffect(()=>{
     if (adminLanguage) setLanguage(adminLanguage);
   },[adminLanguage])
+ 
 
   return (
     <div className="p-4">
@@ -380,6 +389,8 @@ const AddTable = React.memo(() => {
                    </div>
                  </div>
 
+ 
+ 
         <div className="border mt-3 p-1 no-scrollbar">
           <div className="flex-1">
             <input
@@ -423,6 +434,7 @@ const AddTable = React.memo(() => {
                 >
                   {selectedYear || "Select a year"}
                 </div>
+ 
 
                 {isYearDropdownOpen && (
                   <div className="absolute z-10 mt-1 w-1/4 bg-white border border-gray-300 rounded-md shadow-lg">
@@ -486,7 +498,7 @@ const AddTable = React.memo(() => {
             </h1>
           </div>
 
-          <form className="bg-white shadow-md rounded pb-8 w-full max-w-7xl">
+          <form className="bg-white shadow-md rounded pb-4 w-full max-w-2xl">
             <div className="overflow-x-auto">
               <table
                 id="capture-area"
@@ -494,32 +506,33 @@ const AddTable = React.memo(() => {
               >
                 <thead>
                   <tr>
-                    <th className="border bg-slate-300 border-white p-2 text-left">
+                    <th className="border text-[14px] bg-slate-300 border-white px-4 py-[2px] text-left">
                       Contents
                     </th>
-                    <th className="border bg-slate-300 border-white p-2 text-center w-24">
+                    <th className="border  text-[14px] bg-slate-300 border-white px-[6px] py-[2px] text-center  ">
                       Notes
                     </th>
-                    <th className="border bg-slate-300 border-white p-2 text-center w-40">
+                    <th className="border  text-[14px] bg-slate-300 border-white px-[6px] py-[2px] text-center  ">
                       Date 1
                     </th>
-                    <th className="border bg-slate-300 border-white p-2 text-center w-40">
+                    <th className="border  text-[14px] bg-slate-300 border-white px-[6px] py-[2px] text-center ">
                       Date 2
                     </th>
                   </tr>
                 </thead>
+                
 
                 <tbody>
                   {/* Main Name Row */}
                   <tr className=" ">
                     <td className="">
-                      <div className="flex justify-start items-center w-1/2  ">
+                      <div className="flex  h-7  ">
                         <input
                           type="text"
                           name="mainName"
                           value={formData.mainName}
                           onChange={handleMainNameChange}
-                          className="text-sm px-4 py-2 border border-gray-200"
+                          className="text-sm px-4   border border-gray-200"
                           placeholder="Main Name"
                         />
 
@@ -528,7 +541,7 @@ const AddTable = React.memo(() => {
                           name="mainNameArabic"
                           value={formData.mainNameArabic}
                           onChange={handleMainNameChange}
-                          className="text-sm px-4 py-2 border border-gray-200"
+                          className="text-sm px-4   border border-gray-200"
                           placeholder="Main Name Arabic"
                         />
                         {!takeShot && ( // Hide buttons while taking a screenshot
@@ -536,14 +549,14 @@ const AddTable = React.memo(() => {
                             <button
                               type="button"
                               onClick={addSubSection}
-                              className="ml-2 hover:bg-gray-100 p-2 rounded-full font-semibold text-[17px]"
+                              className="ml-2 hover:bg-gray-100 p-1 rounded-full font-semibold text-[14px]"
                             >
                               <FaPlus />
                             </button>
                             <button
                               type="button"
                               onClick={removeSubSection}
-                              className="ml-2  hover:bg-gray-100 p-1 rounded-full font-semibold text-[17px]"
+                              className="ml-2  hover:bg-gray-100 p-1 rounded-full font-semibold text-[14px]"
                             >
                               <HiMinusSm className="text-2xl" />
                             </button>
@@ -560,9 +573,9 @@ const AddTable = React.memo(() => {
                   {formData.subSections.map((subSection, subIndex) => (
                     <React.Fragment key={subIndex}>
                       {/* Sub Section Header */}
-                      <tr className=" ">
+                      <tr className="  ">
                         <td className=" ">
-                          <div className="flex justify-between items-center w-1/2    ">
+                          <div className="flex h-7">
                             <input
                               type="text"
                               value={subSection.subName}
@@ -573,7 +586,7 @@ const AddTable = React.memo(() => {
                                   e.target.value
                                 )
                               }
-                              className="text-sm px-4 py-2   border border-gray-200"
+                              className="text-sm px-4     border border-gray-200"
                               placeholder="SubName"
                             />
                             <input
@@ -586,7 +599,7 @@ const AddTable = React.memo(() => {
                                   e.target.value
                                 )
                               }
-                              className="text-sm px-4 py-2   border border-gray-200"
+                              className="text-sm px-4     border border-gray-200"
                               placeholder="SubName Arabic"
                             />
                             {!takeShot && ( // Hide buttons while taking a screenshot
@@ -594,7 +607,7 @@ const AddTable = React.memo(() => {
                                 <button
                                   type="button"
                                   onClick={() => addProperty(subIndex)}
-                                  className="ml-2 hover:bg-gray-100 p-2 rounded-full font-semibold text-[17px]"
+                                  className="ml-1 hover:bg-gray-100 p-2 rounded-full font-semibold text-[14px]"
                                 >
                                   <FaPlus />
                                 </button>
@@ -603,7 +616,7 @@ const AddTable = React.memo(() => {
                                   onClick={() =>
                                     removeProperty(subIndex, subIndex)
                                   }
-                                  className="ml-2 hover:bg-gray-100 p-1 rounded-full font-semibold text-[17px]"
+                                  className="ml-2 hover:bg-gray-100 p-1 rounded-full font-semibold text-[14px]"
                                 >
                                   <HiMinusSm className="text-2xl" />
                                 </button>
@@ -619,7 +632,7 @@ const AddTable = React.memo(() => {
                       {/* Properties */}
                       {subSection.properties.map((property, propIndex) => (
                         <tr key={`${subIndex}-${propIndex}`}>
-                          <td className="border  ">
+                          <td className="border  h-7 ">
                             <input
                               type="text"
                               value={property.propertyName}
@@ -631,7 +644,7 @@ const AddTable = React.memo(() => {
                                   e.target.value
                                 )
                               }
-                              className="px-4 text-sm   py-2   border-l border-r  border-gray-200"
+                              className="px-4 text-sm       border-l border-r  border-gray-200"
                               placeholder="properties"
                             />
                           </td>
@@ -663,7 +676,7 @@ const AddTable = React.memo(() => {
                                   Number(e.target.value)
                                 )
                               }
-                              className="    border  border-transparent w-full py-1 pl-2"
+                              className="    border  border-transparent w-full   pl-2"
                               placeholder="0"
                             />
                           </td>
@@ -679,7 +692,7 @@ const AddTable = React.memo(() => {
                                   Number(e.target.value)
                                 )
                               }
-                              className=" border  border-transparent w-full py-1  pl-2"
+                              className=" border  border-transparent w-full    pl-2"
                               placeholder="0"
                             />
                           </td>
@@ -687,15 +700,15 @@ const AddTable = React.memo(() => {
                       ))}
 
                       {/* Sub Section Total */}
-                      <tr className="bg-slate-300">
-                        <td className="border border-gray-300 p-2 pl-4  text-md font-semibold">
+                      <tr className="bg-slate-300 ">
+                        <td className="border border-gray-300 px-2   pl-4  text-[14px] font-semibold">
                           Total {subSection.subName}
                         </td>
                         <td className="border border-gray-300"></td>
-                        <td className="border border-gray-300 p-2">
+                        <td className="border border-gray-300 pl-2 ">
                           {calculateSubSectionTotal(subIndex).date1}
                         </td>
-                        <td className="border border-gray-300 p-2">
+                        <td className="border border-gray-300 pl-2 ">
                           {calculateSubSectionTotal(subIndex).date2}
                         </td>
                       </tr>
@@ -704,24 +717,24 @@ const AddTable = React.memo(() => {
 
                   {/* Main Total Row */}
                   <tr className="bg-gray-350">
-                    <td className="border text-lg border-gray-300 p-2 pl-4 font-bold">
+                    <td className="border text-[14px] border-gray-300   px-2 pl-4 font-bold">
                       Total {formData.mainName}
                     </td>
                     <td className="border border-gray-300"></td>
-                    <td className="border border-gray-300 text-lg font-bold p-2">
+                    <td className="border border-gray-300 text-lg font-bold   px-2 ">
                       {calculateMainTotal().totalDate1}
                     </td>
-                    <td className="border border-gray-300  text-lg font-bold p-2">
+                    <td className="border border-gray-300  text-lg font-bold   px-2 ">
                       {calculateMainTotal().totalDate2}
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div className="mt-12 flex justify-end">
+            <div className="mt-2 flex justify-end">
               {" "}
               <button
-                className="bg-slate-300  text-black  px-4 py-3 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
+                className="bg-slate-300  text-black  px-3 py-2 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
                 onClick={captureScreen}
                 disabled={takeShot}
               >

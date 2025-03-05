@@ -32,13 +32,13 @@ import { FaArrowCircleRight } from "react-icons/fa";
   const location = useLocation();
   const { id, language } = location.state || {};
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
-    Q1: { file: null, date: null, year: "" },
-    Q2: { file: null, date: null, year: "" },
-    Q3: { file: null, date: null, year: "" },
-    Q4: { file: null, date: null, year: "" },
-    S1: { file: null, date: null, year: "" },
-    Board: { file: null, date: null, year: "" },
-    Year: { file: null, date: null, year: "" },
+    Q1: { file: null, date: null, year: "", createAt: ""  },
+    Q2: { file: null, date: null, year: "", createAt: ""  },
+    Q3: { file: null, date: null, year: "" , createAt: "" },
+    Q4: { file: null, date: null, year: "" , createAt: "" },
+    S1: { file: null, date: null, year: "" , createAt: "" },
+    Board: { file: null, date: null, year: "", createAt: ""  },
+    Year: { file: null, date: null, year: "" , createAt: "" },
   });
 
   useEffect(() => {
@@ -148,6 +148,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
         tadawalCode,
         sector,
         formData,
+        createdAt: new Date().toISOString(), // Example value
       };
       console.log("my data is", adminCredentials);
       const response = await dispatch(

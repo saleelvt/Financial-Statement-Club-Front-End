@@ -4,17 +4,17 @@ import { addDocumentArabic } from "../../actions/admin/addDocumentArabicAction";
 // import { MyObject } from "../../../interfaces/admin/addDoument";
 
 
-interface document{
+ export interface  AddArabicDocumentState{
     error: string | null;
     loading: boolean;
 }
 
-const initialState:document={
+const initialState: AddArabicDocumentState={
     error: null,
     loading: false,
 }
 
-export const AddArabicDocumentSlice = createSlice({
+ export const AddArabicDocumentSlice = createSlice({
     name: "admin",
     initialState,
     reducers: {

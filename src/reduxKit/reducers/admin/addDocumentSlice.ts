@@ -5,12 +5,12 @@ import { UpdateDocumentEnglish } from "../../actions/admin/updateEnglishDocument
 // import { MyObject } from "../../../interfaces/admin/addDoument";
 
 
-interface document{
+export interface AddDocumentState {
     error: string | null;
     loading: boolean;
 }
 
-const initialState:document={
+const initialState:AddDocumentState ={
     error: null,
     loading: false,
 }

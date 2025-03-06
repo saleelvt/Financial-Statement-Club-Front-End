@@ -49,7 +49,7 @@ const UserCompanyDetails = React.memo(() => {
   const [iframeSrc, setIframeSrc] = useState<any>("");
   const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
 
-  const pdfKeys: (keyof FormDataState)[] = [
+  const pdfKeys: (keyof FormDataState)[] = [ 
     "Q1",
     "Q2",
     "Q3",

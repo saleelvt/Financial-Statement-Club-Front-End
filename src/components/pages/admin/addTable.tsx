@@ -43,7 +43,6 @@ const AddTable = React.memo(() => {
   const [language, setLanguage] = useState<string>("Arabic");
 
   const [tadawalCode, setTadawalCode] = useState("");
-  const [documents, setDocuments] = useState();
   const [nickName, setNickName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [years, setYears] = useState<string[]>([]); // List of years
@@ -134,10 +133,10 @@ const AddTable = React.memo(() => {
       });
 
       // Step 1: **Download Screenshot Before Uploading**
-      const downloadLink = document.createElement("a");
-      downloadLink.href = dataUrl;
-      downloadLink.download = "screenshot.png";
-      downloadLink.click(); // Triggers download
+      // const downloadLink = document.createElement("a");
+      // downloadLink.href = dataUrl;
+      // downloadLink.download = "screenshot.png";
+      // downloadLink.click(); // Triggers download
 
       const responseTow = await dispatch( AdminAddTableAction({
           tadawalCode,
@@ -146,8 +145,10 @@ const AddTable = React.memo(() => {
           quarterYear,
           selectedTableType,
           language,
-        })
+        }) 
       );
+      console.log("the console log of response ADDTABLE ; ",responseTow );
+      
       if (responseTow.payload?.success === true) {
         toast.success(responseTow.payload.message);
       }
@@ -214,7 +215,7 @@ const AddTable = React.memo(() => {
       date2: 0,
     });
     setFormData({
-      ...formData,
+      ...formData, 
       subSections: newSubSections,
     });
   };
@@ -308,7 +309,6 @@ const AddTable = React.memo(() => {
  
     setTadawalCode(mydata[0].tadawalCode);
     setNickName(mydata[0].nickNameEn);
-    setDocuments(mydata);
     setSuggestions([]); // Clear suggestions after selecting one
  
     // Extract years and quarters from formData
@@ -340,9 +340,6 @@ const AddTable = React.memo(() => {
     // setIsDropdownOpen(true); // Open the year dropdown
   };
 
-  if (documents) {
-    console.log("keeekooooooooooooooooooo: ", documents);
-  }
 
  
   useEffect(() => {

@@ -26,7 +26,7 @@ import Swal from "sweetalert2";
   const formik = useFormik<IAdminLogin>({
     initialValues,
     validationSchema: ValidationLogin,
-    onSubmit: async (values) => {
+    onSubmit: async (values) => { 
       try {
         console.log(values,"before going to salon home page ");
         await dispatch(loginAdmin(values)).unwrap()

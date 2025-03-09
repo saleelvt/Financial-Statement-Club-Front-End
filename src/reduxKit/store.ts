@@ -2,7 +2,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./reducers/auth/authSlice";
 import AddDocumentSlice from "./reducers/admin/addDocumentSlice";
-import { userLanguageSlice } from "./reducers/auth/authSlice";
+import { userLanguageSlice } from "./reducers/auth/authSlice"; 
 import { adminLanguageSlice } from "./reducers/admin/adminLanguage";
 import AddArabicDocumentSlice from "./reducers/admin/addDocumentArabic";
 export const store = configureStore({

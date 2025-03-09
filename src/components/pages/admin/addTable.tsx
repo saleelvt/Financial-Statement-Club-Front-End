@@ -9,13 +9,14 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { useDispatch } from "react-redux";
- 
+
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { GrLanguage } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
+import Swal from "sweetalert2";
 
 interface PropertyRow {
   propertyName: string;
@@ -47,7 +48,7 @@ const AddTable = React.memo(() => {
   const [nickName, setNickName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [years, setYears] = useState<string[]>([]); // List of years
- 
+
   const [selectedYear, setSelectedYear] = useState("");
   const [quarterYear, setQuarterYear] = useState("");
   const [quarters, setQuarters] = useState<{
@@ -79,7 +80,6 @@ const AddTable = React.memo(() => {
     ],
   });
 
- 
   const toggleLanguage = async () => {
     const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
     await dispatch(AdminLanguageChange(newLanguage));
@@ -104,7 +104,7 @@ const AddTable = React.memo(() => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
     // setIsYearDropdownOpen(false);
- 
+
     // Close the year dropdown after selection
   };
 
@@ -137,9 +137,10 @@ const AddTable = React.memo(() => {
       const downloadLink = document.createElement("a");
       downloadLink.href = dataUrl;
       downloadLink.download = "screenshot.png";
-      downloadLink.click(); // Triggers download
+      // downloadLink.click(); // Triggers download
 
-      const responseTow = await dispatch( AdminAddTableAction({
+      const responseTow = await dispatch(
+        AdminAddTableAction({
           tadawalCode,
           screenshotFile,
           selectedYear,
@@ -152,8 +153,30 @@ const AddTable = React.memo(() => {
         toast.success(responseTow.payload.message);
       }
       setTakeShot(false);
-    } catch (error) {
+    } catch (error:any) {
       console.error("Error capturing screenshot:", error);
+        Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: error.message,
+                timer: 3000,
+                toast: true,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                background: '#fff', // Light red background for an error message
+                color: '#721c24', // Darker red text color for better readability
+                iconColor: '#f44336', // Custom color for the icon
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer); // Pause timer on hover
+                  toast.addEventListener('mouseleave', Swal.resumeTimer); // Resume timer on mouse leave
+                },
+                showClass: {
+                  popup: 'animate__animated animate__fadeInDown' // Animation when the toast appears
+                },
+                hideClass: {
+                  popup: 'animate__animated animate__fadeOutUp' // Animation when the toast disappears
+                }
+              });
     } finally {
       // Remove the class to restore the scrollbar on the parent and child elements
       node.classList.remove("no-scrollbar");
@@ -305,12 +328,12 @@ const AddTable = React.memo(() => {
     );
     const mydata = response.data.data;
     console.log("Tadawal code response:", mydata);
- 
+
     setTadawalCode(mydata[0].tadawalCode);
     setNickName(mydata[0].nickNameEn);
     setDocuments(mydata);
     setSuggestions([]); // Clear suggestions after selecting one
- 
+
     // Extract years and quarters from formData
     const yearsSet = new Set<string>();
     const quartersMap: {
@@ -334,7 +357,7 @@ const AddTable = React.memo(() => {
         }
       });
     });
- 
+
     setYears(Array.from(yearsSet));
     setQuarters(quartersMap);
     // setIsDropdownOpen(true); // Open the year dropdown
@@ -344,7 +367,6 @@ const AddTable = React.memo(() => {
     console.log("keeekooooooooooooooooooo: ", documents);
   }
 
- 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -352,7 +374,6 @@ const AddTable = React.memo(() => {
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsYearDropdownOpen(false);
- 
       }
     };
 
@@ -361,36 +382,33 @@ const AddTable = React.memo(() => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     if (adminLanguage) setLanguage(adminLanguage);
-  },[adminLanguage])
- 
+  }, [adminLanguage]);
 
   return (
     <div className="p-4">
       <div className="p-2">
         <div className="flex flex-wrap justify-between items-center ">
-                   <FaArrowCircleLeft
-                     className="text-3xl  text-gray-700"
-                     onClick={() => navigate("/home")}
-                   />      
-                   <div className="flex gap-4 items-center ">          
-                     <button
-                       onClick={toggleLanguage}
-                       className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
-                     >
-                       <GrLanguage className=" text-gray-700" />
-                     </button> 
-                     {/* </button> */}
-                     <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
-                     {language === "Arabic" ? "قسم الجدول"  : "Table Section"}
-                     </h4>
-                   </div>
-                 </div>
+          <FaArrowCircleLeft
+            className="text-3xl  text-gray-700"
+            onClick={() => navigate("/home")}
+          />
+          <div className="flex gap-4 items-center ">
+            <button
+              onClick={toggleLanguage}
+              className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
+            >
+              <GrLanguage className=" text-gray-700" />
+            </button>
+            {/* </button> */}
+            <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
+              {language === "Arabic" ? "قسم الجدول" : "Table Section"}
+            </h4>
+          </div>
+        </div>
 
- 
- 
         <div className="border mt-3 p-1 no-scrollbar">
           <div className="flex-1">
             <input
@@ -434,7 +452,6 @@ const AddTable = React.memo(() => {
                 >
                   {selectedYear || "Select a year"}
                 </div>
- 
 
                 {isYearDropdownOpen && (
                   <div className="absolute z-10 mt-1 w-1/4 bg-white border border-gray-300 rounded-md shadow-lg">
@@ -496,9 +513,9 @@ const AddTable = React.memo(() => {
               {" "}
               {`${nickName} ${selectedYear} ${quarterYear} ${selectedTableType}`}{" "}
             </h1>
-          </div>
-
-          <form className="bg-white shadow-md rounded pb-4 w-full max-w-2xl">
+          </div> 
+ 
+          <form className="bg-white shadow-md rounded pb-4 w-full max-w-5xl">
             <div className="overflow-x-auto">
               <table
                 id="capture-area"
@@ -520,7 +537,6 @@ const AddTable = React.memo(() => {
                     </th>
                   </tr>
                 </thead>
-                
 
                 <tbody>
                   {/* Main Name Row */}

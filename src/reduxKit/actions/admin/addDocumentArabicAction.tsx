@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import axios  from "axios";
 import {  URL, } from "../../../config/constants";
 import { createAxiosConfig } from "../../../config/constants";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { handleUploadProgress } from "./uploadingProgress";
+
 
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 

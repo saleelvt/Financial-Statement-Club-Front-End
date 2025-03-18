@@ -487,14 +487,22 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-            <div className="flex justify-end   mt-4">
-              <button
-                type="submit"
-                className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-              >
-                {loading ? "Submiting..." : "Submit"}
-              </button>
-            </div>
+            <div className="flex flex-col justify-center items-center mt-4 w-full h-48 relative">
+  {loading ? (
+    <div className="flex flex-col items-center">
+      <div className="w-16 h-16 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
+      <span className="mt-4 text-gray-700 font-bold">{`Submiting...`}</span>
+    </div>
+  ) : (
+    <button
+      type="submit"
+      className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+    >
+      Submit
+    </button>
+  )}
+</div>
+
           </form>
           {/* <AddDocumentArabic formDataEn={formData} tadawalCodeEn={tadawalCode}  /> */}
         </div>

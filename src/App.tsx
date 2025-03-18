@@ -14,8 +14,8 @@ const DocumentList = lazy(() => import("./components/pages/admin/documentList"))
 const AdminLogin = lazy(() => import("./components/forms/admin/login"));
 const AdminHomePage = lazy(() => import("./components/pages/admin/adminDashBoard"));
 const EmailVerification = lazy(() => import("./components/forms/admin/otpVerifiy"));
-const AddTable = lazy(() => import("./components/pages/admin/addTable"));
-const AddNewTable=lazy(() => import("./components/pages/admin/addNewTable"));
+
+// const AddNewTable=lazy(() => import("./components/pages/admin/addNewTable"));
 const AddDocumentArabic = lazy(() => import("./components/pages/admin/addDocumentAr"));
 const UpdateDocument = lazy(() => import("./components/pages/admin/updateDocument"));
 const AdminProfilePage = lazy(() => import("./components/pages/admin/adminProfile"));
@@ -38,8 +38,8 @@ export const App: React.FC = React.memo(() => {
           <Route path="/login" element={isLogged && role === 'admin' ? <Navigate to="/home" /> : <AdminLogin />} />
           <Route path="/home" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
           <Route path="/addDocument" element={isLogged &&  role === 'admin' ? <AddDocumentArabic /> : <AdminLogin />}/>
-          <Route path="/addTable" element={isLogged &&  role === 'admin' ? <AddTable /> : <AdminLogin />}/>
-          <Route path="/addNewTable" element={isLogged &&  role === 'admin' ? <AddNewTable /> : <AdminLogin />}/>
+    
+          {/* <Route path="/addNewTable" element={isLogged &&  role === 'admin' ? <AddNewTable /> : <AdminLogin />}/> */}
           <Route path="/documentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
           <Route path="/updateDocument" element={isLogged &&  role === 'admin' ? <UpdateDocument /> : <AdminLogin />} />
           <Route path="/updateDocumentAr" element={isLogged &&  role === 'admin' ? <UpdateDocumentAr /> : <AdminLogin />} />

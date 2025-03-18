@@ -8,7 +8,10 @@ export default {
     extend: {
       screens:{
         "xs":"225px"
-      }
+      },
+      colors: {
+        charcoal: "#36454F",
+      },
     },
   },
   plugins: [],

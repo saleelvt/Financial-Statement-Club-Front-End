@@ -4,10 +4,12 @@ import {  URL, } from "../../../config/constants";
 import { createAxiosConfig } from "../../../config/constants";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { handleUploadProgress } from "./uploadingProgress";
 
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 
 import { FormField } from "../../../interfaces/admin/addDoument";
+
 
 
 
@@ -22,6 +24,7 @@ export const axiosIn = axios.create({
     formData: Record<FieldKey, FormField>;
   }
 
+ 
 
   export const addDocumentArabic= createAsyncThunk(
     "admin/addDocumentArabic",
@@ -69,7 +72,7 @@ export const axiosIn = axios.create({
             formData.append("tadawalCode", adminCredentials?.tadawalCode);
             formData.append("sector", adminCredentials?.sector);
             console.log("got hte datas in arabic side}}}}}}}}}}} ",adminCredentials);
-            
+
             const response = await axiosIn.post(`/api/v1/admin/addDocumentArabic`,formData,createAxiosConfig(true));
             return response.data ;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

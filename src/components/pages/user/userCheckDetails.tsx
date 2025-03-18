@@ -121,45 +121,46 @@ const UserCompanyDetails = React.memo(() => {
   };
 
   useEffect(() => {
-    const formDataforLatest = selectedFilteredDocWithYear?.[0]?.formData;
-    console.log("The form data for latest file:", formDataforLatest);
-
-    if (
-      selectedFilteredDocWithYear.length > 0 &&
-      selectedFilteredDocWithYear[0]?.formData
-    ) {
-      const latestFileEntry = Object.entries(
-        selectedFilteredDocWithYear[0].formData
-      )
-        .filter(([, entry]) => entry.file !== null && entry.file !== undefined) // Exclude null/undefined files
-        .sort((a, b) => {
-          const dateA = a[1].date ? new Date(a[1].date).getTime() : 0; // Convert to timestamp or default to 0
-          const dateB = b[1].date ? new Date(b[1].date).getTime() : 0;
-          return dateB - dateA; // Sort by latest date
-        })[0]; // Get the latest entry
-
-      if (latestFileEntry) {
-        const [latestKey, latestData] = latestFileEntry as [
-          FieldKey,
-          FormField
-        ];
-        console.log("Latest FieldKey:", latestKey);
-        console.log("Latest File:", latestData.file);
-        setSelectedPdfKey(latestKey);
-        if (latestData.file) {
-          if (typeof latestData.file === "string") {
-            const encodedUrl = encodeURIComponent(latestData.file);
-            const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
-            setIframeSrc(`${googleViewerUrl}#toolbar=0`);
-            setLoading(false);
-          } else {
-            console.error("fileUrl is not a valid string:", latestData.file);
-          }
-        }
+    if (!selectedFilteredDocWithYear || selectedFilteredDocWithYear.length === 0) return;
+  
+    const formDataForLatest = selectedFilteredDocWithYear[0]?.formData;
+    console.log("The form data for latest file:", formDataForLatest);
+  
+    if (!formDataForLatest) return;
+  
+    // Define priority order for field selection
+    const priorityOrder: FieldKey[] = ["Board", "Year", "S1", "Q4", "Q3", "Q2", "Q1"];
+  
+    let selectedKey: FieldKey | null = null;
+    let selectedData: FormField | null = null;
+  
+    // Check each field in priority order and find the first one with a valid file
+    for (const key of priorityOrder) {
+      if (formDataForLatest[key]?.file) {
+        selectedKey = key;
+        selectedData = formDataForLatest[key];
+        break;
+      }
+    }
+  
+    if (selectedKey && selectedData) {
+      console.log("Latest FieldKey:", selectedKey);
+      console.log("Latest File:", selectedData.file);
+  
+      setSelectedPdfKey(selectedKey);
+  
+      if (typeof selectedData.file === "string") {
+        const encodedUrl = encodeURIComponent(selectedData.file);
+        const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
+        setIframeSrc(`${googleViewerUrl}#toolbar=0`);
+        setLoading(false);
+      } else {
+        console.error("fileUrl is not a valid string:", selectedData.file);
       }
     }
   }, [selectedYear, selectedFilteredDocWithYear]);
-
+  
+  
   const handleLeftClick = () => {
     if (visibleYears > 0) {
       setVisibleYears(visibleYears - 1);
@@ -180,6 +181,7 @@ const UserCompanyDetails = React.memo(() => {
 
   useEffect(() => {
     const TakeYears = async () => {
+      // Extract all years from documents
       const years: string[] = documents
         .map((doc) => {
           return (
@@ -192,34 +194,34 @@ const UserCompanyDetails = React.memo(() => {
             doc.formData?.Year?.year
           );
         })
-        .filter((year): year is string => !!year) // Ensure the year is not null or undefined
-        .sort((a, b) => parseInt(a) - parseInt(b)); // Sort numerically
-      setYearList(years);
-
-      const latestDocument = [...documents].sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      )[0];
-
-      if (latestDocument) {
-        // Find the first available year from the latest document's formData
-        const latestYear =
-          latestDocument.formData?.Q1?.year ||
-          latestDocument.formData?.Q2?.year ||
-          latestDocument.formData?.Q3?.year ||
-          latestDocument.formData?.Q4?.year ||
-          latestDocument.formData?.S1?.year ||
-          latestDocument.formData?.Board?.year ||
-          latestDocument.formData?.Year?.year;
-
-        console.log("Latest Year from Latest Document:", latestYear);
+        .filter((year): year is string => !!year) // Remove null/undefined values
+        .sort((a, b) => parseInt(a) - parseInt(b)); // Sort in descending order to get the largest first
+  
+      if (years.length > 0) {
+        const latestYear = years[years.length-1]; // Get the biggest year
+        console.log("Latest (Biggest) Year:", latestYear);
         setSelectedYear(latestYear);
-        const data = [latestDocument];
-        await setSelectedFilteredDocWithYear(data);
+  
+        // Filter documents that have this latest year
+        const latestYearDocs = documents.filter((doc) => 
+          doc.formData?.Q1?.year === latestYear ||
+          doc.formData?.Q2?.year === latestYear ||
+          doc.formData?.Q3?.year === latestYear ||
+          doc.formData?.Q4?.year === latestYear ||
+          doc.formData?.S1?.year === latestYear ||
+          doc.formData?.Board?.year === latestYear ||
+          doc.formData?.Year?.year === latestYear
+        );
+  
+        await setSelectedFilteredDocWithYear(latestYearDocs);
       }
+  
+      setYearList(years);
     };
+  
     TakeYears();
   }, [documents]);
+  
 
   useEffect(() => {
     if (documents.length > 0) {
@@ -307,28 +309,28 @@ const UserCompanyDetails = React.memo(() => {
                   )}
                 </div>
                 <div className="  flex  flex-col justify-center    ">
-                  <div className="flex  text-[14px] font-serif     justify-center lg:justify-start ">
+                  <div className="flex  text-[14px] font-serif  h-6   justify-center lg:justify-start ">
                     <h3 className="text-gray-800  text-center ">
                       {isDocumentEn(document)
                         ? document.nickNameEn
                         : document.nickNameAr}
                     </h3>
                   </div>
-                  <div className="flex flex-col md:flex-row  text-[14px] font-serif    justify-center lg:justify-start ">
+                  <div className="flex flex-col md:flex-row h-7  text-[14px] font-serif    justify-center lg:justify-start ">
                     <h3 className="text-gray-800 text-center ">
                       {isDocumentEn(document)
                         ? document.fullNameEn
                         : document.fullNameAr}
                     </h3>
                   </div>
-                  <div className="flex    justify-center lg:justify-start items-center ">
+                  <div className="flex h-6   justify-center lg:justify-start items-center ">
                     <h3 className=" text-[14px] font-serif  text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
                     </h3>
                   </div>
-                  <div className="">
+                  <div className="mt-4">
                     <div
                       dir={userLanguage === "English" ? "ltr" : "rtl"}
                       className="flex justify-start gap-[6px]  text-xs justify-center lg:justify-start "
@@ -336,13 +338,13 @@ const UserCompanyDetails = React.memo(() => {
                       <div className="flex  items-center ">
                         <button
                           onClick={handleRightClick}
-                          className="text-gray-600 flex  items-center   justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md     "
+                          className="text-gray-600 flex   items-center    justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md     "
                         >
                           {" "}
                           {"<"}
                         </button>
                       </div>
-                      <div className="flex flex-wrap gap-4 py-1 items-center justify-center lg:justify-start ">
+                      <div className="flex flex-wrap gap-3 py-1 px-4  items-center justify-center lg:justify-start ">
                         {yearList
                           .slice(visibleYears, visibleYears + 5)
                           .map((year) => (
@@ -362,7 +364,7 @@ const UserCompanyDetails = React.memo(() => {
                       <div className="flex items-center ">
                         <button
                           onClick={handleLeftClick}
-                          className="text-gray-600 flex  items-center justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md   "
+                          className="text-gray-600 flex    items-center justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md   "
                         >
                           {" "}
                           {">"}
@@ -376,7 +378,7 @@ const UserCompanyDetails = React.memo(() => {
                     className="mt-2  flex justify-center  lg:justify-start rounded-lg text-xs"
                   >
                     {selectedFilteredDocWithYear.length > 0 ? (
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-2">
                         <button className="text-white flex text-xs   items-center   justify-center text-[16px] px-2 py-1   bg-gray-600 rounded-md     ">
                           {" "}
                           {"PDF"}
@@ -410,9 +412,10 @@ const UserCompanyDetails = React.memo(() => {
                     )}
                   </div>
 
+                  <div className="hidden">
                   {selectedPdfKey &&
                     pdfKeys.includes(selectedPdfKey as keyof FormDataState) && (
-                      <div
+                      <div 
                         dir={userLanguage === "English" ? "ltr" : "rtl"}
                         className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
                       >
@@ -456,13 +459,15 @@ const UserCompanyDetails = React.memo(() => {
                         )}
                       </div>
                     )}
+                    </div>
+
                 </div>
               </div>
             </div>
           )}
         </div>
       </div>
-      <div className="lg:w-[55%] ">
+      <div className="lg:w-[65%] ">
         {tableIframeSrc ? (
           // Show Image in PhotoProvider with Zoom
           <PhotoProvider>
@@ -477,7 +482,7 @@ const UserCompanyDetails = React.memo(() => {
         ) : iframeSrc ? (
           // Show PDF in an iframe
           <div
-            className=""
+            className=" "
             style={{
               position: "relative",
               width: "100%",

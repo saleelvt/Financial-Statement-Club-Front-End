@@ -1,40 +1,55 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
 import { FormField } from "../../../interfaces/admin/addDoument";
-import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
+// import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
-import { config } from "../../../config/constants";
+import { config, URL } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { AddDocument } from "./addDocumentEn";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
- const AddDocumentArabic: React.FC = React.memo(() => {
+interface DocumentPayload {
+  fullNameAr: string;
+  nickNameAr: string;
+  tadawalCode: string;
+  sector: string;
+  formData: Record<FieldKey, FormField>;
+}
+export const axiosIn = axios.create({
+  baseURL: URL,
+});
+
+const AddDocumentArabic: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.adminAr);
   const [fullNameAr, setFullNameAr] = useState("");
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
+  const [progress, setProgress] = useState<number>(0);
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
     Q1: { file: null, date: null, year: "", createAt: "" },
     Q2: { file: null, date: null, year: "", createAt: "" },
-    Q3: { file: null, date: null, year: "" , createAt: ""},
-    Q4: { file: null, date: null, year: "" , createAt: ""},
-    S1: { file: null, date: null, year: "" , createAt: ""},
+    Q3: { file: null, date: null, year: "", createAt: "" },
+    Q4: { file: null, date: null, year: "", createAt: "" },
+    S1: { file: null, date: null, year: "", createAt: "" },
     Board: { file: null, date: null, year: "", createAt: "" },
-    Year: { file: null, date: null, year: "" , createAt: ""},
-  }); 
+    Year: { file: null, date: null, year: "", createAt: "" },
+  });
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -42,7 +57,7 @@ import { AddDocument } from "./addDocumentEn";
     if (value.length > 0) {
       // Fetch suggestions only if input has 3 or more characters
       setIsLoading(true);
-      try {  
+      try {
         const adminLanguage = "Arabic";
         const response = await commonRequest(
           "GET",
@@ -55,7 +70,7 @@ import { AddDocument } from "./addDocumentEn";
         console.error("Error fetching suggestions:", error);
       } finally {
         setIsLoading(false);
-      } 
+      }
     } else {
       setSuggestions([]);
     }
@@ -102,6 +117,70 @@ import { AddDocument } from "./addDocumentEn";
     }));
   };
 
+  const addDocumentArabic = createAsyncThunk(
+    "admin/addDocumentArabic",
+    async (
+      adminCredentials: DocumentPayload,
+      { rejectWithValue, dispatch }
+    ) => {
+      try {
+        console.log("Submitting Arabic document: ", adminCredentials);
+
+        // Validate at least one field
+        const isAnyFieldValid = Object.values(adminCredentials.formData).some(
+          (field) => field.file && field.date && field.year
+        );
+        if (!isAnyFieldValid) {
+          return rejectWithValue({
+            message:
+              "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year.",
+          });
+        }
+        setProgress(0);
+        // Create FormData
+        const formData = new FormData();
+        for (const [key, value] of Object.entries(adminCredentials.formData)) {
+          if (value.file) formData.append(key, value.file);
+          if (value.date instanceof Date)
+            formData.append(`${key}Date`, value.date.toISOString());
+          if (value.year) formData.append(`${key}Year`, value.year);
+        }
+
+        // Append other fields
+        formData.append("fullNameAr", adminCredentials.fullNameAr);
+        formData.append("nickNameAr", adminCredentials.nickNameAr);
+        formData.append("tadawalCode", adminCredentials.tadawalCode);
+        formData.append("sector", adminCredentials.sector);
+
+        // Dispatch Upload Started Action
+        dispatch({ type: "UPLOAD_STARTED" });
+
+        // Send API request with upload progress
+        const response = await axiosIn.post(
+          `/api/v1/admin/addDocumentArabic`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            onUploadProgress: (progressEvent) => {
+              if (progressEvent.total) {
+                const percentCompleted = Math.round(
+                  (progressEvent.loaded * 100) / progressEvent.total
+                );
+                setProgress(percentCompleted);
+              }
+            },
+          }
+        );
+
+        return response.data;
+      } catch (error: any) {
+        return rejectWithValue(
+          error.response?.data || { message: "Something went wrong!" }
+        );
+      }
+    }
+  );
+
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
@@ -113,7 +192,9 @@ import { AddDocument } from "./addDocumentEn";
         formData,
         createdAt: new Date().toISOString(), // Example value
       };
-      await dispatch(addDocumentArabic(payloadData)).unwrap();
+
+      const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
+      console.log("my file pload response , ", response,progress);
 
       toast.success("Document successfully added");
       setFormData(
@@ -413,14 +494,22 @@ import { AddDocument } from "./addDocumentEn";
             </div>
           </div>
 
-          <div className="flex items-center justify-end mt-4">
-            <button
-              type="submit"
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-            >
-              {loading ? "جاري التحميل..." : "يُقدِّم"}
-            </button>
-          </div>
+          <div className="flex flex-col justify-center items-center mt-4 w-full h-48 relative">
+  {loading ? (
+    <div className="flex flex-col items-center">
+      <div className="w-16 h-16 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
+      <span className="mt-4 text-gray-700 font-bold">{`جاري التحميل...`}</span>
+    </div>
+  ) : (
+    <button
+      type="submit"
+      className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+    >
+      يُقدِّم
+    </button>
+  )}
+</div>
+
         </form>
 
         <AddDocument formDataEn={formData} tadawalCodeEn={tadawalCode} />
@@ -429,4 +518,4 @@ import { AddDocument } from "./addDocumentEn";
   );
 });
 
-export default AddDocumentArabic
+export default AddDocumentArabic;

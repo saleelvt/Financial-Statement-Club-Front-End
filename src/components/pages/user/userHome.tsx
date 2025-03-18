@@ -116,8 +116,8 @@ const UserHomePage: React.FC = React.memo(() => {
   }
   return (
     <div
-      style={{ backgroundColor: "#666666" }}
-      className=" text-white min-h-screen flex flex-col items-center xs:p-2 lg:px-24 lg:p-4"
+      // style={{ backgroundColor: "#666666" }}
+      className=" text-white bg-charcoal min-h-screen flex flex-col items-center xs:p-2 lg:px-24 lg:p-4"
     >
       <div className="flex   justify-end w-3/4">
         <button
@@ -131,18 +131,20 @@ const UserHomePage: React.FC = React.memo(() => {
          <GrLanguage />
         </button>
       </div>
+
+
       <div
       dir={ language === "Arabic" ? "rtl" : "ltr"}
-        className={`nickName grid xs:grid-cols-6  mx-[14px]    lg:grid-cols-10  lg:text-[15px]  md:text-[15px]  sm:text-[15px]  xs:text-[13px]  xs:gap-6 lg:gap-[14px] md:lg:gap-[15px]  sm:gap-[15px]         rounded-lg   sm:grid-cols-6 mt-7  md:grid-cols-8  ${
+        className={`nickName grid xs:grid-cols-6   mx-[14px] lg:grid-cols-4     lg:text-[17px]  md:text-[15px]  sm:text-[15px]  xs:text-[13px]  xs:gap-6 lg:gap-[16px] md:lg:gap-[15px]  sm:gap-[15px]         rounded-lg   sm:grid-cols-6 mt-7  md:grid-cols-8  ${
           language === "Arabic" ? "text-right" : ""    
         }`} 
-      >
+      > 
         {currentBrands
           .map((brand, index) => (
             <button
               key={index}
               onClick={() => handleBrandClick(brand.tadawalCode)}
-              className={` font-serif  text-left  flex  justify-start  items-center   ${
+              className={`   text-left  flex  justify-start  items-center   ${
                 selectedBrand === brand.tadawalCode
                   ? "bg-gray-200  text-black"
                   : ""
@@ -156,8 +158,7 @@ const UserHomePage: React.FC = React.memo(() => {
       <div className="mt-6" >
        
       </div>
-      <div className="relative w-full flex flex-col items-center p-8 bg-opacity-50 text-center">
-      </div>
+     
     </div>
   );
 

@@ -48,8 +48,8 @@ const AdminSidebar = () => {
   const navLinks = [
     { to: "/home", icon: FaHome, label: "Dashboard" },
     { to: "/addDocument", icon: FaFileAlt, label: "Add Document" },
-    { to: "/addTable", icon: FaFileAlt, label: "Add Table" },
-    { to: "/addNewTable", icon: FaFileAlt, label: "Add New Table" },
+
+    // { to: "/addNewTable", icon: FaFileAlt, label: "Add New Table" },
     { to: "/documentList", icon: FaListAlt, label: "Document List" },
     { to: "/admin/profile", icon: FaUser, label: "Profile" },
     { to: "/admin/settings", icon: FaCog, label: "Settings" },

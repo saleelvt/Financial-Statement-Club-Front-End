@@ -9,21 +9,21 @@
     direction: ltr;
 }
 .nickName {
-   grid-template-columns: repeat(7, auto);
+   grid-template-columns: repeat(6, auto);
 }
 @media(max-width: 1024px ){
-    .nickName {
-        grid-template-columns: repeat(6, auto);
-     }
-     
-}
-@media(max-width: 750px ){
     .nickName {
         grid-template-columns: repeat(5, auto);
      }
      
 }
-@media(max-width: 450px ){
+@media(max-width: 750px ){
+    .nickName {
+        grid-template-columns: repeat(4, auto);
+     }
+     
+}
+@media(max-width: 500px ){
     .nickName {
         grid-template-columns: repeat(3, auto);
      }

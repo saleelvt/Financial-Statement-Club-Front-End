@@ -23,10 +23,14 @@ export const addDocumentEnglish = createAsyncThunk(
 
 
       const formDataf = adminCredentials.formData;
-      const q1Field = formDataf?.Q1;
-      if (!q1Field || !q1Field.file || !q1Field.date || !q1Field.year) {
+      const isAnyFieldValid = Object.values(formDataf).some(
+        (field) => field.file && field.date && field.year
+      );
+
+      if (!isAnyFieldValid) {
         return rejectWithValue({
-          message:"The Q1 field is required. Please fill in all Details Of Q1 .",
+          message:
+            "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year.",
         });
       }
 

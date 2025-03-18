@@ -9,7 +9,7 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { useDispatch } from "react-redux";
- 
+
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
@@ -46,7 +46,7 @@ const AddTable = React.memo(() => {
   const [nickName, setNickName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [years, setYears] = useState<string[]>([]); // List of years
- 
+
   const [selectedYear, setSelectedYear] = useState("");
   const [quarterYear, setQuarterYear] = useState("");
   const [quarters, setQuarters] = useState<{
@@ -56,6 +56,7 @@ const AddTable = React.memo(() => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [takeShot, setTakeShot] = useState<boolean>(false);
+  const [takeShotForProfitLoss, setTakeShotForProfitLoss] = useState<boolean>(false);
   const navigate = useNavigate();
   const [selectedTableType, setTableType] = useState("");
   const TableTypeArr = ["BalanceSheet", "ProfitLoss", "CashFlow"];
@@ -78,7 +79,6 @@ const AddTable = React.memo(() => {
     ],
   });
 
- 
   const toggleLanguage = async () => {
     const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
     await dispatch(AdminLanguageChange(newLanguage));
@@ -103,7 +103,7 @@ const AddTable = React.memo(() => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
     // setIsYearDropdownOpen(false);
- 
+
     // Close the year dropdown after selection
   };
 
@@ -115,7 +115,9 @@ const AddTable = React.memo(() => {
   const captureScreen = async () => {
     const node = document.getElementById("capture-area");
     if (!node) return;
-
+    if (selectedTableType === "ProfitLoss") {
+      setTakeShotForProfitLoss(true); // Hide UI elements while capturing
+    };
     setTakeShot(true); // Hide UI elements while capturing
     console.log("Taking Screenshot...");
     node.classList.add("no-scrollbar");
@@ -131,28 +133,30 @@ const AddTable = React.memo(() => {
       const screenshotFile = new File([blob], "screenshot.png", {
         type: "image/png",
       });
+ 
+   
+      const downloadLink = document.createElement("a");
+      downloadLink.href = dataUrl;
+      downloadLink.download = "screenshot.png";
+      downloadLink.click(); // Triggers download
 
-      // Step 1: **Download Screenshot Before Uploading**
-      // const downloadLink = document.createElement("a");
-      // downloadLink.href = dataUrl;
-      // downloadLink.download = "screenshot.png";
-      // downloadLink.click(); // Triggers download
-
-      const responseTow = await dispatch( AdminAddTableAction({
+      const responseTow = await dispatch(
+        AdminAddTableAction({
           tadawalCode,
           screenshotFile,
           selectedYear,
           quarterYear,
           selectedTableType,
           language,
-        }) 
+        })
       );
-      console.log("the console log of response ADDTABLE ; ",responseTow );
-      
+      console.log("the console log of response ADDTABLE ; ", responseTow);
+
       if (responseTow.payload?.success === true) {
         toast.success(responseTow.payload.message);
       }
       setTakeShot(false);
+      setTakeShotForProfitLoss(false)
     } catch (error) {
       console.error("Error capturing screenshot:", error);
     } finally {
@@ -215,19 +219,27 @@ const AddTable = React.memo(() => {
       date2: 0,
     });
     setFormData({
-      ...formData, 
+      ...formData,
       subSections: newSubSections,
     });
   };
-  const removeProperty = (subIndex: number, propertyIndex: number) => {
+  const removeProperty = (subIndex: number) => { 
     const newSubSections = [...formData.subSections];
-    newSubSections[subIndex].properties.splice(propertyIndex, 1);
-
-    setFormData({
-      ...formData,
-      subSections: formData.subSections,
-    });
+  
+    // Ensure the subsection has properties before attempting to remove
+    if (newSubSections[subIndex].properties.length > 0) {
+      newSubSections[subIndex] = {
+        ...newSubSections[subIndex],
+        properties: newSubSections[subIndex].properties.slice(0, -1), // Removes last property
+      };
+  
+      setFormData({
+        ...formData,
+        subSections: newSubSections,
+      });
+    }
   };
+  
 
   const addSubSection = () => {
     setFormData({
@@ -306,11 +318,11 @@ const AddTable = React.memo(() => {
     );
     const mydata = response.data.data;
     console.log("Tadawal code response:", mydata);
- 
+
     setTadawalCode(mydata[0].tadawalCode);
     setNickName(mydata[0].nickNameEn);
     setSuggestions([]); // Clear suggestions after selecting one
- 
+
     // Extract years and quarters from formData
     const yearsSet = new Set<string>();
     const quartersMap: {
@@ -334,14 +346,12 @@ const AddTable = React.memo(() => {
         }
       });
     });
- 
+
     setYears(Array.from(yearsSet));
     setQuarters(quartersMap);
     // setIsDropdownOpen(true); // Open the year dropdown
   };
 
-
- 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -349,7 +359,6 @@ const AddTable = React.memo(() => {
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsYearDropdownOpen(false);
- 
       }
     };
 
@@ -358,36 +367,33 @@ const AddTable = React.memo(() => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     if (adminLanguage) setLanguage(adminLanguage);
-  },[adminLanguage])
- 
+  }, [adminLanguage]);
 
   return (
     <div className="p-4">
       <div className="p-2">
         <div className="flex flex-wrap justify-between items-center ">
-                   <FaArrowCircleLeft
-                     className="text-3xl  text-gray-700"
-                     onClick={() => navigate("/home")}
-                   />      
-                   <div className="flex gap-4 items-center ">          
-                     <button
-                       onClick={toggleLanguage}
-                       className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
-                     >
-                       <GrLanguage className=" text-gray-700" />
-                     </button> 
-                     {/* </button> */}
-                     <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
-                     {language === "Arabic" ? "قسم الجدول"  : "Table Section"}
-                     </h4>
-                   </div>
-                 </div>
+          <FaArrowCircleLeft
+            className="text-3xl  text-gray-700"
+            onClick={() => navigate("/home")}
+          />
+          <div className="flex gap-4 items-center ">
+            <button
+              onClick={toggleLanguage}
+              className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
+            >
+              <GrLanguage className=" text-gray-700" />
+            </button>
+            {/* </button> */}
+            <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
+              {language === "Arabic" ? "قسم الجدول" : "Table Section"}
+            </h4>
+          </div>
+        </div>
 
- 
- 
         <div className="border mt-3 p-1 no-scrollbar">
           <div className="flex-1">
             <input
@@ -431,7 +437,6 @@ const AddTable = React.memo(() => {
                 >
                   {selectedYear || "Select a year"}
                 </div>
- 
 
                 {isYearDropdownOpen && (
                   <div className="absolute z-10 mt-1 w-1/4 bg-white border border-gray-300 rounded-md shadow-lg">
@@ -495,31 +500,54 @@ const AddTable = React.memo(() => {
             </h1>
           </div>
 
-          <form className="bg-white shadow-md rounded pb-4 w-full max-w-2xl">
+          <form className="bg-white shadow-md rounded pb-4 w-full max-w-5xl">
             <div className="overflow-x-auto">
-              <table
-                id="capture-area"
+              <table 
+              dir={adminLanguage === "Arabic" ? "rtl" : "ltr"}
+                id="capture-area" 
                 className="w-full border-collapse border border-gray-300"
               >
-                <thead>
-                  <tr>
+                <thead>  
+                  <tr className="flext justify-center">
                     <th className="border text-[14px] bg-slate-300 border-white px-4 py-[2px] text-left">
-                      Contents
+       
+                     </th>
+                    <th className="border   bg-slate-300 text-center  ">
+                      Notes 
+                    </th>  
+                    <th className="border   bg-slate-300 text-center  ">
+                    <input 
+                      type="text"
+                      name="date1"
+                      className="border  bg-slate-300   text-center"
+                      placeholder="Date 1"
+                    /> 
                     </th>
-                    <th className="border  text-[14px] bg-slate-300 border-white px-[6px] py-[2px] text-center  ">
-                      Notes
+                    <th className="border   bg-slate-300 text-center  ">
+                      
+                    <input
+                      type="text"
+                      name="date2"
+                      className="border bg-slate-300  text-center"
+                      placeholder="Date 2"
+                    />
                     </th>
-                    <th className="border  text-[14px] bg-slate-300 border-white px-[6px] py-[2px] text-center  ">
-                      Date 1
-                    </th>
-                    <th className="border  text-[14px] bg-slate-300 border-white px-[6px] py-[2px] text-center ">
-                      Date 2
-                    </th>
+                   
                   </tr>
                 </thead>
-                
+               
 
                 <tbody>
+
+
+
+
+
+
+
+                {!takeShotForProfitLoss && ( // Hide buttons while taking a screenshot
+                          <>
+
                   {/* Main Name Row */}
                   <tr className=" ">
                     <td className="">
@@ -529,18 +557,11 @@ const AddTable = React.memo(() => {
                           name="mainName"
                           value={formData.mainName}
                           onChange={handleMainNameChange}
-                          className="text-sm px-4   border border-gray-200"
+                          className="text-sm px-4 w-[450px]    border border-gray-200"
                           placeholder="Main Name"
                         />
 
-                        <input
-                          type="text"
-                          name="mainNameArabic"
-                          value={formData.mainNameArabic}
-                          onChange={handleMainNameChange}
-                          className="text-sm px-4   border border-gray-200"
-                          placeholder="Main Name Arabic"
-                        />
+                        
                         {!takeShot && ( // Hide buttons while taking a screenshot
                           <>
                             <button
@@ -565,16 +586,26 @@ const AddTable = React.memo(() => {
                     <td className="border border-gray-300"></td>
                     <td className="border border-gray-300"></td>
                   </tr>
+  
+
+                  </>
+                            )} 
+
+
 
                   {/* Sub Sections */}
                   {formData.subSections.map((subSection, subIndex) => (
                     <React.Fragment key={subIndex}>
                       {/* Sub Section Header */}
-                      <tr className="  ">
+
+                      {!takeShotForProfitLoss && ( // Hide buttons while taking a screenshot
+                          <>
+
+                      <tr className=" ">
                         <td className=" ">
-                          <div className="flex h-7">
+                          <div className="flex w-full    ">
                             <input
-                              type="text"
+                              type="text" 
                               value={subSection.subName}
                               onChange={(e) =>
                                 handleSubSectionChange(
@@ -583,49 +614,38 @@ const AddTable = React.memo(() => {
                                   e.target.value
                                 )
                               }
-                              className="text-sm px-4     border border-gray-200"
+                              className="text-sm px-4 w-[450px]     border border-gray-200"
                               placeholder="SubName"
                             />
-                            <input
-                              type="text"
-                              value={subSection.subNameArabic}
-                              onChange={(e) =>
-                                handleSubSectionChange(
-                                  subIndex,
-                                  "subNameArabic",
-                                  e.target.value
-                                )
-                              }
-                              className="text-sm px-4     border border-gray-200"
-                              placeholder="SubName Arabic"
-                            />
+                            
                             {!takeShot && ( // Hide buttons while taking a screenshot
                               <>
                                 <button
                                   type="button"
                                   onClick={() => addProperty(subIndex)}
-                                  className="ml-1 hover:bg-gray-100 p-2 rounded-full font-semibold text-[14px]"
+                                  className=" hover:bg-gray-100 p-2 rounded-full font-semibold text-[14px]"
                                 >
                                   <FaPlus />
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() =>
-                                    removeProperty(subIndex, subIndex)
+                                    removeProperty(subIndex)
                                   }
                                   className="ml-2 hover:bg-gray-100 p-1 rounded-full font-semibold text-[14px]"
                                 >
                                   <HiMinusSm className="text-2xl" />
                                 </button>
                               </>
-                            )}
+                            )} 
                           </div>
                         </td>
                         <td className="border border-gray-300"></td>
                         <td className="border border-gray-300"></td>
                         <td className="border border-gray-300"></td>
-                      </tr>
-
+                      </tr> 
+                      </>
+                        )}
                       {/* Properties */}
                       {subSection.properties.map((property, propIndex) => (
                         <tr key={`${subIndex}-${propIndex}`}>
@@ -641,7 +661,7 @@ const AddTable = React.memo(() => {
                                   e.target.value
                                 )
                               }
-                              className="px-4 text-sm       border-l border-r  border-gray-200"
+                              className="px-4 text-sm     w-[550px]     border-l border-r  border-gray-200"
                               placeholder="properties"
                             />
                           </td>
@@ -694,6 +714,11 @@ const AddTable = React.memo(() => {
                             />
                           </td>
                         </tr>
+
+
+
+ 
+
                       ))}
 
                       {/* Sub Section Total */}

@@ -42,7 +42,7 @@ import { AddDocument } from "./addDocumentEn";
     if (value.length > 0) {
       // Fetch suggestions only if input has 3 or more characters
       setIsLoading(true);
-      try { 
+      try {  
         const adminLanguage = "Arabic";
         const response = await commonRequest(
           "GET",
@@ -55,7 +55,7 @@ import { AddDocument } from "./addDocumentEn";
         console.error("Error fetching suggestions:", error);
       } finally {
         setIsLoading(false);
-      }
+      } 
     } else {
       setSuggestions([]);
     }

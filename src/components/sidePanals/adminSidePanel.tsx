@@ -40,7 +40,7 @@ const AdminSidebar = () => {
   //       backgroundColor: "#9CA3AF", // Gray-400
   //       borderColor: "#374151", // Gray-700
   //       borderWidth: 1.5,
-  //       borderRadius: 8,
+  //       borderRadius: 8, 
   //     },
   //   ],
   // };
@@ -49,6 +49,7 @@ const AdminSidebar = () => {
     { to: "/home", icon: FaHome, label: "Dashboard" },
     { to: "/addDocument", icon: FaFileAlt, label: "Add Document" },
     { to: "/addTable", icon: FaFileAlt, label: "Add Table" },
+    { to: "/addNewTable", icon: FaFileAlt, label: "Add New Table" },
     { to: "/documentList", icon: FaListAlt, label: "Document List" },
     { to: "/admin/profile", icon: FaUser, label: "Profile" },
     { to: "/admin/settings", icon: FaCog, label: "Settings" },

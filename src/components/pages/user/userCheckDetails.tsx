@@ -1,4 +1,3 @@
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, lazy } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -42,14 +41,15 @@ const UserCompanyDetails = React.memo(() => {
     null
   );
   const navigate = useNavigate();
-  const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] = useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
+  const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
+    useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<any>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
 
   const [iframeSrc, setIframeSrc] = useState<any>("");
   const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
 
-  const pdfKeys: (keyof FormDataState)[] = [ 
+  const pdfKeys: (keyof FormDataState)[] = [
     "Q1",
     "Q2",
     "Q3",
@@ -66,19 +66,20 @@ const UserCompanyDetails = React.memo(() => {
 
   const handleYearClick = async (year: string) => {
     setSelectedYear(year);
-    setSelectedFilteredDocWithYear([]); // Clear previously filtered documents
-    setSelectedPdfKey(null); // Reset the selected PDF key
-    setIframeSrc(""); // Reset the iframe source
-    const filteredYears = documents
-      .filter((doc) => doc.formData?.Q1?.year === year)
-      .filter(Boolean);
-      console.log('keeeesha finded ;',filteredYears);
-      
+    setSelectedFilteredDocWithYear([]); // Clear previous filtered documents
+    setSelectedPdfKey(null); // Reset selected PDF key
+    setIframeSrc(""); // Reset iframe source
+
+    const filteredYears = documents.filter((doc) =>
+      pdfKeys.some((key) => doc.formData?.[key]?.year === year)
+    );
+
+    console.log("Filtered Documents:", filteredYears);
     await setSelectedFilteredDocWithYear(filteredYears);
   };
 
   const handlePdfButtonClick = async (key: FieldKey) => {
-    await setTableIframeSrc("")
+    await setTableIframeSrc("");
     await setSelectedTableKey(null);
     await setSelectedPdfKey(key);
     if (selectedFilteredDocWithYear.length > 0) {
@@ -122,19 +123,26 @@ const UserCompanyDetails = React.memo(() => {
   useEffect(() => {
     const formDataforLatest = selectedFilteredDocWithYear?.[0]?.formData;
     console.log("The form data for latest file:", formDataforLatest);
-  
-    if (selectedFilteredDocWithYear.length > 0 && selectedFilteredDocWithYear[0]?.formData) {
 
-      const latestFileEntry = Object.entries(selectedFilteredDocWithYear[0].formData)
+    if (
+      selectedFilteredDocWithYear.length > 0 &&
+      selectedFilteredDocWithYear[0]?.formData
+    ) {
+      const latestFileEntry = Object.entries(
+        selectedFilteredDocWithYear[0].formData
+      )
         .filter(([, entry]) => entry.file !== null && entry.file !== undefined) // Exclude null/undefined files
         .sort((a, b) => {
           const dateA = a[1].date ? new Date(a[1].date).getTime() : 0; // Convert to timestamp or default to 0
           const dateB = b[1].date ? new Date(b[1].date).getTime() : 0;
           return dateB - dateA; // Sort by latest date
         })[0]; // Get the latest entry
-  
+
       if (latestFileEntry) {
-        const [latestKey, latestData] = latestFileEntry as [FieldKey, FormField];
+        const [latestKey, latestData] = latestFileEntry as [
+          FieldKey,
+          FormField
+        ];
         console.log("Latest FieldKey:", latestKey);
         console.log("Latest File:", latestData.file);
         setSelectedPdfKey(latestKey);
@@ -147,11 +155,10 @@ const UserCompanyDetails = React.memo(() => {
           } else {
             console.error("fileUrl is not a valid string:", latestData.file);
           }
-      } 
+        }
+      }
     }
-  }
-  }, [selectedYear, selectedFilteredDocWithYear])
-  
+  }, [selectedYear, selectedFilteredDocWithYear]);
 
   const handleLeftClick = () => {
     if (visibleYears > 0) {
@@ -170,8 +177,9 @@ const UserCompanyDetails = React.memo(() => {
   ): document is DocumentSliceEn => {
     return (document as DocumentSliceEn).fullNameEn !== undefined;
   };
+
   useEffect(() => {
-    const TakeYears = async() => {
+    const TakeYears = async () => {
       const years: string[] = documents
         .map((doc) => {
           return (
@@ -189,9 +197,10 @@ const UserCompanyDetails = React.memo(() => {
       setYearList(years);
 
       const latestDocument = [...documents].sort(
-        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       )[0];
-  
+
       if (latestDocument) {
         // Find the first available year from the latest document's formData
         const latestYear =
@@ -202,21 +211,19 @@ const UserCompanyDetails = React.memo(() => {
           latestDocument.formData?.S1?.year ||
           latestDocument.formData?.Board?.year ||
           latestDocument.formData?.Year?.year;
-  
-        console.log("Latest Year from Latest Document:", latestYear);
-        setSelectedYear(latestYear)
-        const data=[latestDocument]
-      await  setSelectedFilteredDocWithYear(data)
-      }
 
+        console.log("Latest Year from Latest Document:", latestYear);
+        setSelectedYear(latestYear);
+        const data = [latestDocument];
+        await setSelectedFilteredDocWithYear(data);
+      }
     };
     TakeYears();
   }, [documents]);
 
   useEffect(() => {
     if (documents.length > 0) {
-      console.log('kaalan documents : ',documents );
-      
+      console.log("kaalan documents : ", documents);
       setDocument(documents[0]);
     }
   }, [documents]);
@@ -235,7 +242,6 @@ const UserCompanyDetails = React.memo(() => {
           `/api/v1/admin/getDocumetnBytadawalCode?${params}`,
           config
         );
-
         if (response.status === 200 && response.data?.data) {
           await setDocuments(response.data.data);
         } else {
@@ -249,9 +255,9 @@ const UserCompanyDetails = React.memo(() => {
     };
     fetchDocuments();
   }, [language]);
-  if (document) {
-    console.log("the document:", document);
-  }
+  //   console.log("the document:", document);
+  // if (document) {
+  // }
   if (tableIframeSrc) {
     console.log("the tableIframeSrc:", tableIframeSrc);
   }
@@ -456,7 +462,7 @@ const UserCompanyDetails = React.memo(() => {
           )}
         </div>
       </div>
-      <div className="lg:w-[70%] mt-2">
+      <div className="lg:w-[55%] ">
         {tableIframeSrc ? (
           // Show Image in PhotoProvider with Zoom
           <PhotoProvider>
@@ -471,7 +477,7 @@ const UserCompanyDetails = React.memo(() => {
         ) : iframeSrc ? (
           // Show PDF in an iframe
           <div
-            className="rounded-md"
+            className=""
             style={{
               position: "relative",
               width: "100%",
@@ -494,7 +500,7 @@ const UserCompanyDetails = React.memo(() => {
           </div>
         ) : (
           // Fallback UI when both sources are missing
-          <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white rounded-lg">
+          <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white ">
             <p className="text-gray-500">No content available</p>
           </div>
         )}

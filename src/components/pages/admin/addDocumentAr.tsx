@@ -1,4 +1,3 @@
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -194,7 +193,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       };
 
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
-      console.log("my file pload response , ", response,progress);
+      console.log("my file pload response , ", response, progress);
 
       toast.success("Document successfully added");
       setFormData(
@@ -494,22 +493,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center items-center mt-4 w-full h-48 relative">
-  {loading ? (
-    <div className="flex flex-col items-center">
-      <div className="w-16 h-16 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
-      <span className="mt-4 text-gray-700 font-bold">{`جاري التحميل...`}</span>
-    </div>
-  ) : (
-    <button
-      type="submit"
-      className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-    >
-      يُقدِّم
-    </button>
-  )}
-</div>
-
+          <div className="flex  justify-start items-center mt-4 w-full h-40 relative">
+            {loading ? (
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
+                <span className="mt-4 text-gray-700 font-bold">{`جاري التحميل...`}</span>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+              >
+                يُقدِّم
+              </button>
+            )}
+          </div>
         </form>
 
         <AddDocument formDataEn={formData} tadawalCodeEn={tadawalCode} />

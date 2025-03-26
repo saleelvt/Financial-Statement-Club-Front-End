@@ -58,6 +58,16 @@ const UserCompanyDetails = React.memo(() => {
     "Year",
     "Board",
   ];
+  const keyTranslations: Record<string, { en: string; fullEn: string; ar: string; fullAr: string }> = {
+    Q1: { en: "Q1", fullEn: "First Quarter Report", ar: "ر1", fullAr: "تقرير الربع الأول" },
+    Q2: { en: "Q2", fullEn: "Second Quarter Report", ar: "ر2", fullAr: "تقرير الربع الثاني" },
+    Q3: { en: "Q3", fullEn: "Third Quarter Report", ar: "ر3", fullAr: "تقرير الربع الثالث" },
+    Q4: { en: "Q4", fullEn: "Forth Quarter Report", ar: "ر4", fullAr: "تقرير الربع الرابع" },
+    S1: { en: "SA", fullEn: "Semi-Annual Report", ar: "ن.س", fullAr: "التقرير النصف سنوي" },
+    Year: { en: "Annual", fullEn: "Annual Report", ar: "سنوي", fullAr: "التقرير السنوي" },
+    Board: { en: "Board", fullEn: "Board Report", ar: "المجلس", fullAr: "تقرير مجلس الإدارة" },
+  };
+
   const tableKeys: (keyof NonNullable<FormField["table"]>)[] = [
     "BalanceSheet",
     "ProfitLoss",
@@ -121,19 +131,31 @@ const UserCompanyDetails = React.memo(() => {
   };
 
   useEffect(() => {
-    if (!selectedFilteredDocWithYear || selectedFilteredDocWithYear.length === 0) return;
-  
+    if (
+      !selectedFilteredDocWithYear ||
+      selectedFilteredDocWithYear.length === 0
+    )
+      return;
+
     const formDataForLatest = selectedFilteredDocWithYear[0]?.formData;
     console.log("The form data for latest file:", formDataForLatest);
-  
+
     if (!formDataForLatest) return;
-  
+
     // Define priority order for field selection
-    const priorityOrder: FieldKey[] = ["Board", "Year", "S1", "Q4", "Q3", "Q2", "Q1"];
-  
+    const priorityOrder: FieldKey[] = [
+      "Board",
+      "Year",
+      "S1",
+      "Q4",
+      "Q3",
+      "Q2",
+      "Q1",
+    ];
+
     let selectedKey: FieldKey | null = null;
     let selectedData: FormField | null = null;
-  
+
     // Check each field in priority order and find the first one with a valid file
     for (const key of priorityOrder) {
       if (formDataForLatest[key]?.file) {
@@ -142,13 +164,13 @@ const UserCompanyDetails = React.memo(() => {
         break;
       }
     }
-  
+
     if (selectedKey && selectedData) {
       console.log("Latest FieldKey:", selectedKey);
       console.log("Latest File:", selectedData.file);
-  
+
       setSelectedPdfKey(selectedKey);
-  
+
       if (typeof selectedData.file === "string") {
         const encodedUrl = encodeURIComponent(selectedData.file);
         const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
@@ -159,16 +181,15 @@ const UserCompanyDetails = React.memo(() => {
       }
     }
   }, [selectedYear, selectedFilteredDocWithYear]);
-  
-  
-  const handleLeftClick = () => {
+
+  const handleRightClick = () => {
     if (visibleYears > 0) {
       setVisibleYears(visibleYears - 1);
     }
   };
 
-  const handleRightClick = () => {
-    if (visibleYears < yearList.length - 1) {
+  const handleLeftClick = () => {
+    if (visibleYears > 5) {
       setVisibleYears(visibleYears + 1);
     }
   };
@@ -196,32 +217,32 @@ const UserCompanyDetails = React.memo(() => {
         })
         .filter((year): year is string => !!year) // Remove null/undefined values
         .sort((a, b) => parseInt(a) - parseInt(b)); // Sort in descending order to get the largest first
-  
+
       if (years.length > 0) {
-        const latestYear = years[years.length-1]; // Get the biggest year
+        const latestYear = years[years.length - 1]; // Get the biggest year
         console.log("Latest (Biggest) Year:", latestYear);
         setSelectedYear(latestYear);
-  
+
         // Filter documents that have this latest year
-        const latestYearDocs = documents.filter((doc) => 
-          doc.formData?.Q1?.year === latestYear ||
-          doc.formData?.Q2?.year === latestYear ||
-          doc.formData?.Q3?.year === latestYear ||
-          doc.formData?.Q4?.year === latestYear ||
-          doc.formData?.S1?.year === latestYear ||
-          doc.formData?.Board?.year === latestYear ||
-          doc.formData?.Year?.year === latestYear
+        const latestYearDocs = documents.filter(
+          (doc) =>
+            doc.formData?.Q1?.year === latestYear ||
+            doc.formData?.Q2?.year === latestYear ||
+            doc.formData?.Q3?.year === latestYear ||
+            doc.formData?.Q4?.year === latestYear ||
+            doc.formData?.S1?.year === latestYear ||
+            doc.formData?.Board?.year === latestYear ||
+            doc.formData?.Year?.year === latestYear
         );
-  
+
         await setSelectedFilteredDocWithYear(latestYearDocs);
       }
-  
+
       setYearList(years);
     };
-  
+
     TakeYears();
   }, [documents]);
-  
 
   useEffect(() => {
     if (documents.length > 0) {
@@ -237,8 +258,7 @@ const UserCompanyDetails = React.memo(() => {
         const params = new URLSearchParams({
           language,
           tadawalCode,
-        }).toString();
-
+        }).toString(); 
         const response = await commonRequest(
           "GET",
           `/api/v1/admin/getDocumetnBytadawalCode?${params}`,
@@ -324,7 +344,7 @@ const UserCompanyDetails = React.memo(() => {
                     </h3>
                   </div>
                   <div className="flex h-6   justify-center lg:justify-start items-center ">
-                    <h3 className=" text-[14px] font-serif  text-gray-800">
+                    <h3 className=" text-[14px]   text-gray-800">
                       {isDocumentEn(document)
                         ? document.sector
                         : document.sector}
@@ -337,14 +357,14 @@ const UserCompanyDetails = React.memo(() => {
                     >
                       <div className="flex  items-center ">
                         <button
-                          onClick={handleRightClick}
+                          onClick={handleLeftClick}
                           className="text-gray-600 flex   items-center    justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md     "
                         >
                           {" "}
                           {"<"}
                         </button>
                       </div>
-                      <div className="flex flex-wrap gap-3 py-1 px-4  items-center justify-center lg:justify-start ">
+                      <div className="flex flex-wrap gap-2 py-1  items-center justify-center lg:justify-start ">
                         {yearList
                           .slice(visibleYears, visibleYears + 5)
                           .map((year) => (
@@ -363,7 +383,7 @@ const UserCompanyDetails = React.memo(() => {
                       </div>
                       <div className="flex items-center ">
                         <button
-                          onClick={handleLeftClick}
+                          onClick={handleRightClick}
                           className="text-gray-600 flex    items-center justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md   "
                         >
                           {" "}
@@ -373,94 +393,100 @@ const UserCompanyDetails = React.memo(() => {
                     </div>
                   </div>
 
-                  <div
-                    dir={userLanguage === "English" ? "ltr" : "rtl"}
-                    className="mt-2  flex justify-center  lg:justify-start rounded-lg text-xs"
-                  >
-                    {selectedFilteredDocWithYear.length > 0 ? (
-                      <div className="flex flex-wrap gap-2">
-                        <button className="text-white flex text-xs   items-center   justify-center text-[16px] px-2 py-1   bg-gray-600 rounded-md     ">
-                          {" "}
-                          {"PDF"}
-                        </button>
-                        {pdfKeys.map((key) => {
-                          const isFileAvailable =
-                            selectedFilteredDocWithYear.some(
-                              (doc) => doc.formData[key].file !== null
-                            );
-                          return (
-                            isFileAvailable && (
-                              <button
-                                key={key}
-                                onClick={() =>
-                                  handlePdfButtonClick(key as FieldKey)
-                                }
-                                className={`px-2 py-1 lg:ml-2 text-xs bg-gray-200 rounded-md ${
-                                  selectedPdfKey === key
-                                    ? "bg-gray-500 text-white"
-                                    : "bg-gray-100 text-gray-700 hover:bg-gray-300"
-                                }`}
-                              >
-                                {key}
+
+
+                  <div 
+  dir={userLanguage === "English" ? "ltr" : "rtl"}
+  className="mt-2 flex lg:justify-start rounded-lg text-xs"
+>
+  {selectedFilteredDocWithYear.length > 0 ? (
+    <div className="flex flex-wrap gap-2">
+      {pdfKeys
+        .filter((key) =>
+          selectedFilteredDocWithYear.some(
+            (doc) => doc.formData[key]?.file !== null
+          )
+        ) // ✅ Ensure only keys with available files are shown
+        .map((key) => (
+          <div key={key} className="relative group">
+            <button
+              onClick={() => handlePdfButtonClick(key as FieldKey)}
+              className={`px-2 py-1 text-xs bg-gray-200 rounded-md transition-all duration-300 ${
+                selectedPdfKey === key
+                  ? "bg-gray-700 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {userLanguage === "Arabic" ? keyTranslations[key].ar : keyTranslations[key].en}
+            </button>
+
+            {/* Tooltip (Shows based on the selected language) */}
+            <span className="absolute bottom-full mb-1 left-1/2 transform -translate-x-1/2 whitespace-nowrap bg-gray-800 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {userLanguage === "Arabic" ? keyTranslations[key].fullAr : keyTranslations[key].fullEn}
+            </span>
+          </div>
+        ))}
+    </div>
+  ) : (
+    <p className="text-center text-gray-600"></p>
+  )}
+</div>
+
+
+
+
+
+
+                  <div className="hidden ">
+                    {selectedPdfKey &&
+                      pdfKeys.includes(
+                        selectedPdfKey as keyof FormDataState
+                      ) && (
+                        <div
+                          dir={userLanguage === "English" ? "ltr" : "rtl"}
+                          className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
+                        >
+                          {selectedFilteredDocWithYear.length > 0 ? (
+                            <div className="flex flex-wrap gap-3">
+                              <button className="text-white flex text-xs items-center justify-center text-[16px] px-2 py-1 bg-gray-600 rounded-md">
+                                Table
                               </button>
-                            )
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <p className="text-center text-gray-600"></p>
-                    )}
-                  </div>
-
-                  <div className="hidden">
-                  {selectedPdfKey &&
-                    pdfKeys.includes(selectedPdfKey as keyof FormDataState) && (
-                      <div 
-                        dir={userLanguage === "English" ? "ltr" : "rtl"}
-                        className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
-                      >
-                        {selectedFilteredDocWithYear.length > 0 ? (
-                          <div className="flex flex-wrap gap-3">
-                            <button className="text-white flex text-xs items-center justify-center text-[16px] px-2 py-1 bg-gray-600 rounded-md">
-                              Table
-                            </button>
-                            {tableKeys
-                              .filter((key) =>
-                                selectedFilteredDocWithYear.some(
-                                  (doc) =>
-                                    doc.formData[
-                                      selectedPdfKey as keyof FormDataState
-                                    ]?.table?.[key] !== null &&
-                                    doc.formData[
-                                      selectedPdfKey as keyof FormDataState
-                                    ]?.table?.[key] !== undefined
+                              {tableKeys
+                                .filter((key) =>
+                                  selectedFilteredDocWithYear.some(
+                                    (doc) =>
+                                      doc.formData[
+                                        selectedPdfKey as keyof FormDataState
+                                      ]?.table?.[key] !== null &&
+                                      doc.formData[
+                                        selectedPdfKey as keyof FormDataState
+                                      ]?.table?.[key] !== undefined
+                                  )
                                 )
-                              )
-                              .map((key) => (
-                                <button
-                                  key={key}
-                                  onClick={() =>
-                                    handleTableViewButtonClick(key)
-                                  }
-                                  className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
-                                    selectedTableKey === key
-                                      ? "bg-gray-500 text-white"
-                                      : "bg-gray-100 text-gray-700 hover:bg-gray-300"
-                                  }`}
-                                >
-                                  {key}
-                                </button>
-                              ))}
-                          </div>
-                        ) : (
-                          <p className="text-center text-gray-600">
-                            No Data Available
-                          </p>
-                        )}
-                      </div>
-                    )}
-                    </div>
-
+                                .map((key) => (
+                                  <button
+                                    key={key}
+                                    onClick={() =>
+                                      handleTableViewButtonClick(key)
+                                    }
+                                    className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
+                                      selectedTableKey === key
+                                        ? "bg-gray-500 text-white"
+                                        : "bg-gray-100 text-gray-700 hover:bg-gray-300"
+                                    }`}
+                                  >
+                                    {key}
+                                  </button>
+                                ))}
+                            </div>
+                          ) : (
+                            <p className="text-center text-gray-600">
+                              No Data Available
+                            </p>
+                          )}
+                        </div>
+                      )}
+                  </div>
                 </div>
               </div>
             </div>

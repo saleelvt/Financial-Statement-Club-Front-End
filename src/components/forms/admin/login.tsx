@@ -29,7 +29,10 @@ import Swal from "sweetalert2";
     onSubmit: async (values) => {
       try {
         console.log(values,"before going to salon home page ");
-        await dispatch(loginAdmin(values)).unwrap()
+       const response= await dispatch(loginAdmin(values)).unwrap()
+        console.log(response,"after going to salon home page ");
+
+
         navigate("/verify")
       } catch (error:any) {
 

@@ -170,11 +170,11 @@ const DocumentList: React.FC = React.memo(() => {
               <thead>
                 <tr className="bg-gray-300 text-gray-700 text-xs sm:text-sm md:text-base">
                   <th className="py-2 px-2 sm:px-4 border border-gray-300">
-                    {language === "Arabic" ? "كود تداول" : "Tadawul Code"}
+                    {language === "Arabic" ? "رمز تداول" : "Tadawul Code"}
                   </th>
                   <th className="py-2 px-2 sm:px-4 border border-gray-300">
                     {" "}
-                    {language === "Arabic" ? "الاسم الكامل" : "Full Name"}
+                    {language === "Arabic" ? "اسم الشركة" : "Full Name"}
                   </th>
                   <th className="py-2 px-2 sm:px-4 border border-gray-300">
                     {language === "Arabic" ? " كنية" : "NickName"}

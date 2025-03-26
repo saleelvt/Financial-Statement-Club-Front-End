@@ -184,29 +184,30 @@ import toast from "react-hot-toast";
           <div className=" ">
             <table className="w-full text-black  border-collapse  ">
               <thead>
-                <tr>
-                  <th className="p-1 border border-gray-600 bg-gray-300 ">
-                  {adminLanguage ==="Arabic" ?"كود تادافال":"Tadawul Code"}
-                  </th>
-                  <th className="p-1 border border-gray-600 bg-gray-300 ">
-                    Nickname
-                  </th>
-                  <th className="p-1 border border-gray-600 bg-gray-300 ">
-                    Categories
-                  </th>
-                  <th className="p-1 border border-gray-600 bg-gray-300 ">
-                    Year
-                  </th>
-                  <th className="p-1 border border-gray-600 bg-gray-300 ">
-                    Date
-                  </th>
-                  <th className="p-1 border border-gray-600 bg-gray-300 ">
-                    View{" "}
-                  </th>
-                  <th className="p-1 border  border-gray-600 bg-gray-300 ">
-                    Action
-                  </th>
-                </tr>
+              <tr>
+  <th className="p-1 border border-gray-600 bg-gray-300">
+    {adminLanguage === "Arabic" ? "رمز تداول" : "Tadawul Code"}
+  </th>
+  <th className="p-1 border border-gray-600 bg-gray-300">
+    {adminLanguage === "Arabic" ? "كنية" : "Nickname"}
+  </th>
+  <th className="p-1 border border-gray-600 bg-gray-300">
+    {adminLanguage === "Arabic" ? "تقرير" : "Report"}
+  </th>
+  <th className="p-1 border border-gray-600 bg-gray-300">
+    {adminLanguage === "Arabic" ? "سنة" : "Year"}
+  </th>
+  <th className="p-1 border border-gray-600 bg-gray-300">
+    {adminLanguage === "Arabic" ? "تاريخ" : "Date"}
+  </th>
+  <th className="p-1 border border-gray-600 bg-gray-300">
+    {adminLanguage === "Arabic" ? "عرض" : "View"}
+  </th>
+  <th className="p-1 border border-gray-600 bg-gray-300">
+    {adminLanguage === "Arabic" ? "إجراءات" : "Actions"}
+  </th>
+</tr>
+
               </thead>
               <tbody className="">
                 {filteredDocuments.map((doc, docIndex) => (

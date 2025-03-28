@@ -406,6 +406,31 @@ import { FaArrowCircleRight } from "react-icons/fa";
             </div>
             <div className="space-y-2">
               <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                Year
+              </label>
+              <input
+                type="file"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                onChange={(e) =>
+                  handleFileChange("Year", e.target.files?.[0] || null)
+                }
+              />
+              <DatePicker
+                selected={formData.Year.date}
+                onChange={(date) => handleDateChange("Year", date)}
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                placeholderText="Choose Date"
+              />
+              <input
+                type="text"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                placeholder="Enter Year"
+                value={formData.Year.year}
+                onChange={(e) => handleYearChange("Year", e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
                 Board
               </label>
               <input
@@ -430,31 +455,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                Year
-              </label>
-              <input
-                type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Year", e.target.files?.[0] || null)
-                }
-              />
-              <DatePicker
-                selected={formData.Year.date}
-                onChange={(date) => handleDateChange("Year", date)}
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="Choose Date"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                placeholder="Enter Year"
-                value={formData.Year.year}
-                onChange={(e) => handleYearChange("Year", e.target.value)}
-              />
-            </div>
+           
           </div>
 
        

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2";
+
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,6 +15,7 @@ import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config, URL } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
+import ValidationModal from "../validationModal";
 import { AddDocument } from "./addDocumentEn";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -40,6 +41,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
     Q1: { file: null, date: null, year: "", createAt: "" },
     Q2: { file: null, date: null, year: "", createAt: "" },
@@ -120,7 +123,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     "admin/addDocumentArabic",
     async (
       adminCredentials: DocumentPayload,
-      { rejectWithValue, dispatch }
+      {  dispatch }
     ) => {
       try {
         console.log("Submitting Arabic document: ", adminCredentials);
@@ -130,10 +133,11 @@ const AddDocumentArabic: React.FC = React.memo(() => {
           (field) => field.file && field.date && field.year
         );
         if (!isAnyFieldValid) {
-          return rejectWithValue({
-            message:
-              "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year.",
-          });
+          setErrorMessage(
+            "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year."
+          );
+          setIsModalOpen(true); // Open the modal
+          return;
         }
         setProgress(0);
         // Create FormData
@@ -173,9 +177,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
 
         return response.data;
       } catch (error: any) {
-        return rejectWithValue(
-          error.response?.data || { message: "Something went wrong!" }
-        );
+        setErrorMessage(error.response?.data?.message || "Something went wrong!");
+      setIsModalOpen(true); // Open the modal on error
       }
     }
   );
@@ -193,28 +196,24 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       };
 
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
-      console.log("my file pload response , ", response, progress);
+      if(response.success){
+        console.log("my file pload response , ", response, progress);
 
-      toast.success("Document successfully added");
-      setFormData(
-        (prevFormData) =>
-          Object.fromEntries(
-            Object.entries(prevFormData).map(([key, value]) => [
-              key as keyof typeof prevFormData, // Explicitly assert key type
-              { ...value, file: null },
-            ])
-          ) as Record<FieldKey, FormField>
-      );
+        toast.success("Document successfully added");
+        setFormData(
+          (prevFormData) =>
+            Object.fromEntries(
+              Object.entries(prevFormData).map(([key, value]) => [
+                key as keyof typeof prevFormData, // Explicitly assert key type
+                { ...value, file: null },
+              ])
+            ) as Record<FieldKey, FormField>
+        );
+      }
+    
     } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: error.message,
-        timer: 3000,
-        toast: true,
-        showConfirmButton: false,
-        timerProgressBar: true,
-      });
+     console.log("erorr",error);
+     
     }
   };
   return (
@@ -509,6 +508,11 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             )}
           </div>
         </form>
+        <ValidationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        message={errorMessage}
+      />
 
         <AddDocument formDataEn={formData} tadawalCodeEn={tadawalCode} />
       </div>

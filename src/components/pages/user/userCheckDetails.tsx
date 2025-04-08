@@ -58,14 +58,52 @@ const UserCompanyDetails = React.memo(() => {
     "Year",
     "Board",
   ];
-  const keyTranslations: Record<string, { en: string; fullEn: string; ar: string; fullAr: string }> = {
-    Q1: { en: "Q1", fullEn: "First Quarter Report", ar: "ر1", fullAr: "تقرير الربع الأول" },
-    Q2: { en: "Q2", fullEn: "Second Quarter Report", ar: "ر2", fullAr: "تقرير الربع الثاني" },
-    Q3: { en: "Q3", fullEn: "Third Quarter Report", ar: "ر3", fullAr: "تقرير الربع الثالث" },
-    Q4: { en: "Q4", fullEn: "Forth Quarter Report", ar: "ر4", fullAr: "تقرير الربع الرابع" },
-    S1: { en: "SA", fullEn: "Semi-Annual Report", ar: "ن.س", fullAr: "التقرير النصف سنوي" },
-    Year: { en: "Annual", fullEn: "Annual Report", ar: "سنوي", fullAr: "التقرير السنوي" },
-    Board: { en: "Board", fullEn: "Board Report", ar: "المجلس", fullAr: "تقرير مجلس الإدارة" },
+  const keyTranslations: Record<
+    string,
+    { en: string; fullEn: string; ar: string; fullAr: string }
+  > = {
+    Q1: {
+      en: "Q1",
+      fullEn: "First Quarter Report",
+      ar: "ر1",
+      fullAr: "تقرير الربع الأول",
+    },
+    Q2: {
+      en: "Q2",
+      fullEn: "Second Quarter Report",
+      ar: "ر2",
+      fullAr: "تقرير الربع الثاني",
+    },
+    Q3: {
+      en: "Q3",
+      fullEn: "Third Quarter Report",
+      ar: "ر3",
+      fullAr: "تقرير الربع الثالث",
+    },
+    Q4: {
+      en: "Q4",
+      fullEn: "Forth Quarter Report",
+      ar: "ر4",
+      fullAr: "تقرير الربع الرابع",
+    },
+    S1: {
+      en: "SA",
+      fullEn: "Semi-Annual Report",
+      ar: "ن.س",
+      fullAr: "التقرير النصف سنوي",
+    },
+    Year: {
+      en: "Annual",
+      fullEn: "Annual Report",
+      ar: "سنوي",
+      fullAr: "التقرير السنوي",
+    },
+    Board: {
+      en: "Board",
+      fullEn: "Board Report",
+      ar: "المجلس",
+      fullAr: "تقرير مجلس الإدارة",
+    },
   };
 
   const tableKeys: (keyof NonNullable<FormField["table"]>)[] = [
@@ -258,7 +296,7 @@ const UserCompanyDetails = React.memo(() => {
         const params = new URLSearchParams({
           language,
           tadawalCode,
-        }).toString(); 
+        }).toString();
         const response = await commonRequest(
           "GET",
           `/api/v1/admin/getDocumetnBytadawalCode?${params}`,
@@ -393,49 +431,48 @@ const UserCompanyDetails = React.memo(() => {
                     </div>
                   </div>
 
+                  <div
+                    dir={userLanguage === "English" ? "ltr" : "rtl"}
+                    className="mt-2 flex lg:justify-start rounded-lg text-xs"
+                  >
+                    {selectedFilteredDocWithYear.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
+                        {pdfKeys
+                          .filter((key) =>
+                            selectedFilteredDocWithYear.some(
+                              (doc) => doc.formData[key]?.file !== null
+                            )
+                          ) // ✅ Ensure only keys with available files are shown
+                          .map((key) => (
+                            <div key={key} className="relative group">
+                              <button
+                                onClick={() =>
+                                  handlePdfButtonClick(key as FieldKey)
+                                }
+                                className={`px-2 py-1 text-xs bg-gray-200 rounded-md transition-all duration-300 ${
+                                  selectedPdfKey === key
+                                    ? "bg-gray-700 text-white"
+                                    : "bg-gray-100 text-gray-700 hover:bg-gray-300"
+                                }`}
+                              >
+                                {userLanguage === "Arabic"
+                                  ? keyTranslations[key].ar
+                                  : keyTranslations[key].en}
+                              </button>
 
-
-                  <div 
-  dir={userLanguage === "English" ? "ltr" : "rtl"}
-  className="mt-2 flex lg:justify-start rounded-lg text-xs"
->
-  {selectedFilteredDocWithYear.length > 0 ? (
-    <div className="flex flex-wrap gap-2">
-      {pdfKeys
-        .filter((key) =>
-          selectedFilteredDocWithYear.some(
-            (doc) => doc.formData[key]?.file !== null
-          )
-        ) // ✅ Ensure only keys with available files are shown
-        .map((key) => (
-          <div key={key} className="relative group">
-            <button
-              onClick={() => handlePdfButtonClick(key as FieldKey)}
-              className={`px-2 py-1 text-xs bg-gray-200 rounded-md transition-all duration-300 ${
-                selectedPdfKey === key
-                  ? "bg-gray-700 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-300"
-              }`}
-            >
-              {userLanguage === "Arabic" ? keyTranslations[key].ar : keyTranslations[key].en}
-            </button>
-
-            {/* Tooltip (Shows based on the selected language) */}
-            <span className="absolute bottom-full mb-1 left-1/2 transform -translate-x-1/2 whitespace-nowrap bg-gray-800 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {userLanguage === "Arabic" ? keyTranslations[key].fullAr : keyTranslations[key].fullEn}
-            </span>
-          </div>
-        ))}
-    </div>
-  ) : (
-    <p className="text-center text-gray-600"></p>
-  )}
-</div>
-
-
-
-
-
+                              {/* Tooltip (Shows based on the selected language) */}
+                              <span className="tooltip group-hover:opacity-90 absolute bottom-full mb-1 left-1/2 transform -translate-x-2/4 whitespace-nowrap bg-gray-800 text-white text-[10px] px-[2px] py-[2px] rounded-md opacity-0 pointer-events-none">
+                                {userLanguage === "Arabic"
+                                  ? keyTranslations[key].fullAr
+                                  : keyTranslations[key].fullEn}
+                              </span>
+                            </div>
+                          ))}
+                      </div>
+                    ) : (
+                      <p className="text-center text-gray-600"></p>
+                    )}
+                  </div>
 
                   <div className="hidden ">
                     {selectedPdfKey &&

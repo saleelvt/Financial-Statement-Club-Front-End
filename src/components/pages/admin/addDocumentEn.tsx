@@ -213,51 +213,20 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         });
       }
     };
-
+ 
     return (
-      <div className="">
-        <div className="flex flex-col items-center  min-h-screen px-4">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded px-2  pb-8 w-full max-w-lg lg:max-w-4xl space-y-4"
-          >
-            <div className="flex flex-col m lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
-              <div className="w-full">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                  Full Name{" "}
-                  <span className="font-mono text-xs"> (English)</span>
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
-                  type="text"
-                  placeholder="Full Name"
-                  value={fullNameEn}
-                  onChange={(e) => setFullNameEn(e.target.value)}
-                />
-              </div>
-
-              <div className="w-full">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                  Nick Name <span className="text-xs font-mono">(English)</span>
-                </label>
-                <input
-                  className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white"
-                  type="text"
-                  placeholder="Nick Name"
-                  value={nickNameEn}
-                  onChange={(e) => setnickNameEn(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <div className="flex-1">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+      <div className="p-2 border   w-full">
+        <div className="">
+          <form onSubmit={handleSubmit} className="">
+            <div className="flex  justify-between items-center w-1/2 ">
+              <div className=" ">
+                <label className="block uppercase tracking-wide text-xs text-gray-700 font-semibold">
                   Tadawul Code
                 </label>
                 <input
-                  className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none  block  text-xs p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                   type="text"
-                  placeholder="Enter The Tadawul"
+                  placeholder="Enter Tadawul Code "
                   value={tadawalCode}
                   required
                   onChange={handleInputChange}
@@ -282,12 +251,40 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   </ul>
                 )}
               </div>
-              <div className="flex-1">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+
+              <div className="w-full text-xs  p-1 ">
+                <label className="block uppercase tracking-wide text-gray-700 font-bold ">
+                  Full Name
+                </label>
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  type="text"
+                  placeholder="Full Name"
+                  value={fullNameEn}
+                  onChange={(e) => setFullNameEn(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex  text-xs mt-2  gap-2  w-1/2 ">
+              <div className=" w-1/2">
+                <label className="block uppercase  tracking-wide text-gray-700 font-bold ">
+                  Nick Name
+                </label>
+                <input
+                  className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  type="text"
+                  placeholder="Nick Name"
+                  value={nickNameEn}
+                  onChange={(e) => setnickNameEn(e.target.value)}
+                />
+              </div>
+ 
+              <div className="w-1/2">
+                <label className="block uppercase tracking-wide text-gray-700 font-bold ">
                   Sector
                 </label>
                 <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   type="text"
                   placeholder="Enter The Sector"
                   required
@@ -297,15 +294,14 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+            <div className="grid text-xs grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-2  ">
+              <div className="">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                   Q1
                 </label>
-
                 <input
                   type="file"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q1", e.target.files?.[0] || null)
                   }
@@ -314,26 +310,26 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 <DatePicker
                   selected={formData.Q1.date}
                   onChange={(date) => handleDateChange("Q1", date)}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
 
                 <input
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
                   value={formData.Q1.year}
                   onChange={(e) => handleYearChange("Q1", e.target.value)}
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+              <div className="">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                   Q2
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q2", e.target.files?.[0] || null)
                   }
@@ -342,25 +338,25 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 <DatePicker
                   selected={formData.Q2.date}
                   onChange={(date) => handleDateChange("Q2", date)}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
                   value={formData.Q2.year}
                   onChange={(e) => handleYearChange("Q2", e.target.value)}
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+              <div className="">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                   Q3
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q3", e.target.files?.[0] || null)
                   }
@@ -369,25 +365,25 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 <DatePicker
                   selected={formData.Q3.date}
                   onChange={(date) => handleDateChange("Q3", date)}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
                   value={formData.Q3.year}
                   onChange={(e) => handleYearChange("Q3", e.target.value)}
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+              <div className="">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                   Q4
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q4", e.target.files?.[0] || null)
                   }
@@ -396,51 +392,51 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 <DatePicker
                   selected={formData.Q4.date}
                   onChange={(date) => handleDateChange("Q4", date)}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
                   value={formData.Q4.year}
                   onChange={(e) => handleYearChange("Q4", e.target.value)}
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
-                  S1
+              <div className="">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold">
+                  SA
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("S1", e.target.files?.[0] || null)
                   }
                 />
-                <DatePicker 
+                <DatePicker
                   selected={formData.S1.date}
                   onChange={(date) => handleDateChange("S1", date)}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
                   value={formData.S1.year}
                   onChange={(e) => handleYearChange("S1", e.target.value)}
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+              <div className="">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                   Annual
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Year", e.target.files?.[0] || null)
                   }
@@ -448,25 +444,25 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 <DatePicker
                   selected={formData.Year.date}
                   onChange={(date) => handleDateChange("Year", date)}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
                   value={formData.Year.year}
                   onChange={(e) => handleYearChange("Year", e.target.value)}
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+              <div className="">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                   Board
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Board", e.target.files?.[0] || null)
                   }
@@ -474,12 +470,12 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 <DatePicker
                   selected={formData.Board.date}
                   onChange={(date) => handleDateChange("Board", date)}
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
                   value={formData.Board.year}
                   onChange={(e) => handleYearChange("Board", e.target.value)}
@@ -487,7 +483,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-            <div className="flex   justify-end items-center mt-4 w-full h-48 relative">
+            <div className="flex   justify-end items-center mt-2 w-full h-12 relative">
               {loading ? (
                 <div className="flex flex-col items-center">
                   <div className="w-16 h-16 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>

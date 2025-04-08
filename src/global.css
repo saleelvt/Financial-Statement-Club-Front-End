@@ -41,3 +41,28 @@ html {
       transform: translateY(-20px);
     }
   }
+
+
+  .tooltip {
+    transition: opacity 0.3s ease-in-out;
+    transition-delay: 0.75s; /* Delay before showing */
+  }
+  
+  .group:hover .tooltip {
+    opacity: 0.9;
+    animation: fadeOutTooltip 3.5s ease-in-out forwards;
+    animation-delay: 0.75s; /* Delay before starting fade-out */
+  }
+  
+  @keyframes fadeOutTooltip {
+    0% {
+      opacity: 0.9;
+    }
+    70% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  

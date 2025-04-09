@@ -258,7 +258,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                 Sector
               </label>
               <input
-                className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="Enter The Sector"
                 required
@@ -281,7 +281,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                   handleFileChange("Q1", e.target.files?.[0] || null)
                 }
               />
-
+  <div className=" flex justify-start gap-1  ">
               <DatePicker
                 selected={formData.Q1.date}
                 onChange={(date) => handleDateChange("Q1", date)}
@@ -291,11 +291,12 @@ const UpdateDocument: React.FC = React.memo(() => {
 
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Q1.year}
                 onChange={(e) => handleYearChange("Q1", e.target.value)}
               />
+            </div>
             </div>
 
             <div className="">
@@ -309,7 +310,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                   handleFileChange("Q2", e.target.files?.[0] || null)
                 }
               />
-
+                <div className=" flex justify-start gap-1">
               <DatePicker
                 selected={formData.Q2.date}
                 onChange={(date) => handleDateChange("Q2", date)}
@@ -318,11 +319,12 @@ const UpdateDocument: React.FC = React.memo(() => {
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Q2.year}
                 onChange={(e) => handleYearChange("Q2", e.target.value)}
               />
+            </div>
             </div>
 
             <div className="">
@@ -336,7 +338,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                   handleFileChange("Q3", e.target.files?.[0] || null)
                 }
               />
-
+  <div className=" flex justify-start gap-1  ">
               <DatePicker
                 selected={formData.Q3.date}
                 onChange={(date) => handleDateChange("Q3", date)}
@@ -345,11 +347,12 @@ const UpdateDocument: React.FC = React.memo(() => {
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Q3.year}
                 onChange={(e) => handleYearChange("Q3", e.target.value)}
               />
+            </div>
             </div>
 
             <div className="">
@@ -363,7 +366,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                   handleFileChange("Q4", e.target.files?.[0] || null)
                 }
               />
-
+  <div className=" flex justify-start gap-1  ">
               <DatePicker
                 selected={formData.Q4.date}
                 onChange={(date) => handleDateChange("Q4", date)}
@@ -372,11 +375,12 @@ const UpdateDocument: React.FC = React.memo(() => {
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Q4.year}
                 onChange={(e) => handleYearChange("Q4", e.target.value)}
               />
+            </div>
             </div>
 
             <div className="">
@@ -390,6 +394,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                   handleFileChange("S1", e.target.files?.[0] || null)
                 }
               />
+                <div className=" flex justify-start gap-1  ">
               <DatePicker
                 selected={formData.S1.date}
                 onChange={(date) => handleDateChange("S1", date)}
@@ -398,11 +403,12 @@ const UpdateDocument: React.FC = React.memo(() => {
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.S1.year}
                 onChange={(e) => handleYearChange("S1", e.target.value)}
               />
+            </div>
             </div>
 
             <div className="">
@@ -416,6 +422,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                   handleFileChange("Year", e.target.files?.[0] || null)
                 }
               />
+                <div className=" flex justify-start gap-1  ">
               <DatePicker
                 selected={formData.Year.date}
                 onChange={(date) => handleDateChange("Year", date)}
@@ -424,11 +431,12 @@ const UpdateDocument: React.FC = React.memo(() => {
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Year.year}
                 onChange={(e) => handleYearChange("Year", e.target.value)}
               />
+            </div>
             </div>
 
             <div className="">
@@ -442,6 +450,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                   handleFileChange("Board", e.target.files?.[0] || null)
                 }
               />
+                <div className=" flex justify-start gap-1  ">
               <DatePicker
                 selected={formData.Board.date}
                 onChange={(date) => handleDateChange("Board", date)}
@@ -450,11 +459,12 @@ const UpdateDocument: React.FC = React.memo(() => {
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Board.year}
                 onChange={(e) => handleYearChange("Board", e.target.value)}
               />
+            </div>
             </div>
           </div>
 

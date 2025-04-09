@@ -41,6 +41,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
     Year: { file: null, date: null, year: "" , createAt: "" },
   });
 
+  
   useEffect(() => {
     // Fetch document details by ID and Language
     const fetchDocument = async () => {
@@ -219,22 +220,10 @@ import { FaArrowCircleRight } from "react-icons/fa";
                 value={fullNameAr}
                 onChange={(e) => setFullNameAr(e.target.value)}
               />
-            </div>
-
-
-
-
-
-
-           
+            </div>        
           </div>
 
-
-
-
           <div className="flex  w-1/2   justify-between ">
-
-
           <div className="w-full p-1">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm">
                 الاسم المختصر

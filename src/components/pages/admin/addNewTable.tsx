@@ -80,34 +80,56 @@ const AddNewTable = React.memo(() => {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const [formData, setFormData] = useState<FormDataStructure>({
-    mainSections: [
-      {
-        mainName: "",
-        mainNameArabic: "",
-        subSections: [
-          {
-            subName: "",
-            subNameArabic: "",
-            subPropertieSum1: [
-              { SubpropertyName: "", notes: "", date1: null, date2: null },
-            ],
-            properties: [
-              {
-                propertyName: "",
-                notes: "",
-                date1: null,
-                date2: null,
-              },
-            ],
-            subPropertieSum: [
-              { SubpropertyName: "", notes: "", date1: null, date2: null },
-            ],
-          },
+  const initialFormData: FormDataStructure = {
+  mainSections: [
+    {
+      mainName: "",
+      mainNameArabic: "",
+      subSections: [
+        {
+          subName: "",
+          subNameArabic: "",
+          subPropertieSum1: [
+            { SubpropertyName: "", notes: "", date1: null, date2: null },
+          ],
+          properties: Array.from({ length: 12 }, () => ({
+            propertyName: "",
+            notes: "",
+            date1: null,
+            date2: null,
+          })),
+          subPropertieSum: [
+            { SubpropertyName: "", notes: "", date1: null, date2: null },
+          ],
+        },
+      ],
+    },
+    {
+      mainName: "",
+      mainNameArabic: "",
+      subSections: Array.from({ length: 3 }, () => ({
+        subName: "",
+        subNameArabic: "",
+        subPropertieSum1: [
+          { SubpropertyName: "", notes: "", date1: null, date2: null },
         ],
-      },
-    ],
-  });
+        properties: Array.from({ length: 12 }, () => ({
+          propertyName: "",
+          notes: "",
+          date1: null,
+          date2: null,
+        })),
+        subPropertieSum: [
+          { SubpropertyName: "", notes: "", date1: null, date2: null },
+        ],
+      })),
+    },
+  ],
+};
+
+const [formData, setFormData] = useState<FormDataStructure>(initialFormData);
+
+
 
   const captureScreen = async () => {
     const node = document.getElementById("capture-area");
@@ -512,43 +534,43 @@ const addSubPropertySum1 = (mainIndex: number, subIndex: number) => {
     });
   };
 
-  // const addMainSection = () => {
-  //   setFormData({
-  //     ...formData,
-  //     mainSections: [
-  //       ...formData.mainSections,
-  //       {
-  //         mainName: "",
-  //         mainNameArabic: "",
-  //         subSections: [
-  //           {
-  //             subName: "",
-  //             subNameArabic: "",
-  //             subPropertieSum1: [],
-  //             properties: [
-  //               {
-  //                 propertyName: "",
-  //                 notes: "",
-  //                 date1: null,
-  //                 date2: null,
-  //               },
-  //             ],
-  //             subPropertieSum: [], // Add this line to include the subPropertieSum array
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   });
-  // };
-  // // Remove the last main section
-  // const removeMainSection = () => {
-  //   if (formData.mainSections.length > 1) {
-  //     setFormData({
-  //       ...formData,
-  //       mainSections: formData.mainSections.slice(0, -1),
-  //     });
-  //   }
-  // };
+  const addMainSection = () => {
+    setFormData({
+      ...formData,
+      mainSections: [
+        ...formData.mainSections,
+        {
+          mainName: "",
+          mainNameArabic: "",
+          subSections: [
+            {
+              subName: "",
+              subNameArabic: "",
+              subPropertieSum1: [],
+              properties: [
+                {
+                  propertyName: "",
+                  notes: "",
+                  date1: null,
+                  date2: null,
+                },
+              ],
+              subPropertieSum: [], // Add this line to include the subPropertieSum array
+            },
+          ],
+        },
+      ],
+    });
+  };
+  // Remove the last main section
+  const removeMainSection = () => {
+    if (formData.mainSections.length > 1) {
+      setFormData({
+        ...formData,
+        mainSections: formData.mainSections.slice(0, -1),
+      });
+    }
+  };
 
   const handleNickNameChanges = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -649,7 +671,6 @@ const addSubPropertySum1 = (mainIndex: number, subIndex: number) => {
             className="text-3xl text-gray-700"
             onClick={() => navigate("/home")}
           />
-
           <div className="flex gap-4 items-center ">
             <button
               onClick={toggleLanguage}
@@ -665,7 +686,7 @@ const addSubPropertySum1 = (mainIndex: number, subIndex: number) => {
         </div>
 
         {/* Main Section Controls */}
-        {/* <div className="mb-4 flex items-center">
+        <div className="mb-4 flex items-center">
           <button
             type="button"
             onClick={addMainSection}
@@ -681,7 +702,7 @@ const addSubPropertySum1 = (mainIndex: number, subIndex: number) => {
           >
             <HiMinusSm className="mr-1" /> Remove Main Section
           </button>
-        </div> */}
+        </div>
         <div className="flex-1">
           <input
             className="appearance-none block w-1/4 bg-gray-100 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white m-1"
@@ -783,9 +804,6 @@ const addSubPropertySum1 = (mainIndex: number, subIndex: number) => {
             {`${nickName} ${selectedYear} ${quarterYear} ${selectedTableType}`}{" "}
           </h1>
         </div>
-
-
-
 
         <form className="bg-white shadow-md  rounded pb-2 w-full max-w-5xl">
           <div id="capture-area" className="overflow-x-auto ">

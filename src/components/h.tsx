@@ -100,6 +100,7 @@
         // 1					
         // 2					                                       | 
         // 3					
+        // 
         // Total current liabilities (Second Total)					   |   if First Total exist : (sum of First Total + prperties of first total) else : (sum of all Properties of Current liabilities)	
         // Total liabilities 					                       | (sum of the Total non-current liabilites + Total current liabilities )
         // Total shareholder's equity and liabilities *				   |  (sum of the Total shareholder's equity + Total non-current liabilites + Total current liabilities)

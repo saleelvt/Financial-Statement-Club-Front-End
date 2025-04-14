@@ -213,7 +213,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         });
       }
     };
- 
+
     return (
       <div className="p-2 border   w-full">
         <div className="">
@@ -278,7 +278,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   onChange={(e) => setnickNameEn(e.target.value)}
                 />
               </div>
- 
+
               <div className="w-1/2">
                 <label className="block uppercase tracking-wide text-gray-700 font-bold ">
                   Sector
@@ -294,12 +294,12 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-            <div className="grid text-xs grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-2  ">
+            <div className="grid text-xs  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-1  ">
               <div className="">
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                   Q1
                 </label>
-                
+
                 <input
                   type="file"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
@@ -307,22 +307,22 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     handleFileChange("Q1", e.target.files?.[0] || null)
                   }
                 />
-  <div className=" flex justify-start gap-1  ">
-                <DatePicker
-                  selected={formData.Q1.date}
-                  onChange={(date) => handleDateChange("Q1", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="Choose Date"
-                />
+                <div className=" flex justify-start gap-1  ">
+                  <DatePicker
+                    selected={formData.Q1.date}
+                    onChange={(date) => handleDateChange("Q1", date)}
+                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholderText="Choose Date"
+                  />
 
-                <input
-                  type="text"
-                  className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="Enter Year"
-                  value={formData.Q1.year}
-                  onChange={(e) => handleYearChange("Q1", e.target.value)}
-                />
-              </div>
+                  <input
+                    type="text"
+                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    placeholder="Enter Year"
+                    value={formData.Q1.year}
+                    onChange={(e) => handleYearChange("Q1", e.target.value)}
+                  />
+                </div>
               </div>
 
               <div className="">
@@ -331,26 +331,26 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q2", e.target.files?.[0] || null)
                   }
                 />
-  <div className=" flex justify-start gap-1  ">
-                <DatePicker
-                  selected={formData.Q2.date}
-                  onChange={(date) => handleDateChange("Q2", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="Choose Date"
-                />
-                <input
-                  type="text"
-                  className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="Enter Year"
-                  value={formData.Q2.year}
-                  onChange={(e) => handleYearChange("Q2", e.target.value)}
-                />
-              </div>
+                <div className=" flex justify-start gap-1  ">
+                  <DatePicker
+                    selected={formData.Q2.date}
+                    onChange={(date) => handleDateChange("Q2", date)}
+                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholderText="Choose Date"
+                  />
+                  <input
+                    type="text"
+                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    placeholder="Enter Year"
+                    value={formData.Q2.year}
+                    onChange={(e) => handleYearChange("Q2", e.target.value)}
+                  />
+                </div>
               </div>
 
               <div className="">
@@ -359,27 +359,27 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q3", e.target.files?.[0] || null)
                   }
                 />
-  <div className=" flex justify-start gap-1  ">
-                <DatePicker
-                  selected={formData.Q3.date}
-                  onChange={(date) => handleDateChange("Q3", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="Choose Date"
-                />
-                <input
-                  type="text"
-                  className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="Enter Year"
-                  value={formData.Q3.year}
-                  onChange={(e) => handleYearChange("Q3", e.target.value)}
-                />
+                <div className=" flex justify-start gap-1  ">
+                  <DatePicker
+                    selected={formData.Q3.date}
+                    onChange={(date) => handleDateChange("Q3", date)}
+                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholderText="Choose Date"
+                  />
+                  <input
+                    type="text"
+                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    placeholder="Enter Year"
+                    value={formData.Q3.year}
+                    onChange={(e) => handleYearChange("Q3", e.target.value)}
+                  />
+                </div>
               </div>
-              </div> 
 
               <div className="">
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold">
@@ -387,26 +387,26 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q4", e.target.files?.[0] || null)
                   }
                 />
-   <div className=" flex justify-start gap-1  ">
-                <DatePicker
-                  selected={formData.Q4.date}
-                  onChange={(date) => handleDateChange("Q4", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="Choose Date"
-                />
-                <input
-                  type="text"
-                  className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="Enter Year"
-                  value={formData.Q4.year}
-                  onChange={(e) => handleYearChange("Q4", e.target.value)}
-                />
-              </div>
+                <div className=" flex justify-start gap-1  ">
+                  <DatePicker
+                    selected={formData.Q4.date}
+                    onChange={(date) => handleDateChange("Q4", date)}
+                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholderText="Choose Date"
+                  />
+                  <input
+                    type="text"
+                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    placeholder="Enter Year"
+                    value={formData.Q4.year}
+                    onChange={(e) => handleYearChange("Q4", e.target.value)}
+                  />
+                </div>
               </div>
               <div className="">
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold">
@@ -414,26 +414,26 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("S1", e.target.files?.[0] || null)
                   }
-                /> 
-                  <div className=" flex justify-start gap-1  ">
-                <DatePicker
-                  selected={formData.S1.date}
-                  onChange={(date) => handleDateChange("S1", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="Choose Date"
                 />
-                <input
-                  type="text"
-                  className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="Enter Year"
-                  value={formData.S1.year}
-                  onChange={(e) => handleYearChange("S1", e.target.value)}
-                />
-              </div>
+                <div className=" flex justify-start gap-1  ">
+                  <DatePicker
+                    selected={formData.S1.date}
+                    onChange={(date) => handleDateChange("S1", date)}
+                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholderText="Choose Date"
+                  />
+                  <input
+                    type="text"
+                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    placeholder="Enter Year"
+                    value={formData.S1.year}
+                    onChange={(e) => handleYearChange("S1", e.target.value)}
+                  />
+                </div>
               </div>
 
               <div className="">
@@ -442,54 +442,54 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Year", e.target.files?.[0] || null)
                   }
                 />
-                  <div className=" flex justify-start gap-1  ">
-                <DatePicker
-                  selected={formData.Year.date}
-                  onChange={(date) => handleDateChange("Year", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="Choose Date"
-                />
-                <input
-                  type="text"
-                  className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="Enter Year"
-                  value={formData.Year.year}
-                  onChange={(e) => handleYearChange("Year", e.target.value)}
-                />
-              </div>
+                <div className=" flex justify-start gap-1  ">
+                  <DatePicker
+                    selected={formData.Year.date}
+                    onChange={(date) => handleDateChange("Year", date)}
+                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholderText="Choose Date"
+                  />
+                  <input
+                    type="text"
+                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    placeholder="Enter Year"
+                    value={formData.Year.year}
+                    onChange={(e) => handleYearChange("Year", e.target.value)}
+                  />
+                </div>
               </div>
 
               <div className="">
-                <label className="block uppercase tracking-wide text-gray-700 font-semibold">
+                <label className="block uppercase tracking-wide  text-gray-700 font-semibold">
                   Board
                 </label>
                 <input
                   type="file"
-                  className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Board", e.target.files?.[0] || null)
                   }
                 />
-                  <div className=" flex justify-start gap-1  ">
-                <DatePicker
-                  selected={formData.Board.date}
-                  onChange={(date) => handleDateChange("Board", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="Choose Date"
-                />
-                <input
-                  type="text"
-                  className="appearance-none block w-1/4 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="Enter Year"
-                  value={formData.Board.year}
-                  onChange={(e) => handleYearChange("Board", e.target.value)}
-                />
-              </div>
+                <div className=" flex justify-start gap-1  ">
+                  <DatePicker
+                    selected={formData.Board.date}
+                    onChange={(date) => handleDateChange("Board", date)}
+                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholderText="Choose Date"
+                  />
+                  <input
+                    type="text"
+                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    placeholder="Enter Year"
+                    value={formData.Board.year}
+                    onChange={(e) => handleYearChange("Board", e.target.value)}
+                  />
+                </div>
               </div>
             </div>
 

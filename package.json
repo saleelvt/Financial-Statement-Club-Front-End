@@ -22,6 +22,7 @@
     "dom-to-image": "^2.6.0",
     "express": "^4.21.1",
     "formik": "^2.4.6",
+    "html-to-image": "^1.11.13",
     "html2canvas": "^1.4.1",
     "mongoose": "^8.8.1",
     "multer": "^1.4.5-lts.1",

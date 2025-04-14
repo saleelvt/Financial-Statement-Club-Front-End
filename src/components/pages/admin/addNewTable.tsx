@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
-
-import domtoimage from "dom-to-image";
+import { toPng } from "html-to-image";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
@@ -13,12 +12,12 @@ import toast from "react-hot-toast";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { commonRequest } from "../../../config/api";
 import { config } from "process";
-import BalaceSheet from "../../../components/pages/admin/Tables/balanceSheet"
 
-
-
+import BalaceSheet from "../../../components/pages/admin/Tables/balanceSheet";
 
 const AddNewTable = React.memo(() => {
+  
+
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const TableTypeArr = ["BalanceSheet", "ProfitLoss", "CashFlow"];
@@ -49,40 +48,108 @@ const AddNewTable = React.memo(() => {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
- 
-
-
-
-  const captureScreen = async () => {
+  const captureScreen = async (): Promise<void> => {
     const node = document.getElementById("capture-area");
     if (!node) return;
-    // if (selectedTableType === "ProfitLoss") {
-    //   setTakeShotForProfitLoss(true); // Hide UI elements while capturing
-    // }
-    // if (selectedTableType === "CashFlow") {
-    //   setTakeShotForCashFlow(true); // Hide UI elements while capturing
-    // }
-    setTakeShot(true); // Hide UI elements while capturing
+
+    setTakeShot(true);
     console.log("Taking Screenshot...");
-    node.classList.add("no-scrollbar");
-    const childElements = node.querySelectorAll("*");
-    childElements.forEach((element) => element.classList.add("no-scrollbar"));
+
+    // Define types for style storage
+    interface ElementStyleBackup {
+      element: HTMLElement;
+      overflow: string;
+      height: string;
+      maxHeight: string;
+    }
+
+    interface NodeStyleBackup {
+      overflow: string;
+      height: string;
+      maxHeight: string;
+      position: string;
+      display: string;
+    }
+
+    // Save original styles for the entire subtree
+    const elementsToRestore: ElementStyleBackup[] = [];
+    node.querySelectorAll("*").forEach((el: Element) => {
+      const htmlEl = el as HTMLElement;
+      elementsToRestore.push({
+        element: htmlEl,
+        overflow: htmlEl.style.overflow,
+        height: htmlEl.style.height,
+        maxHeight: htmlEl.style.maxHeight,
+      });
+
+      // Set styles to ensure all content is visible
+      htmlEl.style.overflow = "visible";
+      htmlEl.style.height = "auto";
+      htmlEl.style.maxHeight = "none";
+    });
+
+    // Also save and modify the container node
+    const originalNodeStyles: NodeStyleBackup = {
+      overflow: node.style.overflow,
+      height: node.style.height,
+      maxHeight: node.style.maxHeight,
+      position: node.style.position,
+      display: node.style.display,
+    };
+
+    node.style.overflow = "visible";
+    node.style.height = "auto";
+    node.style.maxHeight = "none";
+    node.style.position = "relative";
+    node.style.display = "inline-block"; // This can help with sizing issues
 
     try {
-      const dataUrl = await domtoimage.toPng(node);
+      // Allow more time for styles to apply and content to fully render
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // Force a repaint before capture
+      window.dispatchEvent(new Event("resize"));
+
+      // Get actual content dimensions
+      const nodeRect = node.getBoundingClientRect();
+      console.log("Node dimensions:", nodeRect.width, "x", nodeRect.height);
+
+      // Use html-to-image with proper settings
+      const dataUrl: string = await toPng(node, {
+        height: Math.max(node.scrollHeight, nodeRect.height),
+        width: Math.max(node.scrollWidth, nodeRect.width),
+        quality: 1.0,
+        pixelRatio: 2,
+        cacheBust: true, // Prevents caching issues
+        skipAutoScale: true,
+        style: {
+          transform: "none",
+        },
+        filter: (node: Node): boolean => {
+          // Filter out any elements that might interfere with capture
+          return !(
+            node instanceof HTMLElement &&
+            node.classList?.contains("no-capture")
+          );
+        },
+      });
+
       if (adminLanguage) setLanguage(adminLanguage);
-      // Convert the base64 image to a File object
+
+      // Convert to File object
       const response = await fetch(dataUrl);
       const blob = await response.blob();
       const screenshotFile = new File([blob], "screenshot.png", {
         type: "image/png",
       });
 
-      const downloadLink = document.createElement("a");
-      downloadLink.href = dataUrl;
-      downloadLink.download = "screenshot.png";
-      downloadLink.click(); // Triggers download
+      // Trigger download
+      // const downloadLink = document.createElement("a");
+      // downloadLink.href = dataUrl;
+      // downloadLink.download = "screenshot.png";
+      // downloadLink.click();
 
+      // Send to backend
       const responseTow = await dispatch(
         AdminAddTableAction({
           tadawalCode,
@@ -93,28 +160,33 @@ const AddNewTable = React.memo(() => {
           language,
         })
       );
-      console.log("the console log of response ADDTABLE ; ", responseTow);
+
+      console.log("Response from ADDTABLE:", responseTow);
 
       if (responseTow.payload?.success === true) {
         toast.success(responseTow.payload.message);
       }
-      setTakeShot(false);
-      // setTakeShotForProfitLoss(false);
     } catch (error) {
       console.error("Error capturing screenshot:", error);
+      toast.error("Failed to capture screenshot");
     } finally {
-      // Remove the class to restore the scrollbar on the parent and child elements
-      node.classList.remove("no-scrollbar");
-      const childElements = node.querySelectorAll("*");
-      childElements.forEach((element) =>
-        element.classList.remove("no-scrollbar")
-      );
-      setTimeout(() => setTakeShot(false), 100); // Restore UI
+      // Restore original styles for all elements
+      elementsToRestore.forEach((item) => {
+        item.element.style.overflow = item.overflow;
+        item.element.style.height = item.height;
+        item.element.style.maxHeight = item.maxHeight;
+      });
+
+      // Restore container node styles
+      node.style.overflow = originalNodeStyles.overflow;
+      node.style.height = originalNodeStyles.height;
+      node.style.maxHeight = originalNodeStyles.maxHeight;
+      node.style.position = originalNodeStyles.position;
+      node.style.display = originalNodeStyles.display;
+
+      setTimeout(() => setTakeShot(false), 200);
     }
   };
-
-
-
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
@@ -127,9 +199,6 @@ const AddNewTable = React.memo(() => {
     await setQuarterYear(quarter);
     console.log("Selected Quarter", quarter);
   };
-
-
-
 
   const handleNickNameChanges = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -230,7 +299,7 @@ const AddNewTable = React.memo(() => {
             className="text-3xl text-gray-700"
             onClick={() => navigate("/home")}
           />
-          <div className="flex gap-4 items-center ">
+          <div className="flex gap-3 items-center ">
             <button
               onClick={toggleLanguage}
               className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
@@ -245,88 +314,125 @@ const AddNewTable = React.memo(() => {
         </div>
 
         {/* Main Section Controls */}
-        <div className="mb-4 flex items-center">
-         
-        </div>
-        <div className="flex-1">
-          <input
-            className="appearance-none block w-1/4 bg-gray-100 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white m-1"
-            type="text"
-            placeholder="Tadawal Code"
-            value={tadawalCode}
-            required
-            name="nickName"
-            onChange={handleNickNameChanges}
-          />
 
-          {isLoading && (
-            <p className="text-sm font-serif text-gray-600 mt-1">
-              Loading suggestions...
-            </p>
-          )}
+        <div className="flex flex-wrap items-start mt-2 gap-4 text-sm text-gray-700 font-semibold">
+          {/* Tadawal Code Input + Suggestions */}
+          <div className="relative  ">
+            <label className="block mb-1">Tadawal Code</label>
+            <input
+              className="p-1 w-44 bg-gray-100 text-black border rounded focus:outline-none focus:bg-white"
+              type="text"
+              placeholder="Tadawul Code"
+              value={tadawalCode}
+              required
+              name="nickName"
+              onChange={handleNickNameChanges}
+            />
 
-          {suggestions.length > 0 && (
-            <ul className="border border-gray-300 w-1/2 rounded mt-1 max-h-40 overflow-y-auto bg-white">
-              {suggestions.map((suggestion, index) => (
-                <li
-                  key={index}
-                  className="px-2 text-sm font-semibold py-1 cursor-pointer hover:bg-gray-100"
-                  onClick={() => handleSuggestionClick(suggestion)}
+            {/* Loading */}
+            {isLoading && (
+              <p className="flex items-center text-xs font-serif text-gray-600 mt-1">
+                <svg
+                  className="animate-spin h-4 w-4 mr-2 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
                 >
-                  {suggestion}
-                </li>
-              ))}
-            </ul>
-          )}
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  />
+                </svg>
+                Loading suggestions...
+              </p>
+            )}
 
+            {/* Suggestions */}
+            {suggestions.length > 0 && (
+              <ul className="absolute z-10 w-44 mt-1 border border-gray-300 bg-white rounded max-h-40 overflow-y-auto">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    className="p-1 text-xs cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      handleSuggestionClick(suggestion);
+                      setSuggestions([]); // Hide suggestions after selection
+                    }}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* Year Dropdown */}
           {years.length > 0 && (
-            <div ref={dropdownRef} className="relative mt-2">
-              <label className="block text-sm font-medium text-gray-700">
-                Year
-              </label>
+            <div className="relative">
+              <label className="block mb-1">Year</label>
               <div
-                className="mt-1 block w-1/4 p-2 border border-gray-300 rounded-md shadow-sm cursor-pointer"
+                className="p-1 w-44 border bg-white text-black border-gray-300 rounded shadow-sm cursor-pointer"
                 onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
               >
                 {selectedYear || "Select a year"}
               </div>
 
               {isYearDropdownOpen && (
-                <div className="absolute z-10 mt-1 w-1/4 bg-white border border-gray-300 rounded-md shadow-lg">
+                <div className="absolute z-10 mt-1 w-44 bg-white border border-gray-300 rounded-md shadow-lg">
                   {years.map((year) => (
                     <div
                       key={year}
-                      className="relative p-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleYearSelect(year)}
+                      className="p-1 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        handleYearSelect(year);
+                        setIsYearDropdownOpen(false); // Close after select
+                      }}
                     >
                       {year}
-                      {(quarterYear === year || selectedYear === year) &&
-                        quarters[year] && (
-                          <div className="absolute left-full ml-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
-                            <div className="py-1">
-                              {quarters[year].map((item) => (
-                                <div
-                                  key={item.quarter}
-                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                  onClick={() =>
-                                    handleQuarterYear(item.quarter)
-                                  }
-                                >
-                                  <div>{item.quarter}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
                     </div>
                   ))}
                 </div>
               )}
             </div>
           )}
-          {selectedYear && (
-            <div className="p-2 w-44 mt-3 flex justify-center rounded-sm border border-gray-300 bg-slate-200">
+
+          {/* Quarter Section */}
+          {selectedYear && quarters[selectedYear] && (
+            <div>
+              <label className="block mb-1">Quarter</label>
               <select
+                className="p-1 w-44 border border-gray-300 bg-white text-black rounded"
+                value={quarterYear || ""}
+                onChange={(e) => {
+                  handleQuarterYear(e.target.value);
+                }}
+              >
+                <option value="" disabled>
+                  Select Quarter
+                </option>
+                {quarters[selectedYear].map((item) => (
+                  <option key={item.quarter} value={item.quarter}>
+                    {item.quarter}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {/* Table Type Dropdown */}
+          {selectedYear && (
+            <div>
+              <label className="block mb-1">Table Type</label>
+              <select
+                className="p-1 w-44 border border-gray-300 bg-slate-200 text-black rounded"
                 id="tableType"
                 value={selectedTableType || ""}
                 onChange={(e) => setTableType(e.target.value)}
@@ -343,32 +449,27 @@ const AddNewTable = React.memo(() => {
             </div>
           )}
         </div>
-        <div className="flex justify-center p-1  ">
-          <h1 className="text-lg text-black font-bold">
-            {" "}
-            {`${nickName} ${selectedYear} ${quarterYear} ${selectedTableType}`}{" "}
+
+        {/* Final Result Display */}
+        <div className="text-center p-1 mt-2 ">
+          <h1 className="text-lg font-bold text-black">
+            {`${nickName} ${selectedYear} ${quarterYear} ${selectedTableType}`}
           </h1>
         </div>
 
-        <form className="bg-white shadow-md  rounded pb-2 w-full max-w-5xl">
-          <div id="capture-area" className="overflow-x-auto ">
-            
-
-
-
-<BalaceSheet/>
-            
-
-           
+        <form className="bg-white    ">
+          <div id="capture-area" className="">
+          <BalaceSheet/>
           </div>
-          <div className="mt-2 flex justify-end">
+
+          <div className="mt-2 flex justify-center">
             {" "}
             <button
-              className="bg-slate-300  text-black  px-3 py-2 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
+              className="bg-slate-300 rounded  text-black  px-3 py-2 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
               onClick={captureScreen}
               disabled={takeShot}
             >
-              {takeShot ? "Processing..." : "Capture & Upload"}
+              {takeShot ? "Processing..." : "Submit"}
             </button>
           </div>
         </form>

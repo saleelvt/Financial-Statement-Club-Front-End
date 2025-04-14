@@ -16,7 +16,7 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
 
- const UpdateDocumentAr: React.FC = React.memo(() => {
+const UpdateDocumentAr: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.adminEn);
@@ -32,16 +32,15 @@ import { FaArrowCircleRight } from "react-icons/fa";
   const location = useLocation();
   const { id, language } = location.state || {};
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
-    Q1: { file: null, date: null, year: "", createAt: ""  },
-    Q2: { file: null, date: null, year: "", createAt: ""  },
-    Q3: { file: null, date: null, year: "" , createAt: "" },
-    Q4: { file: null, date: null, year: "" , createAt: "" },
-    S1: { file: null, date: null, year: "" , createAt: "" },
-    Board: { file: null, date: null, year: "", createAt: ""  },
-    Year: { file: null, date: null, year: "" , createAt: "" },
+    Q1: { file: null, date: null, year: "", createAt: "" },
+    Q2: { file: null, date: null, year: "", createAt: "" },
+    Q3: { file: null, date: null, year: "", createAt: "" },
+    Q4: { file: null, date: null, year: "", createAt: "" },
+    S1: { file: null, date: null, year: "", createAt: "" },
+    Board: { file: null, date: null, year: "", createAt: "" },
+    Year: { file: null, date: null, year: "", createAt: "" },
   });
 
-  
   useEffect(() => {
     // Fetch document details by ID and Language
     const fetchDocument = async () => {
@@ -189,12 +188,9 @@ import { FaArrowCircleRight } from "react-icons/fa";
             />
           </div>
           <div className="flex   items-center  w-1/2 mt-1">
-
-
-   
-          <div className=" ">
+            <div className=" ">
               <label className="block uppercase tracking-wide text-sm text-gray-700 font-semibold">
-              رمز تداول
+                رمز تداول
               </label>
               <input
                 className="appearance-none  block  text-sm p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
@@ -205,8 +201,6 @@ import { FaArrowCircleRight } from "react-icons/fa";
                 onChange={(e) => setTadawalCode(e.target.value)}
               />
             </div>
-
-
 
             <div className=" p-1   w-full">
               <label className="block uppercase   font-semibold text-sm tracking-wide text-gray-700">
@@ -220,11 +214,11 @@ import { FaArrowCircleRight } from "react-icons/fa";
                 value={fullNameAr}
                 onChange={(e) => setFullNameAr(e.target.value)}
               />
-            </div>        
+            </div>
           </div>
 
           <div className="flex  w-1/2   justify-between ">
-          <div className="w-full p-1">
+            <div className="w-full p-1">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm">
                 الاسم المختصر
                 <span className="text-xs font-mono">(بالعربية)</span>
@@ -255,8 +249,6 @@ import { FaArrowCircleRight } from "react-icons/fa";
                 </ul>
               )}
             </div>
-         
-
 
             <div className="p-1 ">
               <label className="block uppercase text-sm tracking-wide text-gray-700 font-semibold ">
@@ -273,100 +265,106 @@ import { FaArrowCircleRight } from "react-icons/fa";
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm ">
-            <div className="space-x-2">
+          <div className="grid text-xs grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-2  ">
+            <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-              ر 1  
+                ر 1
               </label>
 
               <input
                 type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q1", e.target.files?.[0] || null)
                 }
               />
+              <div className=" flex justify-start gap-1  ">
+                <DatePicker
+                  selected={formData.Q1.date}
+                  onChange={(date) => handleDateChange("Q1", date)}
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="التاريخ"
+                />
 
-              <DatePicker
-                selected={formData.Q1.date}
-                onChange={(date) => handleDateChange("Q1", date)}
-                className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="التاريخ"
-              />
-
-              <input
-                type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                placeholder="السنة"
-                value={formData.Q1.year}
-                onChange={(e) => handleYearChange("Q1", e.target.value)}
-              />
+                <input
+                  type="text"
+                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                  placeholder="السنة"
+                  value={formData.Q1.year}
+                  onChange={(e) => handleYearChange("Q1", e.target.value)}
+                />
+              </div>
             </div>
 
-            <div className="space-x-2">
-              <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-              ر2
+            <div className="">
+              <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
+                ر2
               </label>
               <input
                 type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q2", e.target.files?.[0] || null)
                 }
               />
-
-              <DatePicker
-                selected={formData.Q2.date}
-                onChange={(date) => handleDateChange("Q2", date)}
-                className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="Choose Date"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                placeholder="Enter Year"
-                value={formData.Q2.year}
-                onChange={(e) => handleYearChange("Q2", e.target.value)}
-              />
+              <div className=" flex justify-start gap-1">
+                <DatePicker
+                  selected={formData.Q2.date}
+                  onChange={(date) => handleDateChange("Q2", date)}
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="Choose Date"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="Enter Year"
+                  value={formData.Q2.year}
+                  onChange={(e) => handleYearChange("Q2", e.target.value)}
+                />
+              </div>
             </div>
 
-            <div className="space-x-2">
+            <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-              ر3
+                ر3
               </label>
               <input
                 type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q3", e.target.files?.[0] || null)
                 }
               />
-              <DatePicker
-                selected={formData.Q3.date}
-                onChange={(date) => handleDateChange("Q3", date)}
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                placeholderText="Choose Date"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
-                placeholder="Enter Year"
-                value={formData.Q3.year}
-                onChange={(e) => handleYearChange("Q3", e.target.value)}
-              />
+
+              <div className=" flex justify-start gap-1">
+                <DatePicker
+                  selected={formData.Q3.date}
+                  onChange={(date) => handleDateChange("Q3", date)}
+                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="Choose Date"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="Enter Year"
+                  value={formData.Q3.year}
+                  onChange={(e) => handleYearChange("Q3", e.target.value)}
+                />
+              </div>
             </div>
 
-            <div className="space-x-2">
+            <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-              ر4
+                ر4
               </label>
               <input
                 type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q4", e.target.files?.[0] || null)
                 }
               />
+                           <div className=" flex justify-start gap-1">
               <DatePicker
                 selected={formData.Q4.date}
                 onChange={(date) => handleDateChange("Q4", date)}
@@ -375,24 +373,26 @@ import { FaArrowCircleRight } from "react-icons/fa";
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Q4.year}
                 onChange={(e) => handleYearChange("Q4", e.target.value)}
               />
             </div>
+            </div>
 
-            <div className="space-x-2">
+            <div className=" ">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-              ن.س
+                ن.س
               </label>
               <input
                 type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("S1", e.target.files?.[0] || null)
                 }
               />
+                <div className=" flex justify-start gap-1">
               <DatePicker
                 selected={formData.S1.date}
                 onChange={(date) => handleDateChange("S1", date)}
@@ -401,23 +401,25 @@ import { FaArrowCircleRight } from "react-icons/fa";
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.S1.year}
                 onChange={(e) => handleYearChange("S1", e.target.value)}
               />
+              </div>
             </div>
-            <div className="space-x-2">
+            <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-              السنوي
+                السنوي
               </label>
               <input
                 type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Year", e.target.files?.[0] || null)
                 }
               />
+                    <div className=" flex justify-start gap-1">
               <DatePicker
                 selected={formData.Year.date}
                 onChange={(date) => handleDateChange("Year", date)}
@@ -426,23 +428,25 @@ import { FaArrowCircleRight } from "react-icons/fa";
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Year.year}
                 onChange={(e) => handleYearChange("Year", e.target.value)}
               />
             </div>
-            <div className="space-x-2">
+            </div>
+            <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-              المجلس
+                المجلس
               </label>
               <input
                 type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Board", e.target.files?.[0] || null)
                 }
               />
+                                  <div className=" flex justify-start gap-1">
               <DatePicker
                 selected={formData.Board.date}
                 onChange={(date) => handleDateChange("Board", date)}
@@ -451,17 +455,15 @@ import { FaArrowCircleRight } from "react-icons/fa";
               />
               <input
                 type="text"
-                className="appearance-none block w-1/4 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 placeholder="Enter Year"
                 value={formData.Board.year}
                 onChange={(e) => handleYearChange("Board", e.target.value)}
               />
             </div>
-
-           
+            </div>
           </div>
 
-       
           <div className="flex items-center justify-between mt-4">
             <button
               type="submit"
@@ -475,4 +477,4 @@ import { FaArrowCircleRight } from "react-icons/fa";
     </div>
   );
 });
-export default UpdateDocumentAr 
+export default UpdateDocumentAr;

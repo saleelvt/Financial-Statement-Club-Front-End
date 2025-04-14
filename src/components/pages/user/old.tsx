@@ -20,7 +20,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 
-const UserCompanyDetails = React.memo(() => {
+ export const UserCompanyDetailsNew = React.memo(() => {
   const { userLanguage } = useSelector(
     (state: RootState) => state.userLanguage
   );
@@ -35,8 +35,8 @@ const UserCompanyDetails = React.memo(() => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [yearList, setYearList] = useState<string[]>([]);
-  type TableKey = keyof NonNullable<FormField["table"]>; // "BalanceSheet" | "CashFlow" | "ProfitLoss"
   const [selectedPdfKey, setSelectedPdfKey] = useState<FieldKey | null>(null);
+  type TableKey = keyof NonNullable<FormField["table"]>; // "BalanceSheet" | "CashFlow" | "ProfitLoss"
   const [selectedTableKey, setSelectedTableKey] = useState<TableKey | null>(
     null
   );
@@ -105,6 +105,7 @@ const UserCompanyDetails = React.memo(() => {
       fullAr: "تقرير مجلس الإدارة",
     },
   };
+
   const tableKeys: (keyof NonNullable<FormField["table"]>)[] = [
     "BalanceSheet",
     "ProfitLoss",
@@ -126,36 +127,26 @@ const UserCompanyDetails = React.memo(() => {
   };
 
   const handlePdfButtonClick = async (key: FieldKey) => {
-    setSelectedPdfKey(key);
-
-    // Reset iframe
-    setIframeSrc("");
-    setTableIframeSrc("");
-
-    // Load PDF
-    const document = selectedFilteredDocWithYear[0];
-    const fileUrl =
-      document.formData[key as keyof typeof document.formData]?.file;
-
-    if (fileUrl && typeof fileUrl === "string") {
-      const encodedUrl = encodeURIComponent(fileUrl);
-      const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
-      setIframeSrc(`${googleViewerUrl}#toolbar=0`);
-      setLoading(false);
-    } else {
-      alert(`No PDF available for ${key}`);
-      setLoading(false);
-    }
-
-    // ✅ If a tableKey was selected before, check if it exists for this PDF
-    if (selectedTableKey) {
-      const screenshotUrl =
-        document.formData?.[key as FieldKey]?.table?.[selectedTableKey];
-
-      if (screenshotUrl && typeof screenshotUrl === "string") {
-        setTableIframeSrc(screenshotUrl);
+    await setTableIframeSrc("");
+    await setSelectedTableKey(null);
+    await setSelectedPdfKey(key);
+    if (selectedFilteredDocWithYear.length > 0) {
+      const document = selectedFilteredDocWithYear[0];
+      const fileUrl =
+        document.formData[key as keyof typeof document.formData]?.file;
+      if (fileUrl) {
+        if (typeof fileUrl === "string") {
+          const encodedUrl = encodeURIComponent(fileUrl);
+          const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
+          setIframeSrc(`${googleViewerUrl}#toolbar=0`);
+          setLoading(false);
+        } else {
+          console.error("fileUrl is not a valid string:", fileUrl);
+        }
+        // setSelectedPdfUrl(fileUrl);
       } else {
-        setTableIframeSrc(""); // If not available, clear
+        setLoading(false);
+        alert(`No PDF available for ${key}`);
       }
     }
   };
@@ -177,51 +168,54 @@ const UserCompanyDetails = React.memo(() => {
     }
   };
 
-  const handlePDF = () => {
-    setTableIframeSrc(""); // hide table view
-    setSelectedTableKey(null); // reset tableKey
-  };
-
-  const handleTABLE = () => {
-    setIframeSrc(""); // hide PDF
-  };
-
   useEffect(() => {
-    const formDataforLatest = selectedFilteredDocWithYear?.[0]?.formData;
-    console.log("The form data for latest file:", formDataforLatest);
-
     if (
-      selectedFilteredDocWithYear.length > 0 &&
-      selectedFilteredDocWithYear[0]?.formData
-    ) {
-      const latestFileEntry = Object.entries(
-        selectedFilteredDocWithYear[0].formData
-      )
-        .filter(([, entry]) => entry.file !== null && entry.file !== undefined) // Exclude null/undefined files
-        .sort((a, b) => {
-          const dateA = a[1].date ? new Date(a[1].date).getTime() : 0; // Convert to timestamp or default to 0
-          const dateB = b[1].date ? new Date(b[1].date).getTime() : 0;
-          return dateB - dateA; // Sort by latest date
-        })[0]; // Get the latest entry
+      !selectedFilteredDocWithYear ||
+      selectedFilteredDocWithYear.length === 0
+    )
+      return;
 
-      if (latestFileEntry) {
-        const [latestKey, latestData] = latestFileEntry as [
-          FieldKey,
-          FormField
-        ];
-        console.log("Latest FieldKey:", latestKey);
-        console.log("Latest File:", latestData.file);
-        setSelectedPdfKey(latestKey);
-        if (latestData.file) {
-          if (typeof latestData.file === "string") {
-            const encodedUrl = encodeURIComponent(latestData.file);
-            const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
-            setIframeSrc(`${googleViewerUrl}#toolbar=0`);
-            setLoading(false);
-          } else {
-            console.error("fileUrl is not a valid string:", latestData.file);
-          }
-        }
+    const formDataForLatest = selectedFilteredDocWithYear[0]?.formData;
+    console.log("The form data for latest file:", formDataForLatest);
+
+    if (!formDataForLatest) return;
+
+    // Define priority order for field selection
+    const priorityOrder: FieldKey[] = [
+      "Board",
+      "Year",
+      "S1",
+      "Q4",
+      "Q3",
+      "Q2",
+      "Q1",
+    ];
+
+    let selectedKey: FieldKey | null = null;
+    let selectedData: FormField | null = null;
+
+    // Check each field in priority order and find the first one with a valid file
+    for (const key of priorityOrder) {
+      if (formDataForLatest[key]?.file) {
+        selectedKey = key;
+        selectedData = formDataForLatest[key];
+        break;
+      }
+    }
+
+    if (selectedKey && selectedData) {
+      console.log("Latest FieldKey:", selectedKey);
+      console.log("Latest File:", selectedData.file);
+
+      setSelectedPdfKey(selectedKey);
+
+      if (typeof selectedData.file === "string") {
+        const encodedUrl = encodeURIComponent(selectedData.file);
+        const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
+        setIframeSrc(`${googleViewerUrl}#toolbar=0`);
+        setLoading(false);
+      } else {
+        console.error("fileUrl is not a valid string:", selectedData.file);
       }
     }
   }, [selectedYear, selectedFilteredDocWithYear]);
@@ -303,7 +297,6 @@ const UserCompanyDetails = React.memo(() => {
           language,
           tadawalCode,
         }).toString();
-
         const response = await commonRequest(
           "GET",
           `/api/v1/admin/getDocumetnBytadawalCode?${params}`,
@@ -356,7 +349,7 @@ const UserCompanyDetails = React.memo(() => {
           {document && (
             <div>
               <div className="flex lg;flex-col flex-row lg:justify-start sm:justify-center  md:justify-center xs:justify-center   sm:flex-row w-full items-start">
-                <div className="flex   mt-3  mr-4">
+                <div className="flex   mt-3  mr-4  ">
                   {userLanguage === "Arabic" ? (
                     <FaArrowCircleRight
                       className="text-3xl  ml-4  xs:hidden sm:hidden md:hidden lg:block text-gray-600"
@@ -374,7 +367,9 @@ const UserCompanyDetails = React.memo(() => {
                   )}
                 </div>
 
-                <div className="flex  flex-col justify-center">
+
+
+                <div className="  flex  flex-col justify-center    ">
                   <div className="flex  text-[14px] font-serif  h-6   justify-center lg:justify-start ">
                     <h3 className="text-gray-800  text-center ">
                       {isDocumentEn(document)
@@ -439,26 +434,19 @@ const UserCompanyDetails = React.memo(() => {
                     </div>
                   </div>
 
+
+
+
                   <div
                     dir={userLanguage === "English" ? "ltr" : "rtl"}
-                    className="mt-2  flex justify-center  lg:justify-start rounded-lg text-xs"
+                    className="mt-2 flex lg:justify-start rounded-lg text-xs"
                   >
                     {selectedFilteredDocWithYear.length > 0 ? (
                       <div className="flex flex-wrap gap-2">
-                        <button
-                          onClick={handlePDF}
-                          className={`flex text-xs items-center justify-center text-[16px] px-2 py-1 rounded-md
-                       ${
-                         selectedTableKey
-                           ? "bg-gray-200 text-black"
-                           : selectedPdfKey
-                           ? "bg-gray-600 text-white"
-                           : "bg-gray-600 text-white"
-                       }`}
-                        >
-                          PDF
+                         <button className="text-white flex text-xs   items-center   justify-center text-[16px] px-2 py-1   bg-gray-600 rounded-md     ">
+                          {" "}
+                          {"PDF"}
                         </button>
-
                         {pdfKeys
                           .filter((key) =>
                             selectedFilteredDocWithYear.some(
@@ -473,7 +461,7 @@ const UserCompanyDetails = React.memo(() => {
                                 }
                                 className={`px-2 py-1 text-xs bg-gray-200 rounded-md transition-all duration-300 ${
                                   selectedPdfKey === key
-                                    ? "bg-gray-600 text-white"
+                                    ? "bg-gray-700 text-white"
                                     : "bg-gray-100 text-gray-700 hover:bg-gray-300"
                                 }`}
                               >
@@ -495,63 +483,57 @@ const UserCompanyDetails = React.memo(() => {
                       <p className="text-center text-gray-600"></p>
                     )}
                   </div>
-                  {selectedPdfKey &&
-                    pdfKeys.includes(selectedPdfKey as keyof FormDataState) && (
-                      <div
-                        dir={userLanguage === "English" ? "ltr" : "rtl"}
-                        className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
-                      >
-                        {selectedFilteredDocWithYear.length > 0 ? (
-                          <div className="flex flex-wrap gap-2">
-                            <button
-                              onClick={handleTABLE}
-                              className={`flex text-xs items-center justify-center text-[16px] px-2 py-1 rounded-md
-                                  ${
-                                    selectedTableKey
-                                      ? "bg-gray-600 text-white"
-                                      : selectedPdfKey
-                                      ? "bg-gray-300 text-gray-800"
-                                      : "bg-gray-600 text-white"
-                                  }`}
-                            >
-                              Table
-                            </button>
 
-                            {tableKeys
-                              .filter((key) =>
-                                selectedFilteredDocWithYear.some(
-                                  (doc) =>
-                                    doc.formData[
-                                      selectedPdfKey as keyof FormDataState
-                                    ]?.table?.[key] !== null &&
-                                    doc.formData[
-                                      selectedPdfKey as keyof FormDataState
-                                    ]?.table?.[key] !== undefined
+                  <div className=" ">
+                    {selectedPdfKey &&
+                      pdfKeys.includes(
+                        selectedPdfKey as keyof FormDataState
+                      ) && (
+                        <div
+                          dir={userLanguage === "English" ? "ltr" : "rtl"}
+                          className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
+                        >
+                          {selectedFilteredDocWithYear.length > 0 ? (
+                            <div className="flex flex-wrap gap-2">
+                              <button className="text-white flex text-xs items-center justify-center text-[16px] px-2 py-1 bg-gray-600 rounded-md">
+                                Table
+                              </button>
+                              {tableKeys
+                                .filter((key) =>
+                                  selectedFilteredDocWithYear.some(
+                                    (doc) =>
+                                      doc.formData[
+                                        selectedPdfKey as keyof FormDataState
+                                      ]?.table?.[key] !== null &&
+                                      doc.formData[
+                                        selectedPdfKey as keyof FormDataState
+                                      ]?.table?.[key] !== undefined
+                                  )
                                 )
-                              )
-                              .map((key) => (
-                                <button
-                                  key={key}
-                                  onClick={() =>
-                                    handleTableViewButtonClick(key)
-                                  }
-                                  className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
-                                    selectedTableKey === key
-                                      ? "bg-gray-600 text-white"
-                                      : "bg-gray-100 text-gray-700 hover:bg-gray-300"
-                                  }`}
-                                >
-                                  {key}
-                                </button>
-                              ))}
-                          </div>
-                        ) : (
-                          <p className="text-center text-gray-600">
-                            No Data Available
-                          </p>
-                        )}
-                      </div>
-                    )}
+                                .map((key) => (
+                                  <button
+                                    key={key}
+                                    onClick={() =>
+                                      handleTableViewButtonClick(key)
+                                    }
+                                    className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
+                                      selectedTableKey === key
+                                        ? "bg-gray-500 text-white"
+                                        : "bg-gray-100 text-gray-700 hover:bg-gray-300"
+                                    }`}
+                                  >
+                                    {key}
+                                  </button>
+                                ))}
+                            </div>
+                          ) : (
+                            <p className="text-center text-gray-600">
+                              No Data Available
+                            </p>
+                          )}
+                        </div>
+                      )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -573,7 +555,7 @@ const UserCompanyDetails = React.memo(() => {
         ) : iframeSrc ? (
           // Show PDF in an iframe
           <div
-            className=""
+            className=" "
             style={{
               position: "relative",
               width: "100%",
@@ -605,4 +587,4 @@ const UserCompanyDetails = React.memo(() => {
   );
 });
 
-export default UserCompanyDetails;
+

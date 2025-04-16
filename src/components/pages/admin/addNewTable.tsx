@@ -16,8 +16,6 @@ import { config } from "process";
 import BalaceSheet from "../../../components/pages/admin/Tables/balanceSheet";
 
 const AddNewTable = React.memo(() => {
-  
-
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const TableTypeArr = ["BalanceSheet", "ProfitLoss", "CashFlow"];
@@ -30,6 +28,7 @@ const AddNewTable = React.memo(() => {
   // const [takeShotForCashFlow, setTakeShotForCashFlow] = useState<boolean>(false);
   const [tadawalCode, setTadawalCode] = useState("");
   const [nickName, setNickName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [years, setYears] = useState<string[]>([]); // List of years
   const [selectedYear, setSelectedYear] = useState("");
@@ -240,6 +239,7 @@ const AddNewTable = React.memo(() => {
 
     setTadawalCode(mydata[0].tadawalCode);
     setNickName(mydata[0].nickNameEn);
+    setFullName(mydata[0].fullNameEn);
     setSuggestions([]); // Clear suggestions after selecting one
 
     // Extract years and quarters from formData
@@ -299,6 +299,15 @@ const AddNewTable = React.memo(() => {
             className="text-3xl text-gray-700"
             onClick={() => navigate("/home")}
           />
+          <h1 className="text-lg font-bold text-black">
+            {fullName}
+            {nickName && (
+              <span className="text-sm font-medium text-gray-600 ml-1">
+                ({nickName})
+              </span>
+            )}
+          </h1>
+
           <div className="flex gap-3 items-center ">
             <button
               onClick={toggleLanguage}
@@ -318,7 +327,7 @@ const AddNewTable = React.memo(() => {
         <div className="flex flex-wrap items-start mt-2 gap-4 text-sm text-gray-700 font-semibold">
           {/* Tadawal Code Input + Suggestions */}
           <div className="relative  ">
-            <label className="block mb-1">Tadawal Code</label>
+            <label className="block mb-1">Tadawul Code</label>
             <input
               className="p-1 w-44 bg-gray-100 text-black border rounded focus:outline-none focus:bg-white"
               type="text"
@@ -408,7 +417,7 @@ const AddNewTable = React.memo(() => {
           {/* Quarter Section */}
           {selectedYear && quarters[selectedYear] && (
             <div>
-              <label className="block mb-1">Quarter</label>
+              <label className="block mb-1">Report</label>
               <select
                 className="p-1 w-44 border border-gray-300 bg-white text-black rounded"
                 value={quarterYear || ""}
@@ -451,15 +460,10 @@ const AddNewTable = React.memo(() => {
         </div>
 
         {/* Final Result Display */}
-        <div className="text-center p-1 mt-2 ">
-          <h1 className="text-lg font-bold text-black">
-            {`${nickName} ${selectedYear} ${quarterYear} ${selectedTableType}`}
-          </h1>
-        </div>
 
         <form className="bg-white    ">
           <div id="capture-area" className="">
-          <BalaceSheet/>
+            <BalaceSheet />
           </div>
 
           <div className="mt-2 flex justify-center">

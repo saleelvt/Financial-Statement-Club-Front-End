@@ -516,7 +516,6 @@ const UserCompanyDetails = React.memo(() => {
                             >
                               Table
                             </button>
-
                             {tableKeys
                               .filter((key) =>
                                 selectedFilteredDocWithYear.some(

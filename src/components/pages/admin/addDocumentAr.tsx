@@ -212,7 +212,6 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         toast.success("Document successfully added");
         setProgress(100); // Ensure it's 100 when done
         setTimeout(() => setProgress(0), 2000); // Optional reset
-
         setFormData(
           (prevFormData) =>
             Object.fromEntries(
@@ -229,13 +228,13 @@ const AddDocumentArabic: React.FC = React.memo(() => {
   };
   return (
     <div className="">
-      <div className="flex flex-col items-center min-h-screen  ">
+      <div className="flex flex-col items-center min-h-screen ">
         <form
           onSubmit={handleSubmitArabicDoc}
-          className="bg-white     w-full p-2 "
+          className="bg-white      w-full p-2 "
           dir="rtl"
         >
-          <div className="flex    ">
+          <div className="flex gap-2   ">
             <FaArrowCircleRight
               className="text-3xl text-gray-600"
               onClick={() => navigate(-1)}
@@ -245,7 +244,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             </h2>
           </div>
 
-          <div className="flex   items-center  w-1/2 mt-1 ">
+          <div className="flex xs:max-w-full   items-center  w-1/2 mt-1  ">
             <div className="    ">
               <label className="block uppercase tracking-wide text-sm text-gray-700 font-semibold ">
                 رمز تداول
@@ -278,7 +277,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               )}
             </div>
 
-            <div className="p-1  w-full">
+            <div className="p-1 w-full   ">
               <label className="block uppercase   font-semibold text-sm tracking-wide text-gray-700 ">
                 الاسم الكامل{" "}
                 {/* <span className="font-mono text-xs"> (بالعربية)</span> */}
@@ -293,7 +292,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="flex  w-1/2   justify-between ">
+          <div className="flex  w-1/2  justify-between ">
             <div className=" w-full p-1">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm ">
                 الاسم المختصر{" "}
@@ -321,9 +320,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               />
             </div>
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm ">
-            <div className=" ">
+            <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر 1
               </label>
@@ -333,22 +331,20 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 onChange={(e) =>
                   handleFileChange("Q1", e.target.files?.[0] || null)
                 }
-              /> 
-
-
-
-
-              <div className=" flex justify-start gap-1  ">
+              />
+              <div className=" flex justify-start gap-1 ">
                 <DatePicker
                   selected={formData.Q1.date}
                   onChange={(date) => handleDateChange("Q1", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-[160px]  text-sm bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
-                /> 
+                />
+
                 <input
                   type="text"
                   className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="أدخل السنة" 
+                  placeholder="أدخل السنة"
                   value={formData.Q1.year}
                   onChange={(e) => handleYearChange("Q1", e.target.value)}
                 />
@@ -366,21 +362,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   handleFileChange("Q2", e.target.files?.[0] || null)
                 }
               />
-                <div className=" flex justify-start gap-1  ">
-              <DatePicker
-                selected={formData.Q2.date}
-                onChange={(date) => handleDateChange("Q2", date)}
-                className="appearance-none block w-[182px]  p-1 mt-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
-                placeholderText="اختر التاريخ"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-1/2 p-1 mt-1 bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
-                placeholder="أدخل السنة"
-                value={formData.Q2.year}
-                onChange={(e) => handleYearChange("Q2", e.target.value)}
-              />
-            </div>
+              <div className=" flex justify-start gap-1  ">
+                <DatePicker
+                  selected={formData.Q2.date}
+                  onChange={(date) => handleDateChange("Q2", date)}
+                  className="appearance-none block w-[182px]  p-1 mt-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="اختر التاريخ"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-1/2 p-1 mt-1 bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
+                  placeholder="أدخل السنة"
+                  value={formData.Q2.year}
+                  onChange={(e) => handleYearChange("Q2", e.target.value)}
+                />
+              </div>
             </div>
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
@@ -393,21 +389,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   handleFileChange("Q3", e.target.files?.[0] || null)
                 }
               />
-                <div className=" flex justify-start gap-1  ">
-              <DatePicker
-                selected={formData.Q3.date}
-                onChange={(date) => handleDateChange("Q3", date)}
-                className="appearance-none block w-[182px] mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="اختر التاريخ"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="أدخل السنة"
-                value={formData.Q3.year}
-                onChange={(e) => handleYearChange("Q3", e.target.value)}
-              />
-            </div>
+              <div className=" flex justify-start gap-1  ">
+                <DatePicker
+                  selected={formData.Q3.date}
+                  onChange={(date) => handleDateChange("Q3", date)}
+                  className="appearance-none block w-[182px] mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="اختر التاريخ"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="أدخل السنة"
+                  value={formData.Q3.year}
+                  onChange={(e) => handleYearChange("Q3", e.target.value)}
+                />
+              </div>
             </div>
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
@@ -420,21 +416,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   handleFileChange("Q4", e.target.files?.[0] || null)
                 }
               />
-                <div className=" flex justify-start gap-1  ">
-              <DatePicker
-                selected={formData.Q4.date}
-                onChange={(date) => handleDateChange("Q4", date)}
-                className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="اختر التاريخ"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="أدخل السنة"
-                value={formData.Q4.year}
-                onChange={(e) => handleYearChange("Q4", e.target.value)}
-              />
-            </div>
+              <div className=" flex justify-start gap-1  ">
+                <DatePicker
+                  selected={formData.Q4.date}
+                  onChange={(date) => handleDateChange("Q4", date)}
+                  className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="اختر التاريخ"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="أدخل السنة"
+                  value={formData.Q4.year}
+                  onChange={(e) => handleYearChange("Q4", e.target.value)}
+                />
+              </div>
             </div>
             <div className=" ">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
@@ -447,22 +443,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   handleFileChange("S1", e.target.files?.[0] || null)
                 }
               />
-                <div className=" flex justify-start gap-1  ">
-              <DatePicker
-                selected={formData.S1.date}
-                onChange={(date) => handleDateChange("S1", date)}
-                className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="اختر التاريخ"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="أدخل السنة"
-                value={formData.S1.year}
-                onChange={(e) => handleYearChange("S1", e.target.value)}
-              />
-            </div>
-
+              <div className=" flex justify-start gap-1  ">
+                <DatePicker
+                  selected={formData.S1.date}
+                  onChange={(date) => handleDateChange("S1", date)}
+                  className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="اختر التاريخ"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="أدخل السنة"
+                  value={formData.S1.year}
+                  onChange={(e) => handleYearChange("S1", e.target.value)}
+                />
+              </div>
             </div>
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
@@ -475,21 +470,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   handleFileChange("Year", e.target.files?.[0] || null)
                 }
               />
-                <div className=" flex justify-start gap-1  ">
-              <DatePicker
-                selected={formData.Year.date}
-                onChange={(date) => handleDateChange("Year", date)}
-                className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="اختر التاريخ"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-1/2 mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="أدخل السنة"
-                value={formData.Year.year}
-                onChange={(e) => handleYearChange("Year", e.target.value)}
-              />
-            </div>
+              <div className=" flex justify-start gap-1  ">
+                <DatePicker
+                  selected={formData.Year.date}
+                  onChange={(date) => handleDateChange("Year", date)}
+                  className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="اختر التاريخ"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-1/2 mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="أدخل السنة"
+                  value={formData.Year.year}
+                  onChange={(e) => handleYearChange("Year", e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="">
@@ -503,21 +498,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   handleFileChange("Board", e.target.files?.[0] || null)
                 }
               />
-                <div className=" flex justify-start gap-1  ">
-              <DatePicker
-                selected={formData.Board.date}
-                onChange={(date) => handleDateChange("Board", date)}
-                className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="اختر التاريخ"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-1/2 mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="أدخل السنة"
-                value={formData.Board.year}
-                onChange={(e) => handleYearChange("Board", e.target.value)}
-              />
-            </div>
+              <div className=" flex justify-start gap-1  ">
+                <DatePicker
+                  selected={formData.Board.date}
+                  onChange={(date) => handleDateChange("Board", date)}
+                  className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="اختر التاريخ"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-1/2 mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="أدخل السنة"
+                  value={formData.Board.year}
+                  onChange={(e) => handleYearChange("Board", e.target.value)}
+                />
+              </div>
             </div>
           </div>
           <div className="flex  justify-end items-center mt-4 w-full h-12 relative">

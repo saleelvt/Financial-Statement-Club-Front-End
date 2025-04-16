@@ -1,11 +1,8 @@
-import  { useState } from "react";
-import DatePicker from "react-datepicker";
+import { useState } from "react";
+
 import "react-datepicker/dist/react-datepicker.css";
 
 const AssetForm = () => {
-  const [date1, setDate1] = useState<Date | null>(null);
-  const [date2, setDate2] = useState<Date | null>(null);
-
   // Updated state declarations with empty strings as initial values
   const [nonCurrentAssets, setNonCurrentAssets] = useState<string[]>(
     Array(12).fill("")
@@ -74,7 +71,7 @@ const AssetForm = () => {
     string[]
   >(Array(12).fill(""));
   const [nonCurrentLiabilitiesLabels, setNonCurrentLiabilitiesLabels] =
-    useState<string[]>(Array(11).fill(""));
+    useState<string[]>(Array(12).fill(""));
 
   const [nonCurrentSubLiabilities, setNonCurrentSubLiabilities] = useState<
     string[]
@@ -316,6 +313,22 @@ const AssetForm = () => {
   const totalEquityAndLiabilities = totalEquity + totalLiabilities;
   const totalEquityAndLiabilitiesDate2 =
     totalEquityDate2 + totalLiabilitiesDate2;
+
+
+
+    
+  const [date1, setDate1] = useState("(Unaudited)");
+  const [date2, setDate2] = useState("(Audited)");
+
+  
+  const [sassets, setAssets] = useState("Assets")
+  const [snonCurrentAssets, ssetnonCurrentAssets] = useState("Non-current Assets");
+  const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState("Total non-current Assets");
+
+  const [scurrentAssets, ssetCurrentAssets] = useState("Current Assets")
+ const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState("Total Current Assets");
+ const [stotalAssets, ssetTotalAssets] = useState("Total Assets")
+ 
   return (
     <div className="flex justify-start  my-2 text-black">
       <table className="border border-gray-300 text-xs mb-12  ">
@@ -324,34 +337,57 @@ const AssetForm = () => {
             <th className="border border-gray-100 w-96"></th>
             <th className="border border-gray-100 w-16">Notes</th>
             <th className="border border-gray-100 p-1 w-28">
-        <DatePicker
-          selected={date1}
-          onChange={(date) => setDate1(date)}
-          placeholderText="Date 1"
-          className="w-full text-center bg-gray-100"
-          dateFormat="yyyy-MM-dd"
-        />
-      </th>
-      <th className="border border-gray-100 w-28">
-        <DatePicker
-          selected={date2}
-          onChange={(date) => setDate2(date)}
-          placeholderText="Date 2"
-          className="w-full text-center bg-gray-100"
-          dateFormat="yyyy-MM-dd"
-        />
-      </th>
+              <input
+                placeholder="Date 1"
+                className="w-full text-center bg-gray-100 fext-row"
+                type="text"
+              />
+              <input
+                placeholder=""
+                value={date1}
+                onChange={(e) => setDate1(e.target.value)}
+                className="w-full text-center bg-gray-100 fext-row"
+                type="text"
+              />
+            </th>
+            <th className="border  border-gray-100 w-28">
+              <input
+                placeholder="Date 2"
+                className="w-full text-center bg-gray-100 fext-row"
+                type="date"
+              />
+              <input
+                placeholder=""
+                value={date2}
+                onChange={(e) => setDate2(e.target.value)}
+                className="w-full text-center bg-gray-100 fext-row"
+                type="text"
+              />
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr className="bg-gray-300 font-semibold">
             <td colSpan={4} className="p-1">
-              Assets
+            <input
+                placeholder=""
+                value={sassets}
+                onChange={(e) => setAssets(e.target.value)}
+                className=" text-start  bg-gray-300 fext-row"
+                type="text"
+              />
             </td>
           </tr>
+          <br />
           <tr className="bg-gray-200 font-medium">
             <td colSpan={4} className="p-1">
-              Non-current assets
+            <input
+                placeholder=""
+                value={snonCurrentAssets}
+                onChange={(e) => ssetnonCurrentAssets(e.target.value)}
+                className=" text-start  bg-gray-200 fext-row"
+                type="text"
+              />
             </td>
           </tr>
           {nonCurrentAssets.map((val, idx) => (
@@ -461,7 +497,13 @@ const AssetForm = () => {
             </tr>
           ))}
           <tr className="bg-gray-100 font-semibold">
-            <td className="">Total non-current assets </td>
+            <td className=""> <input
+                placeholder=""
+                value={stotalNonCurrentAssets}
+                onChange={(e) => ssetTotalNonCurrentAssets(e.target.value)}
+                className=" text-start  bg-gray-100 fext-row"
+                type="text"
+              /></td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">{secondTotalNonCurrent}</td>
             <td className="border border-gray-300">
@@ -471,7 +513,13 @@ const AssetForm = () => {
           <br />
           <tr className="bg-gray-200 font-semibold">
             <td colSpan={4} className="p-2">
-              Current assets
+            <input
+                placeholder=""
+                value={scurrentAssets}
+                onChange={(e) => ssetCurrentAssets(e.target.value)}
+                className=" text-start   bg-gray-200 fext-row"
+                type="text"
+              />
             </td>
           </tr>
           {currentAssets.map((val, idx) => (
@@ -571,7 +619,13 @@ const AssetForm = () => {
             </tr>
           ))}
           <tr className="bg-gray-200 font-semibold">
-            <td className="">Total current assets </td>
+            <td className=""> <input
+                placeholder=""
+                value={stotalCurrentAssets}
+                onChange={(e) => ssetTotalCurrentAssets(e.target.value)}
+                className=" text-start  bg-gray-200 fext-row"
+                type="text"
+              /></td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">{secondTotalCurrent}</td>
             <td className="border border-gray-300">
@@ -580,7 +634,13 @@ const AssetForm = () => {
           </tr>
 
           <tr className="bg-gray-400 font-bold">
-            <td className="">Total assets </td>
+            <td className=""> <input
+                placeholder=""
+                value={stotalAssets}
+                onChange={(e) => ssetTotalAssets(e.target.value)}
+                className=" text-start  bg-gray-400 fext-row"
+                type="text"
+              /> </td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">{totalAssets}</td>
             <td className="border border-gray-300">{totalAssetsDate2}</td>

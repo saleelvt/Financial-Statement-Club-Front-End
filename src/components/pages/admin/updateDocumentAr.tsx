@@ -134,7 +134,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => ({
       ...prev,
-      [field]: { ...prev[field], year },
+      [field]: { ...prev[field], year }, 
     }));
   };
 

@@ -502,7 +502,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               ) : (
                 <button
                   type="submit"
-                  className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+                  className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[1.5px] px-7 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
                   Submit
                 </button>

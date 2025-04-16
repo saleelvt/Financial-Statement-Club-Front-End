@@ -18,7 +18,7 @@ function AdminHomePage() {
     <AdminNavbar/> 
     <header className="w-full bg-gray-800 text-white">
 
-        < AdminSidebar/>
+        < AdminSidebar/> 
       </header>
     </div>
   ) 

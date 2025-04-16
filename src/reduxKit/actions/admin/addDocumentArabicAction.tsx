@@ -30,8 +30,7 @@ export const axiosIn = axios.create({
     "admin/addDocumentArabic",
     async (adminCredentials:DocumentPayload,{rejectWithValue})=>{
         try {
-          console.log("the form data of the data : ", adminCredentials);
-          
+     
           const formDataf = adminCredentials.formData;
           // Check if at least one field is fully filled
           const isAnyFieldValid = Object.values(formDataf).some(
@@ -71,7 +70,7 @@ export const axiosIn = axios.create({
             formData.append("nickNameAr", adminCredentials?.nickNameAr);
             formData.append("tadawalCode", adminCredentials?.tadawalCode);
             formData.append("sector", adminCredentials?.sector);
-            console.log("got hte datas in arabic side}}}}}}}}}}} ",adminCredentials);
+
 
             const response = await axiosIn.post(`/api/v1/admin/addDocumentArabic`,formData,createAxiosConfig(true));
             return response.data ;

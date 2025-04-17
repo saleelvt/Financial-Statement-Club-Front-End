@@ -1,9 +1,16 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from "react";
+// import { IBalanceSheetData } from "./interface";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../reduxKit/store";
 
-const AssetForm = () => {
+const BalaceSheetForm = React.memo(() => {
   // Updated state declarations with empty strings as initial values
+
+
+  
   const [nonCurrentAssets, setNonCurrentAssets] = useState<string[]>(
     Array(12).fill("")
   );
@@ -80,7 +87,6 @@ const AssetForm = () => {
     useState<string[]>(Array(3).fill(""));
   const [nonCurrentSubLiabilitiesLabels, setNonCurrentSubLiabilitiesLabels] =
     useState<string[]>(Array(3).fill(""));
-
   const [currentLiabilities, setCurrentLiabilities] = useState<string[]>(
     Array(12).fill("")
   );
@@ -314,24 +320,107 @@ const AssetForm = () => {
   const totalEquityAndLiabilitiesDate2 =
     totalEquityDate2 + totalLiabilitiesDate2;
 
-
-
-    
   const [date1, setDate1] = useState("(Unaudited)");
   const [date2, setDate2] = useState("(Audited)");
 
-  
-  const [sassets, setAssets] = useState("Assets")
-  const [snonCurrentAssets, ssetnonCurrentAssets] = useState("Non-current Assets");
-  const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState("Total non-current Assets");
 
+
+
+  const [sassets, setAssets] = useState("Assets")
+    const [snonCurrentAssets, ssetnonCurrentAssets] = useState("Non-current Assets");
+    const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState("Total non-current Assets");
+  
   const [scurrentAssets, ssetCurrentAssets] = useState("Current Assets")
  const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState("Total Current Assets");
  const [stotalAssets, ssetTotalAssets] = useState("Total Assets")
+
+
+ const [sShareholdersEquityandliabilitiess, setShareholdersEquityandliabilities] = useState("Shareholder's Equity and Liabilities")
+ const [sShareholdersEquity, setShareholdersEquity] = useState("Shareholder's Equity")
+ const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState("Total Shareholder's Equity")
  
+ const [sNoncurrentliabilities, setNoncurrentliabilities] = useState("Non-current Liabilities")
+ const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] = useState("Total non-current Liabilities")
+
+ const [scurrentliabilities, setcurrentliabilities] = useState("Current Liabilities")
+ const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState("Total Current Liabilities")
+  const [stotalliabilities, setTotalliabilities] = useState("Total  Liabilities")
+ const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState("Total shareholder's equity and Liabilities")
+
+
+ 
+
+
+
+
+  // const [importedData, setImportedData] = useState<IBalanceSheetData | null>(
+  //   null
+  // );
+
+  const { data } = useSelector((state: RootState) => state.table);
+
+  useEffect(() => {
+    if (data) {
+      // setImportedData(data);
+      
+      // Assets - Non-Current
+      if (data.assets?.nonCurrent) {
+        setNonCurrentAssets(data.assets.nonCurrent.items || Array(12).fill(""));
+        setNonCurrentSubAssets(data.assets.nonCurrent.subItems || Array(3).fill(""));
+        setNonCurrentLabels(data.assets.nonCurrent.labels || Array(12).fill(""));
+        setNonCurrentSubLabels(data.assets.nonCurrent.subLabels || Array(3).fill(""));
+        setNonCurrentAssetsDate2(data.assets.nonCurrent.itemsDate2 || Array(12).fill(""));
+        setNonCurrentSubAssetsDate2(data.assets.nonCurrent.subItemsDate2 || Array(3).fill(""));
+      }
+      
+      // Assets - Current
+      if (data.assets?.current) {
+        setCurrentAssets(data.assets.current.items || Array(12).fill(""));
+        setCurrentSubAssets(data.assets.current.subItems || Array(3).fill(""));
+        setCurrentLabels(data.assets.current.labels || Array(12).fill(""));
+        setCurrentSubLabels(data.assets.current.subLabels || Array(3).fill(""));
+        setCurrentAssetsDate2(data.assets.current.itemsDate2 || Array(12).fill(""));
+        setCurrentSubAssetsDate2(data.assets.current.subItemsDate2 || Array(3).fill(""));
+      }
+      
+      // Equity
+      if (data.equity) {
+        setEquityItems(data.equity.items || Array(11).fill("")); 
+        setEquitySubItems(data.equity.subItems || Array(3).fill(""));
+        setEquityLabels(data.equity.labels || Array(12).fill(""));
+        setEquitySubLabels(data.equity.subLabels || Array(3).fill(""));
+        setEquityItemsDate2(data.equity.itemsDate2 || Array(12).fill(""));
+        setEquitySubItemsDate2(data.equity.subItemsDate2 || Array(3).fill(""));
+      }
+      
+      // Liabilities - Non-Current
+      if (data.liabilities?.nonCurrent) {
+        setNonCurrentLiabilities(data.liabilities.nonCurrent.items || Array(12).fill(""));
+        setNonCurrentSubLiabilities(data.liabilities.nonCurrent.subItems || Array(3).fill(""));
+        setNonCurrentLiabilitiesLabels(data.liabilities.nonCurrent.labels || Array(12).fill(""));
+        setNonCurrentSubLiabilitiesLabels(data.liabilities.nonCurrent.subLabels || Array(3).fill(""));
+        setNonCurrentLiabilitiesDate2(data.liabilities.nonCurrent.itemsDate2 || Array(12).fill(""));
+        setNonCurrentSubLiabilitiesDate2(data.liabilities.nonCurrent.subItemsDate2 || Array(3).fill(""));
+      }
+      
+      // Liabilities - Current
+      if (data.liabilities?.current) {
+        setCurrentLiabilities(data.liabilities.current.items || Array(12).fill(""));
+        setCurrentSubLiabilities(data.liabilities.current.subItems || Array(3).fill(""));
+        setCurrentLiabilitiesLabels(data.liabilities.current.labels || Array(12).fill(""));
+        setCurrentSubLiabilitiesLabels(data.liabilities.current.subLabels || Array(3).fill(""));
+        setCurrentLiabilitiesDate2(data.liabilities.current.itemsDate2 || Array(12).fill(""));
+        setCurrentSubLiabilitiesDate2(data.liabilities.current.subItemsDate2 || Array(3).fill(""));
+      }
+      
+      console.log("All states updated from Redux data");
+    }
+  }, [data]);
+
+  // const { assets, equity, liabilities, ItotalEquityAndLiabilitiesDate2, ItotalEquityAndLiabilities } = data
   return (
     <div className="flex justify-start  my-2 text-black">
-      <table className="border border-gray-300 text-xs mb-12  ">
+      <table  className="border border-gray-300 text-xs mb-12  ">
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-gray-100 w-96"></th>
@@ -340,7 +429,7 @@ const AssetForm = () => {
               <input
                 placeholder="Date 1"
                 className="w-full text-center bg-gray-100 fext-row"
-                type="text"
+                type="date"
               />
               <input
                 placeholder=""
@@ -369,7 +458,7 @@ const AssetForm = () => {
         <tbody>
           <tr className="bg-gray-300 font-semibold">
             <td colSpan={4} className="p-1">
-            <input
+              <input
                 placeholder=""
                 value={sassets}
                 onChange={(e) => setAssets(e.target.value)}
@@ -379,9 +468,10 @@ const AssetForm = () => {
             </td>
           </tr>
           <br />
+
           <tr className="bg-gray-200 font-medium">
             <td colSpan={4} className="p-1">
-            <input
+              <input
                 placeholder=""
                 value={snonCurrentAssets}
                 onChange={(e) => ssetnonCurrentAssets(e.target.value)}
@@ -432,8 +522,8 @@ const AssetForm = () => {
                   value={nonCurrentAssetsDate2[idx]}
                   onChange={(e) =>
                     handleChange(idx, e.target.value, "nonCurrent", "date2")
-                  }
-                />
+                  } 
+                /> 
               </td>
             </tr>
           ))}
@@ -496,24 +586,36 @@ const AssetForm = () => {
               </td>
             </tr>
           ))}
-          <tr className="bg-gray-100 font-semibold">
-            <td className=""> <input
+          <tr className="bg-gray-100  font-semibold">
+            <td className=" ">
+              {" "}
+              <input
                 placeholder=""
                 value={stotalNonCurrentAssets}
                 onChange={(e) => ssetTotalNonCurrentAssets(e.target.value)}
                 className=" text-start  bg-gray-100 fext-row"
                 type="text"
-              /></td>
-            <td className="border border-gray-300"></td>
-            <td className="border border-gray-300">{secondTotalNonCurrent}</td>
-            <td className="border border-gray-300">
+              />
+            </td>
+            <td className="border   border-gray-300"></td>
+            <td className="border  p-1 border-gray-300">{secondTotalNonCurrent}</td>
+            <td className="border  border-gray-300">
               {secondTotalNonCurrentDate2}
             </td>
           </tr>
           <br />
+
+
+
+
+
+
+
+
+
           <tr className="bg-gray-200 font-semibold">
             <td colSpan={4} className="p-2">
-            <input
+              <input
                 placeholder=""
                 value={scurrentAssets}
                 onChange={(e) => ssetCurrentAssets(e.target.value)}
@@ -522,6 +624,13 @@ const AssetForm = () => {
               />
             </td>
           </tr>
+
+
+
+
+
+
+
           {currentAssets.map((val, idx) => (
             <tr key={`current-${idx}`} className="bg-gray-100">
               <td className="border border-gray-300">
@@ -619,13 +728,16 @@ const AssetForm = () => {
             </tr>
           ))}
           <tr className="bg-gray-200 font-semibold">
-            <td className=""> <input
+            <td className="">
+              {" "}
+              <input
                 placeholder=""
                 value={stotalCurrentAssets}
                 onChange={(e) => ssetTotalCurrentAssets(e.target.value)}
                 className=" text-start  bg-gray-200 fext-row"
                 type="text"
-              /></td>
+              />
+            </td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">{secondTotalCurrent}</td>
             <td className="border border-gray-300">
@@ -634,13 +746,16 @@ const AssetForm = () => {
           </tr>
 
           <tr className="bg-gray-400 font-bold">
-            <td className=""> <input
+            <td className="">
+              {" "}
+              <input
                 placeholder=""
                 value={stotalAssets}
                 onChange={(e) => ssetTotalAssets(e.target.value)}
                 className=" text-start  bg-gray-400 fext-row"
                 type="text"
-              /> </td>
+              />{" "}
+            </td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">{totalAssets}</td>
             <td className="border border-gray-300">{totalAssetsDate2}</td>
@@ -651,13 +766,27 @@ const AssetForm = () => {
         <tbody className="">
           <tr className="bg-gray-300 font-semibold">
             <td colSpan={4} className="p-1">
-              Shareholder's equity and liabilities
+              <input
+                placeholder=""
+                value={sShareholdersEquityandliabilitiess}
+                onChange={(e) =>
+                  setShareholdersEquityandliabilities(e.target.value)
+                }
+                className=" text-start w-full   bg-gray-300 fext-row"
+                type="text"
+              />
             </td>
           </tr>
 
           <tr className="bg-gray-200 font-medium">
             <td colSpan={4} className="p-1">
-              Shareholder's equity
+              <input
+                placeholder=""
+                value={sShareholdersEquity}
+                onChange={(e) => setShareholdersEquity(e.target.value)}
+                className=" text-start w-full   bg-gray-200 fext-row"
+                type="text"
+              />
             </td>
           </tr>
           {equityItems.map((val, idx) => (
@@ -753,7 +882,16 @@ const AssetForm = () => {
             </tr>
           ))}
           <tr className="bg-gray-100 font-bold">
-            <td className="">Total shareholder's equity</td>
+            <td className="">
+              {" "}
+              <input
+                placeholder=""
+                value={stotalShareholdersEquity}
+                onChange={(e) => setTotalShareholdersEquity(e.target.value)}
+                className=" text-start w-full   bg-gray-100 fext-row"
+                type="text"
+              />
+            </td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">{totalEquity}</td>
             <td className="border border-gray-300">{totalEquityDate2}</td>
@@ -762,7 +900,13 @@ const AssetForm = () => {
 
           <tr className="bg-gray-200 font-semibold ">
             <td colSpan={4} className="">
-              Non-current liabilities
+              <input
+                placeholder=""
+                value={sNoncurrentliabilities}
+                onChange={(e) => setNoncurrentliabilities(e.target.value)}
+                className=" text-start w-full   bg-gray-200 fext-row"
+                type="text"
+              />
             </td>
           </tr>
           {nonCurrentLiabilities.map((val, idx) => (
@@ -888,7 +1032,16 @@ const AssetForm = () => {
           ))}
 
           <tr className="bg-gray-200 font-semibold ">
-            <td className="">Total non-current liabilities </td>
+            <td className="">
+              {" "}
+              <input
+                placeholder=""
+                value={stotalNoncurrentliabilities}
+                onChange={(e) => setTotalNoncurrentliabilities(e.target.value)}
+                className=" text-start w-full   bg-gray-200 fext-row"
+                type="text"
+              />
+            </td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">
               {totalNonCurrentLiabilities}
@@ -902,7 +1055,13 @@ const AssetForm = () => {
 
           <tr className="bg-gray-200 font-semibold">
             <td colSpan={4} className="">
-              Current liabilities
+              <input
+                placeholder=""
+                value={scurrentliabilities}
+                onChange={(e) => setcurrentliabilities(e.target.value)}
+                className=" text-start w-full   bg-gray-200 fext-row"
+                type="text"
+              />
             </td>
           </tr>
           {currentLiabilities.map((val, idx) => (
@@ -1007,7 +1166,6 @@ const AssetForm = () => {
                   }
                 />
               </td>
-
               <td className="border border-gray-300">
                 <input
                   type="number"
@@ -1026,7 +1184,16 @@ const AssetForm = () => {
             </tr>
           ))}
           <tr className="bg-gray-200 font-semibold ">
-            <td className="">Total current liabilities</td>
+            <td className="">
+              {" "}
+              <input
+                placeholder=""
+                value={stotalcurrentliabilities}
+                onChange={(e) => setTotalcurrentliabilities(e.target.value)}
+                className=" text-start w-full   bg-gray-200 fext-row"
+                type="text"
+              />
+            </td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">
               {totalCurrentLiabilities}
@@ -1036,13 +1203,30 @@ const AssetForm = () => {
             </td>
           </tr>
           <tr className="bg-gray-200  font-bold">
-            <td className="">Total liabilities</td>
+            <td className="">
+              {" "}
+              <input
+                placeholder=""
+                value={stotalliabilities}
+                onChange={(e) => setTotalliabilities(e.target.value)}
+                className=" text-start w-full   bg-gray-200 fext-row"
+                type="text"
+              />
+            </td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">{totalLiabilities}</td>
             <td className="border border-gray-300">{totalLiabilitiesDate2}</td>
           </tr>
           <tr className="bg-gray-400  font-bold">
-            <td className="">Total shareholder's equity and liabilities</td>
+            <td className="">
+              <input
+                placeholder=""
+                value={stotalEquityAndLiabilities}
+                onChange={(e) => settotalEquityAndLiabilities(e.target.value)}
+                className=" text-start w-full   bg-gray-400 fext-row"
+                type="text"
+              />
+            </td>
             <td className="border border-gray-300"></td>
             <td className="border border-gray-300">
               {totalEquityAndLiabilities}
@@ -1055,6 +1239,6 @@ const AssetForm = () => {
       </table>
     </div>
   );
-};
+});
 
-export default AssetForm;
+export default BalaceSheetForm

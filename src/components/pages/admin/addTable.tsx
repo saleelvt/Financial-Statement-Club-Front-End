@@ -13,7 +13,8 @@ import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAct
 import { commonRequest } from "../../../config/api";
 import { config } from "process";
 
-import BalaceSheet from "../../../components/pages/admin/Tables/balanceSheet";
+import BalaceSheet from "./Tables/BalanceSheet/balanceSheetAr";
+import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheet";
 
 const AddNewTable = React.memo(() => {
   const navigate = useNavigate();
@@ -143,10 +144,10 @@ const AddNewTable = React.memo(() => {
       });
 
       // Trigger download
-      // const downloadLink = document.createElement("a");
-      // downloadLink.href = dataUrl;
-      // downloadLink.download = "screenshot.png";
-      // downloadLink.click();
+      const downloadLink = document.createElement("a");
+      downloadLink.href = dataUrl;
+      downloadLink.download = "screenshot.png";
+      downloadLink.click();
 
       // Send to backend
       const responseTow = await dispatch(
@@ -192,7 +193,7 @@ const AddNewTable = React.memo(() => {
     // setIsYearDropdownOpen(false);
 
     // Close the year dropdown after selection
-  };
+  };                                                    
 
   const handleQuarterYear = async (quarter: string) => {
     await setQuarterYear(quarter);
@@ -292,191 +293,207 @@ const AddNewTable = React.memo(() => {
   }, [adminLanguage]);
 
   return (
-    <div className="p-4">
-      <div className="p-2">
-        <div className="flex flex-wrap justify-between items-center">
-          <FaArrowCircleLeft
-            className="text-3xl text-gray-700"
-            onClick={() => navigate("/home")}
-          />
-          <h1 className="text-lg font-bold text-black">
-            {fullName}
-            {nickName && (
-              <span className="text-sm font-medium text-gray-600 ml-1">
-                ({nickName})
-              </span>
-            )}
-          </h1>
+    <div className="p-1">
+      <div className="flex  flex-wrap justify-between  items-center">
+        <FaArrowCircleLeft
+          className="text-3xl text-gray-700"
+          onClick={() => navigate("/home")}
+        />
+        <h1 className="text-lg font-bold text-black">
+          {fullName}
+          {nickName && (
+            <span className="text-sm font-medium text-gray-600 ml-1">
+              ({nickName})
+            </span>
+          )}
+        </h1>
 
-          <div className="flex gap-3 items-center ">
-            <button
-              onClick={toggleLanguage}
-              className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
-            >
-              <GrLanguage className=" text-gray-700" />
-            </button>
-            {/* </button> */}
-            <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
-              {language === "Arabic" ? "قسم الجدول" : "Table Section"}
-            </h4>
-          </div>
+        <div className="flex gap-3 items-center ">
+          <button
+            onClick={toggleLanguage}
+            className=" hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
+          >
+            <GrLanguage className=" text-gray-700" />
+          </button>
+          {/* </button> */}
+          <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
+            {language === "Arabic" ? "قسم الجدول" : "Table Section"}
+          </h4>
+        </div>
+      </div>
+
+      {/* Main Section Controls */}
+
+      <div className="flex flex-wrap items-start mt-1 gap-4 text-sm text-gray-700 font-semibold">
+        {/* Tadawal Code Input + Suggestions */}
+        <div className="relative  ">
+          <label className="block mb-1">Tadawul Code</label>
+          <input
+            className="p-1 w-44 bg-gray-100 text-black border rounded focus:outline-none focus:bg-white"
+            type="text"
+            placeholder="Tadawul Code"
+            value={tadawalCode}
+            required
+            name="nickName"
+            onChange={handleNickNameChanges}
+          />
+
+          {/* Loading */}
+          {isLoading && (
+            <p className="flex items-center text-xs font-serif text-gray-600 mt-1">
+              <svg
+                className="animate-spin h-4 w-4 mr-2 text-gray-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+              </svg>
+              Loading suggestions...
+            </p>
+          )}
+
+          {/* Suggestions */}
+          {suggestions.length > 0 && (
+            <ul className="absolute z-10 w-44 mt-1 border border-gray-300 bg-white rounded max-h-40 overflow-y-auto">
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  className="p-1 text-xs cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    handleSuggestionClick(suggestion);
+                    setSuggestions([]); // Hide suggestions after selection
+                  }}
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
-        {/* Main Section Controls */}
+        {/* Year Dropdown */}
+        {years.length > 0 && (
+          <div className="relative">
+            <label className="block mb-1">Year</label>
+            <div
+              className="p-1 w-44 border bg-white text-black border-gray-300 rounded shadow-sm cursor-pointer"
+              onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
+            >
+              {selectedYear || "Select a year"}
+            </div>
 
-        <div className="flex flex-wrap items-start mt-2 gap-4 text-sm text-gray-700 font-semibold">
-          {/* Tadawal Code Input + Suggestions */}
-          <div className="relative  ">
-            <label className="block mb-1">Tadawul Code</label>
-            <input
-              className="p-1 w-44 bg-gray-100 text-black border rounded focus:outline-none focus:bg-white"
-              type="text"
-              placeholder="Tadawul Code"
-              value={tadawalCode}
-              required
-              name="nickName"
-              onChange={handleNickNameChanges}
-            />
-
-            {/* Loading */}
-            {isLoading && (
-              <p className="flex items-center text-xs font-serif text-gray-600 mt-1">
-                <svg
-                  className="animate-spin h-4 w-4 mr-2 text-gray-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  />
-                </svg>
-                Loading suggestions...
-              </p>
-            )}
-
-            {/* Suggestions */}
-            {suggestions.length > 0 && (
-              <ul className="absolute z-10 w-44 mt-1 border border-gray-300 bg-white rounded max-h-40 overflow-y-auto">
-                {suggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    className="p-1 text-xs cursor-pointer hover:bg-gray-100"
+            {isYearDropdownOpen && (
+              <div className="absolute z-10 mt-1 w-44 bg-white border border-gray-300 rounded-md shadow-lg">
+                {years.map((year) => (
+                  <div
+                    key={year}
+                    className="p-1 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
-                      handleSuggestionClick(suggestion);
-                      setSuggestions([]); // Hide suggestions after selection
+                      handleYearSelect(year);
+                      setIsYearDropdownOpen(false); // Close after select
                     }}
                   >
-                    {suggestion}
-                  </li>
+                    {year}
+                  </div>
                 ))}
-              </ul>
+              </div>
             )}
           </div>
+        )}
 
-          {/* Year Dropdown */}
-          {years.length > 0 && (
-            <div className="relative">
-              <label className="block mb-1">Year</label>
-              <div
-                className="p-1 w-44 border bg-white text-black border-gray-300 rounded shadow-sm cursor-pointer"
-                onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
-              >
-                {selectedYear || "Select a year"}
-              </div>
-
-              {isYearDropdownOpen && (
-                <div className="absolute z-10 mt-1 w-44 bg-white border border-gray-300 rounded-md shadow-lg">
-                  {years.map((year) => (
-                    <div
-                      key={year}
-                      className="p-1 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => {
-                        handleYearSelect(year);
-                        setIsYearDropdownOpen(false); // Close after select
-                      }}
-                    >
-                      {year}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Quarter Section */}
-          {selectedYear && quarters[selectedYear] && (
-            <div>
-              <label className="block mb-1">Report</label>
-              <select
-                className="p-1 w-44 border border-gray-300 bg-white text-black rounded"
-                value={quarterYear || ""}
-                onChange={(e) => {
-                  handleQuarterYear(e.target.value);
-                }}
-              >
-                <option value="" disabled>
-                  Select Quarter
+        {/* Quarter Section */}
+        {selectedYear && quarters[selectedYear] && (
+          <div>
+            <label className="block mb-1">Report</label>
+            <select
+              className="p-1 w-44 border border-gray-300 bg-white text-black rounded"
+              value={quarterYear || ""}
+              onChange={(e) => {
+                handleQuarterYear(e.target.value);
+              }}
+            >
+              <option value="" disabled>
+                Select Quarter
+              </option>
+              {quarters[selectedYear].map((item) => (
+                <option key={item.quarter} value={item.quarter}>
+                  {item.quarter}
                 </option>
-                {quarters[selectedYear].map((item) => (
-                  <option key={item.quarter} value={item.quarter}>
-                    {item.quarter}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          {/* Table Type Dropdown */}
-          {selectedYear && (
-            <div>
-              <label className="block mb-1">Table Type</label>
-              <select
-                className="p-1 w-44 border border-gray-300 bg-slate-200 text-black rounded"
-                id="tableType"
-                value={selectedTableType || ""}
-                onChange={(e) => setTableType(e.target.value)}
-              >
-                <option value="" disabled>
-                  Select Table Type
+              ))}
+            </select>
+          </div>
+        )}
+        {/* Table Type Dropdown */}
+        {selectedYear && (
+          <div>
+            <label className="block mb-1">Table Type</label>
+            <select
+              className="p-1 w-44 border border-gray-300 bg-slate-200 text-black rounded"
+              id="tableType"
+              value={selectedTableType || ""}
+              onChange={(e) => setTableType(e.target.value)}
+            >
+              <option value="" disabled>
+                Select Table Type
+              </option>
+              {TableTypeArr.map((type, index) => (
+                <option key={index} value={type}>
+                  {type}
                 </option>
-                {TableTypeArr.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+              ))}
+            </select>
+          </div>
+        )}
+      </div>
+      {/* Final Result Display */}
+<div className="flex w-full gap-3">
+      <form className="">
+        <div id="capture-area" className=" gap-3  w-full ">
+          <BalaceSheetFormAr />
         </div>
 
-        {/* Final Result Display */}
+        <div className="mt-2 flex justify-end">
+          {" "}
+          <button
+            className="bg-slate-300 rounded  text-black  py-1 px-5 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
+            onClick={captureScreen}
+            disabled={takeShot}
+          >
+            {takeShot ? "Processing..." : "Submit"}
+          </button>
+        </div>
+      </form>
+      <form className="">
+        <div id="capture-areaAr" className=" gap-3  w-full ">
+        <BalaceSheet />       
+ 
+        
+        </div>
 
-        <form className="bg-white    ">
-          <div id="capture-area" className="">
-            <BalaceSheet />
-          </div>
-
-          <div className="mt-2 flex justify-center">
-            {" "}
-            <button
-              className="bg-slate-300 rounded  text-black  px-3 py-2 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
-              onClick={captureScreen}
-              disabled={takeShot}
-            >
-              {takeShot ? "Processing..." : "Submit"}
-            </button>
-          </div>
-        </form>
+        <div className="mt-2 flex justify-start">
+          {" "}
+          <button
+            className="bg-slate-300 rounded  text-black py-1 px-8  hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
+            onClick={captureScreen}
+            disabled={takeShot}
+          >
+            {takeShot ? "   رفع..." : " رفع"}
+          </button>
+        </div>
+      </form>
       </div>
     </div>
   );

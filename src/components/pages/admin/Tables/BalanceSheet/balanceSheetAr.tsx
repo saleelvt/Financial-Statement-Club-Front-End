@@ -8,8 +8,7 @@ type BalaceSheetFormArProps = {
   TakingShort: boolean;
 };
 
-const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
-  ({ TakingShort }) => {
+const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingShort }) => {
     const dispatch = useDispatch<AppDispatch>();
 
     // Updated state declarations with empty strings as initial values

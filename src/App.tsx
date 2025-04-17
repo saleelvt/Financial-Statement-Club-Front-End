@@ -14,7 +14,7 @@ const DocumentList = lazy(() => import("./components/pages/admin/documentList"))
 const AdminLogin = lazy(() => import("./components/forms/admin/login"));
 const AdminHomePage = lazy(() => import("./components/pages/admin/adminDashBoard"));
 const EmailVerification = lazy(() => import("./components/forms/admin/otpVerifiy"));
-const BalanceSheetForm = lazy(() => import("./components/pages/admin/Tables/BalanceSheet/balanceSheetAr"));
+
 
 import { UserCompanyDetailsNew } from './components/pages/user/old';
 const AddNewTable=lazy(() => import("./components/pages/admin/addTable"));
@@ -41,7 +41,7 @@ export const App: React.FC = React.memo(() => {
           <Route path="/home" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
           <Route path="/addDocument" element={isLogged &&  role === 'admin' ? <AddDocumentArabic /> : <AdminLogin />}/>
           <Route path="/addNewTable" element={isLogged &&  role === 'admin' ? <AddNewTable /> : <AdminLogin />}/>
-          <Route path="/balanceSheet" element={isLogged &&  role === 'admin' ? <BalanceSheetForm /> : <AdminLogin />}/>
+         
           <Route path="/newOldTableshow" element={ <UserCompanyDetailsNew /> }/>
 
           <Route path="/documentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />

@@ -5,12 +5,13 @@ import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../reduxKit/store";
+type BalaceSheetFormArProps = {
+  TakingShort: boolean;
+};
 
-const BalaceSheetForm = React.memo(() => {
+const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingShort }) => {
   // Updated state declarations with empty strings as initial values
 
-
-  
   const [nonCurrentAssets, setNonCurrentAssets] = useState<string[]>(
     Array(12).fill("")
   );
@@ -320,38 +321,77 @@ const BalaceSheetForm = React.memo(() => {
   const totalEquityAndLiabilitiesDate2 =
     totalEquityDate2 + totalLiabilitiesDate2;
 
+
+
+
+    const hasNonEmptyNonCurrentSubAssets = nonCurrentSubAssets.some(
+      (val, idx) => val || nonCurrentSubAssetsDate2[idx]
+    );
+    const hasNonEmptyCurrentSubAssets = currentSubAssets.some(
+      (val, idx) => val || currentSubAssetsDate2[idx]
+    );
+    
+    const hasNonEmptyEquitySubItems = equitySubItems.some(
+      (val, idx) => val || equitySubItemsDate2[idx]
+    );
+    const hasNonEmptyNonCurrentSubLiabilities = nonCurrentSubLiabilities.some(
+      (val, idx) => val || nonCurrentSubLiabilitiesDate2[idx]
+    );
+    const hasNonEmptyCurrentSubLiabilities = currentSubLiabilities.some(
+      (val, idx) => val || currentSubLiabilitiesDate2[idx]
+    );
+    
+
+
+
+
+
+
   const [date1, setDate1] = useState("(Unaudited)");
   const [date2, setDate2] = useState("(Audited)");
 
+  const [sassets, setAssets] = useState("Assets");
+  const [snonCurrentAssets, ssetnonCurrentAssets] =
+    useState("Non-current Assets");
+  const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(
+    "Total non-current Assets"
+  );
 
+  const [scurrentAssets, ssetCurrentAssets] = useState("Current Assets");
+  const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(
+    "Total Current Assets"
+  );
+  const [stotalAssets, ssetTotalAssets] = useState("Total Assets");
 
+  const [
+    sShareholdersEquityandliabilitiess,
+    setShareholdersEquityandliabilities,
+  ] = useState("Shareholder's Equity and Liabilities");
+  const [sShareholdersEquity, setShareholdersEquity] = useState(
+    "Shareholder's Equity"
+  );
+  const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState(
+    "Total Shareholder's Equity"
+  );
 
-  const [sassets, setAssets] = useState("Assets")
-    const [snonCurrentAssets, ssetnonCurrentAssets] = useState("Non-current Assets");
-    const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState("Total non-current Assets");
-  
-  const [scurrentAssets, ssetCurrentAssets] = useState("Current Assets")
- const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState("Total Current Assets");
- const [stotalAssets, ssetTotalAssets] = useState("Total Assets")
+  const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(
+    "Non-current Liabilities"
+  );
+  const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] = useState(
+    "Total non-current Liabilities"
+  );
 
-
- const [sShareholdersEquityandliabilitiess, setShareholdersEquityandliabilities] = useState("Shareholder's Equity and Liabilities")
- const [sShareholdersEquity, setShareholdersEquity] = useState("Shareholder's Equity")
- const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState("Total Shareholder's Equity")
- 
- const [sNoncurrentliabilities, setNoncurrentliabilities] = useState("Non-current Liabilities")
- const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] = useState("Total non-current Liabilities")
-
- const [scurrentliabilities, setcurrentliabilities] = useState("Current Liabilities")
- const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState("Total Current Liabilities")
-  const [stotalliabilities, setTotalliabilities] = useState("Total  Liabilities")
- const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState("Total shareholder's equity and Liabilities")
-
-
- 
-
-
-
+  const [scurrentliabilities, setcurrentliabilities] = useState(
+    "Current Liabilities"
+  );
+  const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState(
+    "Total Current Liabilities"
+  );
+  const [stotalliabilities, setTotalliabilities] =
+    useState("Total  Liabilities");
+  const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(
+    "Total shareholder's equity and Liabilities"
+  );
 
   // const [importedData, setImportedData] = useState<IBalanceSheetData | null>(
   //   null
@@ -361,66 +401,99 @@ const BalaceSheetForm = React.memo(() => {
 
   useEffect(() => {
     if (data) {
-      // setImportedData(data);
-      
-      // Assets - Non-Current
       if (data.assets?.nonCurrent) {
         setNonCurrentAssets(data.assets.nonCurrent.items || Array(12).fill(""));
-        setNonCurrentSubAssets(data.assets.nonCurrent.subItems || Array(3).fill(""));
-        setNonCurrentLabels(data.assets.nonCurrent.labels || Array(12).fill(""));
-        setNonCurrentSubLabels(data.assets.nonCurrent.subLabels || Array(3).fill(""));
-        setNonCurrentAssetsDate2(data.assets.nonCurrent.itemsDate2 || Array(12).fill(""));
-        setNonCurrentSubAssetsDate2(data.assets.nonCurrent.subItemsDate2 || Array(3).fill(""));
+        setNonCurrentSubAssets(
+          data.assets.nonCurrent.subItems || Array(3).fill("")
+        );
+        setNonCurrentLabels(
+          data.assets.nonCurrent.labels || Array(12).fill("")
+        );
+        setNonCurrentSubLabels(
+          data.assets.nonCurrent.subLabels || Array(3).fill("")
+        );
+        setNonCurrentAssetsDate2(
+          data.assets.nonCurrent.itemsDate2 || Array(12).fill("")
+        );
+        setNonCurrentSubAssetsDate2(
+          data.assets.nonCurrent.subItemsDate2 || Array(3).fill("")
+        );
       }
-      
+
       // Assets - Current
       if (data.assets?.current) {
         setCurrentAssets(data.assets.current.items || Array(12).fill(""));
         setCurrentSubAssets(data.assets.current.subItems || Array(3).fill(""));
         setCurrentLabels(data.assets.current.labels || Array(12).fill(""));
         setCurrentSubLabels(data.assets.current.subLabels || Array(3).fill(""));
-        setCurrentAssetsDate2(data.assets.current.itemsDate2 || Array(12).fill(""));
-        setCurrentSubAssetsDate2(data.assets.current.subItemsDate2 || Array(3).fill(""));
+        setCurrentAssetsDate2(
+          data.assets.current.itemsDate2 || Array(12).fill("")
+        );
+        setCurrentSubAssetsDate2(
+          data.assets.current.subItemsDate2 || Array(3).fill("")
+        );
       }
-      
+
       // Equity
       if (data.equity) {
-        setEquityItems(data.equity.items || Array(11).fill("")); 
+        setEquityItems(data.equity.items || Array(11).fill(""));
         setEquitySubItems(data.equity.subItems || Array(3).fill(""));
         setEquityLabels(data.equity.labels || Array(12).fill(""));
         setEquitySubLabels(data.equity.subLabels || Array(3).fill(""));
         setEquityItemsDate2(data.equity.itemsDate2 || Array(12).fill(""));
         setEquitySubItemsDate2(data.equity.subItemsDate2 || Array(3).fill(""));
       }
-      
+
       // Liabilities - Non-Current
       if (data.liabilities?.nonCurrent) {
-        setNonCurrentLiabilities(data.liabilities.nonCurrent.items || Array(12).fill(""));
-        setNonCurrentSubLiabilities(data.liabilities.nonCurrent.subItems || Array(3).fill(""));
-        setNonCurrentLiabilitiesLabels(data.liabilities.nonCurrent.labels || Array(12).fill(""));
-        setNonCurrentSubLiabilitiesLabels(data.liabilities.nonCurrent.subLabels || Array(3).fill(""));
-        setNonCurrentLiabilitiesDate2(data.liabilities.nonCurrent.itemsDate2 || Array(12).fill(""));
-        setNonCurrentSubLiabilitiesDate2(data.liabilities.nonCurrent.subItemsDate2 || Array(3).fill(""));
+        setNonCurrentLiabilities(
+          data.liabilities.nonCurrent.items || Array(12).fill("")
+        );
+        setNonCurrentSubLiabilities(
+          data.liabilities.nonCurrent.subItems || Array(3).fill("")
+        );
+        setNonCurrentLiabilitiesLabels(
+          data.liabilities.nonCurrent.labels || Array(12).fill("")
+        );
+        setNonCurrentSubLiabilitiesLabels(
+          data.liabilities.nonCurrent.subLabels || Array(3).fill("")
+        );
+        setNonCurrentLiabilitiesDate2(
+          data.liabilities.nonCurrent.itemsDate2 || Array(12).fill("")
+        );
+        setNonCurrentSubLiabilitiesDate2(
+          data.liabilities.nonCurrent.subItemsDate2 || Array(3).fill("")
+        );
       }
-      
+
       // Liabilities - Current
       if (data.liabilities?.current) {
-        setCurrentLiabilities(data.liabilities.current.items || Array(12).fill(""));
-        setCurrentSubLiabilities(data.liabilities.current.subItems || Array(3).fill(""));
-        setCurrentLiabilitiesLabels(data.liabilities.current.labels || Array(12).fill(""));
-        setCurrentSubLiabilitiesLabels(data.liabilities.current.subLabels || Array(3).fill(""));
-        setCurrentLiabilitiesDate2(data.liabilities.current.itemsDate2 || Array(12).fill(""));
-        setCurrentSubLiabilitiesDate2(data.liabilities.current.subItemsDate2 || Array(3).fill(""));
+        setCurrentLiabilities(
+          data.liabilities.current.items || Array(12).fill("")
+        );
+        setCurrentSubLiabilities(
+          data.liabilities.current.subItems || Array(3).fill("")
+        );
+        setCurrentLiabilitiesLabels(
+          data.liabilities.current.labels || Array(12).fill("")
+        );
+        setCurrentSubLiabilitiesLabels(
+          data.liabilities.current.subLabels || Array(3).fill("")
+        );
+        setCurrentLiabilitiesDate2(
+          data.liabilities.current.itemsDate2 || Array(12).fill("")
+        );
+        setCurrentSubLiabilitiesDate2(
+          data.liabilities.current.subItemsDate2 || Array(3).fill("")
+        );
       }
-      
-      console.log("All states updated from Redux data");
     }
   }, [data]);
 
   // const { assets, equity, liabilities, ItotalEquityAndLiabilitiesDate2, ItotalEquityAndLiabilities } = data
   return (
     <div className="flex justify-start  my-2 text-black">
-      <table  className="border border-gray-300 text-xs mb-12  ">
+      <table className="border border-gray-300 text-xs mb-12  ">
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-gray-100 w-96"></th>
@@ -455,6 +528,7 @@ const BalaceSheetForm = React.memo(() => {
             </th>
           </tr>
         </thead>
+
         <tbody>
           <tr className="bg-gray-300 font-semibold">
             <td colSpan={4} className="p-1">
@@ -480,112 +554,152 @@ const BalaceSheetForm = React.memo(() => {
               />
             </td>
           </tr>
-          {nonCurrentAssets.map((val, idx) => (
-            <tr key={`non-current-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={nonCurrentLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "nonCurrentLabel",
-                      "label"
-                    )
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  placeholder=""
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "nonCurrent")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={nonCurrentAssetsDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "nonCurrent", "date2")
-                  } 
-                /> 
-              </td>
-            </tr>
-          ))}
-          <tr className="bg-gray-200 font-semibold">
-            <td className="">
-              <input
-                className="w-full bg-gray-100 text-black p-1"
-                type="text"
-              />
-            </td>
-            <td className="border border-gray-300"></td>
-            <td className="border border-gray-300">{firstTotalNonCurrent}</td>
-            <td className="border border-gray-300">
-              {firstTotalNonCurrentDate2}
-            </td>
-          </tr>
-          {nonCurrentSubAssets.map((val, idx) => (
-            <tr key={`sub-non-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={nonCurrentSubLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "nonCurrentSubLabel",
-                      "label"
-                    )
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "nonCurrentSub")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={nonCurrentSubAssetsDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "nonCurrentSub", "date2")
-                  }
-                />
-              </td>
-            </tr>
-          ))}
+
+
+
+
+
+
+
+          
+
+
+          {nonCurrentAssets.map((val, idx) => {
+              const isRowEmpty = !val && !nonCurrentAssetsDate2[idx];
+
+              // 🧠 Only hide the row *after* submission if it's empty
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr key={`non-current-${idx}`} className="bg-gray-100">
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      placeholder=""
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "nonCurrent")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentAssetsDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "nonCurrent", "date2")
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
+
+
+{hasNonEmptyNonCurrentSubAssets && (
+              <tr className="bg-gray-200 font-semibold">
+                <td className="">
+                  <input
+                    className="w-full bg-gray-100 text-black p-1"
+                    type="text"
+                  />
+                </td>
+                <td className="border border-gray-300"></td>
+                <td className="border border-gray-300">
+                  {firstTotalNonCurrent}
+                </td>
+                <td className="border border-gray-300">
+                  {firstTotalNonCurrentDate2}
+                </td>
+              </tr>
+            )}
+
+
+{nonCurrentSubAssets.map((val, idx) => {
+              const isRowEmpty = !val && !nonCurrentSubAssetsDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr key={`sub-non-${idx}`} className="bg-gray-100">
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentSubLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentSubLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "nonCurrentSub")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentSubAssetsDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentSub",
+                          "date2"
+                        )
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
+
+
           <tr className="bg-gray-100  font-semibold">
             <td className=" ">
               {" "}
@@ -598,20 +712,14 @@ const BalaceSheetForm = React.memo(() => {
               />
             </td>
             <td className="border   border-gray-300"></td>
-            <td className="border  p-1 border-gray-300">{secondTotalNonCurrent}</td>
+            <td className="border  p-1 border-gray-300">
+              {secondTotalNonCurrent}
+            </td>
             <td className="border  border-gray-300">
               {secondTotalNonCurrentDate2}
             </td>
           </tr>
           <br />
-
-
-
-
-
-
-
-
 
           <tr className="bg-gray-200 font-semibold">
             <td colSpan={4} className="p-2">
@@ -625,108 +733,135 @@ const BalaceSheetForm = React.memo(() => {
             </td>
           </tr>
 
+       {currentAssets.map((val, idx) => {
+              const isRowEmpty = !val && !currentAssetsDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr key={`current-${idx}`} className="bg-gray-100">
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={currentLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "currentLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "current")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={currentAssetsDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "current", "date2")
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
 
 
 
+{hasNonEmptyCurrentSubAssets && (
+              <tr className="bg-gray-200 font-semibold">
+                <td className="">
+                  <input
+                    className="w-full bg-gray-100 text-black p-1"
+                    type="text"
+                  />
+                </td>
+                <td className="border border-gray-300"></td>
+                <td className="border border-gray-300">{firstTotalCurrent}</td>
+                <td className="border border-gray-300">
+                  {firstTotalCurrentDate2}
+                </td>
+              </tr>
+            )}
 
 
 
-          {currentAssets.map((val, idx) => (
-            <tr key={`current-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={currentLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "currentLabel", "label")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) => handleChange(idx, e.target.value, "current")}
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={currentAssetsDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "current", "date2")
-                  }
-                />
-              </td>
-            </tr>
-          ))}
-          <tr className="bg-gray-200 font-semibold">
-            <td className="">
-              <input
-                className="w-full bg-gray-100 text-black p-1"
-                type="text"
-              />
-            </td>
-            <td className="border border-gray-300"></td>
-            <td className="border border-gray-300">{firstTotalCurrent}</td>
-            <td className="border border-gray-300">{firstTotalCurrentDate2}</td>
-          </tr>
-          {currentSubAssets.map((val, idx) => (
-            <tr key={`sub-current-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={currentSubLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "currentSubLabel",
-                      "label"
-                    )
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "currentSub")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={currentSubAssetsDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "currentSub", "date2")
-                  }
-                />
-              </td>
-            </tr>
-          ))}
+            
+{currentSubAssets.map((val, idx) => {
+              const isRowEmpty = !val && !currentSubAssetsDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr key={`sub-current-${idx}`} className="bg-gray-100">
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={currentSubLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "currentSubLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "currentSub")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={currentSubAssetsDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "currentSub", "date2")
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
+
+
           <tr className="bg-gray-200 font-semibold">
             <td className="">
               {" "}
@@ -789,98 +924,138 @@ const BalaceSheetForm = React.memo(() => {
               />
             </td>
           </tr>
-          {equityItems.map((val, idx) => (
-            <tr key={`equity-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={equityLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "equityLabel", "label")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) => handleChange(idx, e.target.value, "equity")}
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={equityItemsDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "equity", "date2")
-                  }
-                />
-              </td>
-            </tr>
-          ))}
-          <tr className="bg-gray-200 font-semibold">
-            <td className="">
-              <input
-                className="w-full bg-gray-100 text-black p-1"
-                type="text"
-              />
-            </td>
-            <td className="border border-gray-300"></td>
-            <td className="border border-gray-300">{firstTotalEquity}</td>
-            <td className="border border-gray-300">{firstTotalEquityDate2}</td>
-          </tr>
-          {equitySubItems.map((val, idx) => (
-            <tr key={`sub-equity-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <h1></h1>
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={equitySubLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "equitySubLabel", "label")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "equitySub")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={equitySubItemsDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "equitySub", "date2")
-                  }
-                />
-              </td>
-            </tr>
-          ))}
+
+
+
+           {equityItems.map((val, idx) => {
+              const isRowEmpty = !val && !equityItemsDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr key={`equity-${idx}`} className="bg-gray-100">
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={equityLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "equityLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "equity")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={equityItemsDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "equity", "date2")
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
+
+
+
+{hasNonEmptyEquitySubItems && (
+              <tr className="bg-gray-200 font-semibold">
+                <td className="">
+                  <input
+                    className="w-full bg-gray-100 text-black p-1"
+                    type="text"
+                  />
+                </td>
+                <td className="border border-gray-300"></td>
+                <td className="border border-gray-300">{firstTotalEquity}</td>
+                <td className="border border-gray-300">
+                  {firstTotalEquityDate2}
+                </td>
+              </tr>
+            )}
+
+
+
+
+{equitySubItems.map((val, idx) => {
+              const isRowEmpty = !val && !equitySubItemsDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr key={`sub-equity-${idx}`} className="bg-gray-100">
+                  <td className="border border-gray-300">
+                    <h1></h1>
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={equitySubLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "equitySubLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "equitySub")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={equitySubItemsDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "equitySub", "date2")
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
           <tr className="bg-gray-100 font-bold">
             <td className="">
               {" "}
@@ -909,127 +1084,153 @@ const BalaceSheetForm = React.memo(() => {
               />
             </td>
           </tr>
-          {nonCurrentLiabilities.map((val, idx) => (
-            <tr key={`non-current-liability-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={nonCurrentLiabilitiesLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "nonCurrentLiabilityLabel",
-                      "label"
-                    )
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "nonCurrentLiability")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={nonCurrentLiabilitiesDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "nonCurrentLiability",
-                      "date2"
-                    )
-                  }
-                />
-              </td>
-            </tr>
-          ))}
-          <tr className="bg-gray-200 font-semibold">
-            <td className="">
-              <input
-                className="w-full bg-gray-100 text-black p-1"
-                type="text"
-              />
-            </td>
-            <td className="border border-gray-300"></td>
-            <td className="border border-gray-300">
-              {firstTotalNonCurrentLiabilities}
-            </td>
-            <td className="border border-gray-300">
-              {firstTotalNonCurrentLiabilitiesDate2}
-            </td>
-          </tr>
 
-          {nonCurrentSubLiabilities.map((val, idx) => (
-            <tr
-              key={`sub-non-current-liability-${idx}`}
-              className="bg-gray-100"
-            >
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={nonCurrentSubLiabilitiesLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "nonCurrentSubLiabilityLabel",
-                      "label"
-                    )
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "nonCurrentSubLiability")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={nonCurrentSubLiabilitiesDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "nonCurrentSubLiability",
-                      "date2"
-                    )
-                  }
-                />
-              </td>
-            </tr>
-          ))}
+
+          {nonCurrentLiabilities.map((val, idx) => {
+              const isRowEmpty = !val && !nonCurrentLiabilitiesDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr
+                  key={`non-current-liability-${idx}`}
+                  className="bg-gray-100"
+                >
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentLiabilitiesLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentLiabilityLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "nonCurrentLiability")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentLiabilitiesDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentLiability",
+                          "date2"
+                        )
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
+
+        {hasNonEmptyNonCurrentSubLiabilities && (
+              <tr className="bg-gray-200 font-semibold">
+                <td className="">
+                  <input
+                    className="w-full bg-gray-100 text-black p-1"
+                    type="text"
+                  />
+                </td>
+                <td className="border border-gray-300"></td>
+                <td className="border border-gray-300">
+                  {firstTotalNonCurrentLiabilities}
+                </td>
+                <td className="border border-gray-300">
+                  {firstTotalNonCurrentLiabilitiesDate2}
+                </td>
+              </tr>
+            )}
+
+
+{nonCurrentSubLiabilities.map((val, idx) => {
+              const isRowEmpty = !val && !nonCurrentSubLiabilitiesDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr
+                  key={`sub-non-current-liability-${idx}`}
+                  className="bg-gray-100"
+                >
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentSubLiabilitiesLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentSubLiabilityLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentSubLiability"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentSubLiabilitiesDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentSubLiability",
+                          "date2"
+                        )
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
 
           <tr className="bg-gray-200 font-semibold ">
             <td className="">
@@ -1064,125 +1265,146 @@ const BalaceSheetForm = React.memo(() => {
               />
             </td>
           </tr>
-          {currentLiabilities.map((val, idx) => (
-            <tr key={`current-liability-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={currentLiabilitiesLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "currentLiabilityLabel",
-                      "label"
-                    )
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "currentLiability")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={currentLiabilitiesDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "currentLiability",
-                      "date2"
-                    )
-                  }
-                />
-              </td>
-            </tr>
-          ))}
 
-          <tr className="bg-gray-200 font-semibold">
-            <td className="">
-              <input
-                className="w-full bg-gray-100 text-black p-1"
-                type="text"
-              />
-            </td>
-            <td className="border border-gray-300"></td>
-            <td className="border border-gray-300">
-              {firstTotalCurrentLiabilities}
-            </td>
-            <td className="border border-gray-300">
-              {firstTotalCurrentLiabilitiesDate2}
-            </td>
-          </tr>
 
-          {currentSubLiabilities.map((val, idx) => (
-            <tr key={`sub-current-liability-${idx}`} className="bg-gray-100">
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={currentSubLiabilitiesLabels[idx]}
-                  placeholder={`${idx + 1}`}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "currentSubLiabilityLabel",
-                      "label"
-                    )
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="text"
-                  className="w-full bg-gray-100 text-black p-1"
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={val}
-                  onChange={(e) =>
-                    handleChange(idx, e.target.value, "currentSubLiability")
-                  }
-                />
-              </td>
-              <td className="border border-gray-300">
-                <input
-                  type="number"
-                  className="w-full bg-gray-100 text-black p-1"
-                  value={currentSubLiabilitiesDate2[idx]}
-                  onChange={(e) =>
-                    handleChange(
-                      idx,
-                      e.target.value,
-                      "currentSubLiability",
-                      "date2"
-                    )
-                  }
-                />
-              </td>
-            </tr>
-          ))}
+           {currentLiabilities.map((val, idx) => {
+              const isRowEmpty = !val && !currentLiabilitiesDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr key={`current-liability-${idx}`} className="bg-gray-100">
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={currentLiabilitiesLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "currentLiabilityLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "currentLiability")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={currentLiabilitiesDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "currentLiability",
+                          "date2"
+                        )
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
+
+{hasNonEmptyCurrentSubLiabilities && (
+              <tr className="bg-gray-200 font-semibold">
+                <td className="">
+                  <input
+                    className="w-full bg-gray-100 text-black p-1"
+                    type="text"
+                  />
+                </td>
+                <td className="border border-gray-300"></td>
+                <td className="border border-gray-300">
+                  {firstTotalCurrentLiabilities}
+                </td>
+                <td className="border border-gray-300">
+                  {firstTotalCurrentLiabilitiesDate2}
+                </td>
+              </tr>
+            )}
+
+{currentSubLiabilities.map((val, idx) => {
+              const isRowEmpty = !val && !currentSubLiabilitiesDate2[idx];
+
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr
+                  key={`sub-current-liability-${idx}`}
+                  className="bg-gray-100"
+                >
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={currentSubLiabilitiesLabels[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "currentSubLiabilityLabel",
+                          "label"
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="text"
+                      className="w-full bg-gray-100 text-black p-1"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={val}
+                      onChange={(e) =>
+                        handleChange(idx, e.target.value, "currentSubLiability")
+                      }
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={currentSubLiabilitiesDate2[idx]}
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "currentSubLiability",
+                          "date2"
+                        )
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
           <tr className="bg-gray-200 font-semibold ">
             <td className="">
               {" "}
@@ -1241,4 +1463,4 @@ const BalaceSheetForm = React.memo(() => {
   );
 });
 
-export default BalaceSheetForm
+export default BalaceSheetForm;

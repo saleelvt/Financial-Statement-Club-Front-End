@@ -4,9 +4,9 @@ import { toPng } from "html-to-image";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-import { GrLanguage } from "react-icons/gr";
+
 import { useSelector } from "react-redux";
-import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
+
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
@@ -23,7 +23,7 @@ const AddNewTable = React.memo(() => {
   const { adminLanguage } = useSelector(
     (state: RootState) => state.adminLanguage
   );
-  const [language, setLanguage] = useState<string>("Arabic");
+
   const [selectedTableType, setTableType] = useState("");
   // const [takeShotForProfitLoss, setTakeShotForProfitLoss] = useState<boolean>(false);
   // const [takeShotForCashFlow, setTakeShotForCashFlow] = useState<boolean>(false);
@@ -34,6 +34,7 @@ const AddNewTable = React.memo(() => {
   const [years, setYears] = useState<string[]>([]); // List of years
   const [selectedYear, setSelectedYear] = useState("");
   const [quarterYear, setQuarterYear] = useState("");
+  const [language,setLanguage]=useState<string|null>(null)
   const [quarters, setQuarters] = useState<{
     [key: string]: Array<{ quarter: string; date: string }>;
   }>({}); // Quarters and their dates for each year
@@ -41,16 +42,22 @@ const AddNewTable = React.memo(() => {
   const [isLoading, setIsLoading] = useState(false);
   const [takeShot, setTakeShot] = useState<boolean>(false);
 
-  const toggleLanguage = async () => {
-    const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
-    await dispatch(AdminLanguageChange(newLanguage));
-  };
+  // const toggleLanguage = async () => {
+  //   const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
+  //   await dispatch(AdminLanguageChange(newLanguage));
+  // };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const captureScreen = async (): Promise<void> => {
-    const node = document.getElementById("capture-area");
-    if (!node) return;
+  const captureScreen = async (language: string): Promise<void> => {
+    if(language){
+      setLanguage(language)
+    }
+          const node = language === "Arabic"
+    ? document.getElementById("capture-areaAr")
+    : document.getElementById("capture-area");
+  
+  if (!node) return;
 
     setTakeShot(true);
     console.log("Taking Screenshot...");
@@ -106,14 +113,11 @@ const AddNewTable = React.memo(() => {
     try {
       // Allow more time for styles to apply and content to fully render
       await new Promise((resolve) => setTimeout(resolve, 500));
-
       // Force a repaint before capture
       window.dispatchEvent(new Event("resize"));
-
       // Get actual content dimensions
       const nodeRect = node.getBoundingClientRect();
       console.log("Node dimensions:", nodeRect.width, "x", nodeRect.height);
-
       // Use html-to-image with proper settings
       const dataUrl: string = await toPng(node, {
         height: Math.max(node.scrollHeight, nodeRect.height),
@@ -133,9 +137,6 @@ const AddNewTable = React.memo(() => {
           );
         },
       });
-
-      if (adminLanguage) setLanguage(adminLanguage);
-
       // Convert to File object
       const response = await fetch(dataUrl);
       const blob = await response.blob();
@@ -190,11 +191,7 @@ const AddNewTable = React.memo(() => {
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
-    // setIsYearDropdownOpen(false);
-
-    // Close the year dropdown after selection
-  };                                                    
-
+  };
   const handleQuarterYear = async (quarter: string) => {
     await setQuarterYear(quarter);
     console.log("Selected Quarter", quarter);
@@ -309,12 +306,12 @@ const AddNewTable = React.memo(() => {
         </h1>
 
         <div className="flex gap-3 items-center ">
-          <button
+          {/* <button
             onClick={toggleLanguage}
             className=" hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
           >
             <GrLanguage className=" text-gray-700" />
-          </button>
+          </button> */}
           {/* </button> */}
           <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
             {language === "Arabic" ? "قسم الجدول" : "Table Section"}
@@ -459,41 +456,37 @@ const AddNewTable = React.memo(() => {
         )}
       </div>
       {/* Final Result Display */}
-<div className="flex w-full gap-3">
-      <form className="">
-        <div id="capture-area" className=" gap-3  w-full ">
-          <BalaceSheetFormAr />
-        </div>
-
-        <div className="mt-2 flex justify-end">
-          {" "}
-          <button
-            className="bg-slate-300 rounded  text-black  py-1 px-5 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
-            onClick={captureScreen}
-            disabled={takeShot}
-          >
-            {takeShot ? "Processing..." : "Submit"}
-          </button>
-        </div>
-      </form>
-      <form className="">
-        <div id="capture-areaAr" className=" gap-3  w-full ">
-        <BalaceSheet />       
- 
-        
-        </div>
-
-        <div className="mt-2 flex justify-start">
-          {" "}
-          <button
-            className="bg-slate-300 rounded  text-black py-1 px-8  hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
-            onClick={captureScreen}
-            disabled={takeShot}
-          >
-            {takeShot ? "   رفع..." : " رفع"}
-          </button>
-        </div>
-      </form>
+      <div className="flex w-full gap-3">
+        <form className="">
+          <div id="capture-area" className=" gap-3  w-full ">
+            <BalaceSheetFormAr TakingShort={takeShot} />
+          </div>
+          <div className="mt-2 flex justify-end">
+            {" "}
+            <button
+              className="bg-slate-300 rounded  text-black  py-1 px-5 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
+              onClick={() => captureScreen("English")}
+              disabled={takeShot}
+            >
+              {takeShot ? "Processing..." : "Submit"}
+            </button>
+          </div>
+        </form>
+        <form className="">
+          <div id="capture-areaAr" className=" gap-3  w-full ">
+            <BalaceSheet TakingShort={takeShot} />
+          </div>
+          <div className="mt-2 flex justify-start">
+            {" "}  
+            <button
+              className="bg-slate-300 rounded  text-black py-1 px-8  hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
+              onClick={() => captureScreen("Arabic")}
+              disabled={takeShot}
+            >
+              {takeShot ? "   رفع..." : " رفع"}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

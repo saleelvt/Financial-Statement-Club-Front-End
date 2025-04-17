@@ -208,7 +208,6 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
       if (response.success) {
         console.log("my file pload response , ", response, progress);
-
         toast.success("Document successfully added");
         setProgress(100); // Ensure it's 100 when done
         setTimeout(() => setProgress(0), 2000); // Optional reset

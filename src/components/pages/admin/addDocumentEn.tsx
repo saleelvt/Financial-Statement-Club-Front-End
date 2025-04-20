@@ -215,18 +215,18 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
     };
 
     return (
-      <div className="p-2 border   w-full">
+      <div className="p-2 border-t   w-full">
         <div className="">
           <form onSubmit={handleSubmit} className="">
-            <div className="flex  justify-between items-center w-1/2 ">
+            <div className="flex   items-center  lg:w-1/2 mt-1 ">
               <div className=" ">
-                <label className="block uppercase tracking-wide text-xs text-gray-700 font-semibold">
+                <label className="block placeholder:text-xs  uppercase tracking-wide text-xs text-gray-700 font-semibold">
                   Tadawul Code
                 </label>
                 <input
-                  className="appearance-none  block  text-xs p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none placeholder:text-xs  lg:w-36 xs:w-28  block  text-xs p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                   type="text"
-                  placeholder="Enter Tadawul Code "
+                  placeholder="Tadawul Code "
                   value={tadawalCode}
                   required
                   onChange={handleInputChange}
@@ -265,8 +265,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 />
               </div>
             </div>
-            <div className="flex  text-xs mt-2  gap-2  w-1/2 ">
-              <div className=" w-1/2">
+            <div className="flex xs:w-full   text-xs mt-2  bg-pur gap-1  lg:w-1/2 ">
+              <div className=" xs:w-64 lg:w-1/2">
                 <label className="block uppercase  tracking-wide text-gray-700 font-bold ">
                   Nick Name
                 </label>
@@ -279,7 +279,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 />
               </div>
 
-              <div className="w-1/2">
+              <div className=" lg:w-1/2">
                 <label className="block uppercase tracking-wide text-gray-700 font-bold ">
                   Sector
                 </label>
@@ -311,7 +311,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   <DatePicker
                     selected={formData.Q1.date}
                     onChange={(date) => handleDateChange("Q1", date)}
-                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
                   />
 
@@ -340,7 +340,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   <DatePicker
                     selected={formData.Q2.date}
                     onChange={(date) => handleDateChange("Q2", date)}
-                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
                   />
                   <input
@@ -368,7 +368,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   <DatePicker
                     selected={formData.Q3.date}
                     onChange={(date) => handleDateChange("Q3", date)}
-                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
                   />
                   <input
@@ -396,7 +396,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   <DatePicker
                     selected={formData.Q4.date}
                     onChange={(date) => handleDateChange("Q4", date)}
-                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
                   />
                   <input
@@ -423,7 +423,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   <DatePicker
                     selected={formData.S1.date}
                     onChange={(date) => handleDateChange("S1", date)}
-                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
                   />
                   <input
@@ -451,7 +451,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   <DatePicker
                     selected={formData.Year.date}
                     onChange={(date) => handleDateChange("Year", date)}
-                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
                   />
                   <input
@@ -476,15 +476,15 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   }
                 />
                 <div className=" flex justify-start gap-1  ">
-                  <DatePicker
+                  <DatePicker 
                     selected={formData.Board.date}
                     onChange={(date) => handleDateChange("Board", date)}
-                    className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none  block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
                   />
                   <input
                     type="text"
-                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block w-1/2 mt-1  bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.Board.year}
                     onChange={(e) => handleYearChange("Board", e.target.value)}

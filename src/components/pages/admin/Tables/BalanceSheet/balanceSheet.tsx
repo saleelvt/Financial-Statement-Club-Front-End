@@ -351,11 +351,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
   const [date2, setDate2] = useState("(Audited)");
 
   const [sassets, setAssets] = useState("Assets");
-  const [snonCurrentAssets, ssetnonCurrentAssets] =
-    useState("Non-current Assets");
-  const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(
-    "Total non-current Assets"
-  );
+  const [snonCurrentAssets, ssetnonCurrentAssets] = useState("Non-current Assets");
+  const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState( "Total non-current Assets");
 
   const [scurrentAssets, ssetCurrentAssets] = useState("Current Assets");
   const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(
@@ -392,6 +389,9 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
   const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(
     "Total shareholder's equity and Liabilities"
   );
+
+
+
 
   // const [importedData, setImportedData] = useState<IBalanceSheetData | null>(
   //   null

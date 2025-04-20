@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +37,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
   const [fullNameAr, setFullNameAr] = useState("");
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState<number>(0);
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -111,7 +111,17 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       },
     }));
   };
-
+  useEffect(() => {
+    console.log("Progress state changed:", progress);
+    if (progress === 100) {
+      const timeout = setTimeout(() => {
+        setProgress(0);
+    
+      }, 1500); // Show 100% for 1.5 seconds
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [progress]);
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => {
       // If Q1 is being updated, update all fields
@@ -134,8 +144,6 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     "admin/addDocumentArabic",
     async (adminCredentials: DocumentPayload, { dispatch }) => {
       try {
-        console.log("Submitting Arabic document: ", adminCredentials);
-
         // Validate at least one field
         const isAnyFieldValid = Object.values(adminCredentials.formData).some(
           (field) => field.file && field.date && field.year
@@ -173,16 +181,17 @@ const AddDocumentArabic: React.FC = React.memo(() => {
           {
             headers: { "Content-Type": "multipart/form-data" },
             onUploadProgress: (progressEvent) => {
-              if (progressEvent.total) {
-                const percentCompleted = Math.round(
-                  (progressEvent.loaded * 100) / progressEvent.total
-                );
+              const { loaded, total } = progressEvent;
+              if (total) {
+                // Corrected percentage calculation
+                const percentCompleted = Math.round((loaded / total) * 100);
+                console.log("Upload progress: ", percentCompleted);
                 setProgress(percentCompleted);
               }
             },
           }
         );
-
+        
         return response.data;
       } catch (error: any) {
         setErrorMessage(
@@ -196,130 +205,142 @@ const AddDocumentArabic: React.FC = React.memo(() => {
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
+      setProgress(0); // Reset progress at start
       const payloadData: DocumentSliceAr = {
         fullNameAr,
         nickNameAr,
         tadawalCode,
         sector,
         formData,
-        createdAt: new Date().toISOString(), // Example value
+        createdAt: new Date().toISOString(),
       };
 
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
-      if (response.success) {
-        console.log("my file pload response , ", response, progress);
-        toast.success("Document successfully added");
-        setProgress(100); // Ensure it's 100 when done
-        setTimeout(() => setProgress(0), 2000); // Optional reset
+      
+      if (response && response.success) {
+        toast.success(response.message);
+        
+        // Only set to 100% if not already there from the progress events
+        if (progress < 100) {
+          setProgress(100);
+        }
+        
+        // Reset form data
         setFormData(
           (prevFormData) =>
             Object.fromEntries(
               Object.entries(prevFormData).map(([key, value]) => [
-                key as keyof typeof prevFormData, // Explicitly assert key type
+                key as keyof typeof prevFormData,
                 { ...value, file: null },
               ])
             ) as Record<FieldKey, FormField>
         );
       }
     } catch (error: any) {
-      console.log("erorr", error);
+      console.log("Error submitting form:", error);
+      toast.error("Failed to upload document");
+      setProgress(0);
+
     }
   };
   return (
-    <div className="">
+    <div className="lg:mx-10 m ">
       <div className="flex flex-col items-center min-h-screen ">
         <form
           onSubmit={handleSubmitArabicDoc}
           className="bg-white      w-full p-2 "
           dir="rtl"
         >
-          <div className="flex gap-2   ">
+          <div className="flex xs:gap-2   ">
             <FaArrowCircleRight
               className="text-3xl text-gray-600"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/home")}
             />
             <h2 className="text-lg lg:mr-2 font-bold text-center text-gray-700">
               إضافة تقرير (بالعربي){" "}
             </h2>
           </div>
 
-          <div className="flex xs:max-w-full   items-center  w-1/2 mt-1  ">
-            <div className="    ">
-              <label className="block uppercase tracking-wide text-sm text-gray-700 font-semibold ">
-                رمز تداول
-              </label>
-              <input
-                className="appearance-none  block  text-sm p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="أدخل رمز تداول"
-                value={tadawalCode}
-                required
-                onChange={handleInputChange}
-              />
-              {isLoading && (
-                <p className="text-sm font-serif text-gray-600 mt-1">
-                  Loading suggestions...
-                </p>
-              )}
-              {suggestions.length > 0 && (
-                <ul className="border border-gray-300 w-1/2 rounded mt-1 max-h-40 overflow-y-auto bg-white">
-                  {suggestions.map((suggestion, index) => (
-                    <li
-                      key={index}
-                      className="px-2 text-sm font-semibold  py-1 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleSuggestionClick(suggestion)}
-                    >
-                      {suggestion}
-                    </li>
-                  ))}
-                </ul>
-              )}
+          <div className="">
+            <div className="flex   items-center  lg:w-1/2 mt-1  ">
+              <div className="  ">
+                <label className="block uppercase  tracking-wide text-sm text-gray-700 font-semibold ">
+                  رمز تداول
+                </label>
+                <input
+                  className="appearance-none xs:w-24 block  text-sm p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
+                  type="text"
+                  placeholder="أدخل رمز تداول"
+                  value={tadawalCode}
+                  required
+                  onChange={handleInputChange}
+                />
+                {isLoading && (
+                  <p className="text-sm font-serif text-gray-600 mt-1">
+                    Loading suggestions...
+                  </p>
+                )}
+                {suggestions.length > 0 && (
+                  <ul className="border border-gray-300 w-1/2 rounded mt-1 max-h-40 overflow-y-auto bg-white">
+                    {suggestions.map((suggestion, index) => (
+                      <li
+                        key={index}
+                        className="px-2 text-sm font-semibold  py-1 cursor-pointer hover:bg-gray-100"
+                        onClick={() => handleSuggestionClick(suggestion)}
+                      >
+                        {suggestion}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div className="p-1 w-full   ">
+                <label className="block uppercase   font-semibold text-sm tracking-wide text-gray-700 ">
+                  الاسم الكامل{" "}
+                  {/* <span className="font-mono text-xs"> (بالعربية)</span> */}
+                </label>
+                <input
+                  className="appearance-none w-full p-1 block text-sm bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
+                  type="text"
+                  placeholder="الاسم الكامل"
+                  value={fullNameAr}
+                  onChange={(e) => setFullNameAr(e.target.value)}
+                />
+              </div>
             </div>
 
-            <div className="p-1 w-full   ">
-              <label className="block uppercase   font-semibold text-sm tracking-wide text-gray-700 ">
-                الاسم الكامل{" "}
-                {/* <span className="font-mono text-xs"> (بالعربية)</span> */}
-              </label>
-              <input
-                className="appearance-none w-full p-1 block text-sm bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="الاسم الكامل"
-                value={fullNameAr}
-                onChange={(e) => setFullNameAr(e.target.value)}
-              />
+            <div className="flex xs:w-full    lg:w-1/2  justify-between ">
+              <div className=" lg:w-full xs:w-full  p-1">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm ">
+                  الاسم المختصر{" "}
+                </label>
+                <input
+                  className="appearance-none block w-full text-sm  p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
+                  type="text"
+                  placeholder="الاسم المختصر"
+                  value={nickNameAr}
+                  onChange={(e) => setnickNameAr(e.target.value)}
+                />
+              </div>
+
+              <div className="   p-1  ">
+                <label className="block uppercase text-sm tracking-wide text-gray-700 font-semibold ">
+                  القطاع
+                </label>
+                <input
+                  className="appearance-none block lg:w-72 bg-gray-200 text-gray-700 border rounded  p-1 text-sm leading-tight focus:outline-none focus:bg-white"
+                  type="text"
+                  placeholder="أدخل القطاع"
+                  required
+                  value={sector}
+                  onChange={(e) => setSector(e.target.value)}
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex  w-1/2  justify-between ">
-            <div className=" w-full p-1">
-              <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm ">
-                الاسم المختصر{" "}
-              </label>
-              <input
-                className="appearance-none block w-full text-sm  p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="الاسم المختصر"
-                value={nickNameAr}
-                onChange={(e) => setnickNameAr(e.target.value)}
-              />
-            </div>
-
-            <div className="   p-1  ">
-              <label className="block uppercase text-sm tracking-wide text-gray-700 font-semibold ">
-                القطاع
-              </label>
-              <input
-                className="appearance-none block w-72 bg-gray-200 text-gray-700 border rounded  p-1 text-sm leading-tight focus:outline-none focus:bg-white"
-                type="text"
-                placeholder="أدخل القطاع"
-                required
-                value={sector}
-                onChange={(e) => setSector(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm ">
+          <div className="grid grid-cols-2  md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm ">
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر 1
@@ -335,7 +356,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Q1.date}
                   onChange={(date) => handleDateChange("Q1", date)}
-                  className="appearance-none block w-[160px]  text-sm bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] text-sm bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
                 />
@@ -356,7 +377,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               </label>
               <input
                 type="file"
-                className="appearance-none block  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block  w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q2", e.target.files?.[0] || null)
                 }
@@ -365,7 +386,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Q2.date}
                   onChange={(date) => handleDateChange("Q2", date)}
-                  className="appearance-none block w-[182px]  p-1 mt-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px]  p-1 mt-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                 />
                 <input
@@ -392,7 +413,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Q3.date}
                   onChange={(date) => handleDateChange("Q3", date)}
-                  className="appearance-none block w-[182px] mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  mt-1 lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                 />
                 <input
@@ -419,7 +440,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Q4.date}
                   onChange={(date) => handleDateChange("Q4", date)}
-                  className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                 />
                 <input
@@ -446,7 +467,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.S1.date}
                   onChange={(date) => handleDateChange("S1", date)}
-                  className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                 />
                 <input
@@ -473,7 +494,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Year.date}
                   onChange={(date) => handleDateChange("Year", date)}
-                  className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                 />
                 <input
@@ -501,7 +522,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Board.date}
                   onChange={(date) => handleDateChange("Board", date)}
-                  className="appearance-none block w-[182px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px]  mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                 />
                 <input
@@ -517,7 +538,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
           <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
             {loading ? (
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
                 <span className="mt-4 text-gray-700 font-bold">{`جاري التحميل...`}</span>
               </div>
             ) : (
@@ -530,9 +551,9 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             )}
 
             {progress > 0 && progress < 100 && (
-              <div className="w-full bg-gray-200 rounded-full h-4 mt-4">
+              <div className="w-1/2 bg-gray-200 rounded-full h-4 mt-4">
                 <div
-                  className="bg-green-500 h-4 rounded-full transition-all duration-300"
+                  className="bg-gray-500 h-4 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>

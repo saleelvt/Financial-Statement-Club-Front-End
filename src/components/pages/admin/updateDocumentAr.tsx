@@ -174,7 +174,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
   };
 
   return (
-    <div className="">
+    <div className="lg:mx-6">
       <div className="flex flex-col items-center min-h-screen  ">
         <form
           dir="rtl"
@@ -187,13 +187,13 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               onClick={() => navigate(-1)}
             />
           </div>
-          <div className="flex   items-center  w-1/2 mt-1">
+          <div className="flex   items-center  lg:w-1/2 mt-1">
             <div className=" ">
-              <label className="block uppercase tracking-wide text-sm text-gray-700 font-semibold">
+              <label className="block uppercase  tracking-wide text-sm text-gray-700 font-semibold">
                 رمز تداول
               </label>
               <input
-                className="appearance-none  block  text-sm p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none xs:w-24 block  text-sm p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="التداول"
                 value={tadawalCode}
@@ -217,8 +217,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="flex  w-1/2   justify-between ">
-            <div className="w-full p-1">
+          <div className="flex xs:w-full    lg:w-1/2  justify-between">
+            <div className="lg:w-full xs:w-full  p-1">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm">
                 الاسم المختصر
                 <span className="text-xs font-mono">(بالعربية)</span>
@@ -255,7 +255,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 القطاع
               </label>
               <input
-                className="appearance-none block w-72 bg-gray-200 text-gray-700 border rounded  p-1 text-sm leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block lg:w-72 bg-gray-200 text-gray-700 border rounded  p-1 text-sm leading-tight focus:outline-none focus:bg-white"
                 type="text"
                 placeholder="القطاع"
                 required
@@ -265,7 +265,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="grid text-xs grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-2  ">
+          <div className="grid grid-cols-2  md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm  ">
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر 1
@@ -282,7 +282,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Q1.date}
                   onChange={(date) => handleDateChange("Q1", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="التاريخ"
                 />
 
@@ -311,7 +311,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Q2.date}
                   onChange={(date) => handleDateChange("Q2", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
@@ -340,7 +340,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 <DatePicker
                   selected={formData.Q3.date}
                   onChange={(date) => handleDateChange("Q3", date)}
-                  className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
@@ -368,7 +368,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <DatePicker
                 selected={formData.Q4.date}
                 onChange={(date) => handleDateChange("Q4", date)}
-                className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 placeholderText="Choose Date"
               />
               <input
@@ -396,7 +396,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <DatePicker
                 selected={formData.S1.date}
                 onChange={(date) => handleDateChange("S1", date)}
-                className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 placeholderText="Choose Date"
               />
               <input
@@ -423,7 +423,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <DatePicker
                 selected={formData.Year.date}
                 onChange={(date) => handleDateChange("Year", date)}
-                className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 placeholderText="Choose Date"
               />
               <input
@@ -450,7 +450,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <DatePicker
                 selected={formData.Board.date}
                 onChange={(date) => handleDateChange("Board", date)}
-                className="appearance-none block w-[182px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 placeholderText="Choose Date"
               />
               <input
@@ -467,9 +467,9 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
           <div className="flex items-center justify-between mt-4">
             <button
               type="submit"
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-1 px-9 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
             >
-              {loading ? "تحديث..." : "                رفع"}
+              {loading ? "تحديث..." : " رفع"}
             </button>
           </div>
         </form>

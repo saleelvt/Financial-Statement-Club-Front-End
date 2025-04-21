@@ -4,11 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import type { AxiosProgressEvent } from "axios";
-
-import LinearProgress from "@mui/joy/LinearProgress";
-import Typography from "@mui/joy/Typography";
-import Box from "@mui/joy/Box";
 
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
@@ -23,6 +18,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import ValidationModal from "../validationModal";
 import { AddDocument } from "./addDocumentEn";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
 
 interface DocumentPayload {
   fullNameAr: string;
@@ -42,7 +38,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
   const [fullNameAr, setFullNameAr] = useState("");
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
-  const [progress, setProgress] = useState<number>(0);
+  const [progress, setProgress] = useState<any>(null);
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -117,8 +113,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     }));
   };
   useEffect(() => {
-  console.log("current proggress : ", progress);
-  
+    console.log("current proggress : ", progress);
   }, [progress]);
 
   const handleYearChange = (field: FieldKey, year: string) => {
@@ -144,9 +139,12 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     async (adminCredentials: DocumentPayload) => {
       try {
         // ✅ Validate input
-        const isAnyFieldValid = Object.values(adminCredentials.formData).some(
+        const formDataf = adminCredentials.formData;
+        // Check if at least one field is fully filled
+        const isAnyFieldValid = Object.values(formDataf).some(
           (field) => field.file && field.date && field.year
         );
+  
         if (!isAnyFieldValid) {
           setErrorMessage(
             "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year."
@@ -154,7 +152,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
           setIsModalOpen(true);
           return;
         }
-  
+
         // ✅ Create FormData
         const formData = new FormData();
         for (const [key, value] of Object.entries(adminCredentials.formData)) {
@@ -163,41 +161,35 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             formData.append(`${key}Date`, value.date.toISOString());
           if (value.year) formData.append(`${key}Year`, value.year);
         }
+
         formData.append("fullNameAr", adminCredentials.fullNameAr);
         formData.append("nickNameAr", adminCredentials.nickNameAr);
         formData.append("tadawalCode", adminCredentials.tadawalCode);
         formData.append("sector", adminCredentials.sector);
-  
 
-        // ✅ Send POST with real upload progress tracking
-        const response = await axios.post(
-          "/api/v1/admin/addDocumentArabic",
+
+        console.log("FormData contents:");
+        formData.forEach((value, key) => {
+          console.log("my key of the arabic aned : ",key,"some data of the tree: ", value);
+        });
+
+        const response = await axiosIn.post(  "/api/v1/admin/addDocumentArabic",
           formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-            onUploadProgress: (event: AxiosProgressEvent) => {
-              const { loaded, total } = event;
-              
+            onUploadProgress: (data) => {
+              const { loaded, total } = data;
               // Set a smaller chunk size to force more frequent updates
-             
               if (total) {
-                // Calculate progress based on loaded/total ratio
-                const percentCompleted = Math.round((loaded / total) * 100);
-                console.log("Upload Progress:", percentCompleted, "% | Loaded:", loaded, "| Total:", total);
-                setProgress(percentCompleted);
-              } else {
-                // Fallback for when total is not available
-                console.log("Loaded bytes:", loaded);
-                // Use a progressive estimation approach here
+                setProgress(Math.round((loaded / total) * 100));
               }
+              // Calculate progress based on loaded/total ratio
             },
           }
         );
-  
- 
-  
+        console.log("the respon fo the add arabic doc: ", response);
         return response.data;
       } catch (error: any) {
         setErrorMessage(
@@ -207,7 +199,6 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       }
     }
   );
-  
 
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -222,17 +213,18 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         createdAt: new Date().toISOString(),
       };
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
+  
 
       if (response && response.success) {
         toast.success(response.message);
 
         // Only set to 100% if not already there from the progress events
-        // if (progress < 100) {
-        //   setProgress(100);
-        // }
+        if (progress < 100) {
+          setProgress(100);
+        }
 
         // Reset form data
-        setFormData(
+       await  setFormData(
           (prevFormData) =>
             Object.fromEntries(
               Object.entries(prevFormData).map(([key, value]) => [
@@ -243,8 +235,15 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         );
       }
     } catch (error: any) {
-      console.log("Error submitting form:", error);
-      toast.error("Failed to upload document");
+      Swal.fire({
+               icon: "error",
+               title: "Error!",
+               text: error.message,
+               timer: 3000,
+               toast: true,
+               showConfirmButton: false,
+               timerProgressBar: true,
+             });
       setProgress(0);
     }
   };
@@ -556,34 +555,12 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             )}
 
             {progress > 0 && progress < 100 && (
-              <Box sx={{ bgcolor: "white", width: "100%" }}>
-                <LinearProgress
-                  determinate
-                  variant="outlined"
-                  color="neutral"
-                  size="sm"
-                  thickness={32}
-                  value={progress}
-                  sx={{
-                    "--LinearProgress-radius": "0px",
-                    "--LinearProgress-progressThickness": "24px",
-                    boxShadow: "sm",
-                    borderColor: "neutral.500",
-                  }}
-                >
-                  <Typography
-                    level="body-xs"
-                    textColor="common.white"
-                    sx={{ fontWeight: "xl", mixBlendMode: "difference" }}
-                  >
-                    LOADING… {`${Math.round(progress)}%`}
-                  </Typography>
-                </LinearProgress>
-              </Box>
-            )}
-
-            {progress > 0 && progress < 100 && (
-              <p className="text-bold font-semibold mr-4">{progress}</p>
+              <div className="w-1/2 px-4 bg-gray-200 rounded-full h-4 mt-4">
+                <div
+                  className="bg-gray-500 h-4 rounded-full transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
             )}
           </div>
         </form>

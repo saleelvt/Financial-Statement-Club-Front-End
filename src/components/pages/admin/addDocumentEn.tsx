@@ -4,9 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import axios from "axios";
 import { URL } from "../../../config/constants";
-import type { AxiosProgressEvent } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import ValidationModal from "../validationModal";
 
 export type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
 export const axiosIn = axios.create({
@@ -24,10 +23,6 @@ import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import LinearProgress from "@mui/joy/LinearProgress";
-import Typography from "@mui/joy/Typography";
-import Box from "@mui/joy/Box";
-
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
@@ -42,7 +37,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
   ({ formDataEn, tadawalCodeEn }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { loading } = useSelector((state: RootState) => state.adminEn);
-     const [progress, setProgress] = useState<number>(0);
+    const [progress, setProgress] = useState<number>(0);
+      const [isModalOpen, setIsModalOpen] = useState(false);
+        const [errorMessage, setErrorMessage] = useState("");
     const [fullNameEn, setFullNameEn] = useState("");
     const [nickNameEn, setnickNameEn] = useState("");
     const [tadawalCode, setTadawalCode] = useState<string>(tadawalCodeEn || "");
@@ -208,38 +205,37 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
       }));
     };
 
-
-
-
-
-
-
-
-
-     const addDocumentEnglish = createAsyncThunk(
+    const addDocumentEnglish = createAsyncThunk(
       "admin/addDocument",
-      async (adminCredentials: DocumentPayload, { rejectWithValue }) => {
+      async (adminCredentials: DocumentPayload) => {
         try {
-    
-    
           const formDataf = adminCredentials.formData;
           const isAnyFieldValid = Object.values(formDataf).some(
             (field) => field.file && field.date && field.year
           );
-    
+
           if (!isAnyFieldValid) {
-            return rejectWithValue({
-              message:
-                "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year.",
-            });
+            setErrorMessage(
+              "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year."
+            );
+            setIsModalOpen(true);
+            return;
           }
-    
+
           const formData = new FormData();
-          for (const [key, value] of Object.entries(adminCredentials?.formData || {} )) {
+          for (const [key, value] of Object.entries(
+            adminCredentials?.formData || {}
+          )) {
             if (
-              value && typeof value === "object" && "file" in value && value.file
+              value &&
+              typeof value === "object" &&
+              "file" in value &&
+              value.file
             ) {
-              if (typeof value.file === "string" || value.file instanceof File) {
+              if (
+                typeof value.file === "string" ||
+                value.file instanceof File
+              ) {
                 formData.append(key, value.file);
               } else {
                 console.warn(`Invalid file type for key: ${key}`);
@@ -263,47 +259,39 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           formData.append("nickNameEn", adminCredentials?.nickNameEn);
           formData.append("tadawalCode", adminCredentials?.tadawalCode);
           formData.append("sector", adminCredentials?.sector);
-    
+
           console.log("FormData contents:");
           formData.forEach((value, key) => {
             console.log(key, value);
           });
-    
-          const response = await axiosIn.post(`/api/v1/admin/addDocumentEnglish`,  formData, {
-                      headers: {
-                        "Content-Type": "multipart/form-data",
-                      },
-                      onUploadProgress: (event: AxiosProgressEvent) => {
-                        const { loaded, total } = event;
-                        console.log("my proggress of the data : ", loaded, "Total : ",total );
-                        
-                        if (total) {
-                          const percentCompleted = Math.round((loaded / total) * 100);
-                          console.log("Real Upload Progress:", percentCompleted, "%");
-                          setProgress(percentCompleted)
-                        }
-                      },
-                    }
+
+          const response = await axiosIn.post(
+            `/api/v1/admin/addDocumentEnglish`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+              onUploadProgress: (data) => {
+                const { loaded, total } = data;
+                // Set a smaller chunk size to force more frequent updates
+                if (total) {
+                  setProgress(Math.round((loaded / total) * 100));
+                }
+                // Calculate progress based on loaded/total ratio
+              },
+            }
           );
           return response.data;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-          if (error.response) {
-            return rejectWithValue(error.response.data);
-          }
-          return rejectWithValue({ message: "Something went wrong!" });
+          setErrorMessage(
+            error.response?.data?.message || "Something went wrong!"
+          );
+          setIsModalOpen(true);
         }
       }
     );
-    
-
-
-
-
-
-
-
-
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -317,8 +305,26 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           createdAt: new Date().toISOString(), // Example value
         };
 
-        await dispatch(addDocumentEnglish(payloadData)).unwrap();
-        toast.success("Document successfully added");
+       const response= await dispatch(addDocumentEnglish(payloadData)).unwrap();
+        if (response && response.success) {
+          toast.success(response.message);
+  
+          // Only set to 100% if not already there from the progress events
+          if (progress < 100) {
+            setProgress(100);
+          }
+  
+          // Reset form data
+         await  setFormData(
+            (prevFormData) =>
+              Object.fromEntries(
+                Object.entries(prevFormData).map(([key, value]) => [
+                  key as keyof typeof prevFormData,
+                  { ...value, file: null },
+                ])
+              ) as Record<FieldKey, FormField>
+          );
+        }
       } catch (error: any) {
         Swal.fire({
           icon: "error",
@@ -329,6 +335,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           showConfirmButton: false,
           timerProgressBar: true,
         });
+        setProgress(0);
       }
     };
 
@@ -594,7 +601,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   }
                 />
                 <div className=" flex justify-start gap-1  ">
-                  <DatePicker 
+                  <DatePicker
                     selected={formData.Board.date}
                     onChange={(date) => handleDateChange("Board", date)}
                     className="appearance-none  block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
@@ -614,7 +621,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
             <div className="flex   justify-end items-center mt-2 w-full h-12 relative">
               {loading ? (
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
+                  <div className="w-4 h-4 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
                   <span className="mt-4 text-gray-700 font-bold">{`Submiting...`}</span>
                 </div>
               ) : (
@@ -626,39 +633,21 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </button>
               )}
 
-
-{progress > 0 && progress < 100 && (
-              <Box sx={{ bgcolor: "white", width: "100%" }}>
-                <LinearProgress
-                  determinate
-                  variant="outlined"
-                  color="neutral"
-                  size="sm"
-                  thickness={32}
-                  value={progress}
-                  sx={{
-                    "--LinearProgress-radius": "0px",
-                    "--LinearProgress-progressThickness": "24px",
-                    boxShadow: "sm",
-                    borderColor: "neutral.500",
-                  }}
-                >
-                  <Typography
-                    level="body-xs"
-                    textColor="common.white"
-                    sx={{ fontWeight: "xl", mixBlendMode: "difference" }}
-                  >
-                    LOADING… {`${Math.round(progress)}%`}
-                  </Typography>
-                </LinearProgress>
-              </Box>
-            )}
-
-            {progress > 0 && progress < 100 && (
-              <p className="text-bold font-semibold mr-4">{progress}</p>
-            )}
+              {progress > 0 && progress < 100 && (
+                <div className="w-1/2 px-4 bg-gray-200 rounded-full h-4 mt-4">
+                  <div
+                    className="bg-gray-500 h-4 rounded-full transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  ></div>
+                </div>
+              )}
             </div>
           </form>
+          <ValidationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message={errorMessage}
+        />
           {/* <AddDocumentArabic formDataEn={formData} tadawalCodeEn={tadawalCode}  /> */}
         </div>
       </div>

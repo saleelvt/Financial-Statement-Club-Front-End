@@ -163,12 +163,10 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             formData.append(`${key}Date`, value.date.toISOString());
           if (value.year) formData.append(`${key}Year`, value.year);
         }
-  
         formData.append("fullNameAr", adminCredentials.fullNameAr);
         formData.append("nickNameAr", adminCredentials.nickNameAr);
         formData.append("tadawalCode", adminCredentials.tadawalCode);
         formData.append("sector", adminCredentials.sector);
-  
   
 
         // ✅ Send POST with real upload progress tracking
@@ -181,12 +179,18 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             },
             onUploadProgress: (event: AxiosProgressEvent) => {
               const { loaded, total } = event;
-              console.log("my proggress of the data : ", loaded, "Total : ",total );
               
+              // Set a smaller chunk size to force more frequent updates
+             
               if (total) {
+                // Calculate progress based on loaded/total ratio
                 const percentCompleted = Math.round((loaded / total) * 100);
-                console.log("Real Upload Progress:", percentCompleted, "%");
-                setProgress(percentCompleted)
+                console.log("Upload Progress:", percentCompleted, "% | Loaded:", loaded, "| Total:", total);
+                setProgress(percentCompleted);
+              } else {
+                // Fallback for when total is not available
+                console.log("Loaded bytes:", loaded);
+                // Use a progressive estimation approach here
               }
             },
           }
@@ -241,7 +245,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     } catch (error: any) {
       console.log("Error submitting form:", error);
       toast.error("Failed to upload document");
-      // setProgress(0);
+      setProgress(0);
     }
   };
   return (

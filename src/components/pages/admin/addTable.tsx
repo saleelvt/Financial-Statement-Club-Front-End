@@ -4,17 +4,17 @@ import { toPng } from "html-to-image";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-
 import { useSelector } from "react-redux";
-
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { commonRequest } from "../../../config/api";
 import { config } from "process";
-
+import { PhotoProvider, PhotoView } from "react-photo-view"; // Make sure to import this
 import BalaceSheet from "./Tables/BalanceSheet/balanceSheetAr";
 import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheet";
+import { ITable } from "./Tables/BalanceSheet/interface";
+// import { DocumentSliceAr, DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 
 const AddNewTable = React.memo(() => {
   const navigate = useNavigate();
@@ -31,10 +31,17 @@ const AddNewTable = React.memo(() => {
   const [nickName, setNickName] = useState("");
   const [fullName, setFullName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [tableDataAr, setTableDataAr] = useState<ITable>();
+  const [tableData, setTableData] = useState<ITable>();
+  const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
+  const [tableIframeSrcAr, setTableIframeSrcAr] = useState<string>("");
+
+  //   const [FormDocument, setDocument] = useState<DocumentSliceEn[] | DocumentSliceAr[]>();
+  // const []=useState<>(null)
   const [years, setYears] = useState<string[]>([]); // List of years
   const [selectedYear, setSelectedYear] = useState("");
   const [quarterYear, setQuarterYear] = useState("");
-  const [language,setLanguage]=useState<string|null>(null)
+  const [language, setLanguage] = useState<string | null>(null);
   const [quarters, setQuarters] = useState<{
     [key: string]: Array<{ quarter: string; date: string }>;
   }>({}); // Quarters and their dates for each year
@@ -49,15 +56,30 @@ const AddNewTable = React.memo(() => {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Update tableIframeSrc when selectedTableType or tableData changes
+  useEffect(() => {
+    if (selectedTableType) {
+      const arSrc = tableDataAr?.[selectedTableType as keyof ITable] || "";
+      const enSrc = tableData?.[selectedTableType as keyof ITable] || "";
+  
+      setTableIframeSrcAr(arSrc);
+      setTableIframeSrc(enSrc);
+    } else {
+      setTableIframeSrcAr("");
+      setTableIframeSrc("");
+    }
+  }, [selectedTableType, tableData, tableDataAr]);
+  
+
   const captureScreen = async (language: string): Promise<void> => {
     if(language){
-      setLanguage(language)
+      setLanguage(language);
     }
-          const node = language === "Arabic"
-    ? document.getElementById("capture-areaAr")
-    : document.getElementById("capture-area");
+    const node = language === "Arabic"
+      ? document.getElementById("capture-areaAr")
+      : document.getElementById("capture-area");
   
-  if (!node) return;
+    if (!node) return;
 
     setTakeShot(true);
     console.log("Taking Screenshot...");
@@ -166,6 +188,19 @@ const AddNewTable = React.memo(() => {
 
       if (responseTow.payload?.success === true) {
         toast.success(responseTow.payload.message);
+        
+        // Update the local table data after successful upload
+        if (language === "Arabic" && tableDataAr) {
+          setTableDataAr({
+            ...tableDataAr,
+            [selectedTableType]: responseTow.payload.url || "",
+          });
+        } else if (language === "English" && tableData) {
+          setTableData({
+            ...tableData,
+            [selectedTableType]: responseTow.payload.url || "",
+          });
+        }
       }
     } catch (error) {
       console.error("Error capturing screenshot:", error);
@@ -188,10 +223,12 @@ const AddNewTable = React.memo(() => {
       setTimeout(() => setTakeShot(false), 200);
     }
   };
+  
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
   };
+  
   const handleQuarterYear = async (quarter: string) => {
     await setQuarterYear(quarter);
     console.log("Selected Quarter", quarter);
@@ -224,6 +261,7 @@ const AddNewTable = React.memo(() => {
       setSuggestions([]);
     }
   };
+  
   const handleSuggestionClick = async (suggestion: string) => {
     const adminLanguage = "English";
     const response = await commonRequest(
@@ -234,7 +272,7 @@ const AddNewTable = React.memo(() => {
     );
     const mydata = response.data.data;
     console.log("Tadawal code response:", mydata);
-
+    // setDocument(mydata)
     setTadawalCode(mydata[0].tadawalCode);
     setNickName(mydata[0].nickNameEn);
     setFullName(mydata[0].fullNameEn);
@@ -288,10 +326,100 @@ const AddNewTable = React.memo(() => {
   useEffect(() => {
     if (adminLanguage) setLanguage(adminLanguage);
   }, [adminLanguage]);
+  
+  // useEffect(() => {
+  //   console.log("kunana data ", tableDataAr, "dkjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjf", tableData);
+  // }, [tableData, tableDataAr]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await commonRequest(
+          "GET",
+          `/api/v1/admin/getDataWithYear/Quarter/tadawalCodeForTableView?year=${selectedYear}&quarterYear=${quarterYear}&tadawulCode=${tadawalCode}`,
+          config,
+          {}
+        );
+        setTableDataAr(response.data.arabicTable);
+        setTableData(response.data.englishTable);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [selectedYear, quarterYear, tadawalCode]);
+
+  // Function to render content based on tableIframeSrc availability
+  const renderTableContent = () => {
+    if (tableIframeSrc) {
+      return (
+        <div className="w-full flex justify-between mt-4">
+          <div className="w-1/2">
+          <PhotoProvider>
+            <PhotoView src={tableIframeSrc}>
+              <img
+                src={tableIframeSrc}
+                alt="S3 Image"
+                style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
+              />
+            </PhotoView>
+          </PhotoProvider>
+          </div>
+          <div className="w-1/2 ">
+          <PhotoProvider>
+            <PhotoView src={tableIframeSrcAr}>
+              <img
+                src={tableIframeSrcAr}
+                alt="S3 Image"
+                style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
+              />
+            </PhotoView>
+          </PhotoProvider>
+          </div>
+          
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex w-full gap-3">
+          <form className="">
+            <div id="capture-area" className="gap-3 w-full">
+              <BalaceSheetFormAr TakingShort={takeShot} />
+            </div>
+            <div className="mt-2 flex justify-end">
+              <button 
+                className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                onClick={() => captureScreen("English")}
+                disabled={takeShot}
+                type="button"
+              >
+                {takeShot ? "Processing..." : "Submit"}
+              </button>
+            </div>
+          </form>
+          <form className="">
+            <div id="capture-areaAr" className="gap-3 w-full">
+              <BalaceSheet TakingShort={takeShot} />
+            </div>
+            <div className="mt-2 flex justify-start">
+              <button
+                className="bg-slate-300 rounded text-black py-1 px-8 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                onClick={() => captureScreen("Arabic")}
+                disabled={takeShot}
+                type="button"
+              >
+                {takeShot ? "   رفع..." : " رفع"}
+              </button>
+            </div>
+          </form>
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="p-1">
-      <div className="flex  flex-wrap justify-between  items-center">
+      <div className="flex flex-wrap justify-between items-center">
         <FaArrowCircleLeft
           className="text-3xl text-gray-700"
           onClick={() => navigate("/home")}
@@ -383,7 +511,7 @@ const AddNewTable = React.memo(() => {
 
         {/* Year Dropdown */}
         {years.length > 0 && (
-          <div className="relative">
+          <div className="relative" ref={dropdownRef}>
             <label className="block mb-1">Year</label>
             <div
               className="p-1 w-44 border bg-white text-black border-gray-300 rounded shadow-sm cursor-pointer"
@@ -412,7 +540,7 @@ const AddNewTable = React.memo(() => {
         )}
 
         {/* Quarter Section */}
-        {selectedYear && quarters[selectedYear] && (
+        {selectedYear && quarters[selectedYear] && ( 
           <div>
             <label className="block mb-1">Report</label>
             <select
@@ -433,6 +561,7 @@ const AddNewTable = React.memo(() => {
             </select>
           </div>
         )}
+        
         {/* Table Type Dropdown */}
         {selectedYear && (
           <div>
@@ -455,40 +584,13 @@ const AddNewTable = React.memo(() => {
           </div>
         )}
       </div>
-      {/* Final Result Display */}
-      <div className="flex w-full gap-3">
-        <form className="">
-          <div id="capture-area" className=" gap-3  w-full ">
-            <BalaceSheetFormAr TakingShort={takeShot} />
-          </div>
-          <div className="mt-2 flex justify-end">
-            {" "}
-            <button
-              className="bg-slate-300 rounded  text-black  py-1 px-5 hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
-              onClick={() => captureScreen("English")}
-              disabled={takeShot}
-            >
-              {takeShot ? "Processing..." : "Submit"}
-            </button>
-          </div>
-        </form>
-        <form className="">
-          <div id="capture-areaAr" className=" gap-3  w-full ">
-            <BalaceSheet TakingShort={takeShot} />
-          </div>
-          <div className="mt-2 flex justify-start">
-            {" "}  
-            <button
-              className="bg-slate-300 rounded  text-black py-1 px-8  hover:bg-slate-400  font-semibold mx-2 font-serif text-sm"
-              onClick={() => captureScreen("Arabic")}
-              disabled={takeShot}
-            >
-              {takeShot ? "   رفع..." : " رفع"}
-            </button>
-          </div>
-        </form>
-      </div>
+      
+      {/* Table Content - Conditionally render based on whether we have an image URL */}
+      {renderTableContent()}
     </div>
+
+
+
   );
 });
 

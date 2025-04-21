@@ -12,99 +12,99 @@ type BalaceSheetFormArProps = {
 const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingShort }) => {
   // Updated state declarations with empty strings as initial values
 
-  const [nonCurrentAssets, setNonCurrentAssets] = useState<string[]>(
+  const [nonCurrentAssetsAr, setNonCurrentAssets] = useState<string[]>(
     Array(12).fill("")
   );
-  const [nonCurrentSubAssets, setNonCurrentSubAssets] = useState<string[]>(
+  const [nonCurrentSubAssetsAr, setNonCurrentSubAssets] = useState<string[]>(
     Array(3).fill("")
   );
-  const [currentAssets, setCurrentAssets] = useState<string[]>(
+  const [currentAssetsAr, setCurrentAssets] = useState<string[]>(
     Array(12).fill("")
   );
-  const [currentSubAssets, setCurrentSubAssets] = useState<string[]>(
+  const [currentSubAssetsAr, setCurrentSubAssets] = useState<string[]>(
     Array(3).fill("")
   );
 
   // New state for Date 2 columns with empty strings
-  const [nonCurrentAssetsDate2, setNonCurrentAssetsDate2] = useState<string[]>(
+  const [nonCurrentAssetsDate2Ar, setNonCurrentAssetsDate2] = useState<string[]>(
     Array(12).fill("")
   );
-  const [nonCurrentSubAssetsDate2, setNonCurrentSubAssetsDate2] = useState<
+  const [nonCurrentSubAssetsDate2Ar, setNonCurrentSubAssetsDate2] = useState<
     string[]
   >(Array(3).fill(""));
-  const [currentAssetsDate2, setCurrentAssetsDate2] = useState<string[]>(
+  const [currentAssetsDate2Ar, setCurrentAssetsDate2] = useState<string[]>(
     Array(12).fill("")
   );
-  const [currentSubAssetsDate2, setCurrentSubAssetsDate2] = useState<string[]>(
+  const [currentSubAssetsDate2Ar, setCurrentSubAssetsDate2] = useState<string[]>(
     Array(3).fill("")
   );
 
   // Labels remain as strings
-  const [nonCurrentLabels, setNonCurrentLabels] = useState<string[]>(
+  const [nonCurrentLabelsAr, setNonCurrentLabels] = useState<string[]>(
     Array(12).fill("")
   );
-  const [nonCurrentSubLabels, setNonCurrentSubLabels] = useState<string[]>(
+  const [nonCurrentSubLabelsAr, setNonCurrentSubLabels] = useState<string[]>(
     Array(3).fill("")
   );
-  const [currentLabels, setCurrentLabels] = useState<string[]>(
+  const [currentLabelsAr, setCurrentLabels] = useState<string[]>(
     Array(12).fill("")
   );
-  const [currentSubLabels, setCurrentSubLabels] = useState<string[]>(
+  const [currentSubLabelsAr, setCurrentSubLabels] = useState<string[]>(
     Array(3).fill("")
   );
 
   // States for equity and liabilities with empty strings
-  const [equityItems, setEquityItems] = useState<string[]>(Array(11).fill(""));
-  const [equityItemsDate2, setEquityItemsDate2] = useState<string[]>(
+  const [equityItemsAr, setEquityItems] = useState<string[]>(Array(12).fill(""));
+  const [equityItemsDate2Ar, setEquityItemsDate2] = useState<string[]>(
     Array(12).fill("")
   );
-  const [equityLabels, setEquityLabels] = useState<string[]>(
+  const [equityLabelsAr, setEquityLabels] = useState<string[]>(
     Array(12).fill("")
   );
 
-  const [equitySubItems, setEquitySubItems] = useState<string[]>(
+  const [equitySubItemsAr, setEquitySubItems] = useState<string[]>(
     Array(3).fill("")
   );
-  const [equitySubItemsDate2, setEquitySubItemsDate2] = useState<string[]>(
+  const [equitySubItemsDate2Ar, setEquitySubItemsDate2] = useState<string[]>(
     Array(3).fill("")
   );
-  const [equitySubLabels, setEquitySubLabels] = useState<string[]>(
+  const [equitySubLabelsAr, setEquitySubLabels] = useState<string[]>(
     Array(3).fill("")
   );
 
-  const [nonCurrentLiabilities, setNonCurrentLiabilities] = useState<string[]>(
+  const [nonCurrentLiabilitiesAr, setNonCurrentLiabilities] = useState<string[]>(
     Array(12).fill("")
   );
-  const [nonCurrentLiabilitiesDate2, setNonCurrentLiabilitiesDate2] = useState<
+  const [nonCurrentLiabilitiesDate2Ar, setNonCurrentLiabilitiesDate2] = useState<
     string[]
   >(Array(12).fill(""));
-  const [nonCurrentLiabilitiesLabels, setNonCurrentLiabilitiesLabels] =
+  const [nonCurrentLiabilitiesLabelsAr, setNonCurrentLiabilitiesLabels] =
     useState<string[]>(Array(12).fill(""));
 
-  const [nonCurrentSubLiabilities, setNonCurrentSubLiabilities] = useState<
+  const [nonCurrentSubLiabilitiesAr, setNonCurrentSubLiabilities] = useState<
     string[]
   >(Array(3).fill(""));
-  const [nonCurrentSubLiabilitiesDate2, setNonCurrentSubLiabilitiesDate2] =
+  const [nonCurrentSubLiabilitiesDate2Ar, setNonCurrentSubLiabilitiesDate2] =
     useState<string[]>(Array(3).fill(""));
-  const [nonCurrentSubLiabilitiesLabels, setNonCurrentSubLiabilitiesLabels] =
+  const [nonCurrentSubLiabilitiesLabelsAr, setNonCurrentSubLiabilitiesLabels] =
     useState<string[]>(Array(3).fill(""));
-  const [currentLiabilities, setCurrentLiabilities] = useState<string[]>(
+  const [currentLiabilitiesAr, setCurrentLiabilities] = useState<string[]>(
     Array(12).fill("")
   );
-  const [currentLiabilitiesDate2, setCurrentLiabilitiesDate2] = useState<
+  const [currentLiabilitiesDate2Ar, setCurrentLiabilitiesDate2] = useState<
     string[]
   >(Array(12).fill(""));
-  const [currentLiabilitiesLabels, setCurrentLiabilitiesLabels] = useState<
+  const [currentLiabilitiesLabelsAr, setCurrentLiabilitiesLabels] = useState<
     string[]
   >(Array(12).fill(""));
 
-  const [currentSubLiabilities, setCurrentSubLiabilities] = useState<string[]>(
+  const [currentSubLiabilitiesAr, setCurrentSubLiabilities] = useState<string[]>(
     Array(3).fill("")
   );
-  const [currentSubLiabilitiesDate2, setCurrentSubLiabilitiesDate2] = useState<
+  const [currentSubLiabilitiesDate2Ar, setCurrentSubLiabilitiesDate2] = useState<
     string[]
   >(Array(3).fill(""));
-  const [currentSubLiabilitiesLabels, setCurrentSubLiabilitiesLabels] =
+  const [currentSubLiabilitiesLabelsAr, setCurrentSubLiabilitiesLabels] =
     useState<string[]>(Array(3).fill(""));
 
   // Updated handleChange function to work with string values
@@ -116,43 +116,43 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
   ) => {
     if (column === "label") {
       if (type === "nonCurrentLabel") {
-        const updated = [...nonCurrentLabels];
+        const updated = [...nonCurrentLabelsAr];
         updated[index] = value;
         setNonCurrentLabels(updated);
       } else if (type === "nonCurrentSubLabel") {
-        const updated = [...nonCurrentSubLabels];
+        const updated = [...nonCurrentSubLabelsAr];
         updated[index] = value;
         setNonCurrentSubLabels(updated);
       } else if (type === "currentLabel") {
-        const updated = [...currentLabels];
+        const updated = [...currentLabelsAr];
         updated[index] = value;
         setCurrentLabels(updated);
       } else if (type === "currentSubLabel") {
-        const updated = [...currentSubLabels];
+        const updated = [...currentSubLabelsAr];
         updated[index] = value;
         setCurrentSubLabels(updated);
       } else if (type === "equityLabel") {
-        const updated = [...equityLabels];
+        const updated = [...equityLabelsAr];
         updated[index] = value;
         setEquityLabels(updated);
       } else if (type === "equitySubLabel") {
-        const updated = [...equitySubLabels];
+        const updated = [...equitySubLabelsAr];
         updated[index] = value;
         setEquitySubLabels(updated);
       } else if (type === "nonCurrentLiabilityLabel") {
-        const updated = [...nonCurrentLiabilitiesLabels];
+        const updated = [...nonCurrentLiabilitiesLabelsAr];
         updated[index] = value;
         setNonCurrentLiabilitiesLabels(updated);
       } else if (type === "nonCurrentSubLiabilityLabel") {
-        const updated = [...nonCurrentSubLiabilitiesLabels];
+        const updated = [...nonCurrentSubLiabilitiesLabelsAr];
         updated[index] = value;
         setNonCurrentSubLiabilitiesLabels(updated);
       } else if (type === "currentLiabilityLabel") {
-        const updated = [...currentLiabilitiesLabels];
+        const updated = [...currentLiabilitiesLabelsAr];
         updated[index] = value;
         setCurrentLiabilitiesLabels(updated);
       } else if (type === "currentSubLiabilityLabel") {
-        const updated = [...currentSubLiabilitiesLabels];
+        const updated = [...currentSubLiabilitiesLabelsAr];
         updated[index] = value;
         setCurrentSubLiabilitiesLabels(updated);
       }
@@ -162,85 +162,85 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
     // For numeric fields, we store as strings but validate numeric input
     if (column === "date1") {
       if (type === "nonCurrent") {
-        const updated = [...nonCurrentAssets];
+        const updated = [...nonCurrentAssetsAr]
         updated[index] = value;
         setNonCurrentAssets(updated);
       } else if (type === "nonCurrentSub") {
-        const updated = [...nonCurrentSubAssets];
+        const updated = [...nonCurrentSubAssetsAr];
         updated[index] = value;
         setNonCurrentSubAssets(updated);
       } else if (type === "current") {
-        const updated = [...currentAssets];
+        const updated = [...currentAssetsAr];
         updated[index] = value;
         setCurrentAssets(updated);
       } else if (type === "currentSub") {
-        const updated = [...currentSubAssets];
+        const updated = [...currentSubAssetsAr];
         updated[index] = value;
         setCurrentSubAssets(updated);
       } else if (type === "equity") {
-        const updated = [...equityItems];
+        const updated = [...equityItemsAr];
         updated[index] = value;
         setEquityItems(updated);
       } else if (type === "equitySub") {
-        const updated = [...equitySubItems];
+        const updated = [...equitySubItemsAr];
         updated[index] = value;
         setEquitySubItems(updated);
       } else if (type === "nonCurrentLiability") {
-        const updated = [...nonCurrentLiabilities];
+        const updated = [...nonCurrentLiabilitiesAr];
         updated[index] = value;
         setNonCurrentLiabilities(updated);
       } else if (type === "nonCurrentSubLiability") {
-        const updated = [...nonCurrentSubLiabilities];
+        const updated = [...nonCurrentSubLiabilitiesAr];
         updated[index] = value;
         setNonCurrentSubLiabilities(updated);
       } else if (type === "currentLiability") {
-        const updated = [...currentLiabilities];
+        const updated = [...currentLiabilitiesAr];
         updated[index] = value;
         setCurrentLiabilities(updated);
       } else if (type === "currentSubLiability") {
-        const updated = [...currentSubLiabilities];
+        const updated = [...currentSubLiabilitiesAr];
         updated[index] = value;
         setCurrentSubLiabilities(updated);
       }
     } else if (column === "date2") {
       if (type === "nonCurrent") {
-        const updated = [...nonCurrentAssetsDate2];
+        const updated = [...nonCurrentAssetsDate2Ar];
         updated[index] = value;
         setNonCurrentAssetsDate2(updated);
       } else if (type === "nonCurrentSub") {
-        const updated = [...nonCurrentSubAssetsDate2];
+        const updated = [...nonCurrentSubAssetsDate2Ar];
         updated[index] = value;
         setNonCurrentSubAssetsDate2(updated);
       } else if (type === "current") {
-        const updated = [...currentAssetsDate2];
+        const updated = [...currentAssetsDate2Ar];
         updated[index] = value;
         setCurrentAssetsDate2(updated);
       } else if (type === "currentSub") {
-        const updated = [...currentSubAssetsDate2];
+        const updated = [...currentSubAssetsDate2Ar];
         updated[index] = value;
         setCurrentSubAssetsDate2(updated);
       } else if (type === "equity") {
-        const updated = [...equityItemsDate2];
+        const updated = [...equityItemsDate2Ar];
         updated[index] = value;
         setEquityItemsDate2(updated);
       } else if (type === "equitySub") {
-        const updated = [...equitySubItemsDate2];
+        const updated = [...equitySubItemsDate2Ar];
         updated[index] = value;
         setEquitySubItemsDate2(updated);
       } else if (type === "nonCurrentLiability") {
-        const updated = [...nonCurrentLiabilitiesDate2];
+        const updated = [...nonCurrentLiabilitiesDate2Ar];
         updated[index] = value;
         setNonCurrentLiabilitiesDate2(updated);
       } else if (type === "nonCurrentSubLiability") {
-        const updated = [...nonCurrentSubLiabilitiesDate2];
+        const updated = [...nonCurrentSubLiabilitiesDate2Ar];
         updated[index] = value;
         setNonCurrentSubLiabilitiesDate2(updated);
       } else if (type === "currentLiability") {
-        const updated = [...currentLiabilitiesDate2];
+        const updated = [...currentLiabilitiesDate2Ar];
         updated[index] = value;
         setCurrentLiabilitiesDate2(updated);
       } else if (type === "currentSubLiability") {
-        const updated = [...currentSubLiabilitiesDate2];
+        const updated = [...currentSubLiabilitiesDate2Ar];
         updated[index] = value;
         setCurrentSubLiabilitiesDate2(updated);
       }
@@ -260,56 +260,56 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
   };
 
   // Calculate totals for Assets
-  const firstTotalNonCurrent = sumStringValues(nonCurrentAssets);
+  const firstTotalNonCurrent = sumStringValues(nonCurrentAssetsAr);
   const secondTotalNonCurrent =
-    firstTotalNonCurrent + sumStringValues(nonCurrentSubAssets);
-  const firstTotalCurrent = sumStringValues(currentAssets);
+    firstTotalNonCurrent + sumStringValues(nonCurrentSubAssetsAr);
+  const firstTotalCurrent = sumStringValues(currentAssetsAr);
   const secondTotalCurrent =
-    firstTotalCurrent + sumStringValues(currentSubAssets);
+    firstTotalCurrent + sumStringValues(currentSubAssetsAr);
   const totalAssets = secondTotalNonCurrent + secondTotalCurrent;
 
   // Calculate totals for Date 2
-  const firstTotalNonCurrentDate2 = sumStringValues(nonCurrentAssetsDate2);
+  const firstTotalNonCurrentDate2 = sumStringValues(nonCurrentAssetsDate2Ar);
   const secondTotalNonCurrentDate2 =
-    firstTotalNonCurrentDate2 + sumStringValues(nonCurrentSubAssetsDate2);
-  const firstTotalCurrentDate2 = sumStringValues(currentAssetsDate2);
+    firstTotalNonCurrentDate2 + sumStringValues(nonCurrentSubAssetsDate2Ar);
+  const firstTotalCurrentDate2 = sumStringValues(currentAssetsDate2Ar);
   const secondTotalCurrentDate2 =
-    firstTotalCurrentDate2 + sumStringValues(currentSubAssetsDate2);
+    firstTotalCurrentDate2 + sumStringValues(currentSubAssetsDate2Ar);
   const totalAssetsDate2 = secondTotalNonCurrentDate2 + secondTotalCurrentDate2;
 
   // Calculate totals for Equity
-  const firstTotalEquity = sumStringValues(equityItems);
-  const totalEquity = firstTotalEquity + sumStringValues(equitySubItems);
+  const firstTotalEquity = sumStringValues(equityItemsAr);
+  const totalEquity = firstTotalEquity + sumStringValues(equitySubItemsAr);
 
-  const firstTotalEquityDate2 = sumStringValues(equityItemsDate2);
+  const firstTotalEquityDate2 = sumStringValues(equityItemsDate2Ar);
   const totalEquityDate2 =
-    firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2);
+    firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2Ar);
 
   // Calculate totals for Non-Current Liabilities
   const firstTotalNonCurrentLiabilities = sumStringValues(
-    nonCurrentLiabilities
+    nonCurrentLiabilitiesAr
   );
   const totalNonCurrentLiabilities =
-    firstTotalNonCurrentLiabilities + sumStringValues(nonCurrentSubLiabilities);
+    firstTotalNonCurrentLiabilities + sumStringValues(nonCurrentSubLiabilitiesAr);
 
   const firstTotalNonCurrentLiabilitiesDate2 = sumStringValues(
-    nonCurrentLiabilitiesDate2
+    nonCurrentLiabilitiesDate2Ar
   );
   const totalNonCurrentLiabilitiesDate2 =
     firstTotalNonCurrentLiabilitiesDate2 +
-    sumStringValues(nonCurrentSubLiabilitiesDate2);
+    sumStringValues(nonCurrentSubLiabilitiesDate2Ar);
 
   // Calculate totals for Current Liabilities
-  const firstTotalCurrentLiabilities = sumStringValues(currentLiabilities);
+  const firstTotalCurrentLiabilities = sumStringValues(currentLiabilitiesAr);
   const totalCurrentLiabilities =
-    firstTotalCurrentLiabilities + sumStringValues(currentSubLiabilities);
+    firstTotalCurrentLiabilities + sumStringValues(currentSubLiabilitiesAr);
 
   const firstTotalCurrentLiabilitiesDate2 = sumStringValues(
-    currentLiabilitiesDate2
+    currentLiabilitiesDate2Ar
   );
   const totalCurrentLiabilitiesDate2 =
     firstTotalCurrentLiabilitiesDate2 +
-    sumStringValues(currentSubLiabilitiesDate2);
+    sumStringValues(currentSubLiabilitiesDate2Ar);
 
   // Calculate Total Liabilities
   const totalLiabilities = totalNonCurrentLiabilities + totalCurrentLiabilities;
@@ -324,21 +324,21 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
 
 
 
-    const hasNonEmptyNonCurrentSubAssets = nonCurrentSubAssets.some(
-      (val, idx) => val || nonCurrentSubAssetsDate2[idx]
+    const hasNonEmptyNonCurrentSubAssets = nonCurrentSubAssetsAr.some(
+      (val, idx) => val || nonCurrentSubAssetsDate2Ar[idx]
     );
-    const hasNonEmptyCurrentSubAssets = currentSubAssets.some(
-      (val, idx) => val || currentSubAssetsDate2[idx]
+    const hasNonEmptyCurrentSubAssets = currentSubAssetsAr.some(
+      (val, idx) => val || currentSubAssetsDate2Ar[idx]
     );
     
-    const hasNonEmptyEquitySubItems = equitySubItems.some(
-      (val, idx) => val || equitySubItemsDate2[idx]
+    const hasNonEmptyEquitySubItems = equitySubItemsAr.some(
+      (val, idx) => val || equitySubItemsDate2Ar[idx]
     );
-    const hasNonEmptyNonCurrentSubLiabilities = nonCurrentSubLiabilities.some(
-      (val, idx) => val || nonCurrentSubLiabilitiesDate2[idx]
+    const hasNonEmptyNonCurrentSubLiabilities = nonCurrentSubLiabilitiesAr.some(
+      (val, idx) => val || nonCurrentSubLiabilitiesDate2Ar[idx]
     );
-    const hasNonEmptyCurrentSubLiabilities = currentSubLiabilities.some(
-      (val, idx) => val || currentSubLiabilitiesDate2[idx]
+    const hasNonEmptyCurrentSubLiabilities = currentSubLiabilitiesAr.some(
+      (val, idx) => val || currentSubLiabilitiesDate2Ar[idx]
     );
     
 
@@ -406,11 +406,10 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
         setNonCurrentSubAssets(
           data.assets.nonCurrent.subItems || Array(3).fill("")
         );
-        setNonCurrentLabels(
-          data.assets.nonCurrent.labels || Array(12).fill("")
+        setNonCurrentLabels( Array(12).fill("")
         );
         setNonCurrentSubLabels(
-          data.assets.nonCurrent.subLabels || Array(3).fill("")
+          Array(3).fill("")
         );
         setNonCurrentAssetsDate2(
           data.assets.nonCurrent.itemsDate2 || Array(12).fill("")
@@ -424,8 +423,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
       if (data.assets?.current) {
         setCurrentAssets(data.assets.current.items || Array(12).fill(""));
         setCurrentSubAssets(data.assets.current.subItems || Array(3).fill(""));
-        setCurrentLabels(data.assets.current.labels || Array(12).fill(""));
-        setCurrentSubLabels(data.assets.current.subLabels || Array(3).fill(""));
+        setCurrentLabels( Array(12).fill(""));
+        setCurrentSubLabels( Array(3).fill(""));
         setCurrentAssetsDate2(
           data.assets.current.itemsDate2 || Array(12).fill("")
         );
@@ -436,10 +435,10 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
 
       // Equity
       if (data.equity) {
-        setEquityItems(data.equity.items || Array(11).fill(""));
+        setEquityItems(data.equity.items || Array(12).fill(""));
         setEquitySubItems(data.equity.subItems || Array(3).fill(""));
-        setEquityLabels(data.equity.labels || Array(12).fill(""));
-        setEquitySubLabels(data.equity.subLabels || Array(3).fill(""));
+        setEquityLabels( Array(12).fill(""));
+        setEquitySubLabels( Array(3).fill(""));
         setEquityItemsDate2(data.equity.itemsDate2 || Array(12).fill(""));
         setEquitySubItemsDate2(data.equity.subItemsDate2 || Array(3).fill(""));
       }
@@ -453,10 +452,10 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
           data.liabilities.nonCurrent.subItems || Array(3).fill("")
         );
         setNonCurrentLiabilitiesLabels(
-          data.liabilities.nonCurrent.labels || Array(12).fill("")
+          Array(12).fill("")
         );
         setNonCurrentSubLiabilitiesLabels(
-          data.liabilities.nonCurrent.subLabels || Array(3).fill("")
+          Array(3).fill("")
         );
         setNonCurrentLiabilitiesDate2(
           data.liabilities.nonCurrent.itemsDate2 || Array(12).fill("")
@@ -475,10 +474,10 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
           data.liabilities.current.subItems || Array(3).fill("")
         );
         setCurrentLiabilitiesLabels(
-          data.liabilities.current.labels || Array(12).fill("")
+          Array(12).fill("")
         );
         setCurrentSubLiabilitiesLabels(
-          data.liabilities.current.subLabels || Array(3).fill("")
+           Array(3).fill("")
         );
         setCurrentLiabilitiesDate2(
           data.liabilities.current.itemsDate2 || Array(12).fill("")
@@ -564,8 +563,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
           
 
 
-          {nonCurrentAssets.map((val, idx) => {
-              const isRowEmpty = !val && !nonCurrentAssetsDate2[idx];
+          {nonCurrentAssetsAr.map((val, idx) => {
+              const isRowEmpty = !val && !nonCurrentAssetsDate2Ar[idx];
 
               // 🧠 Only hide the row *after* submission if it's empty
               if (TakingShort && isRowEmpty) return null;
@@ -576,7 +575,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={nonCurrentLabels[idx]}
+                      value={nonCurrentLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -609,7 +608,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={nonCurrentAssetsDate2[idx]}
+                      value={nonCurrentAssetsDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(idx, e.target.value, "nonCurrent", "date2")
                       }
@@ -640,8 +639,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
             )}
 
 
-{nonCurrentSubAssets.map((val, idx) => {
-              const isRowEmpty = !val && !nonCurrentSubAssetsDate2[idx];
+{nonCurrentSubAssetsAr.map((val, idx) => {
+              const isRowEmpty = !val && ! nonCurrentSubAssetsDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -651,7 +650,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={nonCurrentSubLabels[idx]}
+                      value={nonCurrentSubLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -683,7 +682,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={nonCurrentSubAssetsDate2[idx]}
+                      value={nonCurrentSubAssetsDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(
                           idx,
@@ -733,8 +732,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
             </td>
           </tr>
 
-       {currentAssets.map((val, idx) => {
-              const isRowEmpty = !val && !currentAssetsDate2[idx];
+       {currentAssetsAr.map((val, idx) => {
+              const isRowEmpty = !val && !currentAssetsDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -744,7 +743,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={currentLabels[idx]}
+                      value={currentLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -776,7 +775,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={currentAssetsDate2[idx]}
+                      value={currentAssetsDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(idx, e.target.value, "current", "date2")
                       }
@@ -807,8 +806,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
 
 
             
-{currentSubAssets.map((val, idx) => {
-              const isRowEmpty = !val && !currentSubAssetsDate2[idx];
+{currentSubAssetsAr.map((val, idx) => {
+              const isRowEmpty = !val && !currentSubAssetsDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -818,7 +817,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={currentSubLabels[idx]}
+                      value={currentSubLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -850,7 +849,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={currentSubAssetsDate2[idx]}
+                      value={currentSubAssetsDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(idx, e.target.value, "currentSub", "date2")
                       }
@@ -927,8 +926,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
 
 
 
-           {equityItems.map((val, idx) => {
-              const isRowEmpty = !val && !equityItemsDate2[idx];
+           {equityItemsAr.map((val, idx) => {
+              const isRowEmpty = !val && !equityItemsDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -938,7 +937,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={equityLabels[idx]}
+                      value={equityLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -970,7 +969,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={equityItemsDate2[idx]}
+                      value={equityItemsDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(idx, e.target.value, "equity", "date2")
                       }
@@ -1002,8 +1001,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
 
 
 
-{equitySubItems.map((val, idx) => {
-              const isRowEmpty = !val && !equitySubItemsDate2[idx];
+{equitySubItemsAr.map((val, idx) => {
+              const isRowEmpty = !val && !equitySubItemsDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -1014,7 +1013,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={equitySubLabels[idx]}
+                      value={equitySubLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -1046,7 +1045,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={equitySubItemsDate2[idx]}
+                      value={equitySubItemsDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(idx, e.target.value, "equitySub", "date2")
                       }
@@ -1086,8 +1085,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
           </tr>
 
 
-          {nonCurrentLiabilities.map((val, idx) => {
-              const isRowEmpty = !val && !nonCurrentLiabilitiesDate2[idx];
+          {nonCurrentLiabilitiesAr.map((val, idx) => {
+              const isRowEmpty = !val && !nonCurrentLiabilitiesDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -1100,7 +1099,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={nonCurrentLiabilitiesLabels[idx]}
+                      value={nonCurrentLiabilitiesLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -1132,7 +1131,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={nonCurrentLiabilitiesDate2[idx]}
+                      value={nonCurrentLiabilitiesDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(
                           idx,
@@ -1167,8 +1166,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
             )}
 
 
-{nonCurrentSubLiabilities.map((val, idx) => {
-              const isRowEmpty = !val && !nonCurrentSubLiabilitiesDate2[idx];
+{nonCurrentSubLiabilitiesAr.map((val, idx) => {
+              const isRowEmpty = !val && !nonCurrentSubLiabilitiesDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -1181,7 +1180,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={nonCurrentSubLiabilitiesLabels[idx]}
+                      value={nonCurrentSubLiabilitiesLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -1217,7 +1216,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={nonCurrentSubLiabilitiesDate2[idx]}
+                      value={nonCurrentSubLiabilitiesDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(
                           idx,
@@ -1267,8 +1266,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
           </tr>
 
 
-           {currentLiabilities.map((val, idx) => {
-              const isRowEmpty = !val && !currentLiabilitiesDate2[idx];
+           {currentLiabilitiesAr.map((val, idx) => {
+              const isRowEmpty = !val && !currentLiabilitiesDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -1278,7 +1277,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={currentLiabilitiesLabels[idx]}
+                      value={currentLiabilitiesLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -1310,7 +1309,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={currentLiabilitiesDate2[idx]}
+                      value={currentLiabilitiesDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(
                           idx,
@@ -1344,8 +1343,8 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
               </tr>
             )}
 
-{currentSubLiabilities.map((val, idx) => {
-              const isRowEmpty = !val && !currentSubLiabilitiesDate2[idx];
+{currentSubLiabilitiesAr.map((val, idx) => {
+              const isRowEmpty = !val && !currentSubLiabilitiesDate2Ar[idx];
 
               if (TakingShort && isRowEmpty) return null;
 
@@ -1358,7 +1357,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={currentSubLiabilitiesLabels[idx]}
+                      value={currentSubLiabilitiesLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
                         handleChange(
@@ -1390,7 +1389,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     <input
                       type="number"
                       className="w-full bg-gray-100 text-black p-1"
-                      value={currentSubLiabilitiesDate2[idx]}
+                      value={currentSubLiabilitiesDate2Ar[idx]}
                       onChange={(e) =>
                         handleChange(
                           idx,

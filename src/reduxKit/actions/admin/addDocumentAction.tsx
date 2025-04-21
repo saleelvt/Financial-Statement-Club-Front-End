@@ -68,7 +68,7 @@ export const addDocumentEnglish = createAsyncThunk(
       formData.forEach((value, key) => {
         console.log(key, value);
       });
-      console.log("this is my data ++++++++++++");
+
       const response = await axiosIn.post(`/api/v1/admin/addDocumentEnglish`,  formData, createAxiosConfig(true)
       );
       return response.data;

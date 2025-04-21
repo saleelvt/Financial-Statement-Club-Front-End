@@ -71,3 +71,12 @@ export interface IBalanceSheetData {
     ItotalEquityAndLiabilitiesDate2: number;
   }
   
+
+
+
+  export interface ITable {
+    BalanceSheet?: string;
+    ProfitLoss?: string;
+    CashFlow?: string;
+  }
+

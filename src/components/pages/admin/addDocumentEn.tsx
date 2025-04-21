@@ -2,12 +2,32 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
-import { addDocumentEnglish } from "../../../reduxKit/actions/admin/addDocumentAction";
+import axios from "axios";
+import { URL } from "../../../config/constants";
+import type { AxiosProgressEvent } from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
+
+export type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
+export const axiosIn = axios.create({
+  baseURL: URL,
+});
+interface DocumentPayload {
+  fullNameEn: string;
+  nickNameEn: string;
+  tadawalCode: string;
+  sector: string;
+  formData: Record<FieldKey, FormField>;
+}
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FieldKey } from "../../../interfaces/admin/addDoument";
+
+import LinearProgress from "@mui/joy/LinearProgress";
+import Typography from "@mui/joy/Typography";
+import Box from "@mui/joy/Box";
+
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
@@ -22,6 +42,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
   ({ formDataEn, tadawalCodeEn }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { loading } = useSelector((state: RootState) => state.adminEn);
+     const [progress, setProgress] = useState<number>(0);
     const [fullNameEn, setFullNameEn] = useState("");
     const [nickNameEn, setnickNameEn] = useState("");
     const [tadawalCode, setTadawalCode] = useState<string>(tadawalCodeEn || "");
@@ -187,6 +208,103 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
       }));
     };
 
+
+
+
+
+
+
+
+
+     const addDocumentEnglish = createAsyncThunk(
+      "admin/addDocument",
+      async (adminCredentials: DocumentPayload, { rejectWithValue }) => {
+        try {
+    
+    
+          const formDataf = adminCredentials.formData;
+          const isAnyFieldValid = Object.values(formDataf).some(
+            (field) => field.file && field.date && field.year
+          );
+    
+          if (!isAnyFieldValid) {
+            return rejectWithValue({
+              message:
+                "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year.",
+            });
+          }
+    
+          const formData = new FormData();
+          for (const [key, value] of Object.entries(adminCredentials?.formData || {} )) {
+            if (
+              value && typeof value === "object" && "file" in value && value.file
+            ) {
+              if (typeof value.file === "string" || value.file instanceof File) {
+                formData.append(key, value.file);
+              } else {
+                console.warn(`Invalid file type for key: ${key}`);
+              }
+              if (value.date instanceof Date) {
+                formData.append(`${key}Date`, value.date.toISOString());
+              } else {
+                console.warn(`Invalid or missing date for key: ${key}`);
+              }
+              if (typeof value.year === "string") {
+                formData.append(`${key}Year`, value.year);
+              } else {
+                console.warn(`Invalid or missing year for key: ${key}`);
+              }
+            } else {
+              console.warn(`Skipping key: ${key}, value is null or invalid`);
+            }
+          }
+          // Append other data
+          formData.append("fullNameEn", adminCredentials?.fullNameEn);
+          formData.append("nickNameEn", adminCredentials?.nickNameEn);
+          formData.append("tadawalCode", adminCredentials?.tadawalCode);
+          formData.append("sector", adminCredentials?.sector);
+    
+          console.log("FormData contents:");
+          formData.forEach((value, key) => {
+            console.log(key, value);
+          });
+    
+          const response = await axiosIn.post(`/api/v1/admin/addDocumentEnglish`,  formData, {
+                      headers: {
+                        "Content-Type": "multipart/form-data",
+                      },
+                      onUploadProgress: (event: AxiosProgressEvent) => {
+                        const { loaded, total } = event;
+                        console.log("my proggress of the data : ", loaded, "Total : ",total );
+                        
+                        if (total) {
+                          const percentCompleted = Math.round((loaded / total) * 100);
+                          console.log("Real Upload Progress:", percentCompleted, "%");
+                          setProgress(percentCompleted)
+                        }
+                      },
+                    }
+          );
+          return response.data;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+          if (error.response) {
+            return rejectWithValue(error.response.data);
+          }
+          return rejectWithValue({ message: "Something went wrong!" });
+        }
+      }
+    );
+    
+
+
+
+
+
+
+
+
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
@@ -238,7 +356,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   </p>
                 )}
                 {suggestions.length > 0 && (
-                  <ul className="border border-gray-300 w-1/2 rounded mt-1 max-h-40 overflow-y-auto bg-white">
+                  <ul className="border border-gray-300  rounded mt-1 max-h-40 overflow-y-auto bg-white">
                     {suggestions.map((suggestion, index) => (
                       <li
                         key={index}
@@ -507,6 +625,38 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   Submit
                 </button>
               )}
+
+
+{progress > 0 && progress < 100 && (
+              <Box sx={{ bgcolor: "white", width: "100%" }}>
+                <LinearProgress
+                  determinate
+                  variant="outlined"
+                  color="neutral"
+                  size="sm"
+                  thickness={32}
+                  value={progress}
+                  sx={{
+                    "--LinearProgress-radius": "0px",
+                    "--LinearProgress-progressThickness": "24px",
+                    boxShadow: "sm",
+                    borderColor: "neutral.500",
+                  }}
+                >
+                  <Typography
+                    level="body-xs"
+                    textColor="common.white"
+                    sx={{ fontWeight: "xl", mixBlendMode: "difference" }}
+                  >
+                    LOADING… {`${Math.round(progress)}%`}
+                  </Typography>
+                </LinearProgress>
+              </Box>
+            )}
+
+            {progress > 0 && progress < 100 && (
+              <p className="text-bold font-semibold mr-4">{progress}</p>
+            )}
             </div>
           </form>
           {/* <AddDocumentArabic formDataEn={formData} tadawalCodeEn={tadawalCode}  /> */}

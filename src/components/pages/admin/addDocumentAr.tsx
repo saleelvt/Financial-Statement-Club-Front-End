@@ -4,6 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import type { AxiosProgressEvent } from "axios";
+
+import LinearProgress from "@mui/joy/LinearProgress";
+import Typography from "@mui/joy/Typography";
+import Box from "@mui/joy/Box";
 
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
@@ -112,16 +117,10 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     }));
   };
   useEffect(() => {
-    console.log("Progress state changed:", progress);
-    if (progress === 100) {
-      const timeout = setTimeout(() => {
-        setProgress(0);
-    
-      }, 1500); // Show 100% for 1.5 seconds
-      
-      return () => clearTimeout(timeout);
-    }
+  console.log("current proggress : ", progress);
+  
   }, [progress]);
+
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => {
       // If Q1 is being updated, update all fields
@@ -142,9 +141,9 @@ const AddDocumentArabic: React.FC = React.memo(() => {
 
   const addDocumentArabic = createAsyncThunk(
     "admin/addDocumentArabic",
-    async (adminCredentials: DocumentPayload, { dispatch }) => {
+    async (adminCredentials: DocumentPayload) => {
       try {
-        // Validate at least one field
+        // ✅ Validate input
         const isAnyFieldValid = Object.values(adminCredentials.formData).some(
           (field) => field.file && field.date && field.year
         );
@@ -152,11 +151,11 @@ const AddDocumentArabic: React.FC = React.memo(() => {
           setErrorMessage(
             "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year."
           );
-          setIsModalOpen(true); // Open the modal
+          setIsModalOpen(true);
           return;
         }
-        setProgress(0);
-        // Create FormData
+  
+        // ✅ Create FormData
         const formData = new FormData();
         for (const [key, value] of Object.entries(adminCredentials.formData)) {
           if (value.file) formData.append(key, value.file);
@@ -164,43 +163,47 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             formData.append(`${key}Date`, value.date.toISOString());
           if (value.year) formData.append(`${key}Year`, value.year);
         }
-
-        // Append other fields
+  
         formData.append("fullNameAr", adminCredentials.fullNameAr);
         formData.append("nickNameAr", adminCredentials.nickNameAr);
         formData.append("tadawalCode", adminCredentials.tadawalCode);
         formData.append("sector", adminCredentials.sector);
+  
+  
 
-        // Dispatch Upload Started Action
-        dispatch({ type: "UPLOAD_STARTED" });
-
-        // Send API request with upload progress
-        const response = await axiosIn.post(
-          `/api/v1/admin/addDocumentArabic`,
+        // ✅ Send POST with real upload progress tracking
+        const response = await axios.post(
+          "/api/v1/admin/addDocumentArabic",
           formData,
           {
-            headers: { "Content-Type": "multipart/form-data" },
-            onUploadProgress: (progressEvent) => {
-              const { loaded, total } = progressEvent;
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            onUploadProgress: (event: AxiosProgressEvent) => {
+              const { loaded, total } = event;
+              console.log("my proggress of the data : ", loaded, "Total : ",total );
+              
               if (total) {
-                // Corrected percentage calculation
                 const percentCompleted = Math.round((loaded / total) * 100);
-                console.log("Upload progress: ", percentCompleted);
-                setProgress(percentCompleted);
+                console.log("Real Upload Progress:", percentCompleted, "%");
+                setProgress(percentCompleted)
               }
             },
           }
         );
-        
+  
+ 
+  
         return response.data;
       } catch (error: any) {
         setErrorMessage(
           error.response?.data?.message || "Something went wrong!"
         );
-        setIsModalOpen(true); // Open the modal on error
+        setIsModalOpen(true);
       }
     }
   );
+  
 
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -214,17 +217,16 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         formData,
         createdAt: new Date().toISOString(),
       };
-
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
-      
+
       if (response && response.success) {
         toast.success(response.message);
-        
+
         // Only set to 100% if not already there from the progress events
-        if (progress < 100) {
-          setProgress(100);
-        }
-        
+        // if (progress < 100) {
+        //   setProgress(100);
+        // }
+
         // Reset form data
         setFormData(
           (prevFormData) =>
@@ -239,8 +241,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     } catch (error: any) {
       console.log("Error submitting form:", error);
       toast.error("Failed to upload document");
-      setProgress(0);
-
+      // setProgress(0);
     }
   };
   return (
@@ -281,7 +282,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   </p>
                 )}
                 {suggestions.length > 0 && (
-                  <ul className="border border-gray-300 w-1/2 rounded mt-1 max-h-40 overflow-y-auto bg-white">
+                  <ul className="border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white">
                     {suggestions.map((suggestion, index) => (
                       <li
                         key={index}
@@ -551,15 +552,35 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             )}
 
             {progress > 0 && progress < 100 && (
-              <div className="w-1/2 bg-gray-200 rounded-full h-4 mt-4">
-                <div
-                  className="bg-gray-500 h-4 rounded-full transition-all duration-300"
-                  style={{ width: `${progress}%` }}
-                ></div>
-              </div>
+              <Box sx={{ bgcolor: "white", width: "100%" }}>
+                <LinearProgress
+                  determinate
+                  variant="outlined"
+                  color="neutral"
+                  size="sm"
+                  thickness={32}
+                  value={progress}
+                  sx={{
+                    "--LinearProgress-radius": "0px",
+                    "--LinearProgress-progressThickness": "24px",
+                    boxShadow: "sm",
+                    borderColor: "neutral.500",
+                  }}
+                >
+                  <Typography
+                    level="body-xs"
+                    textColor="common.white"
+                    sx={{ fontWeight: "xl", mixBlendMode: "difference" }}
+                  >
+                    LOADING… {`${Math.round(progress)}%`}
+                  </Typography>
+                </LinearProgress>
+              </Box>
             )}
 
-            {progress > 0 && <p>{progress}% uploaded</p>}
+            {progress > 0 && progress < 100 && (
+              <p className="text-bold font-semibold mr-4">{progress}</p>
+            )}
           </div>
         </form>
         <ValidationModal

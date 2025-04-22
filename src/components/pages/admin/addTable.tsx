@@ -9,7 +9,8 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { commonRequest } from "../../../config/api";
-import { config } from "process";
+import { config } from "../../../config/constants";
+ 
 import { PhotoProvider, PhotoView } from "react-photo-view"; // Make sure to import this
 import BalaceSheet from "./Tables/BalanceSheet/balanceSheetAr";
 import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheet";
@@ -522,7 +523,7 @@ const AddNewTable = React.memo(() => {
 
             {isYearDropdownOpen && (
               <div className="absolute z-10 mt-1 w-44 bg-white border border-gray-300 rounded-md shadow-lg">
-                {years.map((year) => (
+                {years.map((year) => ( 
                   <div
                     key={year}
                     className="p-1 hover:bg-gray-100 cursor-pointer"

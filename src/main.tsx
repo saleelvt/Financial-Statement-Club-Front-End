@@ -4,7 +4,7 @@ import { lazy } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './reduxKit/store';
-import './global.css';
+import "../src/global.css"
 import { App } from './App';
 import { Suspense } from 'react';
 

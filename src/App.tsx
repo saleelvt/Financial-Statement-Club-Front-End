@@ -14,8 +14,6 @@ const DocumentList = lazy(() => import("./components/pages/admin/documentList"))
 const AdminLogin = lazy(() => import("./components/forms/admin/login"));
 const AdminHomePage = lazy(() => import("./components/pages/admin/adminDashBoard"));
 const EmailVerification = lazy(() => import("./components/forms/admin/otpVerifiy"));
-
-
 import { UserCompanyDetailsNew } from './components/pages/user/old';
 const AddNewTable=lazy(() => import("./components/pages/admin/addTable"));
 const AddDocumentArabic = lazy(() => import("./components/pages/admin/addDocumentAr"));

@@ -26,13 +26,21 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       Array(12).fill("")
     );
 
+
+
+
+
+
+
     const [currentAssets, setCurrentAssets] = useState<string[]>(
       Array(12).fill("")
     );
     const [currentSubAssets, setCurrentSubAssets] = useState<string[]>(
       Array(3).fill("")
     );
-
+  const [CurrentAssetsNotes, setCurrentAssetsNotes] = useState<string[]>(
+    Array(12).fill("")
+  );
     // New state for Date 2 columns with empty strings
     const [nonCurrentAssetsDate2, setNonCurrentAssetsDate2] = useState<
       string[]
@@ -257,6 +265,11 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           updated[index] = value;
           setNonCurrentNotes(updated);
         }
+        else if (type === "CurrentAssetsNote") {
+          const updated = [...CurrentAssetsNotes];
+          updated[index] = value;
+          setCurrentAssetsNotes(updated);
+        }
         // add other types of notes here if needed (e.g., nonCurrentSubNote, currentNote, etc.)
       }
     };
@@ -424,6 +437,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       currentSubLabels,
       currentAssetsDate2,
       currentSubAssetsDate2,
+      CurrentAssetsNotes,
 
       // Equity
       equityItems,
@@ -468,6 +482,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           },
           current: {
             items: currentAssets,
+            CurrentAssetsNotes:CurrentAssetsNotes,
             subItems: currentSubAssets,
             labels: currentLabels,
             subLabels: currentSubLabels,
@@ -614,6 +629,12 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                       }
                     />
                   </td>
+
+
+
+
+
+
 
 
 
@@ -796,12 +817,50 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                       }
                     />
                   </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   <td className="border border-gray-300">
-                    <input
+                  <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
+                      value={CurrentAssetsNotes[idx]}
+                   
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "CurrentAssetsNote",
+                          "note"
+                        )
+                      }
                     />
                   </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
                   <td className="border border-gray-300">
                     <input
                       type="number"

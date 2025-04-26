@@ -18,10 +18,23 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
   const [nonCurrentNotes, setNonCurrentNotes] = useState<string[]>(
       Array(12).fill("")
     );
+    const [nonCurrentAssetsDate2Ar, setNonCurrentAssetsDate2] = useState<string[]>(
+      Array(12).fill("")
+    );
+    const [nonCurrentSubAssetsDate2Ar, setNonCurrentSubAssetsDate2] = useState<
+      string[]
+    >(Array(3).fill(""));
 
   const [nonCurrentSubAssetsAr, setNonCurrentSubAssets] = useState<string[]>(
     Array(3).fill("")
   );
+
+
+
+
+
+
+
   const [currentAssetsAr, setCurrentAssets] = useState<string[]>(
     Array(12).fill("")
   );
@@ -29,19 +42,14 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
     Array(3).fill("")
   );
 
-  // New state for Date 2 columns with empty strings
-  const [nonCurrentAssetsDate2Ar, setNonCurrentAssetsDate2] = useState<string[]>(
-    Array(12).fill("")
-  );
-  const [nonCurrentSubAssetsDate2Ar, setNonCurrentSubAssetsDate2] = useState<
-    string[]
-  >(Array(3).fill(""));
+
   const [currentAssetsDate2Ar, setCurrentAssetsDate2] = useState<string[]>(
     Array(12).fill("")
   );
   const [currentSubAssetsDate2Ar, setCurrentSubAssetsDate2] = useState<string[]>(
     Array(3).fill("")
   );
+
 
   // Labels remain as strings
   const [nonCurrentLabelsAr, setNonCurrentLabels] = useState<string[]>(
@@ -689,6 +697,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                   <td className="border border-gray-300">
                     <input
                       type="text"
+                   
                       className="w-full bg-gray-100 text-black p-1"
                     />
                   </td>

@@ -12,9 +12,13 @@ type BalaceSheetFormArProps = {
 const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingShort }) => {
   // Updated state declarations with empty strings as initial values
 
-  const [nonCurrentAssetsAr, setNonCurrentAssets] = useState<string[]>(
+  const [nonCurrentAssetsAr, setNonCurrentAssets] = useState<string[]>( 
     Array(12).fill("")
   );
+  const [nonCurrentNotes, setNonCurrentNotes] = useState<string[]>(
+      Array(12).fill("")
+    );
+
   const [nonCurrentSubAssetsAr, setNonCurrentSubAssets] = useState<string[]>(
     Array(3).fill("")
   );
@@ -112,7 +116,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
     index: number,
     value: string,
     type: string,
-    column: "date1" | "date2" | "label" = "date1"
+    column: "date1" | "date2" | "label"|  "note" = "date1"
   ) => {
     if (column === "label") {
       if (type === "nonCurrentLabel") {
@@ -244,6 +248,13 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
         updated[index] = value;
         setCurrentSubLiabilitiesDate2(updated);
       }
+    }else if (column === "note") {
+      if (type === "nonCurrentNote") {
+        const updated = [...nonCurrentNotes];
+        updated[index] = value;
+        setNonCurrentNotes(updated);
+      }
+      // add other types of notes here if needed (e.g., nonCurrentSubNote, currentNote, etc.)
     }
   };
 
@@ -406,6 +417,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
         setNonCurrentSubAssets(
           data.assets.nonCurrent.subItems || Array(3).fill("")
         );
+        setNonCurrentNotes(data.assets.nonCurrent.nonCurrentNotes)
         setNonCurrentLabels( Array(12).fill("")
         );
         setNonCurrentSubLabels(
@@ -588,11 +600,23 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
                     />
                   </td>
                   <td className="border border-gray-300">
+                  <td className="border ">
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
-                      placeholder=""
+                      value={nonCurrentNotes[idx]}
+                   
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentNote",
+                          "note"
+                        )
+                      }
                     />
+                  </td>
+
                   </td>
                   <td className="border border-gray-300">
                     <input
@@ -934,7 +958,7 @@ const BalaceSheetForm:React.FC<BalaceSheetFormArProps> = React.memo(({ TakingSho
               return (
                 <tr key={`equity-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
-                    <input
+                    <input 
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
                       value={equityLabelsAr[idx]}

@@ -33,7 +33,7 @@ const AddNewTable = React.memo(() => {
   const [fullName, setFullName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [tableDataAr, setTableDataAr] = useState<ITable>();
-  const [tableData, setTableData] = useState<ITable>();
+  const [tableData, setTableData] = useState<ITable>(); 
   const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
   const [tableIframeSrcAr, setTableIframeSrcAr] = useState<string>("");
 
@@ -47,7 +47,7 @@ const AddNewTable = React.memo(() => {
     [key: string]: Array<{ quarter: string; date: string }>;
   }>({}); // Quarters and their dates for each year
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState<boolean>(false); // Manage year dropdown visibility
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); 
   const [takeShot, setTakeShot] = useState<boolean>(false);
 
   // const toggleLanguage = async () => {
@@ -168,10 +168,10 @@ const AddNewTable = React.memo(() => {
       });
 
       // Trigger download
-      const downloadLink = document.createElement("a");
-      downloadLink.href = dataUrl;
-      downloadLink.download = "screenshot.png";
-      downloadLink.click();
+      // const downloadLink = document.createElement("a");
+      // downloadLink.href = dataUrl;
+      // downloadLink.download = "screenshot.png";
+      // downloadLink.click();
 
       // Send to backend
       const responseTow = await dispatch(

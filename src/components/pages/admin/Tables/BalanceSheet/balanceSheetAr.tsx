@@ -68,10 +68,18 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       Array(3).fill("")
     );
 
+
+
+
+
     // States for equity and liabilities with empty strings
     const [equityItems, setEquityItems] = useState<string[]>(
       Array(12).fill("")
     );
+
+    const [equityItemsNotes, setEquityItemsNotes] = useState<string[]>(
+      Array(12).fill("")
+    ); 
     const [equityItemsDate2, setEquityItemsDate2] = useState<string[]>(
       Array(12).fill("")
     );
@@ -89,9 +97,20 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       Array(3).fill("")
     );
 
+
+
+
+
+
+
+    
     const [nonCurrentLiabilities, setNonCurrentLiabilities] = useState<
       string[]
     >(Array(12).fill(""));
+    
+    const [nonCurrentLiabilitiesNotes, setNonCurrentLiabilitiesNotes] = useState<string[]>(
+      Array(12).fill("")
+    ); 
     const [nonCurrentLiabilitiesDate2, setNonCurrentLiabilitiesDate2] =
       useState<string[]>(Array(12).fill(""));
     const [nonCurrentLiabilitiesLabels, setNonCurrentLiabilitiesLabels] =
@@ -104,7 +123,20 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       useState<string[]>(Array(3).fill(""));
     const [nonCurrentSubLiabilitiesLabels, setNonCurrentSubLiabilitiesLabels] =
       useState<string[]>(Array(3).fill(""));
+
+
+
+
+
+
+
+
+
+
     const [currentLiabilities, setCurrentLiabilities] = useState<string[]>(
+      Array(12).fill("")
+    );
+    const [currentLiabilitiesNotes, setCurrentLiabilitiesNotes] = useState<string[]>(
       Array(12).fill("")
     );
     const [currentLiabilitiesDate2, setCurrentLiabilitiesDate2] = useState<
@@ -269,6 +301,21 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           const updated = [...CurrentAssetsNotes];
           updated[index] = value;
           setCurrentAssetsNotes(updated);
+        }
+        else if (type === "equityItemsNote") {
+          const updated = [...equityItemsNotes];
+          updated[index] = value;
+          setEquityItemsNotes(updated);
+        }
+        else if (type === "nonCurrentLiabilitiesNote") {
+          const updated = [...nonCurrentLiabilitiesNotes];
+          updated[index] = value;
+          setNonCurrentLiabilitiesNotes(updated);
+        }
+        else if (type === "currentLiabilitiesNote") {
+          const updated = [...currentLiabilitiesNotes];
+          updated[index] = value;
+          setCurrentLiabilitiesNotes(updated);
         }
         // add other types of notes here if needed (e.g., nonCurrentSubNote, currentNote, etc.)
       }
@@ -446,9 +493,11 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       equitySubLabels,
       equityItemsDate2,
       equitySubItemsDate2,
+      equityItemsNotes,
 
       // Liabilities - Non-Current
       nonCurrentLiabilities,
+      nonCurrentLiabilitiesNotes,
       nonCurrentSubLiabilities,
       nonCurrentLiabilitiesLabels,
       nonCurrentSubLiabilitiesLabels,
@@ -457,6 +506,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
       // Liabilities - Current
       currentLiabilities,
+      currentLiabilitiesNotes,
       currentSubLiabilities,
       currentLiabilitiesLabels,
       currentSubLiabilitiesLabels,
@@ -498,6 +548,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
         },
         equity: {
           items: equityItems,
+          equityItemsNotes:equityItemsNotes,
           subItems: equitySubItems,
           labels: equityLabels,
           subLabels: equitySubLabels,
@@ -511,6 +562,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
         liabilities: {
           nonCurrent: {
             items: nonCurrentLiabilities,
+            nonCurrentLiabilitiesNotes:nonCurrentLiabilitiesNotes,
             subItems: nonCurrentSubLiabilities,
             labels: nonCurrentLiabilitiesLabels,
             subLabels: nonCurrentSubLiabilitiesLabels,
@@ -523,6 +575,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           },
           current: {
             items: currentLiabilities,
+            currentLiabilitiesNotes:currentLiabilitiesNotes,
             subItems: currentSubLiabilities,
             labels: currentLiabilitiesLabels,
             subLabels: currentSubLiabilitiesLabels,
@@ -545,7 +598,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
     return (
       <div className="flex justify-start  my-2 text-black">
-        <table dir="rtl" className="border border-gray-300 text-xs mb-12  ">
+        <table dir="rtl" className="border font-semibold border-gray-300 text-[10px] mb-12  ">
           <thead>
             <tr className="bg-gray-100">
               <th className="border border-gray-100 w-96"></th>
@@ -1040,12 +1093,44 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                       }
                     />
                   </td>
+
+
+
+
+
+
+
+
+
+
                   <td className="border border-gray-300">
-                    <input
+                  <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
+                      value={equityItemsNotes[idx]}
+                   
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "equityItemsNote",
+                          "note"
+                        )
+                      }
                     />
                   </td>
+
+
+
+
+
+
+
+
+
+
+
+
                   <td className="border border-gray-300">
                     <input
                       type="number"
@@ -1196,10 +1281,45 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                     />
                   </td>
                   <td className="border border-gray-300">
-                    <input
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
+                      value={nonCurrentLiabilitiesNotes[idx]}
+                   
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "nonCurrentLiabilitiesNote",
+                          "note"
+                        )
+                      }
                     />
+
+
+
+
+
+
+
+
+
+
                   </td>
                   <td className="border border-gray-300">
                     <input
@@ -1236,6 +1356,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                   <input
                     className="w-full bg-gray-100 text-black p-1"
                     type="text"
+               
                   />
                 </td>
                 <td className="border border-gray-300"></td>
@@ -1278,6 +1399,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                     <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
+                    
                     />
                   </td>
                   <td className="border border-gray-300">
@@ -1373,10 +1495,39 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                     />
                   </td>
                   <td className="border border-gray-300">
-                    <input
+
+
+
+
+
+
+
+
+
+                  <input
                       type="text"
                       className="w-full bg-gray-100 text-black p-1"
+                      value={currentLiabilitiesNotes[idx]}
+                   
+                      onChange={(e) =>
+                        handleChange(
+                          idx,
+                          e.target.value,
+                          "currentLiabilitiesNote",
+                          "note"
+                        )
+                      }
                     />
+
+
+
+
+
+
+
+
+
+
                   </td>
                   <td className="border border-gray-300">
                     <input

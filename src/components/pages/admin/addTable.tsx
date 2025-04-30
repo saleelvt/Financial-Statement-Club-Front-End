@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
- 
+
 import { PhotoProvider, PhotoView } from "react-photo-view"; // Make sure to import this
 import BalaceSheet from "./Tables/BalanceSheet/balanceSheetAr";
 import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheet";
@@ -33,7 +33,7 @@ const AddNewTable = React.memo(() => {
   const [fullName, setFullName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [tableDataAr, setTableDataAr] = useState<ITable>();
-  const [tableData, setTableData] = useState<ITable>(); 
+  const [tableData, setTableData] = useState<ITable>();
   const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
   const [tableIframeSrcAr, setTableIframeSrcAr] = useState<string>("");
 
@@ -47,7 +47,7 @@ const AddNewTable = React.memo(() => {
     [key: string]: Array<{ quarter: string; date: string }>;
   }>({}); // Quarters and their dates for each year
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState<boolean>(false); // Manage year dropdown visibility
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false);
   const [takeShot, setTakeShot] = useState<boolean>(false);
 
   // const toggleLanguage = async () => {
@@ -62,7 +62,7 @@ const AddNewTable = React.memo(() => {
     if (selectedTableType) {
       const arSrc = tableDataAr?.[selectedTableType as keyof ITable] || "";
       const enSrc = tableData?.[selectedTableType as keyof ITable] || "";
-  
+
       setTableIframeSrcAr(arSrc);
       setTableIframeSrc(enSrc);
     } else {
@@ -70,16 +70,16 @@ const AddNewTable = React.memo(() => {
       setTableIframeSrc("");
     }
   }, [selectedTableType, tableData, tableDataAr]);
-  
 
   const captureScreen = async (language: string): Promise<void> => {
-    if(language){
+    if (language) {
       setLanguage(language);
     }
-    const node = language === "Arabic"
-      ? document.getElementById("capture-areaAr")
-      : document.getElementById("capture-area");
-  
+    const node =
+      language === "Arabic"
+        ? document.getElementById("capture-areaAr")
+        : document.getElementById("capture-area");
+
     if (!node) return;
 
     setTakeShot(true);
@@ -189,7 +189,7 @@ const AddNewTable = React.memo(() => {
 
       if (responseTow.payload?.success === true) {
         toast.success(responseTow.payload.message);
-        
+
         // Update the local table data after successful upload
         if (language === "Arabic" && tableDataAr) {
           setTableDataAr({
@@ -224,12 +224,12 @@ const AddNewTable = React.memo(() => {
       setTimeout(() => setTakeShot(false), 200);
     }
   };
-  
+
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
   };
-  
+
   const handleQuarterYear = async (quarter: string) => {
     await setQuarterYear(quarter);
     console.log("Selected Quarter", quarter);
@@ -262,7 +262,7 @@ const AddNewTable = React.memo(() => {
       setSuggestions([]);
     }
   };
-  
+
   const handleSuggestionClick = async (suggestion: string) => {
     const adminLanguage = "English";
     const response = await commonRequest(
@@ -327,7 +327,7 @@ const AddNewTable = React.memo(() => {
   useEffect(() => {
     if (adminLanguage) setLanguage(adminLanguage);
   }, [adminLanguage]);
-  
+
   // useEffect(() => {
   //   console.log("kunana data ", tableDataAr, "dkjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjf", tableData);
   // }, [tableData, tableDataAr]);
@@ -356,39 +356,38 @@ const AddNewTable = React.memo(() => {
       return (
         <div className="w-full flex justify-between mt-4">
           <div className="w-1/2">
-          <PhotoProvider>
-            <PhotoView src={tableIframeSrc}>
-              <img
-                src={tableIframeSrc}
-                alt="S3 Image"
-                style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
-              />
-            </PhotoView>
-          </PhotoProvider>
+            <PhotoProvider>
+              <PhotoView src={tableIframeSrc}>
+                <img
+                  src={tableIframeSrc}
+                  alt="S3 Image"
+                  style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
+                />
+              </PhotoView>
+            </PhotoProvider>
           </div>
           <div className="w-1/2 ">
-          <PhotoProvider>
-            <PhotoView src={tableIframeSrcAr}>
-              <img
-                src={tableIframeSrcAr}
-                alt="S3 Image"
-                style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
-              />
-            </PhotoView>
-          </PhotoProvider>
+            <PhotoProvider>
+              <PhotoView src={tableIframeSrcAr}>
+                <img
+                  src={tableIframeSrcAr}
+                  alt="S3 Image"
+                  style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
+                />
+              </PhotoView>
+            </PhotoProvider>
           </div>
-          
         </div>
       );
     } else {
       return (
-        <div className="flex w-full gap-3">
-          <form className="">
+        <div className="flex  w-full gap-2">
+          <form className=" ">
             <div id="capture-area" className="gap-3 w-full">
               <BalaceSheetFormAr TakingShort={takeShot} />
             </div>
             <div className="mt-2 flex justify-end">
-              <button 
+              <button
                 className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
                 onClick={() => captureScreen("English")}
                 disabled={takeShot}
@@ -398,8 +397,8 @@ const AddNewTable = React.memo(() => {
               </button>
             </div>
           </form>
-          <form className="">
-            <div id="capture-areaAr" className="gap-3 w-full">
+          <form className=" ">
+            <div id="capture-areaAr" className=" w-full">
               <BalaceSheet TakingShort={takeShot} />
             </div>
             <div className="mt-2 flex justify-start">
@@ -523,7 +522,7 @@ const AddNewTable = React.memo(() => {
 
             {isYearDropdownOpen && (
               <div className="absolute z-10 mt-1 w-44 bg-white border border-gray-300 rounded-md shadow-lg">
-                {years.map((year) => ( 
+                {years.map((year) => (
                   <div
                     key={year}
                     className="p-1 hover:bg-gray-100 cursor-pointer"
@@ -541,7 +540,7 @@ const AddNewTable = React.memo(() => {
         )}
 
         {/* Quarter Section */}
-        {selectedYear && quarters[selectedYear] && ( 
+        {selectedYear && quarters[selectedYear] && (
           <div>
             <label className="block mb-1">Report</label>
             <select
@@ -562,7 +561,7 @@ const AddNewTable = React.memo(() => {
             </select>
           </div>
         )}
-        
+
         {/* Table Type Dropdown */}
         {selectedYear && (
           <div>
@@ -585,13 +584,10 @@ const AddNewTable = React.memo(() => {
           </div>
         )}
       </div>
-      
+
       {/* Table Content - Conditionally render based on whether we have an image URL */}
       {renderTableContent()}
     </div>
-
-
-
   );
 });
 

@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
-import { FormField } from "../../../interfaces/admin/addDoument";
+import { FormField } from "../../../interfaces/admin/addDoument"; 
 // import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";

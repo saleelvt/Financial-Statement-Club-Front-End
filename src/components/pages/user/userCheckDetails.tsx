@@ -9,7 +9,7 @@ import {
   DocumentSliceEn,
   DocumentSliceAr,
   FormDataState,
-} from "../../../interfaces/admin/addDoument";
+} from "../../../interfaces/admin/addDoument"; 
 const Loading = lazy(() => import("../Loading"));
 import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
@@ -464,7 +464,7 @@ const UserCompanyDetails = React.memo(() => {
                             selectedFilteredDocWithYear.some(
                               (doc) => doc.formData[key]?.file !== null
                             )
-                          ) // ✅ Ensure only keys with available files are shown
+                          ) 
                           .map((key) => (
                             <div key={key} className="relative group">
                               <button
@@ -559,7 +559,7 @@ const UserCompanyDetails = React.memo(() => {
       </div>
       <div className="lg:w-[65%] ">
         {tableIframeSrc ? (
-          // Show Image in PhotoProvider with Zoom
+        
           <PhotoProvider>
             <PhotoView src={tableIframeSrc}>
               <img
@@ -570,7 +570,7 @@ const UserCompanyDetails = React.memo(() => {
             </PhotoView>
           </PhotoProvider>
         ) : iframeSrc ? (
-          // Show PDF in an iframe
+  
           <div
             className=""
             style={{
@@ -594,7 +594,6 @@ const UserCompanyDetails = React.memo(() => {
             />
           </div>
         ) : (
-          // Fallback UI when both sources are missing
           <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white ">
             <p className="text-gray-500">No content available</p>
           </div>

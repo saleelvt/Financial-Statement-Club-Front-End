@@ -20,7 +20,7 @@ function AdminHomePage() {
 
         < AdminSidebar/> 
       </header>
-    </div>
+    </div> 
   ) 
   
 }

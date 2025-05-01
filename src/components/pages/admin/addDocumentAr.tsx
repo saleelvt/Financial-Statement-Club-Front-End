@@ -257,7 +257,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         >
           <div className="flex xs:gap-2   ">
             <FaArrowCircleRight
-              className="text-3xl text-gray-600"
+              className="text-3xl text-gray-500"
               onClick={() => navigate("/home")}
             />
             <h2 className="text-lg lg:mr-2 font-bold text-center text-gray-700">

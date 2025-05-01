@@ -83,7 +83,7 @@ const AddNewTable = React.memo(() => {
     if (!node) return;
 
     setTakeShot(true);
-    console.log("Taking Screenshot...");
+
 
     // Define types for style storage
     interface ElementStyleBackup {
@@ -140,7 +140,7 @@ const AddNewTable = React.memo(() => {
       window.dispatchEvent(new Event("resize"));
       // Get actual content dimensions
       const nodeRect = node.getBoundingClientRect();
-      console.log("Node dimensions:", nodeRect.width, "x", nodeRect.height);
+
       // Use html-to-image with proper settings
       const dataUrl: string = await toPng(node, {
         height: Math.max(node.scrollHeight, nodeRect.height),
@@ -204,8 +204,12 @@ const AddNewTable = React.memo(() => {
         }
       }
     } catch (error) {
-      console.error("Error capturing screenshot:", error);
-      toast.error("Failed to capture screenshot");
+      console.log(error );
+      
+    
+      toast.error("Somthing went wrong")
+      
+     
     } finally {
       // Restore original styles for all elements
       elementsToRestore.forEach((item) => {
@@ -381,7 +385,7 @@ const AddNewTable = React.memo(() => {
       );
     } else {
       return (
-        <div className="flex  w-full gap-2">
+        <div className="flex  w-full ">
           <form className=" ">
             <div id="capture-area" className="gap-3 w-full">
               <BalaceSheetFormAr TakingShort={takeShot} />
@@ -421,7 +425,7 @@ const AddNewTable = React.memo(() => {
     <div className="p-1">
       <div className="flex flex-wrap justify-between items-center">
         <FaArrowCircleLeft
-          className="text-3xl text-gray-700"
+          className="text-3xl text-gray-500"
           onClick={() => navigate("/home")}
         />
         <h1 className="text-lg font-bold text-black">

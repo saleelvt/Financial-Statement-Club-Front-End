@@ -417,6 +417,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       "إجمالي حقوق المساهمين"
     );
 
+     const [liabilities, setLiabilities] = useState("المطلوبات");
     const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(
       "المطلوبات غير المتداولة"
     );
@@ -671,7 +672,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       <div className="flex justify-start  my-2 text-black">
         <table
           dir="rtl"
-          className="border font-semibold border-gray-300 text-xs mb-12  "
+          className="border font-semibold border-gray-300 text-xs table-fixed mb-12  "
         >
           <thead>
             <tr className="bg-gray-100">
@@ -752,18 +753,18 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           </thead>
 
           <tbody>
-            <tr className="bg-gray-300 font-semibold">
+            <tr className="bg-gray-300 text-sm font-semibold font-semibold">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
                   value={sassets}
                   onChange={(e) => setAssets(e.target.value)}
-                  className=" text-start  bg-gray-300 fext-row"
+                  className=" text-start   bg-gray-300 fext-row"
                   type="text"
                 />
               </td>
             </tr>
-            <br />
+            <br/>
             <tr className="bg-gray-200  font-semibold">
               <td colSpan={4} className="p-1">
                 <input
@@ -786,7 +787,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 <tr key={`non-current-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full h-7  bg-gray-100 text-black p-1"
                       value={nonCurrentLabels[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
@@ -908,20 +909,20 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             })}
 
             <tr className="bg-gray-100 font-semibold">
-              <td className="">
+              <td className=" bg-gray-300 ">
                 {" "}
                 <input
                   placeholder=""
                   value={stotalNonCurrentAssets}
                   onChange={(e) => ssetTotalNonCurrentAssets(e.target.value)}
-                  className=" text-start  bg-gray-100 fext-row"
+                  className=" text-start  bg-gray-300  fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
-              <td className="border p-1 border-gray-300">
+              <td className="border bg-gray-300  border-gray-300"></td>
+              <td className="border p-1 bg-gray-300  border-gray-300">
                 {secondTotalNonCurrent}
               </td>
-              <td className="border border-gray-300">
+              <td className="border bg-gray-300  border-gray-300">
                 {secondTotalNonCurrentDate2}
               </td>
             </tr>
@@ -1278,9 +1279,21 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               <td colSpan={4} className="">
                 <input
                   placeholder=""
+                  value={liabilities}
+                  
+                  onChange={(e) => setLiabilities(e.target.value)}
+                  className=" text-start w-full   bg-gray-300 fext-row"
+                  type="text"
+                />
+              </td>
+            </tr>
+            <tr className="bg-gray-200 font-semibold ">
+              <td colSpan={4} className="">
+                <input
+                  placeholder=""
                   value={sNoncurrentliabilities}
                   onChange={(e) => setNoncurrentliabilities(e.target.value)}
-                  className=" text-start w-full   bg-gray-200 fext-row"
+                  className=" text-start w-full    bg-gray-200 fext-row"
                   type="text"
                 />
               </td>

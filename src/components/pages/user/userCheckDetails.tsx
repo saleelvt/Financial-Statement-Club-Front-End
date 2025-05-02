@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 
 const UserCompanyDetails = React.memo(() => {
+
   const { userLanguage } = useSelector(
     (state: RootState) => state.userLanguage
   );
@@ -546,7 +547,7 @@ const UserCompanyDetails = React.memo(() => {
                           </div>
                         ) : (
                           <p className="text-center text-gray-600">
-                            No Data Available
+                            
                           </p>
                         )}
                       </div>
@@ -595,7 +596,7 @@ const UserCompanyDetails = React.memo(() => {
           </div>
         ) : (
           <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white ">
-            <p className="text-gray-500">No content available</p>
+           
           </div>
         )}
       </div>

@@ -11,13 +11,13 @@ import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAct
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 
-import { PhotoProvider, PhotoView } from "react-photo-view"; // Make sure to import this
 import BalaceSheet from "./Tables/BalanceSheet/balanceSheetAr";
 import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheet";
 import { ITable } from "./Tables/BalanceSheet/interface";
 // import { DocumentSliceAr, DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 
 const AddNewTable = React.memo(() => {
+  const preferredOrder = ["Board", "Year", "S1", "Q4", "Q3", "Q2", "Q1"];
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const TableTypeArr = ["BalanceSheet", "ProfitLoss", "CashFlow"];
@@ -43,8 +43,7 @@ const AddNewTable = React.memo(() => {
   const [selectedYear, setSelectedYear] = useState("");
   const [quarterYear, setQuarterYear] = useState("");
   const [language, setLanguage] = useState<string | null>(null);
-  const [quarters, setQuarters] = useState<{
-    [key: string]: Array<{ quarter: string; date: string }>;
+  const [quarters, setQuarters] = useState<{ [key: string]: Array<{ quarter: string; date: string }>;
   }>({}); // Quarters and their dates for each year
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState<boolean>(false); // Manage year dropdown visibility
   const [isLoading, setIsLoading] = useState(false);
@@ -83,7 +82,6 @@ const AddNewTable = React.memo(() => {
     if (!node) return;
 
     setTakeShot(true);
-
 
     // Define types for style storage
     interface ElementStyleBackup {
@@ -204,12 +202,9 @@ const AddNewTable = React.memo(() => {
         }
       }
     } catch (error) {
-      console.log(error );
-      
-    
-      toast.error("Somthing went wrong")
-      
-     
+      console.log(error);
+
+      toast.error("Somthing went wrong");
     } finally {
       // Restore original styles for all elements
       elementsToRestore.forEach((item) => {
@@ -307,7 +302,34 @@ const AddNewTable = React.memo(() => {
       });
     });
 
-    setYears(Array.from(yearsSet));
+    const dataArray = Array.from(yearsSet);
+    let largestYear = dataArray[0];
+    
+    for (const x of dataArray) {
+      if (x > largestYear) {
+        largestYear = x;
+      }
+    }
+
+    setSelectedYear(largestYear)
+
+    setYears(dataArray);
+
+    const datanew =quartersMap[largestYear]
+    const selectedData = preferredOrder
+    .map(priority => datanew.find(x => x.quarter === priority))
+    .find(Boolean); // returns the first non-undefined match
+  
+  console.log("Selected data:", selectedData);
+    // console.log("the quater sist the data : ",quartersMap,datanew);
+    if (selectedData) {
+      setQuarterYear(selectedData.quarter);
+      setTableType("BalanceSheet")
+
+    }
+
+    // if(tableIframeSrc||tableIframeSrcAr){}
+    
     setQuarters(quartersMap);
     // setIsDropdownOpen(true); // Open the year dropdown
   };
@@ -354,68 +376,148 @@ const AddNewTable = React.memo(() => {
     fetchData();
   }, [selectedYear, quarterYear, tadawalCode]);
 
-  // Function to render content based on tableIframeSrc availability
   const renderTableContent = () => {
-    if (tableIframeSrc) {
+    // Case 1: Both English and Arabic tables exist
+    if (tableIframeSrc && tableIframeSrcAr) {
       return (
         <div className="w-full flex justify-between mt-4">
+          {/* Left side - English table */}
           <div className="w-1/2">
-            <PhotoProvider>
-              <PhotoView src={tableIframeSrc}>
-                <img
-                  src={tableIframeSrc}
-                  alt="S3 Image"
-                  style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
-                />
-              </PhotoView>
-            </PhotoProvider>
+            <div className="pointer-events-none">
+              <img
+                src={tableIframeSrc}
+                alt="English Table"
+                style={{ width: "100%", height: "auto" }}
+                className="select-none"
+              />
+            </div>
           </div>
-          <div className="w-1/2 ">
-            <PhotoProvider>
-              <PhotoView src={tableIframeSrcAr}>
-                <img
-                  src={tableIframeSrcAr}
-                  alt="S3 Image"
-                  style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
-                />
-              </PhotoView>
-            </PhotoProvider>
+          {/* Right side - Arabic table */}
+          <div className="w-1/2">
+            <div className="pointer-events-none">
+              <img
+                src={tableIframeSrcAr}
+                alt="Arabic Table"
+                style={{ width: "100%", height: "auto" }}
+                className="select-none"
+              />
+            </div>
           </div>
         </div>
       );
-    } else {
+    }
+    // Case 2: Only English table exists
+    else if (tableIframeSrc && !tableIframeSrcAr) {
       return (
-        <div className="flex  w-full ">
-          <form className=" ">
-            <div id="capture-area" className="gap-3 w-full">
-              <BalaceSheetFormAr TakingShort={takeShot} />
+        <div className="w-full flex mt-4">
+          {/* Left side - English table */}
+          <div className="w-1/2">
+            <div className="pointer-events-none">
+              <img
+                src={tableIframeSrc}
+                alt="English Table"
+                style={{ width: "100%", height: "auto" }}
+                className="select-none"
+              />
             </div>
-            <div className="mt-2 flex justify-end">
-              <button
-                className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                onClick={() => captureScreen("English")}
-                disabled={takeShot}
-                type="button"
-              >
-                {takeShot ? "Processing..." : "Submit"}
-              </button>
+          </div>
+          {/* Right side - Arabic form */}
+          <div className="w-1/2">
+            <form>
+              <div id="capture-areaAr" className="w-full">
+                <BalaceSheetFormAr TakingShort={takeShot} />
+              </div>
+              <div className="mt-2 flex justify-start">
+                <button
+                  className="bg-slate-300 rounded text-black py-1 px-9 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                  onClick={() => captureScreen("Arabic")}
+                  disabled={takeShot}
+                  type="button"
+                >
+                  {takeShot ? "   رفع..." : " رفع"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+    // Case 3: Only Arabic table exists
+    else if (!tableIframeSrc && tableIframeSrcAr) {
+      return (
+        <div className="w-full flex mt-4">
+          {/* Left side - English form */}
+          <div className="w-1/2">
+            <form>
+              <div id="capture-area" className="w-full">
+                <BalaceSheet TakingShort={takeShot} />
+              </div>
+              <div className="mt-2 flex justify-end">
+                <button
+                  className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                  onClick={() => captureScreen("English")}
+                  disabled={takeShot}
+                  type="button"
+                >
+                  {takeShot ? "Processing..." : "Submit"}
+                </button>
+              </div>
+            </form>
+          </div>
+          {/* Right side - Arabic table */}
+          <div className="w-1/2">
+            <div className="pointer-events-none">
+              <img
+                src={tableIframeSrcAr}
+                alt="Arabic Table"
+                style={{ width: "100%", height: "auto" }}
+                className="select-none"
+              />
             </div>
-          </form>
-          <form className=" ">
-            <div id="capture-areaAr" className=" w-full">
-              <BalaceSheet TakingShort={takeShot} />
-            </div>
-            <div className="mt-2 flex justify-start">
-              <button
-                className="bg-slate-300 rounded text-black py-1 px-8 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                onClick={() => captureScreen("Arabic")}
-                disabled={takeShot}
-                type="button"
-              >
-                {takeShot ? "   رفع..." : " رفع"}
-              </button>
-            </div>
-          </form>
+          </div>
+        </div>
+      );
+    }
+    // Case 4: No tables exist - show both forms (English on left, Arabic on right)
+    else {
+      return (
+        <div className="w-full flex mt-4">
+          <div className="w-1/2">
+            <form>
+              <div id="capture-areaAr" className="w-full">
+                <BalaceSheetFormAr TakingShort={takeShot} />
+              </div>
+              <div className="mt-2 flex justify-end">
+                <button
+                  className="bg-slate-300 rounded text-black py-1 px-9 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                  onClick={() => captureScreen("Arabic")}
+                  disabled={takeShot}
+                  type="button"
+                >
+                  {takeShot ? "   رفع..." : " رفع"}
+                </button>
+              </div>
+            </form>
+          </div>
+          {/* Left side - English form */}
+          <div className="w-1/2">
+            <form>
+              <div id="capture-area" className="gap-3 w-full">
+                <BalaceSheet TakingShort={takeShot} />
+              </div>
+              <div className="mt-2 flex justify-start">
+                <button
+                  className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                  onClick={() => captureScreen("English")}
+                  disabled={takeShot}
+                  type="button"
+                >
+                  {takeShot ? "Processing..." : "Submit"}
+                </button>
+              </div>
+            </form>
+          </div>
+          {/* Right side - Arabic form */}
         </div>
       );
     }
@@ -446,7 +548,9 @@ const AddNewTable = React.memo(() => {
           </button> */}
           {/* </button> */}
           <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
-            {language === "Arabic" ? "قسم الجدول" : "Table Section"}
+            {language === "Arabic"
+              ? "تقرير القوائم المالية"
+              : "Financial Statement Report"}
           </h4>
         </div>
       </div>
@@ -588,8 +692,8 @@ const AddNewTable = React.memo(() => {
           </div>
         )}
       </div>
+      <div className="flex justify-between "></div>
 
-      {/* Table Content - Conditionally render based on whether we have an image URL */}
       {renderTableContent()}
     </div>
   );

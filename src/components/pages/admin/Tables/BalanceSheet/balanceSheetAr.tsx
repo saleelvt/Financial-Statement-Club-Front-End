@@ -293,14 +293,23 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
     // Helper function to safely parse numeric values from strings
     const parseNumericValue = (value: string): number => {
-      if (value === "") return 0;
-      const numValue = parseFloat(value);
-      return isNaN(numValue) ? 0 : numValue;
+      if (!value || value.trim() === "-" || value.trim() === "") return 0;
+
+      const isNegative =
+        value.trim().startsWith("(") && value.trim().endsWith(")");
+      const cleaned = value.replace(/[(),]/g, ""); // Remove (, ), and ,
+      const numValue = parseFloat(cleaned);
+
+      if (isNaN(numValue)) return 0;
+      return isNegative ? -numValue : numValue;
     };
 
-    // Helper function to sum array of string values
     const sumStringValues = (values: string[]): number => {
       return values.reduce((sum, val) => sum + parseNumericValue(val), 0);
+    };
+    const formatWithParentheses = (value: number): string => {
+      const formatted = new Intl.NumberFormat("en-US").format(Math.abs(value));
+      return value < 0 ? `(${formatted})` : formatted;
     };
 
     // Calculate totals for Assets
@@ -417,7 +426,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       "إجمالي حقوق المساهمين"
     );
 
-     const [liabilities, setLiabilities] = useState("المطلوبات");
+    const [liabilities, setLiabilities] = useState("المطلوبات");
     const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(
       "المطلوبات غير المتداولة"
     );
@@ -562,19 +571,12 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       await dispatch(setBalanceSheetDataAction(formData));
     };
 
-
-
-
-
-
-
-
-
-
     const { data } = useSelector((state: RootState) => state.table);
 
     useEffect(() => {
       if (data) {
+        setDate1Ar(data.data1En);
+        setDate2Ar(data.data2En);
         if (data.assets?.nonCurrent) {
           setNonCurrentAssets(
             data.assets.nonCurrent.items || Array(12).fill("")
@@ -583,8 +585,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             data.assets.nonCurrent.subItems || Array(3).fill("")
           );
           setNonCurrentNotes(data.assets.nonCurrent.nonCurrentNotes);
-    
-    
+
           setNonCurrentAssetsDate2(
             data.assets.nonCurrent.itemsDate2 || Array(12).fill("")
           );
@@ -600,7 +601,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           setCurrentSubAssets(
             data.assets.current.subItems || Array(3).fill("")
           );
-       
+
           setCurrentAssetsDate2(
             data.assets.current.itemsDate2 || Array(12).fill("")
           );
@@ -614,7 +615,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           setEquityItems(data.equity.items || Array(12).fill(""));
           setEquityItemsNotes(data.equity.equityItemsNotes);
           setEquitySubItems(data.equity.subItems || Array(3).fill(""));
-      
+
           setEquityItemsDate2(data.equity.itemsDate2 || Array(12).fill(""));
           setEquitySubItemsDate2(
             data.equity.subItemsDate2 || Array(3).fill("")
@@ -632,7 +633,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           setNonCurrentSubLiabilities(
             data.liabilities.nonCurrent.subItems || Array(3).fill("")
           );
-   
+
           setNonCurrentLiabilitiesDate2(
             data.liabilities.nonCurrent.itemsDate2 || Array(12).fill("")
           );
@@ -652,7 +653,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           setCurrentSubLiabilities(
             data.liabilities.current.subItems || Array(3).fill("")
           );
-     
+
           setCurrentLiabilitiesDate2(
             data.liabilities.current.itemsDate2 || Array(12).fill("")
           );
@@ -663,11 +664,6 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       }
     }, [data]);
 
-
-
-
-
-
     return (
       <div className="flex justify-start  my-2 text-black">
         <table
@@ -677,14 +673,15 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           <thead>
             <tr className="bg-gray-100">
               <th className="border border-gray-100 w-96"></th>
-              <th className="border border-gray-100 w-16">إيضاحات</th>
+              <th className="border border-gray-100 w-16">Notes</th>
               <th className="border border-gray-100 p-1 w-28">
                 <DatePicker
                   selected={data1Ar}
                   onChange={(date) => setDate1Ar(date)}
-                  className="bg-gray-100 w-24 text-center"
+                  className="bg-gray-100  w-24 text-center font-bold direction-ltr"
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
+                  dateFormat="dd MMMM yyyy" // 30 April 2025
                 />
 
                 <input
@@ -713,13 +710,14 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 </div>
               </th>
 
-              <th className="border border-gray-100 w-28">
+              <th className="border border-gray-100  w-28 p-1 ">
                 <DatePicker
                   selected={data2Ar}
                   onChange={(date) => setDate2Ar(date)}
-                  className="bg-gray-100 w-24 text-center"
+                  className="bg-gray-100   w-24 text-center font-bold"
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
+                  dateFormat="yyyy MMMM dd"
                 />
 
                 <input
@@ -733,7 +731,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 {/* Riyal symbol + input as flex */}
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
+                  className="flex items-center justify-center bg-gray-100   rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -753,25 +751,25 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           </thead>
 
           <tbody>
-            <tr className="bg-gray-300 text-sm font-semibold font-semibold">
+            <tr className="bg-gray-400  text-sm font-semibold font-semibold">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
                   value={sassets}
                   onChange={(e) => setAssets(e.target.value)}
-                  className=" text-start   bg-gray-300 fext-row"
+                  className=" text-start    bg-gray-400 fext-row"
                   type="text"
                 />
               </td>
             </tr>
-            <br/>
+
             <tr className="bg-gray-200  font-semibold">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
                   value={snonCurrentAssets}
                   onChange={(e) => ssetnonCurrentAssets(e.target.value)}
-                  className=" text-start  bg-gray-200 fext-row"
+                  className=" text-start w-full  bg-gray-200 fext-row"
                   type="text"
                 />
               </td>
@@ -787,7 +785,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 <tr key={`non-current-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
                     <input
-                      className="w-full h-7  bg-gray-100 text-black p-1"
+                      className=" h-7 w-full  bg-gray-100 text-black p-1"
                       value={nonCurrentLabels[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
@@ -841,14 +839,14 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             {hasNonEmptyNonCurrentSubAssets && (
               <tr className="bg-gray-200 font-semibold">
                 <td className="">
-                  <input className="w-full bg-gray-100 text-black p-1" />
+                  <input className="w-full bg-gray-200 text-black p-1" />
                 </td>
                 <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">
-                  {firstTotalNonCurrent}
+                <td className="border  border-gray-300">
+                  {formatWithParentheses(firstTotalNonCurrent)}
                 </td>
                 <td className="border border-gray-300">
-                  {firstTotalNonCurrentDate2}
+                  {formatWithParentheses(firstTotalNonCurrentDate2)}
                 </td>
               </tr>
             )}
@@ -908,27 +906,35 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               );
             })}
 
-            <tr className="bg-gray-100 font-semibold">
-              <td className=" bg-gray-300 ">
+            <tr className="bg-gray-200 border-gray-300 font-semibold">
+              <td className=" bg-gray-200 border-gray-300 ">
                 {" "}
                 <input
                   placeholder=""
                   value={stotalNonCurrentAssets}
                   onChange={(e) => ssetTotalNonCurrentAssets(e.target.value)}
-                  className=" text-start  bg-gray-300  fext-row"
+                  className=" text-start  bg-gray-200 p-0.5   fext-row"
                 />
               </td>
-              <td className="border bg-gray-300  border-gray-300"></td>
-              <td className="border p-1 bg-gray-300  border-gray-300">
-                {secondTotalNonCurrent}
+
+              <td className="border bg-gray-200  border-gray-300"></td>
+              <td className="border border-gray-300 bg-gray-200 p-1 text-start">
+                {secondTotalNonCurrent !== 0 &&
+                secondTotalNonCurrent !== undefined
+                  ? formatWithParentheses(Number(secondTotalNonCurrent))
+                  : ""}
               </td>
-              <td className="border bg-gray-300  border-gray-300">
-                {secondTotalNonCurrentDate2}
+
+              <td className="border border-gray-300 font bg-gray-200 p-1 text-start">
+                {secondTotalNonCurrentDate2 !== 0 &&
+                secondTotalNonCurrentDate2 !== undefined
+                  ? formatWithParentheses(Number(secondTotalNonCurrentDate2))
+                  : ""}
               </td>
             </tr>
-            <br />
+
             <tr className="bg-gray-200 font-semibold">
-              <td colSpan={4} className="p-2">
+              <td colSpan={4} className="p-0.5">
                 <input
                   placeholder=""
                   value={scurrentAssets}
@@ -1002,14 +1008,16 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               <tr className="bg-gray-200 font-semibold">
                 <td className="">
                   <input
-                    className="w-full bg-gray-100 text-black p-1"
+                    className="w-full bg-gray-200 text-black p-1"
                     type="text"
                   />
                 </td>
                 <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">{firstTotalCurrent}</td>
                 <td className="border border-gray-300">
-                  {firstTotalCurrentDate2}
+                  {formatWithParentheses(firstTotalCurrent)}
+                </td>
+                <td className="border border-gray-300">
+                  {formatWithParentheses(firstTotalCurrentDate2)}
                 </td>
               </tr>
             )}
@@ -1072,14 +1080,16 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                   placeholder=""
                   value={stotalCurrentAssets}
                   onChange={(e) => ssetTotalCurrentAssets(e.target.value)}
-                  className=" text-start  bg-gray-200 fext-row"
+                  className=" text-start p-0.5  bg-gray-200 fext-row"
                   type="text"
                 />
               </td>
               <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">{secondTotalCurrent}</td>
               <td className="border border-gray-300">
-                {secondTotalCurrentDate2}
+                {formatWithParentheses(secondTotalCurrent)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(secondTotalCurrentDate2)}
               </td>
             </tr>
 
@@ -1090,19 +1100,24 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                   placeholder=""
                   value={stotalAssets}
                   onChange={(e) => ssetTotalAssets(e.target.value)}
-                  className=" text-start  bg-gray-400 fext-row"
+                  className=" text-start p-1  bg-gray-400 fext-row"
                   type="text"
                 />{" "}
               </td>
               <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">{totalAssets}</td>
-              <td className="border border-gray-300">{totalAssetsDate2}</td>
+              <td className="border border-gray-300">
+  {formatWithParentheses(totalAssets)}
+</td>
+<td className="border border-gray-300">
+  {formatWithParentheses(totalAssetsDate2)}
+</td>
+
             </tr>
           </tbody>
           <br />
 
           <tbody className="">
-            <tr className="bg-gray-300 font-semibold">
+            <tr className="bg-gray-400   font-semibold">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
@@ -1110,19 +1125,19 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                   onChange={(e) =>
                     setShareholdersEquityandliabilities(e.target.value)
                   }
-                  className=" text-start w-full   bg-gray-300 fext-row"
+                  className=" text-start w-full   bg-gray-400 fext-row"
                   type="text"
                 />
               </td>
             </tr>
 
-            <tr className="bg-gray-200 font-medium">
+            <tr className="bg-gray-300 font-medium">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
                   value={sShareholdersEquity}
                   onChange={(e) => setShareholdersEquity(e.target.value)}
-                  className=" text-start w-full   bg-gray-200 fext-row"
+                  className=" text-start w-full   bg-gray-300 fext-row"
                   type="text"
                 />
               </td>
@@ -1199,9 +1214,11 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                   />
                 </td>
                 <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">{firstTotalEquity}</td>
                 <td className="border border-gray-300">
-                  {firstTotalEquityDate2}
+                  {formatWithParentheses(firstTotalEquity)}
+                </td>
+                <td className="border border-gray-300">
+                  {formatWithParentheses(firstTotalEquityDate2)}
                 </td>
               </tr>
             )}
@@ -1258,31 +1275,33 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               );
             })}
 
-            <tr className="bg-gray-100 font-bold">
+            <tr className="bg-gray-300 font-bold">
               <td className="">
                 {" "}
                 <input
                   placeholder=""
                   value={stotalShareholdersEquity}
                   onChange={(e) => setTotalShareholdersEquity(e.target.value)}
-                  className=" text-start w-full   bg-gray-100 fext-row"
+                  className=" text-start w-full p-0.5  bg-gray-300 fext-row"
                   type="text"
                 />
               </td>
               <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">{totalEquity}</td>
-              <td className="border border-gray-300">{totalEquityDate2}</td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalEquity)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalEquityDate2)}
+              </td>
             </tr>
-            <br />
 
             <tr className="bg-gray-200 font-semibold ">
               <td colSpan={4} className="">
                 <input
                   placeholder=""
                   value={liabilities}
-                  
                   onChange={(e) => setLiabilities(e.target.value)}
-                  className=" text-start w-full   bg-gray-300 fext-row"
+                  className=" text-start w-full p-0.5 bg-gray-300 fext-row"
                   type="text"
                 />
               </td>
@@ -1293,7 +1312,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                   placeholder=""
                   value={sNoncurrentliabilities}
                   onChange={(e) => setNoncurrentliabilities(e.target.value)}
-                  className=" text-start w-full    bg-gray-200 fext-row"
+                  className=" text-start w-full  p-0.5   bg-gray-200 fext-row"
                   type="text"
                 />
               </td>
@@ -1377,10 +1396,10 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 </td>
                 <td className="border border-gray-300"></td>
                 <td className="border border-gray-300">
-                  {firstTotalNonCurrentLiabilities}
+                  {formatWithParentheses(firstTotalNonCurrentLiabilities)}
                 </td>
                 <td className="border border-gray-300">
-                  {firstTotalNonCurrentLiabilitiesDate2}
+                  {formatWithParentheses(firstTotalNonCurrentLiabilitiesDate2)}
                 </td>
               </tr>
             )}
@@ -1449,7 +1468,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             })}
 
             <tr className="bg-gray-200 font-semibold ">
-              <td className="">
+              <td className="p-0.5">
                 {" "}
                 <input
                   placeholder=""
@@ -1463,17 +1482,16 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               </td>
               <td className="border border-gray-300"></td>
               <td className="border border-gray-300">
-                {totalNonCurrentLiabilities}
+                {formatWithParentheses(totalNonCurrentLiabilities)}
               </td>
-              <td className="border border-gray-300 ">
-                {totalNonCurrentLiabilitiesDate2}
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalNonCurrentLiabilitiesDate2)}
               </td>
             </tr>
             {/* /kfdf */}
-            <br />
 
             <tr className="bg-gray-200 font-semibold">
-              <td colSpan={4} className="">
+              <td colSpan={4} className="p-0.5">
                 <input
                   placeholder=""
                   value={scurrentliabilities}
@@ -1559,10 +1577,10 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 </td>
                 <td className="border border-gray-300"></td>
                 <td className="border border-gray-300">
-                  {firstTotalCurrentLiabilities}
+                  {formatWithParentheses(firstTotalCurrentLiabilities)}
                 </td>
                 <td className="border border-gray-300">
-                  {firstTotalCurrentLiabilitiesDate2}
+                  {formatWithParentheses(firstTotalCurrentLiabilitiesDate2)}
                 </td>
               </tr>
             )}
@@ -1627,7 +1645,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             })}
 
             <tr className="bg-gray-200 font-semibold ">
-              <td className="">
+              <td className="p-0.5">
                 {" "}
                 <input
                   placeholder=""
@@ -1639,31 +1657,33 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               </td>
               <td className="border border-gray-300"></td>
               <td className="border border-gray-300">
-                {totalCurrentLiabilities}
+                {formatWithParentheses(totalCurrentLiabilities)}
               </td>
               <td className="border border-gray-300">
-                {totalCurrentLiabilitiesDate2}
+                {formatWithParentheses(totalCurrentLiabilitiesDate2)}
               </td>
             </tr>
-            <tr className="bg-gray-200  font-bold">
-              <td className="">
+            <tr className="bg-gray-300  font-bold">
+              <td className="p-0.5">
                 {" "}
                 <input
                   placeholder=""
                   value={stotalliabilities}
                   onChange={(e) => setTotalliabilities(e.target.value)}
-                  className=" text-start w-full   bg-gray-200 fext-row"
+                  className=" text-start w-full   bg-gray-300 fext-row"
                   type="text"
                 />
               </td>
               <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">{totalLiabilities}</td>
               <td className="border border-gray-300">
-                {totalLiabilitiesDate2}
+                {formatWithParentheses(totalLiabilities)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalLiabilitiesDate2)}
               </td>
             </tr>
             <tr className="bg-gray-400  font-bold">
-              <td className="">
+              <td className="p-0.5">
                 <input
                   placeholder=""
                   value={stotalEquityAndLiabilities}
@@ -1674,10 +1694,10 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               </td>
               <td className="border border-gray-300"></td>
               <td className="border border-gray-300">
-                {totalEquityAndLiabilities}
+                {formatWithParentheses(totalEquityAndLiabilities)}
               </td>
               <td className="border border-gray-300">
-                {totalEquityAndLiabilitiesDate2}
+                {formatWithParentheses(totalEquityAndLiabilitiesDate2)}
               </td>
             </tr>
           </tbody>

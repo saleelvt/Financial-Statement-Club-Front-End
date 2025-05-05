@@ -16,7 +16,7 @@ interface DocumentPayload {
   nickNameEn: string;
   tadawalCode: string;
   sector: string;
-  formData: Record<FieldKey, FormField>;
+  formData: Record<FieldKey, FormField>; 
 }
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";

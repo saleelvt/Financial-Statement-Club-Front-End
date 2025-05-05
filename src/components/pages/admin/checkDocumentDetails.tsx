@@ -8,7 +8,7 @@ import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { IoEyeSharp } from "react-icons/io5";
 // import { FaEyeSlash } from "react-icons/fa";
-const Loading = lazy(() => import("../Loading"));
+const Loading = lazy(() => import("../Loading")); 
 import React from "react";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { FaArrowCircleLeft } from "react-icons/fa";

@@ -14,6 +14,9 @@ import { config } from "../../../config/constants";
 import BalaceSheet from "./Tables/BalanceSheet/balanceSheetAr";
 import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheet";
 import { ITable } from "./Tables/BalanceSheet/interface";
+import { FaTrash } from "react-icons/fa";
+
+import { ConfirmationModalTable } from "./Tables/ConfirmationModalTable";
 // import { DocumentSliceAr, DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 
 const AddNewTable = React.memo(() => {
@@ -24,7 +27,7 @@ const AddNewTable = React.memo(() => {
   const { adminLanguage } = useSelector(
     (state: RootState) => state.adminLanguage
   );
-
+  const [modalOpen, setModalOpen] = useState(false);
   const [selectedTableType, setTableType] = useState("");
   // const [takeShotForProfitLoss, setTakeShotForProfitLoss] = useState<boolean>(false);
   // const [takeShotForCashFlow, setTakeShotForCashFlow] = useState<boolean>(false);
@@ -43,11 +46,13 @@ const AddNewTable = React.memo(() => {
   const [selectedYear, setSelectedYear] = useState("");
   const [quarterYear, setQuarterYear] = useState("");
   const [language, setLanguage] = useState<string | null>(null);
-  const [quarters, setQuarters] = useState<{ [key: string]: Array<{ quarter: string; date: string }>;
+  const [quarters, setQuarters] = useState<{
+    [key: string]: Array<{ quarter: string; date: string }>;
   }>({}); // Quarters and their dates for each year
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState<boolean>(false); // Manage year dropdown visibility
   const [isLoading, setIsLoading] = useState(false);
   const [takeShot, setTakeShot] = useState<boolean>(false);
+
 
   // const toggleLanguage = async () => {
   //   const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
@@ -70,7 +75,7 @@ const AddNewTable = React.memo(() => {
     }
   }, [selectedTableType, tableData, tableDataAr]);
 
-  const captureScreen = async (language: string): Promise<void> => {
+  const captureData = async (language: string): Promise<void> => {
     if (language) {
       setLanguage(language);
     }
@@ -81,7 +86,8 @@ const AddNewTable = React.memo(() => {
 
     if (!node) return;
 
-    setTakeShot(true);
+      setTakeShot(true);
+   
 
     // Define types for style storage
     interface ElementStyleBackup {
@@ -201,6 +207,7 @@ const AddNewTable = React.memo(() => {
           });
         }
       }
+
     } catch (error) {
       console.log(error);
 
@@ -304,32 +311,31 @@ const AddNewTable = React.memo(() => {
 
     const dataArray = Array.from(yearsSet);
     let largestYear = dataArray[0];
-    
+
     for (const x of dataArray) {
       if (x > largestYear) {
         largestYear = x;
       }
     }
 
-    setSelectedYear(largestYear)
+    setSelectedYear(largestYear);
 
     setYears(dataArray);
 
-    const datanew =quartersMap[largestYear]
+    const datanew = quartersMap[largestYear];
     const selectedData = preferredOrder
-    .map(priority => datanew.find(x => x.quarter === priority))
-    .find(Boolean); // returns the first non-undefined match
-  
-  console.log("Selected data:", selectedData);
+      .map((priority) => datanew.find((x) => x.quarter === priority))
+      .find(Boolean); // returns the first non-undefined match
+
+    console.log("Selected data:", selectedData);
     // console.log("the quater sist the data : ",quartersMap,datanew);
     if (selectedData) {
       setQuarterYear(selectedData.quarter);
-      setTableType("BalanceSheet")
-
+      setTableType("BalanceSheet");
     }
 
     // if(tableIframeSrc||tableIframeSrcAr){}
-    
+
     setQuarters(quartersMap);
     // setIsDropdownOpen(true); // Open the year dropdown
   };
@@ -376,11 +382,52 @@ const AddNewTable = React.memo(() => {
     fetchData();
   }, [selectedYear, quarterYear, tadawalCode]);
 
+  const handleDeleteTable = async (wlanguage: string | null) => {
+    if (
+      !wlanguage ||
+      !tadawalCode ||
+      !quarterYear ||
+      !selectedTableType ||
+      !selectedYear
+    ) {
+      console.log(
+        "my Kunna Delete  : ",
+        wlanguage,
+        tadawalCode,
+        quarterYear,
+        selectedTableType,
+        selectedYear
+      );
+      toast.error(
+        "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
+      );
+      setModalOpen(false);
+      return;
+    }
+    console.log("the delete language now : ", wlanguage);
+    
+    
+    try {
+      await commonRequest(
+        "DELETE",
+        `/api/v1/admin/deleteTable/${tadawalCode}?language=${wlanguage}&quarterYear=${quarterYear}&selectedTableType=${selectedTableType}&selectedYear=${selectedYear}`,
+        config
+      );
+
+      toast.success("Document Successfully Deleted");
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to delete document:", error);
+    } finally {
+      setModalOpen(false);
+    }
+  };
+
   const renderTableContent = () => {
     // Case 1: Both English and Arabic tables exist
     if (tableIframeSrc && tableIframeSrcAr) {
       return (
-        <div className="w-full flex justify-between mt-4">
+        <div className="flex flex-col lg:flex-row lg:justify-start ">
           {/* Left side - English table */}
           <div className="w-1/2">
             <div className="pointer-events-none">
@@ -409,12 +456,12 @@ const AddNewTable = React.memo(() => {
     // Case 2: Only English table exists
     else if (tableIframeSrc && !tableIframeSrcAr) {
       return (
-        <div className="w-full flex mt-4">
-          {/* Left side - English table */}
-          <div className="w-1/2">
+        <div className="flex flex-col lg:flex-row lg:justify-center  ">
+      
+          <div className="w-full lg:w-1/2 overflow-x-auto">
             <div className="pointer-events-none">
               <img
-                src={tableIframeSrc}
+                src={tableIframeSrc} 
                 alt="English Table"
                 style={{ width: "100%", height: "auto" }}
                 className="select-none"
@@ -422,44 +469,67 @@ const AddNewTable = React.memo(() => {
             </div>
           </div>
           {/* Right side - Arabic form */}
-          <div className="w-1/2">
+          <div className="w-full lg:w-1/2 overflow-x-auto">
             <form>
-              <div id="capture-areaAr" className="w-full">
-                <BalaceSheetFormAr TakingShort={takeShot} />
-              </div>
-              <div className="mt-2 flex justify-start">
-                <button
-                  className="bg-slate-300 rounded text-black py-1 px-9 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => captureScreen("Arabic")}
-                  disabled={takeShot}
-                  type="button"
-                >
-                  {takeShot ? "   رفع..." : " رفع"}
-                </button>
+              <div className="">
+                <div id="capture-areaAr" className="">
+                  <BalaceSheet TakingShort={takeShot} />
+                </div>
+                <div className=" flex justify-start">
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => captureData("Arabic")}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "   رفع..." : " رفع"}
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
       );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Case 3: Only Arabic table exists
     else if (!tableIframeSrc && tableIframeSrcAr) {
       return (
-        <div className="w-full flex mt-4">
+        <div className="flex flex-col lg:flex-row lg:justify-center ">
           {/* Left side - English form */}
-          <div className="w-1/2">
+          <div className="w-full lg:w-1/2">
             <form>
-              <div id="capture-area" className="w-full">
-                <BalaceSheet TakingShort={takeShot} />
+              <div id="capture-area" className="">
+                <BalaceSheetFormAr TakingShort={takeShot} />
               </div>
-              <div className="mt-2 flex justify-end">
+              <div className=" flex justify-end">
                 <button
                   className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => captureScreen("English")}
+                  onClick={() => captureData("English")}
                   disabled={takeShot}
                   type="button"
                 >
-                  {takeShot ? "Processing..." : "Submit"}
+                  {takeShot ? "Submiting..." : "Submit"}
                 </button>
               </div>
             </form>
@@ -478,50 +548,90 @@ const AddNewTable = React.memo(() => {
         </div>
       );
     }
-    // Case 4: No tables exist - show both forms (English on left, Arabic on right)
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     else {
       return (
-        <div className="w-full flex mt-4">
-          <div className="w-1/2">
+        <div className="flex flex-col lg:flex-row  gap-1   ">
+          {/* Arabic Form */}
+
+          <div className=" ">
             <form>
-              <div id="capture-areaAr" className="w-full">
+              <div id="capture-area" className="">
                 <BalaceSheetFormAr TakingShort={takeShot} />
               </div>
-              <div className="mt-2 flex justify-end">
-                <button
-                  className="bg-slate-300 rounded text-black py-1 px-9 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => captureScreen("Arabic")}
-                  disabled={takeShot}
-                  type="button"
-                >
-                  {takeShot ? "   رفع..." : " رفع"}
-                </button>
-              </div>
-            </form>
-          </div>
-          {/* Left side - English form */}
-          <div className="w-1/2">
-            <form>
-              <div id="capture-area" className="gap-3 w-full">
-                <BalaceSheet TakingShort={takeShot} />
-              </div>
-              <div className="mt-2 flex justify-start">
+              <div className=" flex justify-end">
                 <button
                   className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => captureScreen("English")}
+                  onClick={() => captureData("English")}
                   disabled={takeShot}
                   type="button"
                 >
-                  {takeShot ? "Processing..." : "Submit"}
+                  {takeShot ? "Submiting..." : "Submit"}
                 </button>
               </div>
             </form>
           </div>
-          {/* Right side - Arabic form */}
+
+
+
+
+
+          {/* English Form */}
+          <div className="  ">
+            <form>
+              <div className="">
+                <div id="capture-areaAr" className="">
+                  <BalaceSheet TakingShort={takeShot} />
+                </div>
+                <div className=" flex justify-start">
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9  hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => captureData("Arabic")}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "   رفع..." : " رفع"}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       );
     }
   };
+ 
+
+
+
+
+
+
+
+
 
   return (
     <div className="p-1">
@@ -692,8 +802,35 @@ const AddNewTable = React.memo(() => {
           </div>
         )}
       </div>
-      <div className="flex justify-between "></div>
-
+      <div className="flex justify-between p-1 mt-2 ">
+        {" "}
+        <div className="">
+          {" "}
+          <FaTrash
+            onClick={() => {
+              setLanguage("English");
+              setModalOpen(true);
+            }}
+            className="text-xl  text-gray-600"
+          />
+        </div>
+        <div className="">
+          {" "}
+          <FaTrash
+            onClick={() => {
+              setLanguage("Arabic");
+              setModalOpen(true);
+            }}
+            className="text-xl  text-gray-600"
+          />
+         
+        </div>{" "}
+      </div>
+      <ConfirmationModalTable
+        isOpen={modalOpen}
+        onConfirm={async () => await handleDeleteTable(language)}
+        onCancel={() => setModalOpen(false)}
+      />
       {renderTableContent()}
     </div>
   );

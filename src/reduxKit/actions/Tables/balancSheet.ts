@@ -14,9 +14,7 @@ export const axiosIn = axios.create({
 export const setBalanceSheetDataAction = createAsyncThunk(
     "admin/setBalanceSheetDataAction",
     async (data:any, { rejectWithValue }) => {
-      try {
-        console.log("the data caaling happpendd ");
-        
+      try { 
          return data
            
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -14,7 +14,7 @@ const AdminProfilePage = () => {
       reader.readAsDataURL(file);
     }
   };
-
+ 
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-100">
       <div className="bg-white shadow-xl rounded-lg p-6 w-full max-w-lg text-center">

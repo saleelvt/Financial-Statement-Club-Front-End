@@ -293,15 +293,23 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
     // Helper function to safely parse numeric values from strings
     const parseNumericValue = (value: string): number => {
-      if (value === "") return 0;
-      const cleaned = value.replace(/,/g, ""); // Remove commas
+      if (!value || value.trim() === "-" || value.trim() === "") return 0;
+
+      const isNegative =
+        value.trim().startsWith("(") && value.trim().endsWith(")");
+      const cleaned = value.replace(/[(),]/g, ""); // Remove (, ), and ,
       const numValue = parseFloat(cleaned);
-      return isNaN(numValue) ? 0 : numValue;
+
+      if (isNaN(numValue)) return 0;
+      return isNegative ? -numValue : numValue;
     };
 
-    // Helper function to sum array of string values
     const sumStringValues = (values: string[]): number => {
       return values.reduce((sum, val) => sum + parseNumericValue(val), 0);
+    };
+    const formatWithParentheses = (value: number): string => {
+      const formatted = new Intl.NumberFormat("en-US").format(Math.abs(value));
+      return value < 0 ? `(${formatted})` : formatted;
     };
 
     // Calculate totals for Assets
@@ -426,7 +434,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
     );
     const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] =
       useState("Total non-current Liabilities");
- 
+
     const [scurrentliabilities, setcurrentliabilities] = useState(
       "Current Liabilities"
     );
@@ -446,6 +454,8 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
         console.log("useEffect error : ", error);
       }
     }, [
+      data1En,
+      data2En,
       nonCurrentAssetsAr,
       nonCurrentSubAssetsAr,
       nonCurrentAssetsDate2Ar,
@@ -550,6 +560,8 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
         },
         ItotalEquityAndLiabilities: totalEquityAndLiabilities,
         ItotalEquityAndLiabilitiesDate2: totalEquityAndLiabilitiesDate2,
+        data1En: data1En,
+        data2En: data2En,
       };
 
       await dispatch(setBalanceSheetDataAction(formData));
@@ -658,24 +670,25 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             <tr className="bg-gray-100">
               <th className="border border-gray-100 w-96"></th>
               <th className="border border-gray-100 w-16">Notes</th>
-              <th className="border border-gray-100 p-1 w-28">
+              <th className="border border-gray-100 p-1 w-28   ">
                 <DatePicker
                   selected={data1En}
                   onChange={(date) => setDate1En(date)}
-                  className="bg-gray-100 w-24 text-center"
+                  className="bg-gray-100  w-24  text-center font-bold"
                   calendarClassName="custom-datepicker"
-                  placeholderText="اختر التاريخ"
+                  placeholderText="Date"
+                  dateFormat="dd MMMM yyyy" // This gives "31 March 2024"
                 />
+
                 <input
                   placeholder=""
                   value={date1}
                   onChange={(e) => setDate1(e.target.value)}
                   className="w-full text-center bg-gray-100 fext-row"
                 />
-
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
+                  className="flex items-center justify-center bg-gray-100 w-full   rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -686,18 +699,19 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     placeholder=""
                     value={date1Rl}
                     onChange={(e) => setDate1Rl(e.target.value)}
-                    className="w-8  text-center bg-gray-100 focus:outline-none"
+                    className="w-8 selection: text-center bg-gray-100 focus:outline-none"
                     type="text"
                   />
                 </div>
               </th>
-              <th className="border  border-gray-100 w-28">
+              <th className="border   border-gray-100 p-1 w-28 ">
                 <DatePicker
                   selected={data2En}
                   onChange={(date) => setDate2En(date)}
-                  className="bg-gray-100 w-24 text-center"
+                  className="bg-gray-100  w-24   text-center font-bold"
                   calendarClassName="custom-datepicker"
-                  placeholderText="اختر التاريخ"
+                  placeholderText="Date"
+                  dateFormat="dd MMMM yyyy" // This gives "31 March 2024"
                 />
                 <input
                   placeholder=""
@@ -728,17 +742,16 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
           </thead>
 
           <tbody>
-            <tr className="bg-gray-300 text-sm font-semibold">
+            <tr className="bg-gray-400  text-sm font-semibold">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
                   value={sassets}
                   onChange={(e) => setAssets(e.target.value)}
-                  className=" text-start  bg-gray-300 fext-row"
+                  className=" text-start   bg-gray-400 fext-row"
                 />
               </td>
             </tr>
-            <br />
 
             <tr className="bg-gray-200 font-medium">
               <td colSpan={4} className="p-1">
@@ -746,7 +759,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   placeholder=""
                   value={snonCurrentAssets}
                   onChange={(e) => ssetnonCurrentAssets(e.target.value)}
-                  className=" text-start  bg-gray-200 fext-row"
+                  className=" text-start  w-full bg-gray-200 fext-row"
                 />
               </td>
             </tr>
@@ -760,7 +773,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 <tr key={`non-current-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
                     <input
-                      className="w-full h-7  bg-gray-100 text-black p-1"
+                      className="w-full h-7   bg-gray-100 text-black p-1"
                       value={nonCurrentLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
@@ -776,7 +789,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <td className="border border-gray-300">
                     <td className="border ">
                       <input
-                        className="w-full bg-gray-100 text-black p-1"
+                        className="w-full  bg-gray-100 text-black p-1"
                         value={nonCurrentNotes[idx]}
                         onChange={(e) =>
                           handleChange(
@@ -795,40 +808,164 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                       className="w-full bg-gray-100 text-black p-1"
                       placeholder=""
                       value={val}
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // Only handle Backspace when caret is at the end and value ends with ')'
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1); // remove last ')'
+                          handleChange(idx, newVal, "nonCurrent");
+                        }
+                      }}
                       onChange={(e) => {
-                        const rawValue = e.target.value.replace(/,/g, ""); // Remove commas
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
 
-                        // Prevent non-numeric input
+                        // Special case: user is typing just "-"
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "nonCurrent");
+                          return;
+                        }
+
+                        // Remove formatting (commas, parentheses, spaces)
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+
+                        // Check if negative number (starts with "-" or "(")
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+
+                        // Strip the minus sign for digit-only processing
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        // Only allow digits
                         if (!/^\d*$/.test(rawValue)) return;
-                        // Format the number with commas
-                        const formattedValue = new Intl.NumberFormat(
-                          "en-US"
-                        ).format(Number(rawValue));
 
-                        handleChange(idx, formattedValue, "nonCurrent");
+                        // Remove leading zeros
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        // Special case: Input is zero → treat as "-"
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "nonCurrent");
+                          return;
+                        }
+
+                        // Handle case where the value is empty after backspace (clear all)
+                        if (rawValue === "") {
+                          handleChange(idx, "", "nonCurrent");
+                          return;
+                        }
+
+                        // Format the number with commas
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+
+                        // Final value with parentheses for negative numbers
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        // Update the value in the parent component
+                        handleChange(idx, finalValue, "nonCurrent");
+
+                        // Optional: Restore caret position after formatting
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
                       }}
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className=" w-full bg-gray-100 text-black p-1"
                       value={nonCurrentAssetsDate2Ar[idx]}
-                      onChange={(e) => {
-                        const rawValue = e.target.value.replace(/,/g, ""); // Remove commas
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
 
-                        // Block non-numeric input (optional)
+                        // Only handle Backspace when caret is at the end and value ends with ')'
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1); // remove last ')'
+                          handleChange(idx, newVal, "nonCurrent", "date2");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // Special case: user is typing just "-"
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "nonCurrent", "date2");
+                          return;
+                        }
+
+                        // Remove formatting (commas, parentheses, spaces)
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+
+                        // Check if negative number (starts with "-" or "(")
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+
+                        // Strip the minus sign for digit-only processing
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        // Only allow digits
                         if (!/^\d*$/.test(rawValue)) return;
 
-                        const formattedValue = new Intl.NumberFormat(
-                          "en-US"
-                        ).format(Number(rawValue));
+                        // Remove leading zeros
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
 
-                        handleChange(
-                          idx,
-                          formattedValue,
-                          "nonCurrent",
-                          "date2"
+                        // Special case: Input is zero → treat as "-"
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "nonCurrent", "date2");
+                          return;
+                        }
+
+                        // Handle case where the value is empty after backspace (clear all)
+                        if (rawValue === "") {
+                          handleChange(idx, "", "nonCurrent", "date2");
+                          return;
+                        }
+
+                        // Format the number with commas
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
                         );
+
+                        // Final value with parentheses for negative numbers
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        // Update the value in the parent component
+                        handleChange(idx, finalValue, "nonCurrent", "date2");
+
+                        // Optional: Restore caret position after formatting
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
                       }}
                     />
                   </td>
@@ -842,13 +979,11 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <input className="w-full bg-gray-200 text-black p-1" />
                 </td>
                 <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">
-                  {new Intl.NumberFormat("en-US").format(firstTotalNonCurrent)}
+                <td className="border  border-gray-300">
+                  {formatWithParentheses(firstTotalNonCurrent)}
                 </td>
                 <td className="border border-gray-300">
-                  {new Intl.NumberFormat("en-US").format(
-                    firstTotalNonCurrentDate2
-                  )}
+                  {formatWithParentheses(firstTotalNonCurrentDate2)}
                 </td>
               </tr>
             )}
@@ -877,21 +1012,87 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   </td>
 
                   <td className="border border-gray-300">
-                    <input className="w-full bg-gray-100 text-black p-1" />
+                    <input className="w-full bg-gray-100 text-black " />
                   </td>
-
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
-                      value={
-                        val
-                          ? new Intl.NumberFormat("en-US").format(Number(val))
-                          : ""
-                      }
+                      value={val}
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // Only handle Backspace when caret is at the end and value ends with ')'
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1); // remove last ')'
+                          handleChange(idx, newVal, "nonCurrentSub");
+                        }
+                      }}
                       onChange={(e) => {
-                        const rawValue = e.target.value.replace(/,/g, "");
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // Special case: user is typing just "-"
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "nonCurrentSub");
+                          return;
+                        }
+
+                        // Remove formatting (commas, parentheses, spaces)
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+
+                        // Check if negative number (starts with "-" or "(")
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+
+                        // Strip the minus sign for digit-only processing
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        // Only allow digits
                         if (!/^\d*$/.test(rawValue)) return;
-                        handleChange(idx, rawValue, "nonCurrentSub");
+
+                        // Remove leading zeros
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        // Special case: Input is zero → treat as "-"
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "nonCurrentSub");
+                          return;
+                        }
+
+                        // Handle case where the value is empty after backspace (clear all)
+                        if (rawValue === "") {
+                          handleChange(idx, "", "nonCurrentSub");
+                          return;
+                        }
+
+                        // Format the number with commas
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+
+                        // Final value with parentheses for negative numbers
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        // Update the value in the parent component
+                        handleChange(idx, finalValue, "nonCurrentSub");
+
+                        // Optional: Restore caret position after formatting
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
                       }}
                     />
                   </td>
@@ -901,16 +1102,81 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                       className="w-full bg-gray-100 text-black p-1"
                       value={nonCurrentSubAssetsDate2Ar[idx]}
                       placeholder=""
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // Only handle Backspace when caret is at the end and value ends with ')'
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1); // remove last ')'
+                          handleChange(idx, newVal, "nonCurrentSub", "date2");
+                        }
+                      }}
                       onChange={(e) => {
-                        const rawValue = e.target.value.replace(/,/g, "");
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
 
-                        if (!/^\d*$/.test(rawValue)) return; // Optional: only digits allowed
+                        // Special case: user is typing just "-"
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "nonCurrentSub", "date2");
+                          return;
+                        }
 
+                        // Remove formatting (commas, parentheses, spaces)
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+
+                        // Check if negative number (starts with "-" or "(")
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+
+                        // Strip the minus sign for digit-only processing
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        // Only allow digits
+                        if (!/^\d*$/.test(rawValue)) return;
+
+                        // Remove leading zeros
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        // Special case: Input is zero → treat as "-"
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "nonCurrentSub", "date2");
+                          return;
+                        }
+
+                        // Handle case where the value is empty after backspace (clear all)
+                        if (rawValue === "") {
+                          handleChange(idx, "", "nonCurrentSub", "date2");
+                          return;
+                        }
+
+                        // Format the number with commas
                         const formatted = new Intl.NumberFormat("en-US").format(
                           Number(rawValue)
                         );
 
-                        handleChange(idx, formatted, "nonCurrentSub", "date2");
+                        // Final value with parentheses for negative numbers
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        // Update the value in the parent component
+                        handleChange(idx, finalValue, "nonCurrentSub", "date2");
+
+                        // Optional: Restore caret position after formatting
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
                       }}
                     />
                   </td>
@@ -919,38 +1185,34 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             })}
 
             <tr className="bg-gray-100 font-semibold">
-              <td className="border border-gray-300 ">
-               <input
+              <td className="border border-gray-300">
+                <input
                   placeholder=""
                   value={stotalNonCurrentAssets}
                   onChange={(e) => ssetTotalNonCurrentAssets(e.target.value)}
-                  className=" text-start p-1  w-full bg-gray-300  fext-row"
+                  className=" text-start p-0.5  w-full bg-gray-200  fext-row"
                 />
               </td>
 
-              <td className="border border-gray-300 bg-gray-300 p-1"></td>
+              <td className="border border-gray-300 bg-gray-200 p-1"></td>
 
-              <td className="border border-gray-300 bg-gray-300 p-1 text-start">
-                {secondTotalNonCurrent
-                  ? new Intl.NumberFormat("en-US").format(
-                      Number(secondTotalNonCurrent)
-                    )
+              <td className="border border-gray-300 bg-gray-200 p-1 text-start">
+                {secondTotalNonCurrent !== 0 &&
+                secondTotalNonCurrent !== undefined
+                  ? formatWithParentheses(Number(secondTotalNonCurrent))
                   : ""}
               </td>
 
-              <td className="border border-gray-300 font bg-gray-300 p-1 text-start">
-                {secondTotalNonCurrentDate2
-                  ? new Intl.NumberFormat("en-US").format(
-                      Number(secondTotalNonCurrentDate2)
-                    )
+              <td className="border border-gray-300 font bg-gray-200 p-1 text-start">
+                {secondTotalNonCurrentDate2 !== 0 &&
+                secondTotalNonCurrentDate2 !== undefined
+                  ? formatWithParentheses(Number(secondTotalNonCurrentDate2))
                   : ""}
               </td>
             </tr>
 
-            <br />
-
             <tr className="bg-gray-200 font-semibold">
-              <td colSpan={4} className="p-2">
+              <td colSpan={4} className="p-0.5 ">
                 <input
                   placeholder=""
                   value={scurrentAssets}
@@ -962,9 +1224,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
             {currentAssetsAr.map((val, idx) => {
               const isRowEmpty = !val && !currentAssetsDate2Ar[idx];
-
               if (TakingShort && isRowEmpty) return null;
-
               return (
                 <tr key={`current-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
@@ -1002,15 +1262,80 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
-                      value={
-                        val
-                          ? new Intl.NumberFormat("en-US").format(Number(val))
-                          : ""
-                      }
+                      value={val}
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // Handle Backspace at end if value ends with ')'
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1); // Remove last ')'
+                          handleChange(idx, newVal, "current");
+                        }
+                      }}
                       onChange={(e) => {
-                        const rawValue = e.target.value.replace(/,/g, "");
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // Just "-" entered
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "current");
+                          return;
+                        }
+
+                        // Remove formatting (commas, parens, spaces)
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+
+                        // Strip any "-"
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        // Allow only digits
                         if (!/^\d*$/.test(rawValue)) return;
-                        handleChange(idx, rawValue, "current");
+
+                        // Remove leading zeros
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        // Handle zero
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "current");
+                          return;
+                        }
+
+                        // Handle empty input
+                        if (rawValue === "") {
+                          handleChange(idx, "", "current");
+                          return;
+                        }
+
+                        // Format with commas
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        // Update value
+                        handleChange(idx, finalValue, "current");
+
+                        // Adjust caret
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
                       }}
                     />
                   </td>
@@ -1018,17 +1343,83 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
-                      value={
-                        currentAssetsDate2Ar[idx]
-                          ? new Intl.NumberFormat("en-US").format(
-                              Number(currentAssetsDate2Ar[idx])
-                            )
-                          : ""
-                      }
+                      placeholder=""
+                      value={currentAssetsDate2Ar[idx]}
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // Handle backspace when value ends with ")"
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1); // Remove last ')'
+                          handleChange(idx, newVal, "current", "date2");
+                        }
+                      }}
                       onChange={(e) => {
-                        const rawValue = e.target.value.replace(/,/g, "");
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        // If just "-" typed
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "current", "date2");
+                          return;
+                        }
+
+                        // Remove formatting: commas, parentheses, spaces
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+
+                        // Check for negative
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+
+                        // Remove minus sign if any
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        // Only allow digits
                         if (!/^\d*$/.test(rawValue)) return;
-                        handleChange(idx, rawValue, "current", "date2");
+
+                        // Remove leading zeros
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        // If zero input
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "current", "date2");
+                          return;
+                        }
+
+                        // If value empty
+                        if (rawValue === "") {
+                          handleChange(idx, "", "current", "date2");
+                          return;
+                        }
+
+                        // Format with commas
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+
+                        // Wrap with parentheses if negative
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        // Send to parent
+                        handleChange(idx, finalValue, "current", "date2");
+
+                        // Restore caret
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
                       }}
                     />
                   </td>
@@ -1039,12 +1430,15 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             {hasNonEmptyCurrentSubAssets && (
               <tr className="bg-gray-200 font-semibold">
                 <td className="">
-                  <input className="w-full bg-gray-00 text-black p-1" />
+                  <input className="w-full bg-gray-200 text-black p-1" />
                 </td>
                 <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">{firstTotalCurrent}</td>
+
                 <td className="border border-gray-300">
-                  {firstTotalCurrentDate2}
+                  {formatWithParentheses(firstTotalCurrent)}
+                </td>
+                <td className="border border-gray-300">
+                  {formatWithParentheses(firstTotalCurrentDate2)}
                 </td>
               </tr>
             )}
@@ -1074,22 +1468,136 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <td className="border border-gray-300">
                     <input className="w-full bg-gray-100 text-black p-1" />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={val}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "currentSub")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "currentSub");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "currentSub");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "currentSub");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "currentSub");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "currentSub");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={currentSubAssetsDate2Ar[idx]}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "currentSub", "date2")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "currentSub", "date2");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "currentSub", "date2");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "currentSub", "date2");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "currentSub", "date2");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "currentSub", "date2");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
                 </tr>
@@ -1103,13 +1611,15 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   placeholder=""
                   value={stotalCurrentAssets}
                   onChange={(e) => ssetTotalCurrentAssets(e.target.value)}
-                  className=" text-start  bg-gray-200 fext-row"
+                  className=" text-start p-0.5   bg-gray-200 fext-row"
                 />
               </td>
               <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">{secondTotalCurrent}</td>
               <td className="border border-gray-300">
-                {secondTotalCurrentDate2}
+                {formatWithParentheses(secondTotalCurrent)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(secondTotalCurrentDate2)}
               </td>
             </tr>
 
@@ -1120,18 +1630,23 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   placeholder=""
                   value={stotalAssets}
                   onChange={(e) => ssetTotalAssets(e.target.value)}
-                  className=" text-start  bg-gray-400 fext-row"
+                  className=" text-start p-1  bg-gray-400 fext-row"
                 />{" "}
               </td>
               <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">{totalAssets}</td>
-              <td className="border border-gray-300">{totalAssetsDate2}</td>
+              <td className="border border-gray-300">
+  {formatWithParentheses(totalAssets)}
+</td>
+<td className="border border-gray-300">
+  {formatWithParentheses(totalAssetsDate2)}
+</td>
+
             </tr>
           </tbody>
           <br />
 
           <tbody className="">
-            <tr className="bg-gray-300 font-semibold">
+            <tr className="bg-gray-400  font-semibold">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
@@ -1139,18 +1654,18 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   onChange={(e) =>
                     setShareholdersEquityandliabilities(e.target.value)
                   }
-                  className=" text-start w-full   bg-gray-300 fext-row"
+                  className=" text-start w-full   bg-gray-400 fext-row"
                 />
               </td>
             </tr>
 
-            <tr className="bg-gray-200 font-medium">
+            <tr className="bg-gray-300 font-medium">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
                   value={sShareholdersEquity}
                   onChange={(e) => setShareholdersEquity(e.target.value)}
-                  className=" text-start w-full   bg-gray-200 fext-row"
+                  className=" text-start w-full   bg-gray-300 fext-row"
                 />
               </td>
             </tr>
@@ -1199,18 +1714,131 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={val}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "equity")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "equity");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "equity");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "equity");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "equity");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "equity");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={equityItemsDate2Ar[idx]}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "equity", "date2")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "equity", "date2");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "equity", "date2");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "equity", "date2");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "equity", "date2");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "equity", "date2");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
                 </tr>
@@ -1223,9 +1851,11 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <input className="w-full bg-gray-100 text-black p-1" />
                 </td>
                 <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">{firstTotalEquity}</td>
                 <td className="border border-gray-300">
-                  {firstTotalEquityDate2}
+                  {formatWithParentheses(firstTotalEquity)}
+                </td>
+                <td className="border border-gray-300">
+                  {formatWithParentheses(firstTotalEquityDate2)}
                 </td>
               </tr>
             )}
@@ -1253,68 +1883,184 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                       }
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input className="w-full bg-gray-100 text-black p-1" />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={val}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "equitySub")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "equitySub");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "equitySub");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "equitySub");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "equitySub");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "equitySub");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={equitySubItemsDate2Ar[idx]}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "equitySub", "date2")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "equitySub", "date2");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "equitySub", "date2");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "equitySub", "date2");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "equitySub", "date2");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "equitySub", "date2");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
                 </tr>
               );
             })}
 
-            <tr className="bg-gray-100 font-bold">
+            <tr className="bg-gray-300 border-gray-300  font-bold">
               <td className="">
                 {" "}
                 <input
                   placeholder=""
                   value={stotalShareholdersEquity}
                   onChange={(e) => setTotalShareholdersEquity(e.target.value)}
-                  className=" text-start w-full   bg-gray-100 fext-row"
+                  className=" text-start w-full bg-gray-300 p-0.5 "
                 />
               </td>
               <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">{totalEquity}</td>
-              <td className="border border-gray-300">{totalEquityDate2}</td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalEquity)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalEquityDate2)}
+              </td>
             </tr>
-            <br />
 
             <tr className="bg-gray-200 font-semibold ">
               <td colSpan={4} className="">
                 <input
                   value={liabilities}
                   onChange={(e) => setLiabilities(e.target.value)}
-                  className=" text-start  w-full font-bold   bg-gray-300  fext-row"
+                  className=" text-start  p-0.5 w-full font-bold   bg-gray-300  fext-row"
                 />
               </td>
             </tr>
-          
+
             <tr className="bg-gray-200   font-semibold ">
               <td colSpan={4} className="">
                 <input
-              
                   value={sNoncurrentliabilities}
                   onChange={(e) => setNoncurrentliabilities(e.target.value)}
-                  className="text-start w-full    bg-gray-200 fext-row"
+                  className="text-start w-full   p-0.5  bg-gray-200 fext-row"
                 />
               </td>
             </tr>
-        
 
             {nonCurrentLiabilitiesAr.map((val, idx) => {
               const isRowEmpty = !val && !nonCurrentLiabilitiesDate2Ar[idx];
@@ -1355,27 +2101,156 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                       }
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={val}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "nonCurrentLiability")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "nonCurrentLiability");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "nonCurrentLiability");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "nonCurrentLiability");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "nonCurrentLiability");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "nonCurrentLiability");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={nonCurrentLiabilitiesDate2Ar[idx]}
-                      onChange={(e) =>
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(
+                            idx,
+                            newVal,
+                            "nonCurrentLiability",
+                            "date2"
+                          );
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(
+                            idx,
+                            "-",
+                            "nonCurrentLiability",
+                            "date2"
+                          );
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(
+                            idx,
+                            "-",
+                            "nonCurrentLiability",
+                            "date2"
+                          );
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "nonCurrentLiability", "date2");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
                         handleChange(
                           idx,
-                          e.target.value,
+                          finalValue,
                           "nonCurrentLiability",
                           "date2"
-                        )
-                      }
+                        );
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
                 </tr>
@@ -1389,10 +2264,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 </td>
                 <td className="border border-gray-300"></td>
                 <td className="border border-gray-300">
-                  {firstTotalNonCurrentLiabilities}
+                  {formatWithParentheses(firstTotalNonCurrentLiabilities)}
                 </td>
                 <td className="border border-gray-300">
-                  {firstTotalNonCurrentLiabilitiesDate2}
+                  {formatWithParentheses(firstTotalNonCurrentLiabilitiesDate2)}
                 </td>
               </tr>
             )}
@@ -1429,27 +2304,156 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={val}
-                      onChange={(e) =>
-                        handleChange(
-                          idx,
-                          e.target.value,
-                          "nonCurrentSubLiability"
-                        )
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "nonCurrentSubLiability");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "nonCurrentSubLiability");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "nonCurrentSubLiability");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "nonCurrentSubLiability");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "nonCurrentSubLiability");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={nonCurrentSubLiabilitiesDate2Ar[idx]}
-                      onChange={(e) =>
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(
+                            idx,
+                            newVal,
+                            "nonCurrentSubLiability",
+                            "date2"
+                          );
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(
+                            idx,
+                            "-",
+                            "nonCurrentSubLiability",
+                            "date2"
+                          );
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(
+                            idx,
+                            "-",
+                            "nonCurrentSubLiability",
+                            "date2"
+                          );
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(
+                            idx,
+                            "",
+                            "nonCurrentSubLiability",
+                            "date2"
+                          );
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
                         handleChange(
                           idx,
-                          e.target.value,
+                          finalValue,
                           "nonCurrentSubLiability",
                           "date2"
-                        )
-                      }
+                        );
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
                 </tr>
@@ -1457,7 +2461,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             })}
 
             <tr className="bg-gray-200 font-semibold ">
-              <td className="">
+              <td className="p-0.5">
                 {" "}
                 <input
                   placeholder=""
@@ -1470,17 +2474,15 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
               </td>
               <td className="border border-gray-300"></td>
               <td className="border border-gray-300">
-                {totalNonCurrentLiabilities}
+                {formatWithParentheses(totalNonCurrentLiabilities)}
               </td>
-              <td className="border border-gray-300 ">
-                {totalNonCurrentLiabilitiesDate2}
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalNonCurrentLiabilitiesDate2)}
               </td>
             </tr>
-        
-       <br />
 
             <tr className="bg-gray-200 font-semibold">
-              <td colSpan={4} className="">
+              <td colSpan={4} className="p-0.5">
                 <input
                   placeholder=""
                   value={scurrentliabilities}
@@ -1530,23 +2532,141 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={val}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "currentLiability")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "currentLiability");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "currentLiability");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "currentLiability");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "currentLiability");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "currentLiability");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={currentLiabilitiesDate2Ar[idx]}
-                      onChange={(e) =>
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(
+                            idx,
+                            newVal,
+                            "currentLiability",
+                            "date2"
+                          );
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "currentLiability", "date2");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "currentLiability", "date2");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "currentLiability", "date2");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
                         handleChange(
                           idx,
-                          e.target.value,
+                          finalValue,
                           "currentLiability",
                           "date2"
-                        )
-                      }
+                        );
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
                 </tr>
@@ -1560,10 +2680,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 </td>
                 <td className="border border-gray-300"></td>
                 <td className="border border-gray-300">
-                  {firstTotalCurrentLiabilities}
+                  {formatWithParentheses(firstTotalCurrentLiabilities)}
                 </td>
                 <td className="border border-gray-300">
-                  {firstTotalCurrentLiabilitiesDate2}
+                  {formatWithParentheses(firstTotalCurrentLiabilitiesDate2)}
                 </td>
               </tr>
             )}
@@ -1600,23 +2720,151 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={val}
-                      onChange={(e) =>
-                        handleChange(idx, e.target.value, "currentSubLiability")
-                      }
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(idx, newVal, "currentSubLiability");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(idx, "-", "currentSubLiability");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(idx, "-", "currentSubLiability");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "currentSubLiability");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChange(idx, finalValue, "currentSubLiability");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
+
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
                       value={currentSubLiabilitiesDate2Ar[idx]}
-                      onChange={(e) =>
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChange(
+                            idx,
+                            newVal,
+                            "currentSubLiability",
+                            "date2"
+                          );
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChange(
+                            idx,
+                            "-",
+                            "currentSubLiability",
+                            "date2"
+                          );
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChange(
+                            idx,
+                            "-",
+                            "currentSubLiability",
+                            "date2"
+                          );
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChange(idx, "", "currentSubLiability", "date2");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
                         handleChange(
                           idx,
-                          e.target.value,
+                          finalValue,
                           "currentSubLiability",
                           "date2"
-                        )
-                      }
+                        );
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
                     />
                   </td>
                 </tr>
@@ -1624,7 +2872,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             })}
 
             <tr className="bg-gray-200 font-semibold ">
-              <td className="">
+              <td className="p-0.5">
                 {" "}
                 <input
                   placeholder=""
@@ -1636,31 +2884,33 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
               </td>
               <td className="border border-gray-300"></td>
               <td className="border border-gray-300">
-                {totalCurrentLiabilities}
+                {formatWithParentheses(totalCurrentLiabilities)}
               </td>
               <td className="border border-gray-300">
-                {totalCurrentLiabilitiesDate2}
+                {formatWithParentheses(totalCurrentLiabilitiesDate2)}
               </td>
             </tr>
-            <tr className="bg-gray-200  font-bold">
-              <td className="">
+            <tr className="bg-gray-300   font-bold">
+              <td className="p-0.5">
                 {" "}
                 <input
                   placeholder=""
                   value={stotalliabilities}
                   onChange={(e) => setTotalliabilities(e.target.value)}
-                  className=" text-start w-full   bg-gray-200 fext-row"
+                  className=" text-start w-full   bg-gray-300 fext-row"
                   type="text"
                 />
               </td>
               <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">{totalLiabilities}</td>
               <td className="border border-gray-300">
-                {totalLiabilitiesDate2}
+                {formatWithParentheses(totalLiabilities)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalLiabilitiesDate2)}
               </td>
             </tr>
-            <tr className="bg-gray-400  font-bold">
-              <td className="">
+            <tr className="bg-gray-400   font-bold">
+              <td className="p-0.5">
                 <input
                   placeholder=""
                   value={stotalEquityAndLiabilities}
@@ -1671,10 +2921,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
               </td>
               <td className="border border-gray-300"></td>
               <td className="border border-gray-300">
-                {totalEquityAndLiabilities}
+                {formatWithParentheses(totalEquityAndLiabilities)}
               </td>
               <td className="border border-gray-300">
-                {totalEquityAndLiabilitiesDate2}
+                {formatWithParentheses(totalEquityAndLiabilitiesDate2)}
               </td>
             </tr>
           </tbody>

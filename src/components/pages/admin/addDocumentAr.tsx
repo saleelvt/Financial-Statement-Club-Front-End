@@ -17,7 +17,7 @@ import { config, URL } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
 import ValidationModal from "../validationModal";
 import { AddDocument } from "./addDocumentEn";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit"; 
 import Swal from "sweetalert2";
 
 interface DocumentPayload {

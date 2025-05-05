@@ -9,7 +9,7 @@ import {
   DocumentSliceEn,
   DocumentSliceAr,
   FormDataState,
-} from "../../../interfaces/admin/addDoument"; 
+} from "../../../interfaces/admin/addDoument";
 const Loading = lazy(() => import("../Loading"));
 import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
@@ -21,13 +21,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 
 const UserCompanyDetails = React.memo(() => {
-
   const { userLanguage } = useSelector(
     (state: RootState) => state.userLanguage
   );
   const [documents, setDocuments] = useState<
     (DocumentSliceEn | DocumentSliceAr)[]
   >([]);
+  const [tableButtonDisable, setTableButtonDisable] = useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [document, setDocument] = useState<DocumentSliceEn | DocumentSliceAr>();
@@ -297,6 +297,31 @@ const UserCompanyDetails = React.memo(() => {
   }, [documents]);
 
   useEffect(() => {
+    try {
+      const hasAnyTable = selectedFilteredDocWithYear.some((x)=>{
+      
+        console.log("my LeADKED DATA OF HT &*&*&",x.formData);
+        for(const k in x.formData){
+          console.log("KKK DAta : ", k);
+          if( x.formData[k].table){
+            console.log("AA DATA : ",  x.formData[k].table);
+            setTableButtonDisable(false)
+          }
+        
+          
+          
+        }
+        
+        
+      });
+      setTableButtonDisable(!hasAnyTable); // Disable if no table exists
+    } catch (error) {
+      console.log("the error is : ", error);
+      setTableButtonDisable(true); // fallback: disable if error
+    }
+  }, [selectedFilteredDocWithYear]);
+
+  useEffect(() => {
     const fetchDocuments = async () => {
       setLoading(true);
       try {
@@ -344,6 +369,7 @@ const UserCompanyDetails = React.memo(() => {
   if (error) {
     return <Error />;
   }
+
   return (
     <div
       dir={userLanguage === "English" ? "ltr" : "rtl"}
@@ -465,7 +491,7 @@ const UserCompanyDetails = React.memo(() => {
                             selectedFilteredDocWithYear.some(
                               (doc) => doc.formData[key]?.file !== null
                             )
-                          ) 
+                          )
                           .map((key) => (
                             <div key={key} className="relative group">
                               <button
@@ -504,19 +530,22 @@ const UserCompanyDetails = React.memo(() => {
                       >
                         {selectedFilteredDocWithYear.length > 0 ? (
                           <div className="flex flex-wrap gap-2">
-                            <button
-                              onClick={handleTABLE}
-                              className={`flex text-xs items-center justify-center text-[16px] px-2 py-1 rounded-md
-                                  ${
-                                    selectedTableKey
-                                      ? "bg-gray-600 text-white"
-                                      : selectedPdfKey
-                                      ? "bg-gray-300 text-gray-800"
-                                      : "bg-gray-600 text-white"
-                                  }`}
-                            >
-                              Table
-                            </button>
+                            {tableButtonDisable && (
+  <button
+    onClick={handleTABLE}
+    className={`flex text-xs items-center justify-center text-[16px] px-2 py-1 rounded-md
+      ${
+        selectedTableKey
+          ? "bg-gray-600 text-white"
+          : selectedPdfKey
+          ? "bg-gray-300 text-gray-800"
+          : "bg-gray-600 text-white"
+      }`}
+  >
+    Table
+  </button>
+)}
+                          
                             {tableKeys
                               .filter((key) =>
                                 selectedFilteredDocWithYear.some(
@@ -546,9 +575,7 @@ const UserCompanyDetails = React.memo(() => {
                               ))}
                           </div>
                         ) : (
-                          <p className="text-center text-gray-600">
-                            
-                          </p>
+                          <p className="text-center text-gray-600"></p>
                         )}
                       </div>
                     )}
@@ -560,7 +587,6 @@ const UserCompanyDetails = React.memo(() => {
       </div>
       <div className="lg:w-[65%] ">
         {tableIframeSrc ? (
-        
           <PhotoProvider>
             <PhotoView src={tableIframeSrc}>
               <img
@@ -571,7 +597,6 @@ const UserCompanyDetails = React.memo(() => {
             </PhotoView>
           </PhotoProvider>
         ) : iframeSrc ? (
-  
           <div
             className=""
             style={{
@@ -595,9 +620,7 @@ const UserCompanyDetails = React.memo(() => {
             />
           </div>
         ) : (
-          <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white ">
-           
-          </div>
+          <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white "></div>
         )}
       </div>
     </div>

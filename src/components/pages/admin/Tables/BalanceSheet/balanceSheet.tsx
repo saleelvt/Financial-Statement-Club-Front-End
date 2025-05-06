@@ -2041,7 +2041,6 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 {formatWithParentheses(totalEquityDate2)}
               </td>
             </tr>
-
             <tr className="bg-gray-200 font-semibold ">
               <td colSpan={4} className="">
                 <input
@@ -2051,7 +2050,6 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 />
               </td>
             </tr>
-
             <tr className="bg-gray-200   font-semibold ">
               <td colSpan={4} className="">
                 <input

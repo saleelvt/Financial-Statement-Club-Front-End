@@ -459,7 +459,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       nonCurrentAssetsDate2,
       nonCurrentSubAssetsDate2,
       nonCurrentNotes,
-
+   
       // Assets - Current
       currentAssets,
       currentSubAssets,

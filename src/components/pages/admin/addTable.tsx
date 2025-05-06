@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
-import { toPng } from "html-to-image";
+
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { toPng } from 'html-to-image-no-fonts';
 import toast from "react-hot-toast";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { commonRequest } from "../../../config/api";
@@ -79,24 +80,23 @@ const AddNewTable = React.memo(() => {
     if (language) {
       setLanguage(language);
     }
+  
     const node =
       language === "Arabic"
         ? document.getElementById("capture-areaAr")
         : document.getElementById("capture-area");
-
+  
     if (!node) return;
-
-      setTakeShot(true);
-   
-
-    // Define types for style storage
+  
+    setTakeShot(true);
+  
     interface ElementStyleBackup {
       element: HTMLElement;
       overflow: string;
       height: string;
       maxHeight: string;
     }
-
+  
     interface NodeStyleBackup {
       overflow: string;
       height: string;
@@ -104,8 +104,7 @@ const AddNewTable = React.memo(() => {
       position: string;
       display: string;
     }
-
-    // Save original styles for the entire subtree
+  
     const elementsToRestore: ElementStyleBackup[] = [];
     node.querySelectorAll("*").forEach((el: Element) => {
       const htmlEl = el as HTMLElement;
@@ -115,14 +114,12 @@ const AddNewTable = React.memo(() => {
         height: htmlEl.style.height,
         maxHeight: htmlEl.style.maxHeight,
       });
-
-      // Set styles to ensure all content is visible
+  
       htmlEl.style.overflow = "visible";
       htmlEl.style.height = "auto";
       htmlEl.style.maxHeight = "none";
     });
-
-    // Also save and modify the container node
+  
     const originalNodeStyles: NodeStyleBackup = {
       overflow: node.style.overflow,
       height: node.style.height,
@@ -130,54 +127,47 @@ const AddNewTable = React.memo(() => {
       position: node.style.position,
       display: node.style.display,
     };
-
+  
     node.style.overflow = "visible";
     node.style.height = "auto";
     node.style.maxHeight = "none";
     node.style.position = "relative";
-    node.style.display = "inline-block"; // This can help with sizing issues
-
+    node.style.display = "inline-block";
+  
     try {
-      // Allow more time for styles to apply and content to fully render
+      // Wait for fonts to fully load
+      await document.fonts.ready;
+  
+      // Allow styles to apply and force repaint
       await new Promise((resolve) => setTimeout(resolve, 500));
-      // Force a repaint before capture
       window.dispatchEvent(new Event("resize"));
-      // Get actual content dimensions
+  
       const nodeRect = node.getBoundingClientRect();
-
-      // Use html-to-image with proper settings
+  
       const dataUrl: string = await toPng(node, {
         height: Math.max(node.scrollHeight, nodeRect.height),
         width: Math.max(node.scrollWidth, nodeRect.width),
         quality: 1.0,
-        pixelRatio: 2,
-        cacheBust: true, // Prevents caching issues
+        cacheBust: true,
         skipAutoScale: true,
         style: {
           transform: "none",
         },
         filter: (node: Node): boolean => {
-          // Filter out any elements that might interfere with capture
           return !(
             node instanceof HTMLElement &&
             node.classList?.contains("no-capture")
           );
         },
-      });
-      // Convert to File object
+        pixelRatio: 2,
+      } as any);
+      
       const response = await fetch(dataUrl);
       const blob = await response.blob();
       const screenshotFile = new File([blob], "screenshot.png", {
         type: "image/png",
       });
-
-      // Trigger download
-      // const downloadLink = document.createElement("a");
-      // downloadLink.href = dataUrl;
-      // downloadLink.download = "screenshot.png";
-      // downloadLink.click();
-
-      // Send to backend
+  
       const responseTow = await dispatch(
         AdminAddTableAction({
           tadawalCode,
@@ -188,13 +178,12 @@ const AddNewTable = React.memo(() => {
           language,
         })
       );
-
+  
       console.log("Response from ADDTABLE:", responseTow);
-
+  
       if (responseTow.payload?.success === true) {
         toast.success(responseTow.payload.message);
-
-        // Update the local table data after successful upload
+  
         if (language === "Arabic" && tableDataAr) {
           setTableDataAr({
             ...tableDataAr,
@@ -207,30 +196,28 @@ const AddNewTable = React.memo(() => {
           });
         }
       }
-
+  
     } catch (error) {
       console.log(error);
-
-      toast.error("Somthing went wrong");
+      toast.error("Something went wrong");
     } finally {
-      // Restore original styles for all elements
       elementsToRestore.forEach((item) => {
         item.element.style.overflow = item.overflow;
         item.element.style.height = item.height;
         item.element.style.maxHeight = item.maxHeight;
       });
-
-      // Restore container node styles
+  
       node.style.overflow = originalNodeStyles.overflow;
       node.style.height = originalNodeStyles.height;
       node.style.maxHeight = originalNodeStyles.maxHeight;
       node.style.position = originalNodeStyles.position;
       node.style.display = originalNodeStyles.display;
-
+  
       setTimeout(() => setTakeShot(false), 200);
     }
   };
-
+  
+  
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
     console.log("Selected Year:", year);

@@ -159,7 +159,6 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             formData.append(`${key}Date`, value.date.toISOString());
           if (value.year) formData.append(`${key}Year`, value.year);
         }
-  
         formData.append("fullNameAr", adminCredentials.fullNameAr);
         formData.append("nickNameAr", adminCredentials.nickNameAr);
         formData.append("tadawalCode", adminCredentials.tadawalCode);
@@ -189,7 +188,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
      
         
         setErrorMessage(
-          error.response?.data?.message || "Something went wrong!"
+          error.response?.data?.message || "Something went s wrong!"
         );
         setIsModalOpen(true);
         throw error; // Re-throw to be caught by the component
@@ -311,8 +310,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               </div>
             </div>
 
-            <div className="flex xs:w-full    lg:w-1/2  justify-between ">
-              <div className=" lg:w-full xs:w-full  p-1">
+            <div className="flex xs:w-full   lg:w-1/2  ">
+              <div className=" lg:w-full  xs:w-64  p-1"> 
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm ">
                   الاسم المختصر{" "}
                 </label>
@@ -364,7 +363,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
 
                 <input
                   type="text"
-                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                   placeholder="أدخل السنة"
                   value={formData.Q1.year}
                   onChange={(e) => handleYearChange("Q1", e.target.value)}
@@ -392,7 +391,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-1/2 p-1 mt-1 bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full  p-1 mt-1 bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
                   placeholder="أدخل السنة"
                   value={formData.Q2.year}
                   onChange={(e) => handleYearChange("Q2", e.target.value)}
@@ -419,7 +418,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="أدخل السنة"
                   value={formData.Q3.year}
                   onChange={(e) => handleYearChange("Q3", e.target.value)}
@@ -446,7 +445,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="أدخل السنة"
                   value={formData.Q4.year}
                   onChange={(e) => handleYearChange("Q4", e.target.value)}
@@ -473,7 +472,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="أدخل السنة"
                   value={formData.S1.year}
                   onChange={(e) => handleYearChange("S1", e.target.value)}
@@ -500,7 +499,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-1/2 mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full  mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="أدخل السنة"
                   value={formData.Year.year}
                   onChange={(e) => handleYearChange("Year", e.target.value)}
@@ -528,7 +527,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-1/2 mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  w-full mt-1  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="أدخل السنة"
                   value={formData.Board.year}
                   onChange={(e) => handleYearChange("Board", e.target.value)}

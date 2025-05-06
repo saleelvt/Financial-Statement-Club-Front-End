@@ -376,7 +376,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 />
               </div>
             </div>
-            <div className="flex xs:w-full   text-xs mt-2  bg-pur gap-1  lg:w-1/2 ">
+            <div className="flex xs:w-full   text-xs mt-1 gap-1  lg:w-1/2 ">
               <div className=" xs:w-64 lg:w-1/2">
                 <label className="block uppercase  tracking-wide text-gray-700 font-bold ">
                   Nick Name

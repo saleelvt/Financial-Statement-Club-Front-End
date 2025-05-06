@@ -111,7 +111,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         date,
       },
     }));
-  };
+  }; 
   useEffect(() => {
     console.log("current proggress : ", progress);
   }, [progress]);
@@ -133,7 +133,19 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       };
     });
   };
-
+  const progressManager = {
+    setProgressFn: null as ((progress: number) => void) | null,
+    updateProgress: function(progress: number) {
+      if (this.setProgressFn) {
+        this.setProgressFn(progress);
+      }
+    },
+    registerSetProgress: function(setProgressFn: (progress: number) => void) {
+      this.setProgressFn = setProgressFn;
+    }
+  };
+  
+  // Your Redux thunk - with minimal changes
   const addDocumentArabic = createAsyncThunk(
     "admin/addDocumentArabic",
     async (adminCredentials: DocumentPayload) => {
@@ -152,7 +164,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
           setIsModalOpen(true);
           return;
         }
-
+  
         // ✅ Create FormData
         const formData = new FormData();
         for (const [key, value] of Object.entries(adminCredentials.formData)) {
@@ -161,19 +173,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             formData.append(`${key}Date`, value.date.toISOString());
           if (value.year) formData.append(`${key}Year`, value.year);
         }
-
+  
         formData.append("fullNameAr", adminCredentials.fullNameAr);
         formData.append("nickNameAr", adminCredentials.nickNameAr);
         formData.append("tadawalCode", adminCredentials.tadawalCode);
         formData.append("sector", adminCredentials.sector);
-
-
+  
         console.log("FormData contents:");
         formData.forEach((value, key) => {
-          console.log("my key of the arabic aned : ",key,"some data of the tree: ", value);
+          console.log("my key of the arabic aned : ", key, "some data of the tree: ", value);
         });
-
-        const response = await axiosIn.post(  "/api/v1/admin/addDocumentArabic",
+  
+        // Reset progress to 0 before starting
+        progressManager.updateProgress(0);
+  
+        const response = await axiosIn.post("/api/v1/admin/addDocumentArabic",
           formData,
           {
             headers: {
@@ -181,29 +195,47 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             },
             onUploadProgress: (data) => {
               const { loaded, total } = data;
-              // Set a smaller chunk size to force more frequent updates
+              console.log("my Loaded Fries:",loaded, "my total :", total);
+              
+              // Only update progress if total is available
               if (total) {
-                setProgress(Math.round((loaded / total) * 100));
+                const percent = Math.round((loaded / total) * 100);
+                progressManager.updateProgress(percent);
+                console.log(`Progress: ${percent}%`); // Debug log
               }
-              // Calculate progress based on loaded/total ratio
             },
           }
         );
-        console.log("the respon fo the add arabic doc: ", response);
+  
+        // Always set progress to 100% on successful completion
+        progressManager.updateProgress(100);
+        
+        console.log("the response for the add arabic doc: ", response);
         return response.data;
       } catch (error: any) {
+        // Reset progress on error
+        progressManager.updateProgress(0);
+        
         setErrorMessage(
           error.response?.data?.message || "Something went wrong!"
         );
         setIsModalOpen(true);
+        throw error; // Re-throw to be caught by the component
       }
     }
   );
-
+  
+  // Your component submit handler with minimal changes
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      setProgress(0); // Reset progress at start
+      
+      // Register the setProgress function with our manager
+      progressManager.registerSetProgress(setProgress);
+      
+      // Reset progress at start
+      setProgress(0);
+      
       const payloadData: DocumentSliceAr = {
         fullNameAr,
         nickNameAr,
@@ -212,19 +244,14 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         formData,
         createdAt: new Date().toISOString(),
       };
+      
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
   
-
       if (response && response.success) {
         toast.success(response.message);
-
-        // Only set to 100% if not already there from the progress events
-        if (progress < 100) {
-          setProgress(100);
-        }
-
+  
         // Reset form data
-       await  setFormData(
+        await setFormData(
           (prevFormData) =>
             Object.fromEntries(
               Object.entries(prevFormData).map(([key, value]) => [
@@ -233,17 +260,21 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               ])
             ) as Record<FieldKey, FormField>
         );
-      }
+      } 
     } catch (error: any) {
+      console.error("Submit error:", error);
+      
       Swal.fire({
-               icon: "error",
-               title: "Error!",
-               text: error.message,
-               timer: 3000,
-               toast: true,
-               showConfirmButton: false,
-               timerProgressBar: true,
-             });
+        icon: "error",
+        title: "Error!",
+        text: error.message || "Something went wrong!",
+        timer: 3000,
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      });
+      
+      // Ensure progress is reset to 0 on error in component too
       setProgress(0);
     }
   };
@@ -543,19 +574,19 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             {loading ? (
               <div className="flex flex-col items-center">
                 <div className="w-4 h-4 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
-                <span className="mt-4 text-gray-700 font-bold">{`جاري التحميل...`}</span>
+                {/* <span className="mt-4 text-gray-700 font-bold">{`جاري التحميل...`}</span> */}
               </div>
             ) : (
               <button
                 type="submit"
-                className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[1.5px] px-7 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[1.5px] px-9 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 رفع
               </button>
             )}
 
             {progress > 0 && progress < 100 && (
-              <div className="w-1/2 px-4 bg-gray-200 rounded-full h-4 mt-4">
+              <div className="w-1/4 px-2 bg-gray-200 rounded-full h-1 mt-4">
                 <div
                   className="bg-gray-500 h-4 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}

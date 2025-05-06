@@ -561,7 +561,7 @@ const AddNewTable = React.memo(() => {
 
     else {
       return (
-        <div className="flex flex-col lg:flex-row  gap-1   ">
+        <div className="flex justify-center flex-col lg:flex-row  gap-1   ">
           {/* Arabic Form */}
 
           <div className=" ">
@@ -788,8 +788,7 @@ const AddNewTable = React.memo(() => {
             </select>
           </div>
         )}
-      </div>
-      <div className="flex justify-between p-1 mt-2 ">
+         <div className="flex gap-3 place-items-center justify-end p-1 mt-5 ">
         {" "}
         <div className="">
           {" "}
@@ -813,6 +812,8 @@ const AddNewTable = React.memo(() => {
          
         </div>{" "}
       </div>
+      </div>
+     
       <ConfirmationModalTable
         isOpen={modalOpen}
         onConfirm={async () => await handleDeleteTable(language)}

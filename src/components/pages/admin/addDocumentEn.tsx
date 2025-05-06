@@ -37,7 +37,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
   ({ formDataEn, tadawalCodeEn }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { loading } = useSelector((state: RootState) => state.adminEn);
-    const [progress, setProgress] = useState<number>(0);
       const [isModalOpen, setIsModalOpen] = useState(false);
         const [errorMessage, setErrorMessage] = useState("");
     const [fullNameEn, setFullNameEn] = useState("");
@@ -174,7 +173,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         config,
         {}
       );
-      console.log("data with the suggetin __________", response.data.data);
       const mydata = response.data.data;
       setnickNameEn(mydata.nickNameEn);
       setFullNameEn(mydata.fullNameEn);
@@ -272,14 +270,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               headers: {
                 "Content-Type": "multipart/form-data",
               },
-              onUploadProgress: (data) => {
-                const { loaded, total } = data;
-                // Set a smaller chunk size to force more frequent updates
-                if (total) {
-                  setProgress(Math.round((loaded / total) * 100));
-                }
-                // Calculate progress based on loaded/total ratio
-              },
             }
           );
           return response.data;
@@ -308,12 +298,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
        const response= await dispatch(addDocumentEnglish(payloadData)).unwrap();
         if (response && response.success) {
           toast.success(response.message);
-  
           // Only set to 100% if not already there from the progress events
-          if (progress < 100) {
-            setProgress(100);
-          }
-  
+     
           // Reset form data
          await  setFormData(
             (prevFormData) =>
@@ -335,7 +321,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           showConfirmButton: false,
           timerProgressBar: true,
         });
-        setProgress(0);
+
       }
     };
 
@@ -631,15 +617,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 >
                   Submit
                 </button>
-              )}
-
-              {progress > 0 && progress < 100 && (
-                <div className="w-1/2 px-4 bg-gray-200 rounded-full h-4 mt-4">
-                  <div
-                    className="bg-gray-500 h-4 rounded-full transition-all duration-300"
-                    style={{ width: `${progress}%` }}
-                  ></div>
-                </div>
               )}
             </div>
           </form>

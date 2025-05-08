@@ -27,7 +27,7 @@ const UserCompanyDetails = React.memo(() => {
   const [documents, setDocuments] = useState<
     (DocumentSliceEn | DocumentSliceAr)[]
   >([]);
-  const [tableButtonDisable, setTableButtonDisable] = useState(false);
+  // const [tableButtonDisable, setTableButtonDisable] = useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [document, setDocument] = useState<DocumentSliceEn | DocumentSliceAr>();
@@ -169,11 +169,9 @@ const UserCompanyDetails = React.memo(() => {
       const screenshotUrl =
         document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
 
-      console.log("the screen short for the user  url is : ", screenshotUrl);
+
       if (screenshotUrl && typeof screenshotUrl === "string") {
         setTableIframeSrc(screenshotUrl);
-      } else {
-        alert(`No screenshot available for ${tableKey}`);
       }
     }
   };
@@ -291,35 +289,10 @@ const UserCompanyDetails = React.memo(() => {
 
   useEffect(() => {
     if (documents.length > 0) {
-      console.log("kaalan documents : ", documents);
+      console.log(" documents : ", documents);
       setDocument(documents[0]);
     }
   }, [documents]);
-
-  useEffect(() => {
-    try {
-      const hasAnyTable = selectedFilteredDocWithYear.some((x)=>{
-      
-        console.log("my LeADKED DATA OF HT &*&*&",x.formData);
-        for(const k in x.formData){
-          console.log("KKK DAta : ", k);
-          if( x.formData[k].table){
-            console.log("AA DATA : ",  x.formData[k].table);
-            setTableButtonDisable(false)
-          }
-        
-          
-          
-        }
-        
-        
-      });
-      setTableButtonDisable(!hasAnyTable); // Disable if no table exists
-    } catch (error) {
-      console.log("the error is : ", error);
-      setTableButtonDisable(true); // fallback: disable if error
-    }
-  }, [selectedFilteredDocWithYear]);
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -356,7 +329,7 @@ const UserCompanyDetails = React.memo(() => {
   }
   if (selectedFilteredDocWithYear) {
     console.log(
-      "the selectedFilteredDocWithYear:",
+      "the selectedFilteredDocWithYear this is Importent data :",
       selectedFilteredDocWithYear
     );
   }
@@ -489,7 +462,7 @@ const UserCompanyDetails = React.memo(() => {
                         {pdfKeys
                           .filter((key) =>
                             selectedFilteredDocWithYear.some(
-                              (doc) => doc.formData[key]?.file !== null
+                              (doc) => doc.formData[key]?.file // This checks for existence (not null/undefined/empty)
                             )
                           )
                           .map((key) => (
@@ -498,7 +471,7 @@ const UserCompanyDetails = React.memo(() => {
                                 onClick={() =>
                                   handlePdfButtonClick(key as FieldKey)
                                 }
-                                className={`px-2 py-1 text-xs bg-gray-200 rounded-md transition-all duration-300 ${
+                                className={`px-2 py-1 text-xs rounded-md transition-all duration-300 ${
                                   selectedPdfKey === key
                                     ? "bg-gray-600 text-white"
                                     : "bg-gray-100 text-gray-700 hover:bg-gray-300"
@@ -509,7 +482,7 @@ const UserCompanyDetails = React.memo(() => {
                                   : keyTranslations[key].en}
                               </button>
 
-                              {/* Tooltip (Shows based on the selected language) */}
+                              {/* Tooltip */}
                               <span className="tooltip group-hover:opacity-90 absolute bottom-full mb-1 left-1/2 transform -translate-x-2/4 whitespace-nowrap bg-gray-800 text-white text-[10px] px-[2px] py-[2px] rounded-md opacity-0 pointer-events-none">
                                 {userLanguage === "Arabic"
                                   ? keyTranslations[key].fullAr
@@ -523,39 +496,45 @@ const UserCompanyDetails = React.memo(() => {
                     )}
                   </div>
                   {selectedPdfKey &&
-                    pdfKeys.includes(selectedPdfKey as keyof FormDataState) && (
+                    pdfKeys.includes(selectedPdfKey as keyof FormDataState) &&
+                    selectedFilteredDocWithYear.some(
+                      (doc) =>
+                        doc.formData[selectedPdfKey as keyof FormDataState]
+                          ?.table &&
+                        Object.values(
+                          doc.formData[selectedPdfKey as keyof FormDataState]
+                            ?.table || {}
+                        ).some(Boolean)
+                    ) && (
                       <div
                         dir={userLanguage === "English" ? "ltr" : "rtl"}
                         className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
                       >
                         {selectedFilteredDocWithYear.length > 0 ? (
                           <div className="flex flex-wrap gap-2">
-                            {tableButtonDisable && (
-  <button
-    onClick={handleTABLE}
-    className={`flex text-xs items-center justify-center text-[16px] px-2 py-1 rounded-md
-      ${
-        selectedTableKey
-          ? "bg-gray-600 text-white"
-          : selectedPdfKey
-          ? "bg-gray-300 text-gray-800"
-          : "bg-gray-600 text-white"
-      }`}
-  >
-    Table
-  </button>
-)}
-                          
+                            {/* Only shown if at least one valid table exists */}
+                            <button
+                              onClick={handleTABLE}
+                              className={`flex text-xs items-center justify-center text-[16px] px-2 py-1 rounded-md
+              ${
+                selectedTableKey
+                  ? "bg-gray-600 text-white"
+                  : selectedPdfKey
+                  ? "bg-gray-300 text-gray-800"
+                  : "bg-gray-600 text-white"
+              }`}
+                            >
+                              Table
+                            </button>
+
+                            {/* Table subkeys */}
                             {tableKeys
                               .filter((key) =>
                                 selectedFilteredDocWithYear.some(
                                   (doc) =>
                                     doc.formData[
                                       selectedPdfKey as keyof FormDataState
-                                    ]?.table?.[key] !== null &&
-                                    doc.formData[
-                                      selectedPdfKey as keyof FormDataState
-                                    ]?.table?.[key] !== undefined
+                                    ]?.table?.[key]
                                 )
                               )
                               .map((key) => (

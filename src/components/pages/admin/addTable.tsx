@@ -76,11 +76,19 @@ const AddNewTable = React.memo(() => {
     }
   }, [selectedTableType, tableData, tableDataAr]);
 
+
+
+
+
+
+
+  
+
   const captureData = async (language: string): Promise<void> => {
     if (language) {
       setLanguage(language);
     }
-  
+    
     const node =
       language === "Arabic"
         ? document.getElementById("capture-areaAr")
@@ -218,6 +226,34 @@ const AddNewTable = React.memo(() => {
   };
   
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
@@ -559,12 +595,24 @@ const AddNewTable = React.memo(() => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     else {
       return (
-        <div className="flex justify-center flex-col lg:flex-row  gap-1   ">
+        <div className="flex justify-center w-screen bg-yellow-100  flex-col lg:flex-row  gap-1   ">
           {/* Arabic Form */}
 
-          <div className=" ">
+          <div className="">
             <form>
               <div id="capture-area" className="">
                 <BalaceSheetFormAr TakingShort={takeShot} />
@@ -611,6 +659,36 @@ const AddNewTable = React.memo(() => {
     }
   };
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -12,7 +13,7 @@ export const axiosIn = axios.create({
   export interface dataI {
     tadawalCode :string,
     language:string
-      screenshotFile:File
+      data:any
       selectedYear:string
       quarterYear:string
       selectedTableType:string
@@ -21,7 +22,7 @@ export const AdminAddTableAction = createAsyncThunk(
     "admin/addTable",
     async (data:dataI, { rejectWithValue }) => {
       try {
-        console.log("the current tghe data aof hte ", data );
+        console.log("The current action of the Last submition Data of the Table : ", data );
         
            const response= await axiosIn.post(`/api/v1/admin/addTable`,data,createAxiosConfig(true))
            console.log("the response ",response);

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, lazy } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
@@ -19,6 +18,7 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
+const BalaceSheetFormUser = lazy(()=>import("./Tables/balanceSheet"))
 
 const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
@@ -47,8 +47,8 @@ const UserCompanyDetails = React.memo(() => {
   const [selectedYear, setSelectedYear] = useState<any>("");
   const [visibleYears, setVisibleYears] = useState<number>(0);
 
-  const [iframeSrc, setIframeSrc] = useState<any>("");
-  const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
+  const [iframeSrc, setIframeSrc] = useState<string>("");
+  const [table, setTableData] = useState<any>(null);
 
   const pdfKeys: (keyof FormDataState)[] = [
     "Q1",
@@ -128,10 +128,10 @@ const UserCompanyDetails = React.memo(() => {
 
   const handlePdfButtonClick = async (key: FieldKey) => {
     setSelectedPdfKey(key);
-
+    setTableData(null);
+     setSelectedTableKey(null)
     // Reset iframe
     setIframeSrc("");
-    setTableIframeSrc("");
 
     // Load PDF
     const document = selectedFilteredDocWithYear[0];
@@ -147,16 +147,14 @@ const UserCompanyDetails = React.memo(() => {
       alert(`No PDF available for ${key}`);
       setLoading(false);
     }
-
     // ✅ If a tableKey was selected before, check if it exists for this PDF
     if (selectedTableKey) {
-      const screenshotUrl =
-        document.formData?.[key as FieldKey]?.table?.[selectedTableKey];
+      const  tableData =  document.formData?.[key as FieldKey]?.table?.[selectedTableKey];
 
-      if (screenshotUrl && typeof screenshotUrl === "string") {
-        setTableIframeSrc(screenshotUrl);
+      if (tableData) {
+        setTableData(tableData);
       } else {
-        setTableIframeSrc(""); // If not available, clear
+        setTableData(null);
       }
     }
   };
@@ -166,18 +164,20 @@ const UserCompanyDetails = React.memo(() => {
 
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
-      const screenshotUrl =
-        document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
-
-
-      if (screenshotUrl && typeof screenshotUrl === "string") {
-        setTableIframeSrc(screenshotUrl);
+      const filteredData =   document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
+      console.log("the balancesheet data : ",filteredData, "key: ",tableKey);
+      
+      
+      
+      if (  filteredData  ) {
+        setTableData(filteredData);
       }
     }
   };
 
+
   const handlePDF = () => {
-    setTableIframeSrc(""); // hide table view
+    setTableData(null);
     setSelectedTableKey(null); // reset tableKey
   };
 
@@ -224,13 +224,11 @@ const UserCompanyDetails = React.memo(() => {
       }
     }
   }, [selectedYear, selectedFilteredDocWithYear]);
-
   const handleRightClick = () => {
     if (visibleYears > 0) {
       setVisibleYears(visibleYears - 1);
     }
   };
-
   const handleLeftClick = () => {
     if (visibleYears > 5) {
       setVisibleYears(visibleYears + 1);
@@ -265,7 +263,6 @@ const UserCompanyDetails = React.memo(() => {
         const latestYear = years[years.length - 1]; // Get the biggest year
         console.log("Latest (Biggest) Year:", latestYear);
         setSelectedYear(latestYear);
-
         // Filter documents that have this latest year
         const latestYearDocs = documents.filter(
           (doc) =>
@@ -277,13 +274,10 @@ const UserCompanyDetails = React.memo(() => {
             doc.formData?.Board?.year === latestYear ||
             doc.formData?.Year?.year === latestYear
         );
-
         await setSelectedFilteredDocWithYear(latestYearDocs);
       }
-
       setYearList(years);
     };
-
     TakeYears();
   }, [documents]);
 
@@ -302,7 +296,6 @@ const UserCompanyDetails = React.memo(() => {
           language,
           tadawalCode,
         }).toString();
-
         const response = await commonRequest(
           "GET",
           `/api/v1/admin/getDocumetnBytadawalCode?${params}`,
@@ -321,12 +314,8 @@ const UserCompanyDetails = React.memo(() => {
     };
     fetchDocuments();
   }, [language]);
-  //   console.log("the document:", document);
-  // if (document) {
-  // }
-  if (tableIframeSrc) {
-    console.log("the tableIframeSrc:", tableIframeSrc);
-  }
+
+
   if (selectedFilteredDocWithYear) {
     console.log(
       "the selectedFilteredDocWithYear this is Importent data :",
@@ -564,17 +553,22 @@ const UserCompanyDetails = React.memo(() => {
           )}
         </div>
       </div>
+
       <div className="lg:w-[65%] ">
-        {tableIframeSrc ? (
-          <PhotoProvider>
-            <PhotoView src={tableIframeSrc}>
-              <img
-                src={tableIframeSrc}
-                alt="S3 Image"
-                style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
-              />
-            </PhotoView>
-          </PhotoProvider>
+        {table && selectedTableKey ? (
+          <div className="">
+            <h1>Table data coming </h1>
+            <BalaceSheetFormUser Tabledata={table}/>
+          </div>
+          // <PhotoProvider>
+          //   <PhotoView src={tableIframeSrc}>
+          //     <img
+          //       src={tableIframeSrc}
+          //       alt="S3 Image"
+          //       style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
+          //     />
+          //   </PhotoView>
+          // </PhotoProvider>
         ) : iframeSrc ? (
           <div
             className=""

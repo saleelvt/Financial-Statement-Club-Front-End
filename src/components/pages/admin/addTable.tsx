@@ -6,17 +6,19 @@ import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { toPng } from 'html-to-image-no-fonts';
+
 import toast from "react-hot-toast";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
+import BalaceSheet from "./Tables/BalanceSheet/balanceSheet";
 
-import BalaceSheet from "./Tables/BalanceSheet/balanceSheetAr";
-import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheet";
+
+
+
+import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheetAr";
 import { ITable } from "./Tables/BalanceSheet/interface";
 import { FaTrash } from "react-icons/fa";
-
 import { ConfirmationModalTable } from "./Tables/ConfirmationModalTable";
 // import { DocumentSliceAr, DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 
@@ -25,9 +27,7 @@ const AddNewTable = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const TableTypeArr = ["BalanceSheet", "ProfitLoss", "CashFlow"];
-  const { adminLanguage } = useSelector(
-    (state: RootState) => state.adminLanguage
-  );
+  const { adminLanguage } = useSelector(  (state: RootState) => state.adminLanguage);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTableType, setTableType] = useState("");
   // const [takeShotForProfitLoss, setTakeShotForProfitLoss] = useState<boolean>(false);
@@ -38,7 +38,7 @@ const AddNewTable = React.memo(() => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [tableDataAr, setTableDataAr] = useState<ITable>();
   const [tableData, setTableData] = useState<ITable>();
-  const [tableIframeSrc, setTableIframeSrc] = useState<string>("");
+  const [tableIframeSrc, setTableIframeSrc] = useState<string>(""); 
   const [tableIframeSrcAr, setTableIframeSrcAr] = useState<string>("");
 
   //   const [FormDocument, setDocument] = useState<DocumentSliceEn[] | DocumentSliceAr[]>();
@@ -53,21 +53,16 @@ const AddNewTable = React.memo(() => {
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState<boolean>(false); // Manage year dropdown visibility
   const [isLoading, setIsLoading] = useState(false);
   const [takeShot, setTakeShot] = useState<boolean>(false);
+  const {data}=useSelector((state:RootState)=>state.table)
 
-
-  // const toggleLanguage = async () => {
-  //   const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
-  //   await dispatch(AdminLanguageChange(newLanguage));
-  // };
-
+  
+  
   const dropdownRef = useRef<HTMLDivElement>(null);
-
   // Update tableIframeSrc when selectedTableType or tableData changes
   useEffect(() => {
     if (selectedTableType) {
       const arSrc = tableDataAr?.[selectedTableType as keyof ITable] || "";
       const enSrc = tableData?.[selectedTableType as keyof ITable] || "";
-
       setTableIframeSrcAr(arSrc);
       setTableIframeSrc(enSrc);
     } else {
@@ -75,149 +70,58 @@ const AddNewTable = React.memo(() => {
       setTableIframeSrc("");
     }
   }, [selectedTableType, tableData, tableDataAr]);
+  const handleClickEnglish= async()=>{
 
-  const captureData = async (language: string): Promise<void> => {
-    if (language) {
-      setLanguage(language);
-    }
-  
-    const node =
-      language === "Arabic"
-        ? document.getElementById("capture-areaAr")
-        : document.getElementById("capture-area");
-  
-    if (!node) return;
-  
-    setTakeShot(true);
-  
-    interface ElementStyleBackup {
-      element: HTMLElement;
-      overflow: string;
-      height: string;
-      maxHeight: string;
-    }
-  
-    interface NodeStyleBackup {
-      overflow: string;
-      height: string;
-      maxHeight: string;
-      position: string;
-      display: string;
-    }
-  
-    const elementsToRestore: ElementStyleBackup[] = [];
-    node.querySelectorAll("*").forEach((el: Element) => {
-      const htmlEl = el as HTMLElement;
-      elementsToRestore.push({
-        element: htmlEl,
-        overflow: htmlEl.style.overflow,
-        height: htmlEl.style.height,
-        maxHeight: htmlEl.style.maxHeight,
-      });
-  
-      htmlEl.style.overflow = "visible";
-      htmlEl.style.height = "auto";
-      htmlEl.style.maxHeight = "none";
-    });
-  
-    const originalNodeStyles: NodeStyleBackup = {
-      overflow: node.style.overflow,
-      height: node.style.height,
-      maxHeight: node.style.maxHeight,
-      position: node.style.position,
-      display: node.style.display,
-    };
-  
-    node.style.overflow = "visible";
-    node.style.height = "auto";
-    node.style.maxHeight = "none";
-    node.style.position = "relative";
-    node.style.display = "inline-block";
-  
     try {
-      // Wait for fonts to fully load
-      await document.fonts.ready;
-  
-      // Allow styles to apply and force repaint
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      window.dispatchEvent(new Event("resize"));
-  
-      const nodeRect = node.getBoundingClientRect();
-  
-      const dataUrl: string = await toPng(node, {
-        height: Math.max(node.scrollHeight, nodeRect.height),
-        width: Math.max(node.scrollWidth, nodeRect.width),
-        quality: 1.0,
-        cacheBust: true,
-        skipAutoScale: true,
-        style: {
-          transform: "none",
-        },
-        filter: (node: Node): boolean => {
-          return !(
-            node instanceof HTMLElement &&
-            node.classList?.contains("no-capture")
-          );
-        },
-        pixelRatio: 2,
-      } as any);
+      setTakeShot(true )
+        const Language = "English";
+    // create data object
+    const dataforUpload = {
+      tadawalCode:tadawalCode, // replace with actual value
+      language: Language,
+      data: data, // replace with actual data
+      selectedYear:selectedYear,
+      quarterYear: quarterYear,
+      selectedTableType: selectedTableType,
+    };
+
+      const response = await dispatch(AdminAddTableAction(dataforUpload))
+      console.log("the english data the Values are  submiting : ", response);
+        setTakeShot(false )
       
-      const response = await fetch(dataUrl);
-      const blob = await response.blob();
-      const screenshotFile = new File([blob], "screenshot.png", {
-        type: "image/png",
-      });
-  
-      const responseTow = await dispatch(
-        AdminAddTableAction({
-          tadawalCode,
-          screenshotFile,
-          selectedYear,
-          quarterYear,
-          selectedTableType,
-          language,
-        })
-      );
-  
-      console.log("Response from ADDTABLE:", responseTow);
-  
-      if (responseTow.payload?.success === true) {
-        toast.success(responseTow.payload.message);
-  
-        if (language === "Arabic" && tableDataAr) {
-          setTableDataAr({
-            ...tableDataAr,
-            [selectedTableType]: responseTow.payload.url || "",
-          });
-        } else if (language === "English" && tableData) {
-          setTableData({
-            ...tableData,
-            [selectedTableType]: responseTow.payload.url || "",
-          });
-        }
-      }
-  
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
-    } finally {
-      elementsToRestore.forEach((item) => {
-        item.element.style.overflow = item.overflow;
-        item.element.style.height = item.height;
-        item.element.style.maxHeight = item.maxHeight;
-      });
-  
-      node.style.overflow = originalNodeStyles.overflow;
-      node.style.height = originalNodeStyles.height;
-      node.style.maxHeight = originalNodeStyles.maxHeight;
-      node.style.position = originalNodeStyles.position;
-      node.style.display = originalNodeStyles.display;
-  
-      setTimeout(() => setTakeShot(false), 200);
+      console.log("the table adding error is : ", error );
+      
     }
-  };
-  
-  
+
+
+  }
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
     console.log("Selected Year:", year);
@@ -347,9 +251,6 @@ const AddNewTable = React.memo(() => {
     if (adminLanguage) setLanguage(adminLanguage);
   }, [adminLanguage]);
 
-  // useEffect(() => {
-  //   console.log("kunana data ", tableDataAr, "dkjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjf", tableData);
-  // }, [tableData, tableDataAr]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -378,7 +279,7 @@ const AddNewTable = React.memo(() => {
       !selectedYear
     ) {
       console.log(
-        "my Kunna Delete  : ",
+        "my  Delete  : ",
         wlanguage,
         tadawalCode,
         quarterYear,
@@ -459,13 +360,13 @@ const AddNewTable = React.memo(() => {
           <div className="w-full lg:w-1/2 overflow-x-auto">
             <form>
               <div className="">
-                <div id="capture-areaAr" className="">
-                  <BalaceSheet TakingShort={takeShot} />
+                <div className="">
+                  <BalaceSheetFormAr TakingShort={takeShot} />
                 </div>
                 <div className=" flex justify-start">
                   <button
                     className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                    onClick={() => captureData("Arabic")}
+                   
                     disabled={takeShot}
                     type="button"
                   >
@@ -503,16 +404,15 @@ const AddNewTable = React.memo(() => {
     else if (!tableIframeSrc && tableIframeSrcAr) {
       return (
         <div className="flex flex-col lg:flex-row lg:justify-center ">
-          {/* Left side - English form */}
           <div className="w-full lg:w-1/2">
             <form>
-              <div id="capture-area" className="">
-                <BalaceSheetFormAr TakingShort={takeShot} />
+              <div id="capture-area" className="">  
+                <BalaceSheet TakingShort={takeShot} />
               </div>
               <div className=" flex justify-end">
                 <button
                   className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => captureData("English")}
+                
                   disabled={takeShot}
                   type="button"
                 >
@@ -521,7 +421,6 @@ const AddNewTable = React.memo(() => {
               </div>
             </form>
           </div>
-          {/* Right side - Arabic table */}
           <div className="w-1/2">
             <div className="pointer-events-none">
               <img
@@ -559,20 +458,32 @@ const AddNewTable = React.memo(() => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     else {
       return (
-        <div className="flex justify-center flex-col lg:flex-row  gap-1   ">
+        <div className="flex justify-center  bg-yellow-100  flex-col lg:flex-row  gap-1   ">
           {/* Arabic Form */}
 
-          <div className=" ">
+          <div className="">
             <form>
-              <div id="capture-area" className="">
-                <BalaceSheetFormAr TakingShort={takeShot} />
+              <div className="">
+                <BalaceSheet TakingShort={takeShot} />
               </div>
               <div className=" flex justify-end">
                 <button
                   className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => captureData("English")}
+                  onClick={handleClickEnglish}
                   disabled={takeShot}
                   type="button"
                 >
@@ -583,20 +494,17 @@ const AddNewTable = React.memo(() => {
           </div>
 
 
-
-
-
           {/* English Form */}
           <div className="  ">
             <form>
               <div className="">
-                <div id="capture-areaAr" className="">
-                  <BalaceSheet TakingShort={takeShot} />
+                <div  className="">
+                  <BalaceSheetFormAr TakingShort={takeShot} />
                 </div>
                 <div className=" flex justify-start">
                   <button
                     className="bg-slate-300 rounded text-black py-1 px-9  hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                    onClick={() => captureData("Arabic")}
+             
                     disabled={takeShot}
                     type="button"
                   >
@@ -611,6 +519,36 @@ const AddNewTable = React.memo(() => {
     }
   };
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

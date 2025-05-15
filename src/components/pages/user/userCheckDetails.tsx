@@ -557,7 +557,7 @@ const UserCompanyDetails = React.memo(() => {
       <div className="lg:w-[65%] ">
         {table && selectedTableKey ? (
           <div className="">
-            <h1>Table data coming </h1>
+          
             <BalaceSheetFormUser Tabledata={table}/>
           </div>
           // <PhotoProvider>

@@ -84,7 +84,8 @@ const AddNewTable = React.memo(() => {
       quarterYear: quarterYear,
       selectedTableType: selectedTableType,
     };
-
+     console.log("MY utherPradhesh Data id 66^^^^^^^^^^^^^^^^^^^^^: ",data);
+     
       const response = await dispatch(AdminAddTableAction(dataforUpload))
       console.log("the english data the Values are  submiting : ", response);
         setTakeShot(false )
@@ -678,7 +679,7 @@ const AddNewTable = React.memo(() => {
                   </div>
                 ))}
               </div>
-            )}
+            )} 
           </div>
         )}
 

@@ -5,13 +5,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../reduxKit/store";
 import { setBalanceSheetDataAction } from "../../../../../reduxKit/actions/Tables/balancSheet";
+import { setBalanceSheetDataArAction } from "../../../../../reduxKit/actions/Tables/balanceSheetAr";
 type BalaceSheetFormArProps = {
   TakingShort: boolean;
 };
 
 const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
   ({ TakingShort }) => {
-     const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch<AppDispatch>();
 
     // Updated state declarations with empty strings as initial values
     const [nonCurrentAssets, setNonCurrentAssets] = useState<string[]>(
@@ -406,30 +407,46 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
     const [snonCurrentAssets, ssetnonCurrentAssets] = useState(
       "الأصول غير المتداولة"
     );
-        const [sfirtsTotalnonCurrentAssets, ssetfirtsTotalnonCurrentAssets] = useState("");
-    const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(  "إجمالي الأصول غير المتداولة");
+    const [sfirtsTotalnonCurrentAssets, ssetfirtsTotalnonCurrentAssets] =
+      useState("");
+    const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(
+      "إجمالي الأصول غير المتداولة"
+    );
 
     const [scurrentAssets, ssetCurrentAssets] = useState("الأصول المتداولة");
-        const [sfirtsTotalCurrentAssets, ssetfirtsTotalCurrentAssets] = useState("");
-    const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(   "إجمالي الأصول المتداولة"  );
+    const [sfirtsTotalCurrentAssets, ssetfirtsTotalCurrentAssets] =
+      useState("");
+    const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(
+      "إجمالي الأصول المتداولة"
+    );
     const [stotalAssets, ssetTotalAssets] = useState("إجمالي الأصول");
 
-    const [sShareholdersEquityandliabilitiess,    setShareholdersEquityandliabilities,  ] = useState("إجمالي حقوق المساهمين والمطلوبات");
-    const [sShareholdersEquity, setShareholdersEquity] =    useState("حقوق المساهمين");
-    const [sfirtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] = useState("");
-    const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState(  "إجمالي حقوق المساهمين" );
+    const [
+      sShareholdersEquityandliabilitiess,
+      setShareholdersEquityandliabilities,
+    ] = useState("إجمالي حقوق المساهمين والمطلوبات");
+    const [sShareholdersEquity, setShareholdersEquity] =
+      useState("حقوق المساهمين");
+    const [sfirtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =
+      useState("");
+    const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState(
+      "إجمالي حقوق المساهمين"
+    );
 
     const [liabilities, setLiabilities] = useState("المطلوبات");
-    const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(   "المطلوبات غير المتداولة"
+    const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(
+      "المطلوبات غير المتداولة"
     );
-                const [sfirtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] = useState("");
+    const [sfirtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] =
+      useState("");
     const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] =
       useState("إجمالي المطلوبات غير المتداولة");
 
     const [scurrentliabilities, setcurrentliabilities] = useState(
       "المطلوبات المتداولة"
     );
-    const [sfirtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] = useState("");
+    const [sfirtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] =
+      useState("");
     const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState(
       "إجمالي المطلوبات المتداولة"
     );
@@ -442,18 +459,250 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
     useEffect(() => {
       try {
-        prepareAndDispatchData();
+        prepareAndDispatchForArabicDataStore();
       } catch (error) {
         console.log("useEffect error : ", error);
       }
     }, [
-      // Assets - Non-Current
+ nonCurrentLabels,
+      nonCurrentSubLabels,
+      currentSubLabels,
+      currentLabels,
+
+      equityLabels,
+      equitySubLabels,
+
+      currentLiabilitiesLabels,
+      currentSubLiabilitiesLabels,
+
+      nonCurrentLiabilitiesLabels,
+      nonCurrentSubLiabilitiesLabels,
+
+      sassets,
+      snonCurrentAssets,
+      sfirtsTotalnonCurrentAssets,
+      stotalNonCurrentAssets,
+      scurrentAssets,
+      sfirtsTotalCurrentAssets,
+      stotalCurrentAssets,
+      stotalAssets,
+      sShareholdersEquityandliabilitiess,
+      sShareholdersEquity,
+      sfirtsTotalShareholdersEquity,
+      stotalShareholdersEquity,
+      liabilities,
+      sNoncurrentliabilities,
+      sfirtsTotalNoncurrentLiabilities,
+      stotalNoncurrentliabilities,
+      scurrentliabilities,
+      sfirtsTotalcurrentLiabilities,
+      stotalcurrentliabilities,
+      stotalliabilities,
+      stotalEquityAndLiabilities,
+
+      data1Ar,
+      data2Ar,
       nonCurrentAssets,
       nonCurrentSubAssets,
       nonCurrentAssetsDate2,
       nonCurrentSubAssetsDate2,
       nonCurrentNotes,
-   
+
+      // Assets - Current
+      currentAssets,
+      currentSubAssets,
+      currentAssetsDate2,
+      currentSubAssetsDate2,
+      CurrentAssetsNotes,
+
+      // Equity
+      equityItems,
+      equitySubItems,
+      equityItemsDate2,
+      equitySubItemsDate2,
+      equityItemsNotes,
+
+      // Liabilities - Non-Current
+      nonCurrentLiabilities,
+      nonCurrentLiabilitiesNotes,
+      nonCurrentSubLiabilities,
+      nonCurrentLiabilitiesDate2,
+      nonCurrentSubLiabilitiesDate2,
+
+      // Liabilities - Current
+      currentLiabilities,
+      currentLiabilitiesNotes,
+      currentSubLiabilities,
+      currentLiabilitiesDate2,
+      currentSubLiabilitiesDate2,
+    ]);
+
+    const prepareAndDispatchForArabicDataStore = async () => {
+      const formData = {
+        assets: {
+          sassets: sassets,
+          nonCurrent: {
+            snonCurrentAssets: snonCurrentAssets,
+            nonCurrentLabelsAr: nonCurrentLabels,
+            items: nonCurrentAssets,
+            itemsDate2: nonCurrentAssetsDate2,
+            nonCurrentNotes: nonCurrentNotes,
+
+            nonCurrentSubLabelsAr: nonCurrentSubLabels,
+            subItems: nonCurrentSubAssets,
+            subItemsDate2: nonCurrentSubAssetsDate2,
+            sfirtsTotalnonCurrentAssets: sfirtsTotalnonCurrentAssets,
+            firstTotal: firstTotalNonCurrent,
+            firstTotalDate2: firstTotalNonCurrentDate2,
+            secondTotal: secondTotalNonCurrent,
+            secondTotalDate2: secondTotalNonCurrentDate2,
+            stotalNonCurrentAssets: stotalNonCurrentAssets,
+          },
+          current: {
+            scurrentAssets: scurrentAssets,
+            currentLabelsAr: currentLabels,
+            items: currentAssets,
+            itemsDate2: currentAssetsDate2,
+            CurrentAssetsNotes: CurrentAssetsNotes,
+
+            currentSubLabelsAr: currentSubLabels,
+            subItems: currentSubAssets,
+            subItemsDate2: currentSubAssetsDate2,
+            sfirtsTotalCurrentAssets: sfirtsTotalCurrentAssets,
+            firstTotal: firstTotalCurrent,
+            firstTotalDate2: firstTotalCurrentDate2,
+            stotalCurrentAssets: stotalCurrentAssets,
+            secondTotal: secondTotalCurrent,
+            secondTotalDate2: secondTotalCurrentDate2,
+          },
+          stotalAssets: stotalAssets,
+          totalAssets,
+          totalAssetsDate2,
+        },
+        sShareholdersEquityandliabilitiess,
+        equity: {
+          sShareholdersEquity: sShareholdersEquity,
+          equityLabelsAr: equityLabels,
+          equityItemsNotes: equityItemsNotes,
+          items: equityItems,
+          itemsDate2: equityItemsDate2,
+
+          equitySubLabelsAr: equitySubLabels,
+          subItems: equitySubItems,
+          subItemsDate2: equitySubItemsDate2,
+          sfirtsTotalShareholdersEquity: sfirtsTotalShareholdersEquity,
+          firstTotal: firstTotalEquity,
+          firstTotalDate2: firstTotalEquityDate2,
+          stotalShareholdersEquity: stotalShareholdersEquity,
+          totalEquity,
+          totalEquityDate2,
+        },
+        liabilities: {
+          liabilities: liabilities,
+          nonCurrent: {
+            sNoncurrentliabilities: sNoncurrentliabilities,
+            nonCurrentLiabilitiesLabelsAr: nonCurrentLiabilitiesLabels,
+            nonCurrentLiabilitiesNotes: nonCurrentLiabilitiesNotes,
+            items: nonCurrentLiabilities,
+            itemsDate2: nonCurrentLiabilitiesDate2,
+
+            nonCurrentSubLiabilitiesLabelsAr: nonCurrentSubLiabilitiesLabels,
+            subItems: nonCurrentSubLiabilities,
+            subItemsDate2: nonCurrentSubLiabilitiesDate2,
+            sfirtsTotalNoncurrentLiabilities: sfirtsTotalNoncurrentLiabilities,
+            firstTotal: firstTotalNonCurrentLiabilities,
+            firstTotalDate2: firstTotalNonCurrentLiabilitiesDate2,
+            stotalNoncurrentliabilities: stotalNoncurrentliabilities,
+            total: totalNonCurrentLiabilities,
+            totalDate2: totalNonCurrentLiabilitiesDate2,
+          },
+
+          current: {
+            scurrentliabilities: scurrentliabilities,
+            currentLiabilitiesLabelsAr: currentLiabilitiesLabels,
+            currentLiabilitiesNotes: currentLiabilitiesNotes,
+            items: currentLiabilities,
+            itemsDate2: currentLiabilitiesDate2,
+            sfirtsTotalcurrentLiabilities: sfirtsTotalcurrentLiabilities,
+            firstTotal: firstTotalCurrentLiabilities,
+            firstTotalDate2: firstTotalCurrentLiabilitiesDate2,
+
+            currentSubLiabilitiesLabelsAr: currentSubLiabilitiesLabels,
+            subItems: currentSubLiabilities,
+            subItemsDate2: currentSubLiabilitiesDate2,
+            stotalcurrentliabilities: stotalcurrentliabilities,
+            total: totalCurrentLiabilities,
+            totalDate2: totalCurrentLiabilitiesDate2,
+          },
+          stotalliabilities: stotalliabilities,
+          totalLiabilities,
+          totalLiabilitiesDate2,
+        },
+        stotalEquityAndLiabilities: stotalEquityAndLiabilities,
+        ItotalEquityAndLiabilities: totalEquityAndLiabilities,
+        ItotalEquityAndLiabilitiesDate2: totalEquityAndLiabilitiesDate2,
+        data1En: data1Ar,
+        data2En: data2Ar,
+      };
+
+      await dispatch(setBalanceSheetDataArAction(formData));
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    useEffect(() => {
+      try {
+        prepareAndDispatchData();
+      } catch (error) {
+        console.log("useEffect error : ", error);
+      }
+    }, [
+       // Assets - Non-Current
+      nonCurrentAssets,
+      nonCurrentSubAssets,
+      nonCurrentAssetsDate2,
+      nonCurrentSubAssetsDate2,
+      nonCurrentNotes,
+
       // Assets - Current
       currentAssets,
       currentSubAssets,
@@ -563,14 +812,12 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       };
       await dispatch(setBalanceSheetDataAction(formData));
     };
-  
 
     const { data } = useSelector((state: RootState) => state.table);
 
     useEffect(() => {
       if (data) {
-        if(data.data1En||data.data2En){
-
+        if (data.data1En || data.data2En) {
           setDate1Ar(data.data1En);
           setDate2Ar(data.data2En);
         }
@@ -829,22 +1076,24 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               );
             })}
 
-    
-              <tr className="bg-gray-200 font-semibold">
-                <td className="">
-                  <input   value={sfirtsTotalnonCurrentAssets}
-                  onChange={(e) => ssetfirtsTotalnonCurrentAssets(e.target.value)} 
-                   className="w-full bg-gray-200 text-black p-1" />
-                </td>
-                <td className="border border-gray-300"></td>
-                <td className="border  border-gray-300">
-                  {formatWithParentheses(firstTotalNonCurrent)}
-                </td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalNonCurrentDate2)}
-                </td>
-              </tr>
-   
+            <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                <input
+                  value={sfirtsTotalnonCurrentAssets}
+                  onChange={(e) =>
+                    ssetfirtsTotalnonCurrentAssets(e.target.value)
+                  }
+                  className="w-full bg-gray-200 text-black p-1"
+                />
+              </td>
+              <td className="border border-gray-300"></td>
+              <td className="border  border-gray-300">
+                {formatWithParentheses(firstTotalNonCurrent)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalNonCurrentDate2)}
+              </td>
+            </tr>
 
             {nonCurrentSubAssets.map((val, idx) => {
               const isRowEmpty = !val && !nonCurrentSubAssetsDate2[idx];
@@ -999,22 +1248,22 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               );
             })}
 
-      
-              <tr className="bg-gray-200 font-semibold">
-                <td className="">
-                  <input   value={sfirtsTotalCurrentAssets}
-                  onChange={(e) => ssetfirtsTotalCurrentAssets(e.target.value)} 
-                   className="w-full bg-gray-200 text-black p-1" />
-                </td>
-                <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalCurrent)}
-                </td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalCurrentDate2)}
-                </td>
-              </tr>
- 
+            <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                <input
+                  value={sfirtsTotalCurrentAssets}
+                  onChange={(e) => ssetfirtsTotalCurrentAssets(e.target.value)}
+                  className="w-full bg-gray-200 text-black p-1"
+                />
+              </td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalCurrent)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalCurrentDate2)}
+              </td>
+            </tr>
 
             {currentSubAssets.map((val, idx) => {
               const isRowEmpty = !val && !currentSubAssetsDate2[idx];
@@ -1100,12 +1349,11 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               </td>
               <td className="border border-gray-300"></td>
               <td className="border border-gray-300">
-  {formatWithParentheses(totalAssets)}
-</td>
-<td className="border border-gray-300">
-  {formatWithParentheses(totalAssetsDate2)}
-</td>
-
+                {formatWithParentheses(totalAssets)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(totalAssetsDate2)}
+              </td>
             </tr>
           </tbody>
           <br />
@@ -1199,22 +1447,24 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               );
             })}
 
-        
-              <tr className="bg-gray-200 font-semibold">
-                <td className="">
-                   <input   value={sfirtsTotalShareholdersEquity}
-                  onChange={(e) => ssetfirtsTotalShareholdersEquity(e.target.value)} 
-                   className="w-full bg-gray-200 text-black p-1" />
-                </td>
-                <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalEquity)}
-                </td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalEquityDate2)}
-                </td>
-              </tr>
-  
+            <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                <input
+                  value={sfirtsTotalShareholdersEquity}
+                  onChange={(e) =>
+                    ssetfirtsTotalShareholdersEquity(e.target.value)
+                  }
+                  className="w-full bg-gray-200 text-black p-1"
+                />
+              </td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalEquity)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalEquityDate2)}
+              </td>
+            </tr>
 
             {equitySubItems.map((val, idx) => {
               const isRowEmpty = !val && !equitySubItemsDate2[idx];
@@ -1379,22 +1629,24 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               );
             })}
 
-
-              <tr className="bg-gray-200 font-semibold">
-                <td className="">
-                  <input   value={sfirtsTotalNoncurrentLiabilities}
-                  onChange={(e) => ssetfirtsNoncurrentLiabilities(e.target.value)} 
-                   className="w-full bg-gray-200 text-black p-1" />
-                </td>
-                <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalNonCurrentLiabilities)}
-                </td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalNonCurrentLiabilitiesDate2)}
-                </td>
-              </tr>
-
+            <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                <input
+                  value={sfirtsTotalNoncurrentLiabilities}
+                  onChange={(e) =>
+                    ssetfirtsNoncurrentLiabilities(e.target.value)
+                  }
+                  className="w-full bg-gray-200 text-black p-1"
+                />
+              </td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalNonCurrentLiabilities)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalNonCurrentLiabilitiesDate2)}
+              </td>
+            </tr>
 
             {nonCurrentSubLiabilities.map((val, idx) => {
               const isRowEmpty = !val && !nonCurrentSubLiabilitiesDate2[idx];
@@ -1559,21 +1811,22 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               );
             })}
 
-              <tr className="bg-gray-200 font-semibold">
-                <td className="">
-                   <input   value={sfirtsTotalcurrentLiabilities}
-                  onChange={(e) => ssetfirtscurrentLiabilities(e.target.value)} 
-                   className="w-full bg-gray-200 text-black p-1" />
-                </td>
-                <td className="border border-gray-300"></td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalCurrentLiabilities)}
-                </td>
-                <td className="border border-gray-300">
-                  {formatWithParentheses(firstTotalCurrentLiabilitiesDate2)}
-                </td>
-              </tr>
- 
+            <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                <input
+                  value={sfirtsTotalcurrentLiabilities}
+                  onChange={(e) => ssetfirtscurrentLiabilities(e.target.value)}
+                  className="w-full bg-gray-200 text-black p-1"
+                />
+              </td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalCurrentLiabilities)}
+              </td>
+              <td className="border border-gray-300">
+                {formatWithParentheses(firstTotalCurrentLiabilitiesDate2)}
+              </td>
+            </tr>
 
             {currentSubLiabilities.map((val, idx) => {
               const isRowEmpty = !val && !currentSubLiabilitiesDate2[idx];

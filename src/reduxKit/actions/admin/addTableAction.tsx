@@ -22,11 +22,8 @@ export const AdminAddTableAction = createAsyncThunk(
     "admin/addTable",
     async (data:dataI, { rejectWithValue }) => {
       try {
-        console.log("The current action of the Last submition Data of the Table : ", data );
-        
            const response= await axiosIn.post(`/api/v1/admin/addTable`,data,createAxiosConfig(true))
            console.log("the response ",response);
-           
         return response.data  
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {

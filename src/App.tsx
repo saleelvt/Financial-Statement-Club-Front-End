@@ -37,9 +37,7 @@ export const App: React.FC = React.memo(() => {
           <Route path="/home" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
           <Route path="/addDocument" element={isLogged &&  role === 'admin' ? <AddDocumentArabic /> : <AdminLogin />}/>
           <Route path="/addNewTable" element={isLogged &&  role === 'admin' ? <AddNewTable /> : <AdminLogin />}/>
-         
           {/* <Route path="/newOldTableshow" element={ <UserCompanyDetailsNew /> }/> */}
-
           <Route path="/documentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
           <Route path="/updateDocument" element={isLogged &&  role === 'admin' ? <UpdateDocument /> : <AdminLogin />} />
           <Route path="/updateDocumentAr" element={isLogged &&  role === 'admin' ? <UpdateDocumentAr /> : <AdminLogin />} />

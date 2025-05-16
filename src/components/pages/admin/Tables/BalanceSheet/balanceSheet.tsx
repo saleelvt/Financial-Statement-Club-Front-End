@@ -373,68 +373,6 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
     useEffect(() => {
       try {
-      //   console.log(
-      //     "The data is the Dta for the upload : ",
-
-      // sassets,
-      // snonCurrentAssets,
-      // sfirtsTotalnonCurrentAssets,
-      // stotalNonCurrentAssets,
-      // scurrentAssets,
-      // sfirtsTotalCurrentAssets,
-      // stotalCurrentAssets,
-      // stotalAssets,
-      // sShareholdersEquityandliabilitiess,
-      // sShareholdersEquity,
-      // sfirtsTotalShareholdersEquity,
-      // stotalShareholdersEquity,
-      // liabilities,
-      // sNoncurrentliabilities,
-      // sfirtsTotalNoncurrentLiabilities,
-      // stotalNoncurrentliabilities,
-      // scurrentliabilities,
-      // sfirtsTotalcurrentLiabilities,
-      // stotalcurrentliabilities,
-      // stotalliabilities,
-      // stotalEquityAndLiabilities,
-
-
-      //     data1En,
-      //     data2En,
-      //     nonCurrentAssetsAr,
-      //     nonCurrentSubAssetsAr,
-      //     nonCurrentAssetsDate2Ar,
-      //     nonCurrentSubAssetsDate2Ar,
-      //     nonCurrentNotes,
-
-      //     // Assets - Current
-      //     currentAssetsAr,
-      //     currentSubAssetsAr,
-      //     currentAssetsDate2Ar,
-      //     currentSubAssetsDate2Ar,
-      //     CurrentAssetsNotes,
-
-      //     // Equity
-      //     equityItemsAr,
-      //     equitySubItemsAr,
-      //     equityItemsDate2Ar,
-      //     equitySubItemsDate2Ar,
-      //     equityItemsNotes,
-
-      //     // Liabilities - Non-Current
-      //     nonCurrentLiabilitiesAr,
-      //     nonCurrentLiabilitiesNotes,
-      //     nonCurrentSubLiabilitiesAr,
-      //     nonCurrentLiabilitiesDate2Ar,
-      //     nonCurrentSubLiabilitiesDate2Ar,
-
-      //     // Liabilities - Current
-      //     currentLiabilitiesAr,
-      //     currentLiabilitiesNotes,
-      //     currentSubLiabilitiesAr,
-      //     currentLiabilitiesDate2Ar,
-      //     currentSubLiabilitiesDate2Ar
-      //   );
 
         prepareAndDispatchData();
       } catch (error) {
@@ -444,16 +382,21 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
 
 nonCurrentLabelsAr,
-      currentSubLiabilitiesLabelsAr,
-      currentLiabilitiesLabelsAr,
-      nonCurrentSubLiabilitiesLabelsAr,
-      nonCurrentLiabilitiesLabelsAr,
-      equitySubLabelsAr,
-      equityLabelsAr,
+nonCurrentSubLabelsAr,
       currentSubLabelsAr,
       currentLabelsAr,
+
+            equityLabelsAr, 
+      equitySubLabelsAr,
+
+      currentLiabilitiesLabelsAr,
       currentSubLiabilitiesLabelsAr,
-      nonCurrentSubLabelsAr,
+
+      nonCurrentLiabilitiesLabelsAr,
+      nonCurrentSubLiabilitiesLabelsAr,
+
+
+  
 
 
       sassets,

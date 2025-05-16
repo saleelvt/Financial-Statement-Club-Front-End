@@ -12,8 +12,8 @@ import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAct
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import BalaceSheet from "./Tables/BalanceSheet/balanceSheet";
-
-
+import BalanceSheetFormUser from "../user/Tables/balanceSheet"
+import BalanceSheetFormUserArabic from "../user/Tables/balanceSheetAr"
 
 
 import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheetAr";
@@ -38,8 +38,8 @@ const AddNewTable = React.memo(() => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [tableDataAr, setTableDataAr] = useState<ITable>();
   const [tableData, setTableData] = useState<ITable>();
-  const [tableIframeSrc, setTableIframeSrc] = useState<string>(""); 
-  const [tableIframeSrcAr, setTableIframeSrcAr] = useState<string>("");
+  const [tableEn, setTableEn] = useState<any>(null); 
+  const [tableAr, setTableAr] = useState<any>(null);
 
   //   const [FormDocument, setDocument] = useState<DocumentSliceEn[] | DocumentSliceAr[]>();
   // const []=useState<>(null)
@@ -54,6 +54,7 @@ const AddNewTable = React.memo(() => {
   const [isLoading, setIsLoading] = useState(false);
   const [takeShot, setTakeShot] = useState<boolean>(false);
   const {data}=useSelector((state:RootState)=>state.table)
+  const {dataAr}=useSelector((state:RootState)=>state.tableAr)
 
   
   
@@ -61,15 +62,26 @@ const AddNewTable = React.memo(() => {
   // Update tableIframeSrc when selectedTableType or tableData changes
   useEffect(() => {
     if (selectedTableType) {
-      const arSrc = tableDataAr?.[selectedTableType as keyof ITable] || "";
-      const enSrc = tableData?.[selectedTableType as keyof ITable] || "";
-      setTableIframeSrcAr(arSrc);
-      setTableIframeSrc(enSrc);
+      const arTable = tableDataAr?.[selectedTableType as keyof ITable] ;
+      const enTable = tableData?.[selectedTableType as keyof ITable] ;
+      setTableAr(arTable);
+      setTableEn(enTable);
     } else {
-      setTableIframeSrcAr("");
-      setTableIframeSrc("");
+      setTableAr(null);
+      setTableEn(null);
     }
   }, [selectedTableType, tableData, tableDataAr]);
+
+
+
+  useEffect(()=>{
+    console.log("the tables : in frontend :",tableAr,"then the console data is the data : ",tableEn);
+    
+
+  },[tableEn,tableAr])
+
+
+
   const handleClickEnglish= async()=>{
 
     try {
@@ -88,6 +100,34 @@ const AddNewTable = React.memo(() => {
      
       const response = await dispatch(AdminAddTableAction(dataforUpload))
       console.log("the english data the Values are  submiting : ", response);
+        setTakeShot(false )
+      
+    } catch (error) {
+      console.log("the table adding error is : ", error );
+      
+    }
+
+
+  }
+
+
+  const handleClickArabic= async()=>{
+
+    try {
+      setTakeShot(true )
+        const Language = "Arabic";
+    // create data object
+    const dataforUpload = {
+      tadawalCode:tadawalCode, // replace with actual value
+      language: Language,
+      data: dataAr, // replace with actual data
+      selectedYear:selectedYear,
+      quarterYear: quarterYear,
+      selectedTableType: selectedTableType,
+    };
+     console.log("MY Saudi Arabic Data",dataAr);
+      const response = await dispatch(AdminAddTableAction(dataforUpload))
+      console.log("the Arabic after   submited Response : ", response);
         setTakeShot(false )
       
     } catch (error) {
@@ -211,14 +251,9 @@ const AddNewTable = React.memo(() => {
     }
 
     setSelectedYear(largestYear);
-
     setYears(dataArray);
-
     const datanew = quartersMap[largestYear];
-    const selectedData = preferredOrder
-      .map((priority) => datanew.find((x) => x.quarter === priority))
-      .find(Boolean); // returns the first non-undefined match
-
+    const selectedData = preferredOrder .map((priority) => datanew.find((x) => x.quarter === priority)) .find(Boolean); // returns the first non-undefined match
     console.log("Selected data:", selectedData);
     // console.log("the quater sist the data : ",quartersMap,datanew);
     if (selectedData) {
@@ -279,14 +314,7 @@ const AddNewTable = React.memo(() => {
       !selectedTableType ||
       !selectedYear
     ) {
-      console.log(
-        "my  Delete  : ",
-        wlanguage,
-        tadawalCode,
-        quarterYear,
-        selectedTableType,
-        selectedYear
-      );
+     
       toast.error(
         "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
       );
@@ -310,52 +338,42 @@ const AddNewTable = React.memo(() => {
     } finally {
       setModalOpen(false);
     }
-  };
+  };  
 
   const renderTableContent = () => {
     // Case 1: Both English and Arabic tables exist
-    if (tableIframeSrc && tableIframeSrcAr) {
+    if (tableEn && tableAr) {
       return (
         <div className="flex flex-col lg:flex-row lg:justify-start ">
           {/* Left side - English table */}
           <div className="w-1/2">
-            <div className="pointer-events-none">
-              <img
-                src={tableIframeSrc}
-                alt="English Table"
-                style={{ width: "100%", height: "auto" }}
-                className="select-none"
-              />
-            </div>
+               <BalanceSheetFormUser Tabledata={tableEn} />
+
           </div>
           {/* Right side - Arabic table */}
           <div className="w-1/2">
-            <div className="pointer-events-none">
-              <img
-                src={tableIframeSrcAr}
-                alt="Arabic Table"
-                style={{ width: "100%", height: "auto" }}
-                className="select-none"
-              />
-            </div>
+             <BalanceSheetFormUserArabic Tabledata={tableAr} />
           </div>
         </div>
       );
     }
     // Case 2: Only English table exists
-    else if (tableIframeSrc && !tableIframeSrcAr) {
+    else if (tableEn && !tableAr) {
       return (
         <div className="flex flex-col lg:flex-row lg:justify-center  ">
       
           <div className="w-full lg:w-1/2 overflow-x-auto">
-            <div className="pointer-events-none">
+            {/* <div className="pointer-events-none">
               <img
                 src={tableIframeSrc} 
                 alt="English Table"
                 style={{ width: "100%", height: "auto" }}
                 className="select-none"
               />
-            </div>
+            </div> */}
+
+            <BalanceSheetFormUser Tabledata={tableEn} />
+
           </div>
           {/* Right side - Arabic form */}
           <div className="w-full lg:w-1/2 overflow-x-auto">
@@ -398,11 +416,8 @@ const AddNewTable = React.memo(() => {
 
 
 
-
-
-
     // Case 3: Only Arabic table exists
-    else if (!tableIframeSrc && tableIframeSrcAr) {
+    else if (!tableEn && tableAr) {
       return (
         <div className="flex flex-col lg:flex-row lg:justify-center ">
           <div className="w-full lg:w-1/2">
@@ -423,19 +438,29 @@ const AddNewTable = React.memo(() => {
             </form>
           </div>
           <div className="w-1/2">
-            <div className="pointer-events-none">
+        <BalanceSheetFormUserArabic Tabledata={tableAr} />
+            {/* <div className="pointer-events-none">
               <img
                 src={tableIframeSrcAr}
                 alt="Arabic Table"
                 style={{ width: "100%", height: "auto" }}
                 className="select-none"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       );
     }
   
+
+
+
+
+
+
+
+
+
 
 
 
@@ -493,10 +518,8 @@ const AddNewTable = React.memo(() => {
               </div>
             </form>
           </div>
-
-
           {/* English Form */}
-          <div className="  ">
+          <div className="">
             <form>
               <div className="">
                 <div  className="">
@@ -505,7 +528,7 @@ const AddNewTable = React.memo(() => {
                 <div className=" flex justify-start">
                   <button
                     className="bg-slate-300 rounded text-black py-1 px-9  hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-             
+              onClick={handleClickArabic}
                     disabled={takeShot}
                     type="button"
                   >

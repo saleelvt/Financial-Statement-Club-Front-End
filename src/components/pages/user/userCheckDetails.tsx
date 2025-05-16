@@ -18,7 +18,8 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
-const BalaceSheetFormUser = lazy(()=>import("./Tables/balanceSheet"))
+const BalaceSheetFormUser = lazy(() => import("./Tables/balanceSheet"));
+const BalanceSheetFormUserArabic=lazy(()=> import("./Tables/balanceSheetAr"))
 
 const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
@@ -129,7 +130,7 @@ const UserCompanyDetails = React.memo(() => {
   const handlePdfButtonClick = async (key: FieldKey) => {
     setSelectedPdfKey(key);
     setTableData(null);
-     setSelectedTableKey(null)
+    setSelectedTableKey(null);
     // Reset iframe
     setIframeSrc("");
 
@@ -149,7 +150,8 @@ const UserCompanyDetails = React.memo(() => {
     }
     // ✅ If a tableKey was selected before, check if it exists for this PDF
     if (selectedTableKey) {
-      const  tableData =  document.formData?.[key as FieldKey]?.table?.[selectedTableKey];
+      const tableData =
+        document.formData?.[key as FieldKey]?.table?.[selectedTableKey];
 
       if (tableData) {
         setTableData(tableData);
@@ -164,17 +166,15 @@ const UserCompanyDetails = React.memo(() => {
 
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
-      const filteredData =   document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
-      console.log("the balancesheet data : ",filteredData, "key: ",tableKey);
-      
-      
-      
-      if (  filteredData  ) {
+      const filteredData =
+        document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
+      console.log("the balancesheet data : ", filteredData, "key: ", tableKey);
+
+      if (filteredData) {
         setTableData(filteredData);
       }
     }
   };
-
 
   const handlePDF = () => {
     setTableData(null);
@@ -314,7 +314,6 @@ const UserCompanyDetails = React.memo(() => {
     };
     fetchDocuments();
   }, [language]);
-
 
   if (selectedFilteredDocWithYear) {
     console.log(
@@ -554,21 +553,14 @@ const UserCompanyDetails = React.memo(() => {
         </div>
       </div>
 
-      <div className="lg:w-[65%] ">
+      <div className="lg:w-[65%]">
         {table && selectedTableKey ? (
-          <div className="">
-          
-            <BalaceSheetFormUser Tabledata={table}/>
+          <div
+            className="h-[90vh] overflow-y-auto pr-2"
+            // You can adjust height as per layout needs
+          >
+          {language==="English"?<BalaceSheetFormUser Tabledata={table} />: <BalanceSheetFormUserArabic Tabledata={table} />}  
           </div>
-          // <PhotoProvider>
-          //   <PhotoView src={tableIframeSrc}>
-          //     <img
-          //       src={tableIframeSrc}
-          //       alt="S3 Image"
-          //       style={{ width: "100%", height: "auto", cursor: "zoom-in" }}
-          //     />
-          //   </PhotoView>
-          // </PhotoProvider>
         ) : iframeSrc ? (
           <div
             className=""

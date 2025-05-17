@@ -26,9 +26,7 @@ const AddNewTable = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const TableTypeArr = ["BalanceSheet", "ProfitLoss", "CashFlow"];
-  const { adminLanguage } = useSelector(
-    (state: RootState) => state.adminLanguage
-  );
+  const { adminLanguage } = useSelector((state: RootState) => state.adminLanguage);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTableType, setTableType] = useState("");
   // const [takeShotForProfitLoss, setTakeShotForProfitLoss] = useState<boolean>(false);
@@ -39,6 +37,8 @@ const AddNewTable = React.memo(() => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [tableDataAr, setTableDataAr] = useState<ITable>();
   const [tableData, setTableData] = useState<ITable>();
+
+
   const [tableEn, setTableEn] = useState<any>(null);
   const [tableAr, setTableAr] = useState<any>(null);
 
@@ -61,6 +61,15 @@ const AddNewTable = React.memo(() => {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   // Update tableIframeSrc when selectedTableType or tableData changes
+
+  useEffect(()=>{
+
+    console.log("The Latest Data set of the Data: engish : __+++:",data );
+
+  },[data,dataAr])
+
+
+
   useEffect(() => {
     if (selectedTableType) {
       const arTable = tableDataAr?.[selectedTableType as keyof ITable];
@@ -103,9 +112,7 @@ const AddNewTable = React.memo(() => {
         selectedTableType: selectedTableType,
       };
       console.log(
-        "MY utherPradhesh Data id 66^^^^^^^^^^^^^^^^^^^^^: ",
-        dataforUpload
-      );
+        "MY utherPradhesh Data id 66^^^^^^^^^^^^^^^^^^^^^: ", dataforUpload  );
       const response = await dispatch(AdminAddTableAction(dataforUpload));
       console.log("the english data the Values are  submiting : ", response);
       if (response.payload.success) {
@@ -140,7 +147,7 @@ const AddNewTable = React.memo(() => {
         setShowToastAr(true);
         setTakeShot(false);
         setTimeout(() => {
-          setShowToast(false); // Hide toast after 3 seconds
+          setShowToastAr(false); // Hide toast after 3 seconds
         }, 10000);
       }
     } catch (error) {
@@ -328,13 +335,13 @@ const AddNewTable = React.memo(() => {
     // Case 1: Both English and Arabic tables exist
     if (tableEn && tableAr) {
       return (
-        <div className="flex flex-col lg:flex-row lg:justify-start ">
+        <div className="flex flex-col lg:flex-row  lg:justify-center ">
           {/* Left side - English table */}
-          <div className="w-1/2">
+          <div className=" h-[94vh] mt-1 overflow-y-auto ">
             <BalanceSheetFormUser Tabledata={tableEn} />
           </div>
           {/* Right side - Arabic table */}
-          <div className="w-1/2">
+          <div className=" h-[94vh] mt-1 overflow-y-auto ">
             <BalanceSheetFormUserArabic Tabledata={tableAr} />
           </div>
         </div>
@@ -344,7 +351,7 @@ const AddNewTable = React.memo(() => {
     else if (tableEn && !tableAr) {
       return (
         <div className="flex flex-col lg:flex-row lg:justify-center  ">
-          <div className="w-full lg:w-1/2  h-[96vh] mt-1 overflow-y-auto">
+          <div className=" h-[96vh] mt-1 overflow-y-auto">
             {/* <div className="pointer-events-none">
               <img
                 src={tableIframeSrc} 
@@ -357,7 +364,7 @@ const AddNewTable = React.memo(() => {
             <BalanceSheetFormUser Tabledata={tableEn} />
           </div>
           {/* Right side - Arabic form */}
-          <div className="w-full lg:w-1/2 overflow-x-auto">
+          <div className=" overflow-x-auto">
             <form>
               <div className="">
                 <div className="">
@@ -416,7 +423,7 @@ const AddNewTable = React.memo(() => {
       );
     } else {
       return (
-        <div className="flex justify-center  bg-yellow-100  flex-col lg:flex-row  gap-1   ">
+        <div className="flex justify-center   flex-col lg:flex-row  gap-1   ">
           {/* Arabic Form */}
 
           <div className="">
@@ -475,6 +482,17 @@ const AddNewTable = React.memo(() => {
       );
     }
   };
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="p-1">

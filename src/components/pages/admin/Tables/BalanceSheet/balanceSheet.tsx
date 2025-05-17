@@ -6,8 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../reduxKit/store";
 import { setBalanceSheetDataAction } from "../../../../../reduxKit/actions/Tables/balancSheet";
-type BalaceSheetFormArProps = {
-  TakingShort: boolean;
+type BalaceSheetFormArProps = {TakingShort: boolean;
 };
 
 const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
@@ -55,14 +54,17 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
     const [nonCurrentSubLiabilitiesDate2Ar, setNonCurrentSubLiabilitiesDate2] =  useState<string[]>(Array(3).fill(""));
     const [  nonCurrentSubLiabilitiesLabelsAr, setNonCurrentSubLiabilitiesLabels, ] = useState<string[]>(Array(3).fill(""));
 
+
+
     const [currentLiabilitiesAr, setCurrentLiabilities] = useState<string[]>(  Array(12).fill("") );
     const [currentLiabilitiesNotes, setCurrentLiabilitiesNotes] = useState<    string[]  >(Array(12).fill(""));
     const [currentLiabilitiesDate2Ar, setCurrentLiabilitiesDate2] = useState< string[] >(Array(12).fill(""));
-    const [currentLiabilitiesLabelsAr, setCurrentLiabilitiesLabels] = useState< string[] >(Array(12).fill(""));
 
+    const [currentLiabilitiesLabelsAr, setCurrentLiabilitiesLabels] = useState< string[] >(Array(12).fill(""));
+    const [currentSubLiabilitiesLabelsAr, setCurrentSubLiabilitiesLabels] =  useState<string[]>(Array(3).fill(""));
+    
     const [currentSubLiabilitiesAr, setCurrentSubLiabilities] = useState<  string[]>(Array(3).fill(""));
     const [currentSubLiabilitiesDate2Ar, setCurrentSubLiabilitiesDate2] =  useState<string[]>(Array(3).fill(""));
-    const [currentSubLiabilitiesLabelsAr, setCurrentSubLiabilitiesLabels] =  useState<string[]>(Array(3).fill(""));
 
     // Updated handleChange function to work with string values
     const handleChange = (
@@ -314,22 +316,6 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
     const totalEquityAndLiabilitiesDate2 =
       totalEquityDate2 + totalLiabilitiesDate2;
 
-    // const hasNonEmptyNonCurrentSubAssets = nonCurrentSubAssetsAr.some(
-    //   (val, idx) => val || nonCurrentSubAssetsDate2Ar[idx]
-    // );
-    // const hasNonEmptyCurrentSubAssets = currentSubAssetsAr.some(
-    //   (val, idx) => val || currentSubAssetsDate2Ar[idx]
-    // );
-
-    // const hasNonEmptyEquitySubItems = equitySubItemsAr.some(
-    //   (val, idx) => val || equitySubItemsDate2Ar[idx]
-    // );
-    // const hasNonEmptyNonCurrentSubLiabilities = nonCurrentSubLiabilitiesAr.some(
-    //   (val, idx) => val || nonCurrentSubLiabilitiesDate2Ar[idx]
-    // );
-    // const hasNonEmptyCurrentSubLiabilities = currentSubLiabilitiesAr.some(
-    //   (val, idx) => val || currentSubLiabilitiesDate2Ar[idx]
-    // );
 
     const [data1En, setDate1En] = useState<Date | null>(null);
     const [data2En, setDate2En] = useState<Date | null>(null);
@@ -379,7 +365,6 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
         console.log("useEffect error : ", error);
       }
     }, [
-
 
 nonCurrentLabelsAr,
 nonCurrentSubLabelsAr,
@@ -546,16 +531,16 @@ nonCurrentSubLabelsAr,
 
           current: {
             scurrentliabilities:scurrentliabilities,
-            currentLiabilitiesLabelsAr:currentLiabilitiesLabelsAr,
             currentLiabilitiesNotes: currentLiabilitiesNotes,
             items: currentLiabilitiesAr,
             itemsDate2: currentLiabilitiesDate2Ar,
             sfirtsTotalcurrentLiabilities:sfirtsTotalcurrentLiabilities,
             firstTotal: firstTotalCurrentLiabilities,
             firstTotalDate2: firstTotalCurrentLiabilitiesDate2,
-
-
+            
+            currentLiabilitiesLabelsAr:currentLiabilitiesLabelsAr,
             currentSubLiabilitiesLabelsAr:currentSubLiabilitiesLabelsAr,
+
             subItems: currentSubLiabilitiesAr,
             subItemsDate2: currentSubLiabilitiesDate2Ar,
             stotalcurrentliabilities:stotalcurrentliabilities,
@@ -582,6 +567,29 @@ nonCurrentSubLabelsAr,
     // const [importedData, setImportedData] = useState<IBalanceSheetData | null>(
     //   null
     // );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const { data } = useSelector((state: RootState) => state.table);
 

@@ -16,7 +16,6 @@ export const setBalanceSheetDataAction = createAsyncThunk(
     async (data:any, { rejectWithValue }) => {
       try { 
          return data
-           
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         if (error.response && error.response.data) {

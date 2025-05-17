@@ -18,7 +18,7 @@ export const commonRequest= async(
     const requestConfig = {
         method,
         url: route,
-        headers: config,
+        ...config,
         data: body,
       };
       try {

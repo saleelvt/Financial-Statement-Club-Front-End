@@ -6,14 +6,14 @@ export const URL="https://api.finstatements.club";
 export const createAxiosConfig = (isFileUpload = false) => ({
     headers: {
         "Content-Type": isFileUpload ? "multipart/form-data" : "application/json",
-         "X-Requested-With": "XMLHttpRequest"
+        
     },
     withCredentials: true,
 });
 export const config ={  
     headers :{  
         "Content-Type": "application/json", 
-        "X-Requested-With": "XMLHttpRequest",
+       
     },
     withCredentials:true
 }
@@ -24,7 +24,7 @@ export const configWithToken = () => {
     return {
       headers: {
         "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest",
+        
         Authorization: token ? `Bearer ${token}` : "",
       },
       withCredentials: true
@@ -39,7 +39,6 @@ export const configWithTokenMultiPart = () => {
       return {
         headers: {
           "Content-Type": "multipart/form-data",
-          "X-Requested-With": "XMLHttpRequest",
           Authorization: token ? `Bearer ${token}` : "", // Explicitly handle undefined
         },
         withCredentials: true,

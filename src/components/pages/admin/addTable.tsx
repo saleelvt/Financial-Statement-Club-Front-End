@@ -61,14 +61,11 @@ const AddNewTable = React.memo(() => {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   // Update tableIframeSrc when selectedTableType or tableData changes
-
   useEffect(()=>{
 
     console.log("The Latest Data set of the Data: engish : __+++:",data );
 
   },[data,dataAr])
-
-
 
   useEffect(() => {
     if (selectedTableType) {
@@ -133,6 +130,7 @@ const AddNewTable = React.memo(() => {
         quarterYear: quarterYear,
         selectedTableType: selectedTableType,
       };
+
       console.log("MY Saudi Arabic Data", dataforUpload);
       const response = await dispatch(AdminAddTableAction(dataforUpload));
       console.log("the Arabic after   submited Response : ", response);
@@ -384,7 +382,7 @@ const AddNewTable = React.memo(() => {
     else if (!tableEn && tableAr) {
       return (
         <div className="flex flex-col lg:flex-row lg:justify-center ">
-          <div className="w-full lg:w-1/2">
+          <div className="">
             <form>
               <div  className="">
                 <BalaceSheet TakingShort={takeShot} />
@@ -401,16 +399,9 @@ const AddNewTable = React.memo(() => {
               </div>
             </form>
           </div>
-          <div className="w-1/2 h-[96vh] mt-1 overflow-y-auto">
+          <div className=" h-[96vh] mt-1 overflow-y-auto">
             <BalanceSheetFormUserArabic Tabledata={tableAr} />
-            {/* <div className="pointer-events-none">
-              <img
-                src={tableIframeSrcAr}
-                alt="Arabic Table"
-                style={{ width: "100%", height: "auto" }}
-                className="select-none"
-              />
-            </div> */}
+          
           </div>
         </div>
       );

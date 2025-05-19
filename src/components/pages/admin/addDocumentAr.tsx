@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
- 
+
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
-import { FormField } from "../../../interfaces/admin/addDoument"; 
+import { FormField } from "../../../interfaces/admin/addDoument";
 // import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
 import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
@@ -17,7 +17,7 @@ import { config, URL } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
 import ValidationModal from "../validationModal";
 import { AddDocument } from "./addDocumentEn";
-import { createAsyncThunk } from "@reduxjs/toolkit"; 
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
 
 interface DocumentPayload {
@@ -110,7 +110,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         date,
       },
     }));
-  }; 
+  };
 
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => {
@@ -130,19 +130,17 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     });
   };
 
-  
   // Your Redux thunk - with minimal changes
   const addDocumentArabic = createAsyncThunk(
     "admin/addDocumentArabic",
     async (adminCredentials: DocumentPayload) => {
       try {
-        // ✅ Validate input
         const formDataf = adminCredentials.formData;
-        // Check if at least one field is fully filled
+
         const isAnyFieldValid = Object.values(formDataf).some(
           (field) => field.file && field.date && field.year
         );
-  
+
         if (!isAnyFieldValid) {
           setErrorMessage(
             "At least one field (Q1, Q2, Q3, Q4, S1, Year, Board) must be fully filled with file, date, and year."
@@ -150,7 +148,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
           setIsModalOpen(true);
           return;
         }
-  
+
         // ✅ Create FormData
         const formData = new FormData();
         for (const [key, value] of Object.entries(adminCredentials.formData)) {
@@ -163,30 +161,33 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         formData.append("nickNameAr", adminCredentials.nickNameAr);
         formData.append("tadawalCode", adminCredentials.tadawalCode);
         formData.append("sector", adminCredentials.sector);
-  
+
         console.log("FormData contents:");
         formData.forEach((value, key) => {
-          console.log("my key of the arabic aned : ", key, "some data of the tree: ", value);
+          console.log(
+            "my key of the arabic aned : ",
+            key,
+            "some data of the tree: ",
+            value
+          );
         });
-  
+
         // Reset progress to 0 before starting
-   
-  
-        const response = await axiosIn.post("/api/v1/admin/addDocumentArabic",
+
+        const response = await axiosIn.post(
+          "/api/v1/admin/addDocumentArabic",
           formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-      
           }
         );
         // Always set progress to 100% on successful completio
         return response.data;
       } catch (error: any) {
         // Reset progress on error
-     
-        
+
         setErrorMessage(
           error.response?.data?.message || "Something went s wrong!"
         );
@@ -195,15 +196,12 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       }
     }
   );
-  
+
   // Your component submit handler with minimal changes
   const handleSubmitArabicDoc = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      
 
-
-      
       const payloadData: DocumentSliceAr = {
         fullNameAr,
         nickNameAr,
@@ -212,12 +210,12 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         formData,
         createdAt: new Date().toISOString(),
       };
-      
+
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
-  
+
       if (response && response.success) {
         toast.success(response.message);
-  
+
         // Reset form data
         await setFormData(
           (prevFormData) =>
@@ -228,10 +226,10 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               ])
             ) as Record<FieldKey, FormField>
         );
-      } 
+      }
     } catch (error: any) {
       console.error("Submit error:", error);
-      
+
       Swal.fire({
         icon: "error",
         title: "Error!",
@@ -243,6 +241,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       });
     }
   };
+
   return (
     <div className="lg:mx-10 m ">
       <div className="flex flex-col items-center min-h-screen ">
@@ -251,7 +250,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
           className="bg-white      w-full p-2 "
           dir="rtl"
         >
-          <div className="flex xs:gap-2   ">
+          <div className="flex xs:gap-2">
             <FaArrowCircleRight
               className="text-3xl text-gray-500"
               onClick={() => navigate("/home")}
@@ -261,9 +260,9 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             </h2>
           </div>
 
-          <div className="">
+          <div className=" ">
             <div className="flex   items-center  lg:w-1/2 mt-1  ">
-              <div className="  ">
+              <div className="relative  ">
                 <label className="block uppercase  tracking-wide text-sm text-gray-700 font-semibold ">
                   رمز تداول
                 </label>
@@ -280,12 +279,13 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                     Loading suggestions...
                   </p>
                 )}
+
                 {suggestions.length > 0 && (
-                  <ul className="border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white">
+                  <ul className="absolute z-10 w-full border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white shadow">
                     {suggestions.map((suggestion, index) => (
                       <li
                         key={index}
-                        className="px-2 text-sm font-semibold  py-1 cursor-pointer hover:bg-gray-100"
+                        className="px-2 text-sm font-semibold py-1 cursor-pointer hover:bg-gray-100"
                         onClick={() => handleSuggestionClick(suggestion)}
                       >
                         {suggestion}
@@ -310,8 +310,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               </div>
             </div>
 
-            <div className="flex xs:w-full   lg:w-1/2  ">
-              <div className=" lg:w-full  xs:w-64  p-1"> 
+            <div className="flex   items-center  lg:w-1/2     ">
+              <div className=" lg:w-full    p-1">
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm ">
                   الاسم المختصر{" "}
                 </label>
@@ -324,12 +324,12 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 />
               </div>
 
-              <div className="   p-1  ">
+              <div className=" w-full   p-1  ">
                 <label className="block uppercase text-sm tracking-wide text-gray-700 font-semibold ">
                   القطاع
                 </label>
                 <input
-                  className="appearance-none block lg:w-72 bg-gray-200 text-gray-700 border rounded  p-1 text-sm leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block   lg:w-full bg-gray-200 text-gray-700 border rounded  p-1 text-sm leading-tight focus:outline-none focus:bg-white"
                   type="text"
                   placeholder="أدخل القطاع"
                   required
@@ -549,8 +549,6 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 رفع
               </button>
             )}
-
-          
           </div>
         </form>
         <ValidationModal

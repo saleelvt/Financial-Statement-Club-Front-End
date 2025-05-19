@@ -16,13 +16,13 @@ interface DocumentPayload {
   nickNameEn: string;
   tadawalCode: string;
   sector: string;
-  formData: Record<FieldKey, FormField>; 
+  formData: Record<FieldKey, FormField>;
 }
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
- 
+
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
@@ -37,8 +37,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
   ({ formDataEn, tadawalCodeEn }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { loading } = useSelector((state: RootState) => state.adminEn);
-      const [isModalOpen, setIsModalOpen] = useState(false);
-        const [errorMessage, setErrorMessage] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const [fullNameEn, setFullNameEn] = useState("");
     const [nickNameEn, setnickNameEn] = useState("");
     const [tadawalCode, setTadawalCode] = useState<string>(tadawalCodeEn || "");
@@ -294,13 +294,15 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           createdAt: new Date().toISOString(), // Example value
         };
 
-       const response= await dispatch(addDocumentEnglish(payloadData)).unwrap();
+        const response = await dispatch(
+          addDocumentEnglish(payloadData)
+        ).unwrap();
         if (response && response.success) {
           toast.success(response.message);
           // Only set to 100% if not already there from the progress events
-     
+
           // Reset form data
-         await  setFormData(
+          await setFormData(
             (prevFormData) =>
               Object.fromEntries(
                 Object.entries(prevFormData).map(([key, value]) => [
@@ -320,7 +322,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           showConfirmButton: false,
           timerProgressBar: true,
         });
-
       }
     };
 
@@ -328,13 +329,13 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
       <div className="p-2 border-t   w-full">
         <div className="">
           <form onSubmit={handleSubmit} className="">
-            <div className="flex   items-center  lg:w-1/2 mt-1 ">
-              <div className=" ">
-                <label className="block placeholder:text-xs  uppercase tracking-wide text-xs text-gray-700 font-semibold">
+            <div className="flex items-center lg:w-1/2 mt-1">
+              <div className="relative">
+                <label className="block placeholder:text-xs uppercase tracking-wide text-xs text-gray-700 font-semibold">
                   Tadawul Code
                 </label>
                 <input
-                  className="appearance-none placeholder:text-xs  lg:w-36 xs:w-28  block  text-xs p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none placeholder:text-xs lg:w-36 xs:w-28 block text-xs p-1 bg-gray-200 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
                   type="text"
                   placeholder="Tadawul Code "
                   value={tadawalCode}
@@ -347,12 +348,13 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     Loading suggestions...
                   </p>
                 )}
+
                 {suggestions.length > 0 && (
-                  <ul className="border border-gray-300  rounded mt-1 max-h-40 overflow-y-auto bg-white">
+                  <ul className="absolute z-10 w-full border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto bg-white shadow">
                     {suggestions.map((suggestion, index) => (
                       <li
                         key={index}
-                        className="px-2 text-sm font-semibold  py-1 cursor-pointer hover:bg-gray-100"
+                        className="px-2 text-sm font-semibold py-1 cursor-pointer hover:bg-gray-100"
                         onClick={() => handleSuggestionClick(suggestion)}
                       >
                         {suggestion}
@@ -362,8 +364,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 )}
               </div>
 
-              <div className="w-full text-xs  p-1 ">
-                <label className="block uppercase tracking-wide text-gray-700 font-bold ">
+              <div className="w-full text-xs p-1">
+                <label className="block uppercase tracking-wide text-gray-700 font-bold">
                   Full Name
                 </label>
                 <input
@@ -375,6 +377,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 />
               </div>
             </div>
+
             <div className="flex xs:w-full   text-xs mt-1 gap-1  lg:w-1/2 ">
               <div className=" xs:w-64 lg:w-1/2">
                 <label className="block uppercase  tracking-wide text-gray-700 font-bold ">
@@ -427,7 +430,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
 
                   <input
                     type="text"
-                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.Q1.year}
                     onChange={(e) => handleYearChange("Q1", e.target.value)}
@@ -455,7 +458,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   />
                   <input
                     type="text"
-                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block w-full   mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.Q2.year}
                     onChange={(e) => handleYearChange("Q2", e.target.value)}
@@ -483,7 +486,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   />
                   <input
                     type="text"
-                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.Q3.year}
                     onChange={(e) => handleYearChange("Q3", e.target.value)}
@@ -511,7 +514,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   />
                   <input
                     type="text"
-                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.Q4.year}
                     onChange={(e) => handleYearChange("Q4", e.target.value)}
@@ -538,7 +541,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   />
                   <input
                     type="text"
-                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.S1.year}
                     onChange={(e) => handleYearChange("S1", e.target.value)}
@@ -566,7 +569,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   />
                   <input
                     type="text"
-                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.Year.year}
                     onChange={(e) => handleYearChange("Year", e.target.value)}
@@ -594,7 +597,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   />
                   <input
                     type="text"
-                    className="appearance-none block w-1/2 mt-1  bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-none block w-full  mt-1  bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.Board.year}
                     onChange={(e) => handleYearChange("Board", e.target.value)}
@@ -620,10 +623,10 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
             </div>
           </form>
           <ValidationModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          message={errorMessage}
-        />
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            message={errorMessage}
+          />
           {/* <AddDocumentArabic formDataEn={formData} tadawalCodeEn={tadawalCode}  /> */}
         </div>
       </div>

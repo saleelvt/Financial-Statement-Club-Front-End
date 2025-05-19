@@ -644,7 +644,6 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
         data1En: data1Ar,
         data2En: data2Ar,
       };
-
       await dispatch(setBalanceSheetDataArAction(formData));
     };
 

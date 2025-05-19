@@ -34,7 +34,7 @@ const initialState: AddTableArState={
           state.error = null;
         })
         .addCase(setBalanceSheetDataArAction.fulfilled, (state, { payload }) => {
-          console.log("The Table data values Are :  ", payload);
+          console.log("the ARabic REdux Updated data  :  ", payload);
           state.loading = false;
           state.error = null;
           state.dataAr=payload

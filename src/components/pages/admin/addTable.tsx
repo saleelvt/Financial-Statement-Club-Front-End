@@ -89,14 +89,7 @@ const AddNewTable = React.memo(() => {
     }
   }, [selectedTableType, tableData, tableDataAr]);
 
-  useEffect(() => {
-    console.log(
-      "the tables : in frontend :",
-      tableAr,
-      "then the console data is the data : ",
-      tableEn
-    );
-  }, [tableEn, tableAr]);
+
 
   const handleClickEnglish = async () => {
     try {
@@ -431,22 +424,29 @@ const AddNewTable = React.memo(() => {
               <div className="h-[94vh] mt-1 overflow-y-auto">
                 <BalaceSheet TakingShort={takeShot} />
 
-                <div className="relative flex justify-between mt-4 ">
-                  {" "}
-                
-                  {showToast && (
+                <div className="relative flex justify-between    ">
+       
+                   <div className="items-start">
+                  
+ {showToast && (
                     <div className="absolute  right-0 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded shadow">
                       Table Submitted Successfully
                     </div>
                   )}
+
+                  </div>
+                 
                   <button
-                    className="bg-slate-300 items-end rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                    className="bg-slate-300  rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
                     onClick={handleClickEnglish}
                     disabled={takeShot}
                     type="button"
                   >
                     {takeShot ? "Submitting..." : "Submit"}
                   </button>
+               
+
+                  
                 </div>
               </div>
             </form>

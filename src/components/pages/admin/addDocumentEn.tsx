@@ -363,7 +363,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   </ul>
                 )}
               </div>
-
               <div className="w-full text-xs p-1">
                 <label className="block uppercase tracking-wide text-gray-700 font-bold">
                   Full Name
@@ -378,8 +377,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-            <div className="flex xs:w-full   text-xs mt-1 gap-1  lg:w-1/2 ">
-              <div className=" xs:w-64 lg:w-1/2">
+            <div className="flex     text-xs mt-1 gap-1  lg:w-1/2 ">
+              <div className="  lg:w-full w-full  ">
                 <label className="block uppercase  tracking-wide text-gray-700 font-bold ">
                   Nick Name
                 </label>
@@ -392,7 +391,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 />
               </div>
 
-              <div className=" lg:w-1/2">
+              <div className=" w-full ">
                 <label className="block uppercase tracking-wide text-gray-700 font-bold ">
                   Sector
                 </label>

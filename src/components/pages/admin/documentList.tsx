@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 const Loading = lazy(() => import("../Loading"));
 import { Error } from "../Error";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import { GrLanguage } from "react-icons/gr";
+import { GrLanguage } from "react-icons/gr"; 
 import {
   DocumentSliceAr,
   DocumentSliceEn,

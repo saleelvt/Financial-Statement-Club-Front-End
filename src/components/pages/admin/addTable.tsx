@@ -77,7 +77,6 @@ const AddNewTable = React.memo(() => {
         "The English Succedd Data : ",
         enTable
       );
-
       setTableAr(arTable);
       setTableEn(enTable);
     } else {

@@ -88,7 +88,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
           `/api/v1/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,
           config,
           {}
-        );
+        ); 
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
         console.error("Error fetching suggestions:", error);
@@ -266,6 +266,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
           </div>
 
           <div className="grid grid-cols-2  md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm  ">
+              {formData.Q1 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر 1
@@ -295,6 +296,9 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 />
               </div>
             </div>
+            )}
+
+              {formData.Q2 && (
 
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
@@ -323,7 +327,9 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 />
               </div>
             </div>
+            )}
 
+  {formData.Q3 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر3
@@ -352,7 +358,9 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 />
               </div>
             </div>
+            )}
 
+  {formData.Q4 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر4
@@ -380,7 +388,9 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               />
             </div>
             </div>
+            )}
 
+  {formData.S1&& (
             <div className=" ">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ن.س
@@ -408,6 +418,9 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               />
               </div>
             </div>
+            )}
+
+              {formData.Board && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 السنوي
@@ -435,6 +448,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               />
             </div>
             </div>
+            )}
+              {formData.Year&& (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 المجلس
@@ -462,6 +477,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               />
             </div>
             </div>
+            )}
           </div>
 
           <div className="flex items-center justify-between mt-4">

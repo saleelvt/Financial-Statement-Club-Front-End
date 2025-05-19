@@ -12,7 +12,7 @@ const Loading = lazy(() => import("../Loading"));
 import React from "react";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import { FaPen } from "react-icons/fa"
+import { FaPen } from "react-icons/fa" 
 import {DocumentSliceEn,DocumentSliceAr,} from "../../../interfaces/admin/addDoument";
 import { FormDataState } from "../../../interfaces/admin/addDoument";
 import { useSelector } from "react-redux";
@@ -255,7 +255,7 @@ import toast from "react-hot-toast";
                           >
                             View 
                           </button> */}
-                          <div className="flex justify-center items-center">
+                          <div className="flex justify-center  items-center">
                             <IoEyeSharp
                               className="text-2xl   text-center text-gray-800"
                               onClick={() =>
@@ -273,22 +273,26 @@ import toast from "react-hot-toast";
                                 className=" flex justify-center border  gap-3 font-semibold border-gray-300 bg-gray-200"
                               >
                                 {/* <button className="bg-gray-400 border border-gray-600 hover:bg-gray-800 text-white text-sm  rounded-lg shadow transition duration-300">Update</button> */}
-                                <div className="flex gap-5">
-                                <FaTrash
+                               
+                               <div className="flex justify-between px-2 py-0.5 w-full">
+
+                            <div className="">  <FaTrash
                                   
                                   onClick={() => {
                                     setDocToDelete(doc._id);
                                     setModalOpen(true);
                                   }}
                                   className="text-xl  text-gray-800"
-                                />
-                                <FaPen  onClick={() => {
+                                /></div>
+                            <div className=""> <FaPen  onClick={() => {
                                     handleUpdateDocument(doc?._id);
                                   }}
                                   className="text-xl text-gray-800 "/>
-                             
-                                {/* <button onClick={()=>{handleUpdateDocument(doc?._id)}} className="bg-gray-400 border border-gray-600 hover:bg-gray-800 text-white px-4 py-1 rounded-lg shadow transition duration-300">Update</button> */}
-                                </div>
+                                  
+                                  </div>
+
+                               </div>
+                          
                               </td>
                             </>
                           )}

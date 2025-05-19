@@ -72,8 +72,6 @@ const UpdateDocument: React.FC = React.memo(() => {
     }
   }, [document]);
 
-
-
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setnickNameEn(value);
@@ -108,7 +106,7 @@ const UpdateDocument: React.FC = React.memo(() => {
       config,
       {}
     );
-  
+
     const mydata = response.data.data;
     setnickNameEn(suggestion);
     setFullNameEn(mydata.fullNameEn);
@@ -151,11 +149,10 @@ const UpdateDocument: React.FC = React.memo(() => {
         createdAt: new Date().toISOString(), // Example value
       };
 
-     
       await dispatch(
         UpdateDocumentEnglish({ id, language, adminCredentials })
       ).unwrap();
-    
+
       toast.success("Document updated successfully");
       navigate(-1);
     } catch (error: any) {
@@ -184,9 +181,9 @@ const UpdateDocument: React.FC = React.memo(() => {
 
           <div className="flex   items-center  lg:w-1/2 mt-1 ">
             <div className="">
-            <label className="block placeholder:text-xs  uppercase tracking-wide text-xs text-gray-700 font-semibold">
-                  Tadawul Code
-                </label>
+              <label className="block placeholder:text-xs  uppercase tracking-wide text-xs text-gray-700 font-semibold">
+                Tadawul Code
+              </label>
               <input
                 className="appearance-none placeholder:text-xs  lg:w-36 xs:w-28  block  text-xs p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                 type="text"
@@ -258,36 +255,43 @@ const UpdateDocument: React.FC = React.memo(() => {
           </div>
 
           <div className="grid text-xs  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-1  ">
-            <div className="">
-              <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
-                Q1
-              </label>
-
-              <input
-                type="file"
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Q1", e.target.files?.[0] || null)
-                }
-              />
-              <div className=" flex justify-start gap-1  ">
-                <DatePicker
-                  selected={formData.Q1.date}
-                  onChange={(date) => handleDateChange("Q1", date)}
-                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="Choose Date"
-                />
+            {formData.Q1 && (
+              <div className="">
+                <label className="block uppercase tracking-wide text-gray-700 font-semibold">
+                  Q1
+                </label>
 
                 <input
-                  type="text"
-                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="Enter Year"
-                  value={formData.Q1.year}
-                  onChange={(e) => handleYearChange("Q1", e.target.value)}
+                  type="file"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  onChange={(e) =>
+                    handleFileChange("Q1", e.target.files?.[0] || null)
+                  }
                 />
-              </div>
-            </div>
 
+                <div className="flex justify-start gap-1">
+                  <DatePicker
+                    selected={formData.Q1.date || null}
+                    onChange={(date) => handleDateChange("Q1", date)}
+                    className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholderText="Choose Date"
+                  />
+
+                  <input
+                    type="text"
+                    className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                    placeholder="Enter Year"
+                    value={formData.Q1.year || ""}
+                    onChange={(e) => handleYearChange("Q1", e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
+
+
+ 
+
+  {formData.Q2 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                 Q2
@@ -301,7 +305,7 @@ const UpdateDocument: React.FC = React.memo(() => {
               />
               <div className=" flex justify-start gap-1">
                 <DatePicker
-                  selected={formData.Q2.date}
+                  selected={formData?.Q2?.date}
                   onChange={(date) => handleDateChange("Q2", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
@@ -315,7 +319,10 @@ const UpdateDocument: React.FC = React.memo(() => {
                 />
               </div>
             </div>
+            )}
 
+
+  {formData.Q3 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                 Q3
@@ -343,7 +350,8 @@ const UpdateDocument: React.FC = React.memo(() => {
                 />
               </div>
             </div>
-
+            )}
+  {formData.Q4 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                 Q4
@@ -370,8 +378,10 @@ const UpdateDocument: React.FC = React.memo(() => {
                   onChange={(e) => handleYearChange("Q4", e.target.value)}
                 />
               </div>
-            </div>
+            </div> 
+            )}
 
+              {formData.S1 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                 SA
@@ -399,6 +409,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                 />
               </div>
             </div>
+            )}
+
+              {formData.Year && (
 
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
@@ -427,7 +440,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                 />
               </div>
             </div>
+            )}
 
+  {formData.Board && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                 Board
@@ -455,7 +470,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                 />
               </div>
             </div>
-          </div>
+            )}
+          </div> 
+          
 
           <div className="flex justify-end mt-4">
             <button

@@ -310,8 +310,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               </div>
             </div>
 
-            <div className="flex   items-center  lg:w-1/2     ">
-              <div className=" lg:w-full    p-1">
+            <div className="flex   items-center  lg:w-1/2   ">
+              <div className=" lg:w-full w-full  p-1">
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm ">
                   الاسم المختصر{" "}
                 </label>
@@ -329,7 +329,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   القطاع
                 </label>
                 <input
-                  className="appearance-none block   lg:w-full bg-gray-200 text-gray-700 border rounded  p-1 text-sm leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block  w-full bg-gray-200 text-gray-700 border rounded  p-1 text-sm leading-tight focus:outline-none focus:bg-white"
                   type="text"
                   placeholder="أدخل القطاع"
                   required

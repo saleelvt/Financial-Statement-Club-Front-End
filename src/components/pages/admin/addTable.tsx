@@ -479,11 +479,6 @@ const AddNewTable = React.memo(() => {
 
 
 
-
-
-
-
-
   return (
     <div className="p-1">
       <div className="flex flex-wrap justify-between items-center">

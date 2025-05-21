@@ -18,7 +18,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import ValidationModal from "../validationModal";
 import { AddDocument } from "./addDocumentEn";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Swal from "sweetalert2";
+
 
 interface DocumentPayload {
   fullNameAr: string;
@@ -224,21 +224,11 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                 key as keyof typeof prevFormData,
                 { ...value, file: null },
               ])
-            ) as Record<FieldKey, FormField>
+            ) as Record<FieldKey, FormField> 
         );
       }
     } catch (error: any) {
       console.error("Submit error:", error);
-
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: error.message || "Something went wrong!",
-        timer: 3000,
-        toast: true,
-        showConfirmButton: false,
-        timerProgressBar: true,
-      });
     }
   };
 

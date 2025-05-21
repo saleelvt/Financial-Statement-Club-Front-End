@@ -64,11 +64,17 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
   useEffect(() => {
     if (document) {
-      setFullNameAr(document.fullNameAr);
-      setnickNameAr(document.nickNameAr);
-      setTadawalCode(document.tadawalCode);
-      setSector(document.sector);
-      setFormData(document.formData);
+      setFullNameAr(document.fullNameAr || "");
+      setnickNameAr(document.nickNameAr || "");
+      setTadawalCode(document.tadawalCode || "");
+      setSector(document.sector || "");
+
+      // Merge incoming partial data with defaults
+      const mergedFormData = {
+        ...formData,
+        ...document.formData, // document.formData may contain Q1, Q2 only
+      };
+      setFormData(mergedFormData);
     }
   }, [document]);
 
@@ -88,7 +94,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
           `/api/v1/admin/nicknamesSuggestions?name=${value}&language=${adminLanguage}`,
           config,
           {}
-        ); 
+        );
         setSuggestions(response.data.suggestions || []);
       } catch (error) {
         console.error("Error fetching suggestions:", error);
@@ -134,7 +140,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
   const handleYearChange = (field: FieldKey, year: string) => {
     setFormData((prev) => ({
       ...prev,
-      [field]: { ...prev[field], year }, 
+      [field]: { ...prev[field], year },
     }));
   };
 
@@ -266,218 +272,297 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
           </div>
 
           <div className="grid grid-cols-2  md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm  ">
-              {formData.Q1 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-                ر 1
+                ر1
               </label>
 
-              <input
-                type="file"
-                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Q1", e.target.files?.[0] || null)
-                }
-              />
-              <div className=" flex justify-start gap-1  ">
+              <div className="relative">
+                <input
+                  type="file"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
+                  onChange={(e) =>
+                    handleFileChange("Q1", e.target.files?.[0] || null)
+                  }
+                />
+
+                {typeof formData.Q1.file === "string" && (
+                  <span
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    style={{ direction: "rtl", textAlign: "right" }}
+                  >
+                    {formData.Q1.file.split("/").pop()}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
                   selected={formData.Q1.date}
                   onChange={(date) => handleDateChange("Q1", date)}
-                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                  placeholderText="التاريخ"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="Choose Date"
                 />
-
                 <input
                   type="text"
-                  className="appearance-none block w-1/2 mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
-                  placeholder="السنة"
-                  value={formData.Q1.year}
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="Enter Year"
+                  value={formData.Q1.year || ""}
                   onChange={(e) => handleYearChange("Q1", e.target.value)}
                 />
               </div>
             </div>
-            )}
-
-              {formData.Q2 && (
 
             <div className="">
-              <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
+              <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر2
               </label>
-              <input
-                type="file"
-                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Q2", e.target.files?.[0] || null)
-                }
-              />
-              <div className=" flex justify-start gap-1">
+
+              <div className="relative">
+                <input
+                  type="file"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
+                  onChange={(e) =>
+                    handleFileChange("Q2", e.target.files?.[0] || null)
+                  }
+                />
+
+                {typeof formData.Q2.file === "string" && (
+                  <span
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    style={{ direction: "rtl", textAlign: "right" }}
+                  >
+                    {formData.Q2.file.split("/").pop()}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
                   selected={formData.Q2.date}
                   onChange={(date) => handleDateChange("Q2", date)}
-                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
                 <input
                   type="text"
-                  className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.Q2.year}
+                  value={formData.Q2.year || ""}
                   onChange={(e) => handleYearChange("Q2", e.target.value)}
                 />
               </div>
             </div>
-            )}
 
-  {formData.Q3 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر3
               </label>
-              <input
-                type="file"
-                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Q3", e.target.files?.[0] || null)
-                }
-              />
 
-              <div className=" flex justify-start gap-1">
+              <div className="relative">
+                <input
+                  type="file"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
+                  onChange={(e) =>
+                    handleFileChange("Q3", e.target.files?.[0] || null)
+                  }
+                />
+
+                {/* ✅ Show filename if it's a string (S3 URL) */}
+                {typeof formData.Q3.file === "string" && (
+                  <span
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    style={{ direction: "rtl", textAlign: "right" }}
+                  >
+                    {formData.Q3.file.split("/").pop()}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
                   selected={formData.Q3.date}
                   onChange={(date) => handleDateChange("Q3", date)}
-                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                 />
+
                 <input
                   type="text"
-                  className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 mt- leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.Q3.year}
+                  value={formData.Q3.year || ""}
                   onChange={(e) => handleYearChange("Q3", e.target.value)}
                 />
               </div>
             </div>
-            )}
 
-  {formData.Q4 && (
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ر4
               </label>
-              <input
-                type="file"
-                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Q4", e.target.files?.[0] || null)
-                }
-              />
-                           <div className=" flex justify-start gap-1">
-              <DatePicker
-                selected={formData.Q4.date}
-                onChange={(date) => handleDateChange("Q4", date)}
-                className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="Choose Date"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="Enter Year"
-                value={formData.Q4.year}
-                onChange={(e) => handleYearChange("Q4", e.target.value)}
-              />
-            </div>
-            </div>
-            )}
 
-  {formData.S1&& (
-            <div className=" ">
-              <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-                ن.س
-              </label>
-              <input
-                type="file"
-                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("S1", e.target.files?.[0] || null)
-                }
-              />
-                <div className=" flex justify-start gap-1">
-              <DatePicker
-                selected={formData.S1.date}
-                onChange={(date) => handleDateChange("S1", date)}
-                className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="Choose Date"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="Enter Year"
-                value={formData.S1.year}
-                onChange={(e) => handleYearChange("S1", e.target.value)}
-              />
+              <div className="relative">
+                <input
+                  type="file"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
+                  onChange={(e) =>
+                    handleFileChange("Q4", e.target.files?.[0] || null)
+                  }
+                />
+
+                {typeof formData.Q4.file === "string" && (
+                  <span
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    style={{ direction: "rtl", textAlign: "right" }}
+                  >
+                    {formData.Q4.file.split("/").pop()}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex justify-start gap-1 mt-1">
+                <DatePicker
+                  selected={formData.Q4.date}
+                  onChange={(date) => handleDateChange("Q4", date)}
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="Choose Date"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="Enter Year"
+                  value={formData.Q4.year || ""}
+                  onChange={(e) => handleYearChange("Q4", e.target.value)}
+                />
               </div>
             </div>
-            )}
 
-              {formData.Board && (
+            {/* ----------- S1 ------------ */}
+            <div className="">
+              <label className="block uppercase tracking-wide text-gray-700 font-semibold">
+                س1
+              </label>
+
+              <div className="relative">
+                <input
+                  type="file"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
+                  onChange={(e) =>
+                    handleFileChange("S1", e.target.files?.[0] || null)
+                  }
+                />
+
+                {typeof formData.S1.file === "string" && (
+                  <span
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    style={{ direction: "rtl", textAlign: "right" }}
+                  >
+                    {formData.S1.file.split("/").pop()}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex justify-start gap-1 mt-1">
+                <DatePicker
+                  selected={formData.S1.date}
+                  onChange={(date) => handleDateChange("S1", date)}
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="Choose Date"
+                />
+
+                <input
+                  type="text"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="Enter Year"
+                  value={formData.S1.year || ""}
+                  onChange={(e) => handleYearChange("S1", e.target.value)}
+                />
+              </div>
+            </div>
+
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 السنوي
               </label>
-              <input
-                type="file"
-                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Year", e.target.files?.[0] || null)
-                }
-              />
-                    <div className=" flex justify-start gap-1">
-              <DatePicker
-                selected={formData.Year.date}
-                onChange={(date) => handleDateChange("Year", date)}
-                className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="Choose Date"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-full mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="Enter Year"
-                value={formData.Year.year}
-                onChange={(e) => handleYearChange("Year", e.target.value)}
-              />
+
+              <div className="relative">
+                <input
+                  type="file"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
+                  onChange={(e) =>
+                    handleFileChange("Year", e.target.files?.[0] || null)
+                  }
+                />
+
+                {typeof formData.Year.file === "string" && (
+                  <span
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    style={{ direction: "rtl", textAlign: "right" }}
+                  >
+                    {formData.Year.file.split("/").pop()}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex justify-start gap-1 mt-1">
+                <DatePicker
+                  selected={formData.Year.date}
+                  onChange={(date) => handleDateChange("Year", date)}
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="Choose Date"
+                />
+
+                <input
+                  type="text"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="Enter Year"
+                  value={formData.Year.year || ""}
+                  onChange={(e) => handleYearChange("Year", e.target.value)}
+                />
+              </div>
             </div>
-            </div>
-            )}
-              {formData.Year&& (
+
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 المجلس
               </label>
-              <input
-                type="file"
-                className="appearance-none  block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                onChange={(e) =>
-                  handleFileChange("Board", e.target.files?.[0] || null)
-                }
-              />
-                                  <div className=" flex justify-start gap-1">
-              <DatePicker
-                selected={formData.Board.date}
-                onChange={(date) => handleDateChange("Board", date)}
-                className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholderText="Choose Date"
-              />
-              <input
-                type="text"
-                className="appearance-none block w-full bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
-                placeholder="Enter Year"
-                value={formData.Board.year}
-                onChange={(e) => handleYearChange("Board", e.target.value)}
-              />
+
+              <div className="relative">
+                <input
+                  type="file"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
+                  onChange={(e) =>
+                    handleFileChange("Board", e.target.files?.[0] || null)
+                  }
+                />
+
+                {typeof formData.Board.file === "string" && (
+                  <span
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    style={{ direction: "rtl", textAlign: "right" }}
+                  >
+                    {formData.Board.file.split("/").pop()}
+                  </span>
+                )}
+              </div>
+ 
+              <div className="flex justify-start gap-1 mt-1">
+                <DatePicker
+                  selected={formData.Board.date}
+                  onChange={(date) => handleDateChange("Board", date)}
+                  className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholderText="Choose Date"
+                />
+                <input
+                  type="text"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="Enter Year"
+                  value={formData.Board.year || ""}
+                  onChange={(e) => handleYearChange("Board", e.target.value)}
+                />
+              </div>
             </div>
-            </div>
-            )}
           </div>
 
           <div className="flex items-center justify-between mt-4">

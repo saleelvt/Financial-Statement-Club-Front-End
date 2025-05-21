@@ -8,9 +8,9 @@ export interface FormField {
   date?: Date | null;
   year?: string;
   table?: {
-    BalanceSheet?: string |null; 
-    CashFlow?: string|null  
-    ProfitLoss?: string|null
+    BalanceSheet?: any |null; 
+    CashFlow?: any|null  
+    ProfitLoss?: any|null
   };
   createAt?:string 
 }
@@ -26,6 +26,17 @@ export interface FormDataState {
  [key: string]: FormField; // Add this line
 }
 
+export interface DocumentSliceAr {
+  _id?:string;
+ fullNameAr: string;
+ nickNameAr: string;
+ tadawalCode: string;
+ sector: string;
+ formData: FormDataState;
+ createdAt: string; // Add this line
+
+}
+
 export interface DocumentSliceEn  {
   _id?:string;
  fullNameEn: string;
@@ -38,16 +49,7 @@ export interface DocumentSliceEn  {
 }
 
 
-export interface DocumentSliceAr {
-  _id?:string;
- fullNameAr: string;
- nickNameAr: string;
- tadawalCode: string;
- sector: string;
- formData: FormDataState;
- createdAt: string; // Add this line
 
-}
 
 export interface ShowDocumentSliceForUser {
   fullName: string;

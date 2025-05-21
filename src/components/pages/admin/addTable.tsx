@@ -327,11 +327,11 @@ const AddNewTable = React.memo(() => {
       return (
         <div className="flex flex-col lg:flex-row  lg:justify-center ">
           {/* Left side - English table */}
-          <div className=" h-[94vh] mt-1 overflow-y-auto ">
+          <div className=" ">
             <BalanceSheetFormUser Tabledata={tableEn} />
           </div>
           {/* Right side - Arabic table */}
-          <div className=" h-[94vh] mt-1 overflow-y-auto ">
+          <div className=" ">
             <BalanceSheetFormUserArabic Tabledata={tableAr} />
           </div>
         </div>
@@ -341,7 +341,7 @@ const AddNewTable = React.memo(() => {
     else if (tableEn && !tableAr) {
       return (
         <div className="flex flex-col lg:flex-row lg:justify-center  ">
-          <div className=" h-[96vh] mt-1 overflow-y-auto">
+          <div className=" ">
             {/* <div className="pointer-events-none">
               <img
                 src={tableIframeSrc} 
@@ -398,7 +398,7 @@ const AddNewTable = React.memo(() => {
               </div>
             </form>
           </div>
-          <div className=" h-[96vh] mt-1 overflow-y-auto">
+          <div className=" ">
             <BalanceSheetFormUserArabic Tabledata={tableAr} />
           
           </div>
@@ -411,7 +411,7 @@ const AddNewTable = React.memo(() => {
 
           <div className="">
             <form>
-              <div className="h-[94vh] mt-1 overflow-y-auto">
+              <div className="">
                 <BalaceSheet TakingShort={takeShot} />
 
                 <div className="relative flex justify-between    ">
@@ -434,8 +434,6 @@ const AddNewTable = React.memo(() => {
                   >
                     {takeShot ? "Submitting..." : "Submit"}
                   </button>
-               
-
                   
                 </div>
               </div>
@@ -446,7 +444,7 @@ const AddNewTable = React.memo(() => {
           <div className="">
             <form>
               <div className="">
-                <div className=" h-[94vh] mt-1 overflow-y-auto ">
+                <div className=" ">
                   <BalaceSheetFormAr TakingShort={takeShot} />
 
                   <div className=" flex justify-between">

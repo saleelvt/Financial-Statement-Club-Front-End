@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect,lazy } from "react";
+import React, { useState, useEffect, lazy, useRef } from "react";
 import "../../../global.css";
 import { config } from "../../../config/constants";
 import { commonRequest } from "../../../config/api";
-const Loading = lazy(() => import("../Loading"));
+const Loading = lazy(() => import("./skeltonLoading"));
 import { setArabicNames } from "../../../functions/setArabicNames";
 import { setEnglishNames } from "../../../functions/setEnglishNames";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,22 +11,22 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { userLanguageChange } from "../../../reduxKit/actions/auth/authAction";
 import { GrLanguage } from "react-icons/gr";
 import "../../../css/userHome.css";
-import { Error } from "../Error"; 
-
-
-
-
-
-
+import { Error } from "../Error";
 import {
   DocumentSliceAr,
   DocumentSliceEn,
 } from "../../../interfaces/admin/addDoument";
 import { useNavigate } from "react-router-dom";
 
+const BATCH_SIZE = 200;
+const INTERVAL_MS = 1000; // 1 second
+
 const UserHomePage: React.FC = React.memo(() => {
-  // const [showAll, setShowAll] = useState(false);
-  const [brandsEn, setBrandsEn] = useState< {
+  const skipRef = useRef(0);
+  const hasMoreRef = useRef(true);
+
+  const [brandsEn, setBrandsEn] = useState<
+    {
       fullNameEn: string;
       nickNameEn: string;
       tadawalCode: string;
@@ -47,36 +47,67 @@ const UserHomePage: React.FC = React.memo(() => {
       id: string;
     }[]
   >([]);
-
-  const [loading, setLoading] = useState(false);
+  const [loadingInitial, setLoadingInitial] = useState(true);
   const [error, setError] = useState("");
-  const [language, setLanguage] = useState<string>("Arabic");
+  const [language, setLanguage] = useState<string|null>("Arabic");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
-  const { userLanguage } = useSelector( (state: RootState) => state.userLanguage);
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      setLoading(true);
-      try {
-        if (userLanguage) setLanguage(userLanguage);
-        const endpoint =
-          userLanguage === "English"
-            ? "/api/v1/admin/getDocuments"
-            : "/api/v1/admin/getArabicDocuments";
-        const response = await commonRequest("GET", endpoint, config, null);
+  const { userLanguage } = useSelector(
+    (state: RootState) => state.userLanguage
+  );
 
-        if (response.status === 200 && response.data?.data) {
-          setDocuments(response.data.data);
+  const fetchBatch = async (isInitial = false) => {
+    try {
+      const endpoint =
+        userLanguage === "English"
+          ? `/api/v1/admin/getDocuments?skip=${skipRef.current}&limit=${BATCH_SIZE}`
+          : `/api/v1/admin/getArabicDocuments?skip=${skipRef.current}&limit=${BATCH_SIZE}`;
+
+      const response = await commonRequest("GET", endpoint, config, null);
+
+      if (response.status === 200 && response.data?.data?.length > 0) {
+        const newDocs = response.data.data;
+        if (isInitial) {
+          setDocuments(newDocs);
         } else {
-          setError("Failed to fetch documents");
+          setDocuments((prev) => [...prev, ...newDocs]);
         }
-      } catch (err: any) {
-        setError(err.message || "An unexpected error occurred");
-      } finally {
-        setLoading(false);
+
+        // Update refs and states
+        skipRef.current += BATCH_SIZE;
+
+        if (newDocs.length < BATCH_SIZE) {
+          hasMoreRef.current = false;
+        }
+      } else {
+        hasMoreRef.current = false;
       }
-    };
-    fetchDocuments();
+    } catch (err: any) {
+      setError(err.message || "Failed to load documents");
+      hasMoreRef.current = false;
+    } finally {
+      if (isInitial) {
+        setLoadingInitial(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    setDocuments([]);
+    skipRef.current = 0;
+    hasMoreRef.current = true;
+    setError("");
+    setLoadingInitial(true);
+    fetchBatch(true);
+    const intervalId = setInterval(() => {
+      if (hasMoreRef.current) {
+        fetchBatch();
+      } else {
+        clearInterval(intervalId);
+      }
+    }, INTERVAL_MS);
+
+    return () => clearInterval(intervalId);
   }, [userLanguage]);
 
   useEffect(() => {
@@ -88,33 +119,49 @@ const UserHomePage: React.FC = React.memo(() => {
     }
   }, [documents]);
 
+  // Sync local language state with Redux state
+  useEffect(() => {
+    setLanguage(userLanguage);
+  }, [userLanguage]);
+
   const handleBrandClick = async (tadawalCode: string) => {
     setSelectedBrand(tadawalCode);
     navigate(`/companyDetails?tadawalCode=${tadawalCode}&language=${language}`);
   };
 
   const toggleLanguage = async () => {
-    const newLanguage = language === "English" ? "Arabic" : "English";
-    setLanguage(newLanguage);
+    const newLanguage = userLanguage === "English" ? "Arabic" : "English";
     await dispatch(userLanguageChange(newLanguage));
+    // We don't need to set language manually as the useEffect will handle it
+    // based on the updated userLanguage from Redux
   };
 
   const arrays = userLanguage === "English" ? brandsEn : brandsAr;
-  const currentBrands = arrays.filter(
-    (item, index, self) =>
-      index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
-  ) .sort((a, b) =>
-    userLanguage === "English"
-      ? a.nickNameEn.localeCompare(b.nickNameEn, "en", { sensitivity: "base" })
-      : a.nickNameEn.localeCompare(b.nickNameEn, "ar", { sensitivity: "base" })
-  );
-  if (loading) {
+
+  const currentBrands = arrays
+    .filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
+    )
+    .sort((a, b) =>
+      userLanguage === "English"
+        ? a.nickNameEn.localeCompare(b.nickNameEn, "en", {
+            sensitivity: "base",
+          })
+        : a.nickNameEn.localeCompare(b.nickNameEn, "ar", {
+            sensitivity: "base",
+          })
+    );
+
+  if (loadingInitial) {
     return <Loading />;
   }
+
   if (error) {
     return <Error />;
   }
-  return (
+
+   return (
     <div
       // style={{ backgroundColor: "#666666" }}
       className=" text-white bg-charcoal min-h-screen flex flex-col items-center xs:p-2 lg:px-24 lg:p-4"
@@ -161,7 +208,6 @@ const UserHomePage: React.FC = React.memo(() => {
      
     </div>
   );
-
-})
+});
 
 export default UserHomePage;

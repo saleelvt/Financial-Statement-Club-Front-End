@@ -17,7 +17,7 @@ import BalanceSheetFormUserArabic from "../user/Tables/balanceSheetAr";
 
 import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheetAr";
 import { ITable } from "./Tables/BalanceSheet/interface";
-import { FaTrash } from "react-icons/fa";
+
 import { ConfirmationModalTable } from "./Tables/ConfirmationModalTable";
 // import { DocumentSliceAr, DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 
@@ -721,29 +721,7 @@ const AddNewTable = React.memo(() => {
             </select>
           </div>
         )}
-        <div className="flex gap-3 place-items-center justify-end p-1 mt-5 ">
-          {" "}
-          <div className="">
-            {" "}
-            <FaTrash
-              onClick={() => {
-                setLanguage("English");
-                setModalOpen(true);
-              }}
-              className="text-xl  text-gray-600"
-            />
-          </div>
-          <div className="">
-            {" "}
-            <FaTrash
-              onClick={() => {
-                setLanguage("Arabic");
-                setModalOpen(true);
-              }}
-              className="text-xl  text-gray-600"
-            />
-          </div>{" "}
-        </div>
+     
       </div>
 
       <ConfirmationModalTable

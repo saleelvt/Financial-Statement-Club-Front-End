@@ -29,7 +29,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
       <>
         {table ? (
           <div className="flex justify-start   my-2 text-black">
-            <table dir="rtl" className="border font-semibold border-gray-300 text-xs mb-12 table-fixed ">
+            <table dir="rtl" className="border font-semibold border-gray-300 text-xs mb-8 table-fixed ">
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-100 w-96"></th>
@@ -98,7 +98,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
               <tbody>
                 <tr className="bg-gray-400 text-sm font-semibold">
                   <td colSpan={4} className="p-1 text-start">
-                    {table.assets.sassets}
+                    {table?.assets?.sassets}
                   </td>
                 </tr>
 
@@ -667,7 +667,6 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
                 {formatValue(table.ItotalEquityAndLiabilitiesDate2)}
               </td>
             </tr>
-
               </tbody>
             </table>
           </div>

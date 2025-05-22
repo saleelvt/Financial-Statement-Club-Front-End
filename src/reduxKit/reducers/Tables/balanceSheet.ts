@@ -34,7 +34,6 @@ const initialState: AddTableEnState={
           state.error = null;
         })
         .addCase(setBalanceSheetDataAction.fulfilled, (state, { payload }) => {
-          console.log("The Table data values Are :  ", payload);
           state.loading = false;
           state.error = null;
           state.data=payload

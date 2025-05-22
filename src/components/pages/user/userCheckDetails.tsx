@@ -149,7 +149,8 @@ const UserCompanyDetails = React.memo(() => {
       setLoading(false);
     }
     // ✅ If a tableKey was selected before, check if it exists for this PDF
-    if (selectedTableKey) {
+
+  if (selectedTableKey) {
       const tableData =
         document.formData?.[key as FieldKey]?.table?.[selectedTableKey];
 

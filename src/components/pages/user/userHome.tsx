@@ -56,6 +56,8 @@ const UserHomePage: React.FC = React.memo(() => {
     (state: RootState) => state.userLanguage
   );
 
+
+  
   const fetchBatch = async (isInitial = false) => {
     try {
       const endpoint =

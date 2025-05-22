@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-// import { IBalanceSheetData } from "./interface";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -344,7 +344,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
         const [sfirtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] = useState("");
     const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState( "Total Shareholder's Equity"  );
 
-    const [liabilities, setLiabilities] = useState("Liabilities");
+    const [sliabilities, setLiabilities] = useState("Liabilities");
     const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(  "Non-current Liabilities"  );
             const [sfirtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] = useState("");
     const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] =  useState("Total non-current Liabilities");
@@ -357,32 +357,59 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     useEffect(() => {
       try {
 
         prepareAndDispatchData();
+        
       } catch (error) {
         console.log("useEffect error : ", error);
       }
-    }, [
+    },
+    [
 
-nonCurrentLabelsAr,
-nonCurrentSubLabelsAr,
+     nonCurrentLabelsAr,
+      nonCurrentSubLabelsAr,
       currentSubLabelsAr,
       currentLabelsAr,
-
-            equityLabelsAr, 
+      equityLabelsAr, 
       equitySubLabelsAr,
-
       currentLiabilitiesLabelsAr,
       currentSubLiabilitiesLabelsAr,
-
       nonCurrentLiabilitiesLabelsAr,
       nonCurrentSubLiabilitiesLabelsAr,
 
 
   
-
 
       sassets,
       snonCurrentAssets,
@@ -396,7 +423,7 @@ nonCurrentSubLabelsAr,
       sShareholdersEquity,
       sfirtsTotalShareholdersEquity,
       stotalShareholdersEquity,
-      liabilities,
+      sliabilities,
       sNoncurrentliabilities,
       sfirtsTotalNoncurrentLiabilities,
       stotalNoncurrentliabilities,
@@ -429,7 +456,7 @@ nonCurrentSubLabelsAr,
       equitySubItemsAr,
       equityItemsDate2Ar,
       equitySubItemsDate2Ar,
-      equityItemsNotes,
+      equityItemsNotes, 
 
       // Liabilities - Non-Current
       nonCurrentLiabilitiesAr,
@@ -444,7 +471,36 @@ nonCurrentSubLabelsAr,
       currentSubLiabilitiesAr,
       currentLiabilitiesDate2Ar,
       currentSubLiabilitiesDate2Ar,
-    ]);
+    ]
+  
+  );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const prepareAndDispatchData = async () => {
       const formData = {
@@ -510,7 +566,7 @@ nonCurrentSubLabelsAr,
           totalEquityDate2,
         },
         liabilities: {
-          liabilities:liabilities,
+          liabilities:sliabilities,
           nonCurrent: {
             sNoncurrentliabilities:sNoncurrentliabilities,
             nonCurrentLiabilitiesLabelsAr:nonCurrentLiabilitiesLabelsAr,
@@ -557,16 +613,11 @@ nonCurrentSubLabelsAr,
         data1En: data1En,
         data2En: data2En,
       };
-
-
-      console.log( "the form*(&$^$&$()$#&*(#(" ,formData);
       
       await dispatch(setBalanceSheetDataAction(formData));
     };
 
-    // const [importedData, setImportedData] = useState<IBalanceSheetData | null>(
-    //   null
-    // );
+   
 
 
 
@@ -2136,7 +2187,7 @@ nonCurrentSubLabelsAr,
             <tr className="bg-gray-200 font-semibold ">
               <td colSpan={4} className="">
                 <input
-                  value={liabilities}
+                  value={sliabilities}
                   onChange={(e) => setLiabilities(e.target.value)}
                   className=" text-start  p-0.5 w-full font-bold   bg-gray-300  fext-row"
                 />

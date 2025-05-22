@@ -12,7 +12,7 @@ export const axiosIn = axios.create({
 
 
 export const setBalanceSheetDataArAction = createAsyncThunk(
-    "admin/setBalanceSheetDataAction",
+    "admin/setBalanceSheetDataArAction",
     async (data:any, { rejectWithValue }) => {
       try { 
          return data

@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { UpdateDocumentArabic } from "../../../reduxKit/actions/admin/updateArabicDocument";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
+
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,9 +26,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [document, setDocument] = useState<
-    DocumentSliceAr | null | undefined
-  >();
+  const [document, setDocument] = useState<  DocumentSliceAr | null | undefined>();
   const location = useLocation();
   const { id, language } = location.state || {};
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
@@ -85,7 +83,6 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
     setnickNameAr(value);
 
     if (value.length > 0) {
-      // Fetch suggestions only if input has 3 or more characters
       setIsLoading(true);
       try {
         const adminLanguage = "English";
@@ -167,15 +164,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
       toast.success("Document updated successfully");
       navigate(-1);
     } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: error.message,
-        timer: 3000,
-        toast: true,
-        showConfirmButton: false,
-        timerProgressBar: true,
-      });
+     console.log("erorr ",error);
+     
     }
   };
 
@@ -288,7 +278,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
                 {typeof formData.Q1.file === "string" && (
                   <span
-                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
                     {formData.Q1.file.split("/").pop()}
@@ -329,7 +319,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
                 {typeof formData.Q2.file === "string" && (
                   <span
-                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
                     {formData.Q2.file.split("/").pop()}
@@ -371,7 +361,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 {/* ✅ Show filename if it's a string (S3 URL) */}
                 {typeof formData.Q3.file === "string" && (
                   <span
-                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
                     {formData.Q3.file.split("/").pop()}
@@ -413,7 +403,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
                 {typeof formData.Q4.file === "string" && (
                   <span
-                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
                     {formData.Q4.file.split("/").pop()}
@@ -455,7 +445,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
                 {typeof formData.S1.file === "string" && (
                   <span
-                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
                     {formData.S1.file.split("/").pop()}
@@ -497,7 +487,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
                 {typeof formData.Year.file === "string" && (
                   <span
-                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
                     {formData.Year.file.split("/").pop()}
@@ -539,7 +529,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
                 {typeof formData.Board.file === "string" && (
                   <span
-                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[120px]"
+                    className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
                     {formData.Board.file.split("/").pop()}

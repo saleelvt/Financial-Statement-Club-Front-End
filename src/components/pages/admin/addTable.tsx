@@ -26,7 +26,9 @@ const AddNewTable = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const TableTypeArr = ["BalanceSheet", "ProfitLoss", "CashFlow"];
-  const { adminLanguage } = useSelector((state: RootState) => state.adminLanguage);
+  const { adminLanguage } = useSelector(
+    (state: RootState) => state.adminLanguage
+  );
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTableType, setTableType] = useState("");
   // const [takeShotForProfitLoss, setTakeShotForProfitLoss] = useState<boolean>(false);
@@ -37,7 +39,6 @@ const AddNewTable = React.memo(() => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [tableDataAr, setTableDataAr] = useState<ITable>();
   const [tableData, setTableData] = useState<ITable>();
-
 
   const [tableEn, setTableEn] = useState<any>(null);
   const [tableAr, setTableAr] = useState<any>(null);
@@ -56,36 +57,47 @@ const AddNewTable = React.memo(() => {
   const [takeShot, setTakeShot] = useState<boolean>(false);
   const [showToast, setShowToast] = useState<boolean>(false);
   const [showToastAr, setShowToastAr] = useState<boolean>(false);
+
   const { data } = useSelector((state: RootState) => state.table);
   const { dataAr } = useSelector((state: RootState) => state.tableAr);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   // Update tableIframeSrc when selectedTableType or tableData changes
-  useEffect(()=>{
-
-    console.log("The Latest Data set of the Data: engish : __+++:",data );
-
-  },[data,dataAr])
+  useEffect(() => {
+    console.log("The Latest Data set of the Data: English : __+++:", data);
+    console.log("The Latest Data set of the Data: Arabic : &&&:", dataAr);
+  }, [data, dataAr]);
 
   useEffect(() => {
     if (selectedTableType) {
       const arTable = tableDataAr?.[selectedTableType as keyof ITable];
       const enTable = tableData?.[selectedTableType as keyof ITable];
+
+      const isEmptyDeep = (obj: any): boolean => {
+        if (!obj || typeof obj !== "object") return true;
+        if (Array.isArray(obj)) return obj.length === 0;
+
+        return Object.values(obj).every((value) => isEmptyDeep(value));
+      };
+
+      const isValidTable = (table: any) => {
+        return table && typeof table === "object" && !isEmptyDeep(table);
+      };
+
       console.log(
-        "The PreventenData for Add arabic :  ",
+        "The PreventenData for Add arabic : ",
         arTable,
         "The English Succedd Data : ",
         enTable
       );
-      setTableAr(arTable);
-      setTableEn(enTable);
+
+      setTableAr(isValidTable(arTable) ? arTable : null);
+      setTableEn(isValidTable(enTable) ? enTable : null);
     } else {
       setTableAr(null);
       setTableEn(null);
     }
   }, [selectedTableType, tableData, tableDataAr]);
-
-
 
   const handleClickEnglish = async () => {
     try {
@@ -101,7 +113,9 @@ const AddNewTable = React.memo(() => {
         selectedTableType: selectedTableType,
       };
       console.log(
-        "MY utherPradhesh Data id 66^^^^^^^^^^^^^^^^^^^^^: ", dataforUpload  );
+        "MY utherPradhesh Data id 66^^^^^^^^^^^^^^^^^^^^^: ",
+        dataforUpload
+      );
       const response = await dispatch(AdminAddTableAction(dataforUpload));
       console.log("the english data the Values are  submiting : ", response);
       if (response.payload.success) {
@@ -133,7 +147,7 @@ const AddNewTable = React.memo(() => {
       console.log("MY Saudi Arabic Data", dataforUpload);
       const response = await dispatch(AdminAddTableAction(dataforUpload));
       console.log("the Arabic after   submited Response : ", response);
-           if (response.payload.success) {
+      if (response.payload.success) {
         setShowToastAr(true);
         setTakeShot(false);
         setTimeout(() => {
@@ -280,6 +294,15 @@ const AddNewTable = React.memo(() => {
           config,
           {}
         );
+        console.log(
+          "REsponse of the Quarter tadawal Code Data English ",
+          response.data.englishTable
+        );
+        console.log(
+          "REsponse of the Quarter tadawal Code Data Arabic ",
+          response.data.arabicTable
+        );
+
         setTableDataAr(response.data.arabicTable);
         setTableData(response.data.englishTable);
       } catch (error) {
@@ -325,14 +348,40 @@ const AddNewTable = React.memo(() => {
     // Case 1: Both English and Arabic tables exist
     if (tableEn && tableAr) {
       return (
-        <div className="flex flex-col lg:flex-row  lg:justify-center ">
+        <div className="flex flex-col lg:flex-row mb-8   lg:justify-center ">
           {/* Left side - English table */}
-          <div className=" ">
+          <div className="  ">
             <BalanceSheetFormUser Tabledata={tableEn} />
+ <div className="flex justify-end">
+<button
+              className="bg-slate-400  rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+              onClick={() => {
+                setLanguage("English");
+                setModalOpen(true);
+              }}
+              disabled={takeShot}
+              type="button"
+            >
+              {takeShot ? "Deleting..." : "Delete"}
+            </button>
+
+ </div>
+            
           </div>
           {/* Right side - Arabic table */}
           <div className=" ">
             <BalanceSheetFormUserArabic Tabledata={tableAr} />
+            <button
+              className="bg-slate-400 rounded text-black py-1 px-9 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+              onClick={() => {
+                setLanguage("Arabic");
+                setModalOpen(true);
+              }}
+              disabled={takeShot}
+              type="button"
+            >
+              {takeShot ? "   حذف..." : "يمسح"}
+            </button>
           </div>
         </div>
       );
@@ -340,17 +389,8 @@ const AddNewTable = React.memo(() => {
     // Case 2: Only English table exists
     else if (tableEn && !tableAr) {
       return (
-        <div className="flex flex-col lg:flex-row lg:justify-center  ">
+        <div className="flex mb-8  flex-col lg:flex-row lg:justify-center  ">
           <div className=" ">
-            {/* <div className="pointer-events-none">
-              <img
-                src={tableIframeSrc} 
-                alt="English Table"
-                style={{ width: "100%", height: "auto" }}
-                className="select-none"
-              />
-            </div> */}
-
             <BalanceSheetFormUser Tabledata={tableEn} />
           </div>
           {/* Right side - Arabic form */}
@@ -380,11 +420,12 @@ const AddNewTable = React.memo(() => {
     // Case 3: Only Arabic table exists
     else if (!tableEn && tableAr) {
       return (
-        <div className="flex flex-col lg:flex-row lg:justify-center ">
+        <div className="flex mb-8  flex-col lg:flex-row lg:justify-center ">
           <div className="">
             <form>
-              <div  className="">
+              <div className="">
                 <BalaceSheet TakingShort={takeShot} />
+                
               </div>
               <div className=" flex justify-end">
                 <button
@@ -400,13 +441,24 @@ const AddNewTable = React.memo(() => {
           </div>
           <div className=" ">
             <BalanceSheetFormUserArabic Tabledata={tableAr} />
-          
+
+             <button
+                        className="bg-slate-400 rounded text-black py-1 px-9 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                        onClick={() => {
+                          setLanguage("Arabic");
+                          setModalOpen(true);
+                        }}
+                        disabled={takeShot}
+                        type="button"
+                      >
+                        {takeShot ? "   حذف..." : "يمسح"}
+                      </button>
           </div>
         </div>
       );
     } else {
       return (
-        <div className="flex justify-center   flex-col lg:flex-row  gap-1   ">
+        <div className="flex justify-center      flex-col lg:flex-row  gap-1   ">
           {/* Arabic Form */}
 
           <div className="">
@@ -415,26 +467,37 @@ const AddNewTable = React.memo(() => {
                 <BalaceSheet TakingShort={takeShot} />
 
                 <div className="relative flex justify-between    ">
-       
-                   <div className="items-start">
-                  
- {showToast && (
-                    <div className="absolute  right-0 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded shadow">
-                      Table Submitted Successfully
+                  <div className="items-start">
+                    {showToast && (
+                    <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      Submitted Successfully :{" "}
+                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
                     </div>
-                  )}
-
+                    )}
                   </div>
-                 
-                  <button
-                    className="bg-slate-300  rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                    onClick={handleClickEnglish}
-                    disabled={takeShot}
-                    type="button"
-                  >
-                    {takeShot ? "Submitting..." : "Submit"}
-                  </button>
-                  
+
+                  {tableEn ? (
+                    <button
+                      className="bg-slate-400 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                      onClick={() => {
+                        setLanguage("English");
+                        setModalOpen(true);
+                      }}
+                      disabled={takeShot}
+                      type="button"
+                    >
+                      {takeShot ? "Deleting..." : "Delete"}
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-slate-300 rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                      onClick={handleClickEnglish}
+                      disabled={takeShot}
+                      type="button"
+                    >
+                      {takeShot ? "Submitting..." : "Submit"}
+                    </button>
+                  )}
                 </div>
               </div>
             </form>
@@ -443,24 +506,43 @@ const AddNewTable = React.memo(() => {
           {/* English Form */}
           <div className="">
             <form>
-              <div className="">
-                <div className=" ">
+              <div className=" pb-8">
+                <div className="  ">
                   <BalaceSheetFormAr TakingShort={takeShot} />
 
-                  <div className=" flex justify-between">
-                    <button
-                      className="bg-slate-300 rounded text-black py-1 px-9  hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
-                      onClick={handleClickArabic}
-                      disabled={takeShot}
-                      type="button"
-                    >
-                      {takeShot ? "   رفع..." : " رفع"}
-                    </button>
-                     {showToastAr && (
-                    <div className="absolute  right-0 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded shadow">
-                    تم إرسال الجدول بنجاح
+                  <div className=" flex justify-between ">
+                    {tableAr ? (
+                      <button
+                        className="bg-slate-400 rounded text-black py-1 px-9 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                        onClick={() => {
+                          setLanguage("Arabic");
+                          setModalOpen(true);
+                        }}
+                        disabled={takeShot}
+                        type="button"
+                      >
+                        {takeShot ? "   حذف..." : "يمسح"}
+                      </button>
+                    ) : (
+                      <button
+                        className="bg-slate-300 rounded text-black py-1 px-9 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+                        onClick={handleClickArabic}
+                        disabled={takeShot}
+                        type="button"
+                      >
+                        {takeShot ? "   رفع..." : "رفع"}
+                      </button>
+                    )}
+
+                    <div className="items-end ">
+                      {showToastAr && (
+                      <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                       تم الرفع بنجاح:
+                      </div>
+
+                    )} 
                     </div>
-                  )}
                   </div>
                 </div>
               </div>
@@ -470,12 +552,6 @@ const AddNewTable = React.memo(() => {
       );
     }
   };
-
-
-
-
-
-
 
   return (
     <div className="p-1">
@@ -616,8 +692,8 @@ const AddNewTable = React.memo(() => {
                 Select Quarter
               </option>
               {quarters[selectedYear].map((item) => (
-                <option key={item.quarter} value={item.quarter}>
-                  {item.quarter}
+                <option key={item?.quarter} value={item?.quarter}>
+                  {item?.quarter}
                 </option>
               ))}
             </select>

@@ -1,16 +1,16 @@
 // /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect, lazy } from "react";
+import React, { useState, useEffect, lazy,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { commonRequest } from "../../../config/api";
-import { configWithToken} from "../../../config/constants";
+import { configWithToken } from "../../../config/constants";
 import { TbListDetails } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 const Loading = lazy(() => import("../Loading"));
 import { Error } from "../Error";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import { GrLanguage } from "react-icons/gr"; 
+import { GrLanguage } from "react-icons/gr";
 import {
   DocumentSliceAr,
   DocumentSliceEn,
@@ -18,71 +18,118 @@ import {
 import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
 
 const DocumentList: React.FC = React.memo(() => {
+    const skipRef = useRef(0);
+    const hasMoreRef = useRef(true);
   const { adminLanguage } = useSelector(
     (state: RootState) => state.adminLanguage
   );
   const [language, setLanguage] = useState<string>("Arabic");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [documents, setDocuments] = useState<
-    (DocumentSliceAr | DocumentSliceEn)[]
-  >([]);
-  const [loading, setLoading] = useState(false);
+  const [documents, setDocuments] = useState< (DocumentSliceAr | DocumentSliceEn)[] >([]);
+  // const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [loadingInitial, setLoadingInitial] = useState(true);
   const [uniqeDocument, setUniqueDocument] = useState<
     (DocumentSliceAr | DocumentSliceEn)[]
   >([]);
+  const BATCH_SIZE = 200;
+const INTERVAL_MS = 1000; // 1 second
 
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      setLoading(true);
-      try {
-        if (adminLanguage) setLanguage(adminLanguage);
 
-        const endpoint =
-          adminLanguage === "English"
-            ? "/api/v1/admin/getDocuments"
-            : "/api/v1/admin/getArabicDocuments";
-        const response = await commonRequest("GET", endpoint, configWithToken(), null);
+  
+useEffect(() => {
+  const fetchBatch = async (isInitial = false) => {
+    try {
+      if (adminLanguage) setLanguage(adminLanguage);
 
-        if (response.status === 200 && response.data?.data) {
-          const fetchedDocuments = response.data.data;
+      const endpoint =
+        adminLanguage === "English"
+          ? `/api/v1/admin/getDocuments?skip=${skipRef.current}&limit=${BATCH_SIZE}`
+          : `/api/v1/admin/getArabicDocuments?skip=${skipRef.current}&limit=${BATCH_SIZE}`;
 
-          // Filter unique documents based on nickNameEn or nickNameAr
-          const uniqueDocs = fetchedDocuments.filter(
-            (
-              doc: DocumentSliceAr | DocumentSliceEn,
-              index: number,
-              self: any[]
-            ) => {
-              const nickname =
-                "nickNameEn" in doc ? doc.nickNameEn : doc.nickNameAr;
-              return (
-                index ===
-                self.findIndex((d) =>
-                  "nickNameEn" in d
-                    ? d.nickNameEn === nickname
-                    : d.nickNameAr === nickname
-                )
-              );
-            }
-          );
+      const response = await commonRequest("GET", endpoint, configWithToken(), null);
 
-          setDocuments(fetchedDocuments);
-          setUniqueDocument(uniqueDocs);
+      if (response.status === 200 && response.data?.data?.length > 0) {
+        const newDocs = response.data.data;
+
+        const filteredNewDocs = newDocs.filter(
+          (doc: DocumentSliceAr | DocumentSliceEn, index: number, self: any[]) => {
+            const nickname = "nickNameEn" in doc ? doc.nickNameEn : doc.nickNameAr;
+            return (
+              index ===
+              self.findIndex((d) =>
+                "nickNameEn" in d
+                  ? d.nickNameEn === nickname
+                  : d.nickNameAr === nickname
+              )
+            );
+          }
+        );
+
+        if (isInitial) {
+          setDocuments(newDocs);
+          setUniqueDocument(filteredNewDocs);
         } else {
-          setError("Failed to fetch documents");
-        }
-      } catch (err: any) {
-        setError(err.message || "An unexpected error occurred");
-      } finally {
-        setLoading(false);
-      }
-    };
+          setDocuments((prev) => [...prev, ...newDocs]);
 
-    fetchDocuments();
-  }, [adminLanguage]);
+          setUniqueDocument((prev) => {
+            const combined = [...prev, ...filteredNewDocs];
+            return combined.filter(
+              (doc, index, self) => {
+                const nickname = "nickNameEn" in doc ? doc.nickNameEn : doc.nickNameAr;
+                return (
+                  index ===
+                  self.findIndex((d) =>
+                    "nickNameEn" in d
+                      ? d.nickNameEn === nickname
+                      : d.nickNameAr === nickname
+                  )
+                );
+              }
+            );
+          });
+        }
+
+        skipRef.current += BATCH_SIZE;
+
+        if (newDocs.length < BATCH_SIZE) {
+          hasMoreRef.current = false;
+        }
+      } else {
+        hasMoreRef.current = false;
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to load documents");
+      hasMoreRef.current = false;
+    } finally {
+      if (isInitial) {
+        setLoadingInitial(false); // 👈 only for first batch
+      }
+    }
+  };
+
+  // Initial setup
+  setDocuments([]);
+  setUniqueDocument([]);
+  skipRef.current = 0;
+  hasMoreRef.current = true;
+  setError("");
+  setLoadingInitial(true); // 👈 set before initial fetch
+
+  fetchBatch(true); // First load
+
+  const intervalId = setInterval(() => {
+    if (hasMoreRef.current) {
+      fetchBatch();
+    } else {
+      clearInterval(intervalId);
+    }
+  }, INTERVAL_MS);
+
+  return () => clearInterval(intervalId);
+}, [adminLanguage]);
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const documentsPerPage = 10;
@@ -93,7 +140,7 @@ const DocumentList: React.FC = React.memo(() => {
   // const currentDocuments = uniqeDocument.slice(indexOfFirstDoc, indexOfLastDoc);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  if (loading) {
+  if (loadingInitial) {
     return <Loading />;
   }
   if (error) {

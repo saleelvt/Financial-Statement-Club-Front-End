@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IBalanceSheetData {
     assets: {
       nonCurrent: {
@@ -75,8 +76,8 @@ export interface IBalanceSheetData {
 
 
   export interface ITable {
-    BalanceSheet?: string;
-    ProfitLoss?: string;
-    CashFlow?: string;
+    BalanceSheet?: any;
+    ProfitLoss?: any;
+    CashFlow?: any;
   }
 

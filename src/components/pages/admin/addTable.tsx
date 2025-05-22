@@ -123,7 +123,7 @@ const AddNewTable = React.memo(() => {
         setTakeShot(false);
         setTimeout(() => {
           setShowToast(false); // Hide toast after 3 seconds
-        }, 10000);
+        }, 30000);
       }
     } catch (error) {
       console.log("the table adding error is : ", error);
@@ -152,7 +152,7 @@ const AddNewTable = React.memo(() => {
         setTakeShot(false);
         setTimeout(() => {
           setShowToastAr(false); // Hide toast after 3 seconds
-        }, 10000);
+        }, 30000);
       }
     } catch (error) {
       console.log("the table adding error is : ", error);
@@ -392,6 +392,21 @@ const AddNewTable = React.memo(() => {
         <div className="flex mb-8  flex-col lg:flex-row lg:justify-center  ">
           <div className=" ">
             <BalanceSheetFormUser Tabledata={tableEn} />
+
+           <div className="flex justify-end">
+<button
+              className="bg-slate-400  rounded text-black py-1 px-5 hover:bg-slate-400 font-semibold mx-2 font-serif text-sm"
+              onClick={() => {
+                setLanguage("English");
+                setModalOpen(true);
+              }}
+              disabled={takeShot}
+              type="button"
+            >
+              {takeShot ? "Deleting..." : "Delete"}
+            </button>
+
+ </div>
           </div>
           {/* Right side - Arabic form */}
           <div className=" overflow-x-auto">

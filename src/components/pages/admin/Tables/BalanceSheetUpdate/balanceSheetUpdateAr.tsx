@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 
@@ -7,13 +9,12 @@ import { AppDispatch, RootState } from "../../../../../reduxKit/store";
 
 import { setBalanceSheetDataArAction } from "../../../../../reduxKit/actions/Tables/balanceSheetAr";
 type BalaceSheetFormArProps = {
-  TakingShort: boolean;
+  TableDataAr: any;
 };
 
-const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
-  ({ TakingShort }) => {
+const BalaceSheetUpdateFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
+  ({ TableDataAr }) => {
     const dispatch = useDispatch<AppDispatch>();
-
     // Updated state declarations with empty strings as initial values
     const [nonCurrentAssets, setNonCurrentAssets] = useState<string[]>(
       Array(12).fill("")
@@ -336,7 +337,8 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
     const totalEquity = firstTotalEquity + sumStringValues(equitySubItems);
 
     const firstTotalEquityDate2 = sumStringValues(equityItemsDate2);
-    const totalEquityDate2 = firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2);
+    const totalEquityDate2 =
+      firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2);
 
     // Calculate totals for Non-Current Liabilities
     const firstTotalNonCurrentLiabilities = sumStringValues(
@@ -475,7 +477,235 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
 
 
+useEffect(() => {
+      console.log(
+        "The Update section of the Data Set in the Part Arabic  : ",
+        TableDataAr
+      );
 
+      if (TableDataAr) {
+        setDate1Ar(TableDataAr.data1En);
+        setDate2Ar(TableDataAr.data2En);
+        setAssets(TableDataAr.assets.sassets);
+        ssetTotalAssets(TableDataAr.assets.stotalAssets);
+        if (TableDataAr.assets?.nonCurrent) {
+          setNonCurrentLabels(TableDataAr.assets.nonCurrent.nonCurrentLabels);
+          setNonCurrentSubLabels(
+            TableDataAr.assets.nonCurrent.nonCurrentSubLabels
+          );
+          ssetfirtsTotalnonCurrentAssets(
+            TableDataAr.assets.nonCurrent.sfirtsTotalnonCurrentAssets
+          );
+          ssetnonCurrentAssets(TableDataAr.assets.nonCurrent.snonCurrentAssets);
+          ssetTotalNonCurrentAssets(
+            TableDataAr.assets.nonCurrent.stotalNonCurrentAssets
+          );
+
+          setNonCurrentAssets(
+            TableDataAr.assets.nonCurrent.items || Array(12).fill("")
+          );
+          setNonCurrentSubAssets(
+            TableDataAr.assets.nonCurrent.subItems || Array(3).fill("")
+          );
+          setNonCurrentNotes(TableDataAr.assets.nonCurrent.nonCurrentNotes);
+
+          setNonCurrentAssetsDate2(
+            TableDataAr.assets.nonCurrent.itemsDate2 || Array(12).fill("")
+          );
+          setNonCurrentSubAssetsDate2(
+            TableDataAr.assets.nonCurrent.subItemsDate2 || Array(3).fill("")
+          );
+        }
+
+        // Assets - Current
+        if (TableDataAr.assets?.current) {
+          ssetCurrentAssets(TableDataAr.assets?.current.scurrentAssets);
+          ssetfirtsTotalCurrentAssets(
+            TableDataAr.assets?.current.sfirtsTotalCurrentAssets
+          );
+          ssetTotalCurrentAssets(
+            TableDataAr.assets?.current.stotalCurrentAssets
+          );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          setCurrentLabels(TableDataAr.assets?.current.currentLabels);
+          setCurrentSubLabels(TableDataAr.assets?.current.currentSubLabels);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          setCurrentAssets(
+            TableDataAr.assets.current.items || Array(12).fill("")
+          );
+          setCurrentAssetsNotes(TableDataAr.assets.current.CurrentAssetsNotes);
+          setCurrentSubAssets(
+            TableDataAr.assets.current.subItems || Array(3).fill("")
+          );
+          setCurrentAssetsDate2(
+            TableDataAr.assets.current.itemsDate2 || Array(12).fill("")
+          );
+          setCurrentSubAssetsDate2(
+            TableDataAr.assets.current.subItemsDate2 || Array(3).fill("")
+          );
+        }
+
+        // Equity
+        if (TableDataAr.equity) {
+          setEquityLabels(TableDataAr.equity.equityLabels);
+          setEquitySubLabels(TableDataAr.equity.equitySubLabels);
+
+          setShareholdersEquityandliabilities(
+            TableDataAr.sShareholdersEquityandliabilitiess
+          );
+          setShareholdersEquity(TableDataAr.equity.sShareholdersEquity);
+          ssetfirtsTotalShareholdersEquity(
+            TableDataAr.equity.sfirtsTotalShareholdersEquity
+          );
+          ssetfirtsTotalShareholdersEquity(
+            TableDataAr.equity.sfirtsTotalShareholdersEquity
+          );
+          setTotalShareholdersEquity(
+            TableDataAr.equity.stotalShareholdersEquity
+          );
+          settotalEquityAndLiabilities(TableDataAr.stotalEquityAndLiabilities);
+
+          setEquityItems(TableDataAr.equity.items || Array(12).fill(""));
+          setEquityItemsNotes(TableDataAr.equity.equityItemsNotes);
+          setEquitySubItems(TableDataAr.equity.subItems || Array(3).fill(""));
+          setEquityItemsDate2(
+            TableDataAr.equity.itemsDate2 || Array(12).fill("")
+          );
+          setEquitySubItemsDate2(
+            TableDataAr.equity.subItemsDate2 || Array(3).fill("")
+          );
+        }
+
+        // Liabilities - Non-Current
+        if (TableDataAr.liabilities?.nonCurrent) {
+          setLiabilities(TableDataAr.liabilities?.liabilities);
+          setNoncurrentliabilities(
+            TableDataAr.liabilities.nonCurrent.sNoncurrentliabilities
+          );
+          ssetfirtsNoncurrentLiabilities(
+            TableDataAr.liabilities.nonCurrent.sfirtsTotalNoncurrentLiabilities
+          );
+          setNonCurrentLiabilitiesLabels(
+            TableDataAr.liabilities.nonCurrent.NonCurrentLiabilitiesLabels
+          );
+          setNonCurrentSubLiabilitiesLabels(
+            TableDataAr.liabilities.nonCurrent.NonCurrentLiabilitiesSubLabels
+          );
+          setTotalNoncurrentliabilities(
+            TableDataAr.liabilities.nonCurrent.stotalNoncurrentliabilities
+          );
+          setTotalliabilities(TableDataAr.liabilities.stotalliabilities);
+
+          setNonCurrentLiabilities(
+            TableDataAr.liabilities.nonCurrent.items || Array(12).fill("")
+          );
+          setNonCurrentLiabilitiesNotes(
+            TableDataAr.liabilities.nonCurrent.nonCurrentLiabilitiesNotes
+          );
+          setNonCurrentSubLiabilities(
+            TableDataAr.liabilities.nonCurrent.subItems || Array(3).fill("")
+          );
+
+          setNonCurrentLiabilitiesDate2(
+            TableDataAr.liabilities.nonCurrent.itemsDate2 || Array(12).fill("")
+          );
+          setNonCurrentSubLiabilitiesDate2(
+            TableDataAr.liabilities.nonCurrent.subItemsDate2 ||
+              Array(3).fill("")
+          );
+        }
+
+        // Liabilities - Current
+        if (TableDataAr.liabilities?.current) {
+          setcurrentliabilities(
+            TableDataAr.liabilities?.current.scurrentliabilities
+          );
+          setCurrentLiabilitiesLabels(
+            TableDataAr.liabilities?.current.currentLiabilitiesLabels
+          );
+          ssetfirtscurrentLiabilities(
+            TableDataAr.liabilities?.current.sfirtsTotalcurrentLiabilities
+          );
+          setCurrentSubLiabilitiesLabels(
+            TableDataAr.liabilities?.current.currentLiabilitiesSubLabels
+          );
+          setTotalcurrentliabilities(
+            TableDataAr.liabilities?.current.stotalcurrentliabilities
+          );
+          setTotalliabilities(TableDataAr.liabilities?.stotalliabilities);
+
+          setCurrentLiabilities(
+            TableDataAr.liabilities.current.items || Array(12).fill("")
+          );
+          setCurrentLiabilitiesNotes(
+            TableDataAr.liabilities.current.currentLiabilitiesNotes
+          );
+          setCurrentSubLiabilities(
+            TableDataAr.liabilities.current.subItems || Array(3).fill("")
+          );
+
+          setCurrentLiabilitiesDate2(
+            TableDataAr.liabilities.current.itemsDate2 || Array(12).fill("")
+          );
+          setCurrentSubLiabilitiesDate2(
+            TableDataAr.liabilities.current.subItemsDate2 || Array(3).fill("")
+          );
+        }
+      }
+    }, [TableDataAr]);
 
 
 
@@ -631,7 +861,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           qfirstTotalDate2: firstTotalEquityDate2,
           qstotalShareholdersEquity: totalShareholdersEquity,
           qtotalEquity:totalEquity,
-          qtotalEquityDate2:totalEquityDate2,
+          totalEquityDate2:totalEquityDate2,
         },
         qliabilities: {
           qliabilities: liabilities,
@@ -728,100 +958,100 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
   
 
-    const { data } = useSelector((state: RootState) => state.table);
+    // const { data } = useSelector((state: RootState) => state.table);
 
-    useEffect(() => {
-      if (data) {
-        if (data.data1En || data.data2En) {
-          setDate1Ar(data.data1En);
-          setDate2Ar(data.data2En);
-        }
-        if (data.assets?.nonCurrent) {
-          setNonCurrentAssets(
-            data.assets.nonCurrent.items || Array(12).fill("")
-          );
-          setNonCurrentSubAssets(
-            data.assets.nonCurrent.subItems || Array(3).fill("")
-          );
-          setNonCurrentNotes(data.assets.nonCurrent.nonCurrentNotes);
+    // useEffect(() => {
+    //   if (data) {
+    //     if (data.data1En || data.data2En) {
+    //       setDate1Ar(data.data1En);
+    //       setDate2Ar(data.data2En);
+    //     }
+    //     if (data.assets?.nonCurrent) {
+    //       setNonCurrentAssets(
+    //         data.assets.nonCurrent.items || Array(12).fill("")
+    //       );
+    //       setNonCurrentSubAssets(
+    //         data.assets.nonCurrent.subItems || Array(3).fill("")
+    //       );
+    //       setNonCurrentNotes(data.assets.nonCurrent.nonCurrentNotes);
 
-          setNonCurrentAssetsDate2(
-            data.assets.nonCurrent.itemsDate2 || Array(12).fill("")
-          );
-          setNonCurrentSubAssetsDate2(
-            data.assets.nonCurrent.subItemsDate2 || Array(3).fill("")
-          );
-        }
+    //       setNonCurrentAssetsDate2(
+    //         data.assets.nonCurrent.itemsDate2 || Array(12).fill("")
+    //       );
+    //       setNonCurrentSubAssetsDate2(
+    //         data.assets.nonCurrent.subItemsDate2 || Array(3).fill("")
+    //       );
+    //     }
 
-        // Assets - Current
-        if (data.assets?.current) {
-          setCurrentAssets(data.assets.current.items || Array(12).fill(""));
-          setCurrentAssetsNotes(data.assets.current.CurrentAssetsNotes);
-          setCurrentSubAssets(
-            data.assets.current.subItems || Array(3).fill("")
-          );
+    //     // Assets - Current
+    //     if (data.assets?.current) {
+    //       setCurrentAssets(data.assets.current.items || Array(12).fill(""));
+    //       setCurrentAssetsNotes(data.assets.current.CurrentAssetsNotes);
+    //       setCurrentSubAssets(
+    //         data.assets.current.subItems || Array(3).fill("")
+    //       );
 
-          setCurrentAssetsDate2(
-            data.assets.current.itemsDate2 || Array(12).fill("")
-          );
-          setCurrentSubAssetsDate2(
-            data.assets.current.subItemsDate2 || Array(3).fill("")
-          );
-        }
+    //       setCurrentAssetsDate2(
+    //         data.assets.current.itemsDate2 || Array(12).fill("")
+    //       );
+    //       setCurrentSubAssetsDate2(
+    //         data.assets.current.subItemsDate2 || Array(3).fill("")
+    //       );
+    //     }
 
-        // Equity
-        if (data.equity) {
-          setEquityItems(data.equity.items || Array(12).fill(""));
-          setEquityItemsNotes(data.equity.equityItemsNotes);
-          setEquitySubItems(data.equity.subItems || Array(3).fill(""));
+    //     // Equity
+    //     if (data.equity) {
+    //       setEquityItems(data.equity.items || Array(12).fill(""));
+    //       setEquityItemsNotes(data.equity.equityItemsNotes);
+    //       setEquitySubItems(data.equity.subItems || Array(3).fill(""));
 
-          setEquityItemsDate2(data.equity.itemsDate2 || Array(12).fill(""));
-          setEquitySubItemsDate2(
-            data.equity.subItemsDate2 || Array(3).fill("")
-          );
-        }
+    //       setEquityItemsDate2(data.equity.itemsDate2 || Array(12).fill(""));
+    //       setEquitySubItemsDate2(
+    //         data.equity.subItemsDate2 || Array(3).fill("")
+    //       );
+    //     }
 
-        // Liabilities - Non-Current
-        if (data.liabilities?.nonCurrent) {
-          setNonCurrentLiabilities(
-            data.liabilities.nonCurrent.items || Array(12).fill("")
-          );
-          setNonCurrentLiabilitiesNotes(
-            data.liabilities.nonCurrent.nonCurrentLiabilitiesNotes
-          );
-          setNonCurrentSubLiabilities(
-            data.liabilities.nonCurrent.subItems || Array(3).fill("")
-          );
+    //     // Liabilities - Non-Current
+    //     if (data.liabilities?.nonCurrent) {
+    //       setNonCurrentLiabilities(
+    //         data.liabilities.nonCurrent.items || Array(12).fill("")
+    //       );
+    //       setNonCurrentLiabilitiesNotes(
+    //         data.liabilities.nonCurrent.nonCurrentLiabilitiesNotes
+    //       );
+    //       setNonCurrentSubLiabilities(
+    //         data.liabilities.nonCurrent.subItems || Array(3).fill("")
+    //       );
 
-          setNonCurrentLiabilitiesDate2(
-            data.liabilities.nonCurrent.itemsDate2 || Array(12).fill("")
-          );
-          setNonCurrentSubLiabilitiesDate2(
-            data.liabilities.nonCurrent.subItemsDate2 || Array(3).fill("")
-          );
-        }
+    //       setNonCurrentLiabilitiesDate2(
+    //         data.liabilities.nonCurrent.itemsDate2 || Array(12).fill("")
+    //       );
+    //       setNonCurrentSubLiabilitiesDate2(
+    //         data.liabilities.nonCurrent.subItemsDate2 || Array(3).fill("")
+    //       );
+    //     }
 
-        // Liabilities - Current
-        if (data.liabilities?.current) {
-          setCurrentLiabilities(
-            data.liabilities.current.items || Array(12).fill("")
-          );
-          setCurrentLiabilitiesNotes(
-            data.liabilities.current.currentLiabilitiesNotes
-          );
-          setCurrentSubLiabilities(
-            data.liabilities.current.subItems || Array(3).fill("")
-          );
+    //     // Liabilities - Current
+    //     if (data.liabilities?.current) {
+    //       setCurrentLiabilities(
+    //         data.liabilities.current.items || Array(12).fill("")
+    //       );
+    //       setCurrentLiabilitiesNotes(
+    //         data.liabilities.current.currentLiabilitiesNotes
+    //       );
+    //       setCurrentSubLiabilities(
+    //         data.liabilities.current.subItems || Array(3).fill("")
+    //       );
 
-          setCurrentLiabilitiesDate2(
-            data.liabilities.current.itemsDate2 || Array(12).fill("")
-          );
-          setCurrentSubLiabilitiesDate2(
-            data.liabilities.current.subItemsDate2 || Array(3).fill("")
-          );
-        }
-      }
-    }, [data]);
+    //       setCurrentLiabilitiesDate2(
+    //         data.liabilities.current.itemsDate2 || Array(12).fill("")
+    //       );
+    //       setCurrentSubLiabilitiesDate2(
+    //         data.liabilities.current.subItemsDate2 || Array(3).fill("")
+    //       );
+    //     }
+    //   }
+    // }, [data]);
 
     return (
       <div className="flex justify-start  my-2 text-black">
@@ -933,9 +1163,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {nonCurrentAssets.map((val, idx) => {
-              const isRowEmpty = !val && !nonCurrentAssetsDate2[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
-              if (TakingShort && isRowEmpty) return null;
+         
               return (
                 <tr key={`non-current-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
@@ -1011,9 +1239,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {nonCurrentSubAssets.map((val, idx) => {
-              const isRowEmpty = !val && !nonCurrentSubAssetsDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
+   
 
               return (
                 <tr key={`sub-non-${idx}`} className="bg-gray-100">
@@ -1104,10 +1330,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {currentAssets.map((val, idx) => {
-              const isRowEmpty = !val && !currentAssetsDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
-
+          
               return (
                 <tr key={`current-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
@@ -1181,10 +1404,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {currentSubAssets.map((val, idx) => {
-              const isRowEmpty = !val && !currentSubAssetsDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
-
+ 
               return (
                 <tr key={`sub-current-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
@@ -1301,9 +1521,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {equityItems.map((val, idx) => {
-              const isRowEmpty = !val && !equityItemsDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
+    
 
               return (
                 <tr key={`equity-${idx}`} className="bg-gray-100">
@@ -1382,9 +1600,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {equitySubItems.map((val, idx) => {
-              const isRowEmpty = !val && !equitySubItemsDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
+         
 
               return (
                 <tr key={`sub-equity-${idx}`} className="bg-gray-100">
@@ -1477,10 +1693,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {nonCurrentLiabilities.map((val, idx) => {
-              const isRowEmpty = !val && !nonCurrentLiabilitiesDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
-
+         
               return (
                 <tr
                   key={`non-current-liability-${idx}`}
@@ -1564,9 +1777,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {nonCurrentSubLiabilities.map((val, idx) => {
-              const isRowEmpty = !val && !nonCurrentSubLiabilitiesDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
+           
 
               return (
                 <tr
@@ -1662,9 +1873,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {currentLiabilities.map((val, idx) => {
-              const isRowEmpty = !val && !currentLiabilitiesDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
+          
 
               return (
                 <tr key={`current-liability-${idx}`} className="bg-gray-100">
@@ -1744,9 +1953,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
 
             {currentSubLiabilities.map((val, idx) => {
-              const isRowEmpty = !val && !currentSubLiabilitiesDate2[idx];
-
-              if (TakingShort && isRowEmpty) return null;
+         
 
               return (
                 <tr
@@ -1842,7 +2049,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
             <tr className="bg-gray-400  font-bold">
               <td className="p-0.5">
-                <input
+                <input 
                   placeholder=""
                   value={totalEquityAndLiabilities}
                   onChange={(e) => settotalEquityAndLiabilities(e.target.value)}
@@ -1865,4 +2072,4 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
   }
 );
 
-export default BalaceSheetFormAr;
+export default BalaceSheetUpdateFormAr;

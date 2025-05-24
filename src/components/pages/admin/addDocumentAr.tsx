@@ -132,7 +132,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
 
   // Your Redux thunk - with minimal changes
   const addDocumentArabic = createAsyncThunk(
-    "admin/addDocumentArabic",
+    "admin/addDocumentArabic", 
     async (adminCredentials: DocumentPayload) => {
       try {
         const formDataf = adminCredentials.formData;
@@ -188,9 +188,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
       } catch (error: any) {
         // Reset progress on error
 
-        setErrorMessage(
-          error.response?.data?.message || "Something went s wrong!"
-        );
+
         setIsModalOpen(true);
         throw error; // Re-throw to be caught by the component
       }

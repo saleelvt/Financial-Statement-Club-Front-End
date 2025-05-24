@@ -1,6 +1,7 @@
 
 
 export const URL="https://api.finstatements.club";
+
 // export const URL="http://localhost:5555";
 
 export const createAxiosConfig = (isFileUpload = false) => ({
@@ -9,27 +10,25 @@ export const createAxiosConfig = (isFileUpload = false) => ({
     },
     withCredentials: true,
 });
+
 export const config ={  
-    headers :{  
+    headers :{
         "Content-Type": "application/json", 
-       
     },
     withCredentials:true
 }
+
 export const configWithToken = () => {
     let token = localStorage.getItem("accessTokenFins");
     token = token ? token.replace(/^"|"$/g, "").trim() : null;
-    console.log("MY TOKEN IS:", token);
-    return {
+    return {  
       headers: {
-        "Content-Type": "application/json",
-        
+        "Content-Type": "application/json",      
         Authorization: token ? `Bearer ${token}` : "",
       },
       withCredentials: true
     };
   };
-          
 
 export const configWithTokenMultiPart = () => {
     let token = localStorage.getItem("accessTokenFins");

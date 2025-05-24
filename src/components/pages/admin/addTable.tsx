@@ -117,7 +117,7 @@ const AddNewTable = React.memo(() => {
       };
 
       const response = await dispatch(AdminAddTableAction(dataforUpload));
-      console.log("the english data the Values are  submiting : ", response);
+      console.log(" submiting : ", response);
       if (response.payload.success) {
         setShowToast(true);
         setTakeShot(false);

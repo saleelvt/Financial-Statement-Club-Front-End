@@ -19,7 +19,7 @@ export const Error=()=>{
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M12 8v4m0 4h.01M12 6a9 9 0 100 18 9 9 0 000-18z"
+                d="M12 8v4m0 4h.01M12 6a9 9 0 100 18 9 9 0 000-18z" 
               />
             </svg>
             <span className="font-bold">Error:  </span>

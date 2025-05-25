@@ -5,7 +5,6 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
@@ -39,6 +38,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
   const [sector, setSector] = useState("");
+    const [showToastAr, setShowToastAr] = useState<boolean>(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -187,8 +187,6 @@ const AddDocumentArabic: React.FC = React.memo(() => {
         return response.data;
       } catch (error: any) {
         // Reset progress on error
-
-
         setIsModalOpen(true);
         throw error; // Re-throw to be caught by the component
       }
@@ -211,8 +209,12 @@ const AddDocumentArabic: React.FC = React.memo(() => {
 
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
 
-      if (response && response.success) {
-        toast.success(response.message);
+ if(response.success){
+setShowToastAr(true)
+   setTimeout(()=>{
+    setShowToastAr(false)
+   },30000)
+
 
         // Reset form data
         await setFormData(
@@ -220,7 +222,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             Object.fromEntries(
               Object.entries(prevFormData).map(([key, value]) => [
                 key as keyof typeof prevFormData,
-                { ...value, file: null },
+                { ...value, file: null,date:null,year:"" },
               ])
             ) as Record<FieldKey, FormField> 
         );
@@ -347,6 +349,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   className="appearance-none block lg:w-[170px] xs:w-[130px] text-sm bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
 
                 <input
@@ -376,6 +380,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   onChange={(date) => handleDateChange("Q2", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px]  p-1 mt-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
@@ -403,6 +409,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   onChange={(date) => handleDateChange("Q3", date)}
                   className="appearance-none block  mt-1 lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
@@ -430,6 +438,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   onChange={(date) => handleDateChange("Q4", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
@@ -457,6 +467,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   onChange={(date) => handleDateChange("S1", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
@@ -484,6 +496,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   onChange={(date) => handleDateChange("Year", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
@@ -512,6 +526,8 @@ const AddDocumentArabic: React.FC = React.memo(() => {
                   onChange={(date) => handleDateChange("Board", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px]  mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
@@ -523,7 +539,14 @@ const AddDocumentArabic: React.FC = React.memo(() => {
               </div>
             </div>
           </div>
-          <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
+   <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
+ {showToastAr && (
+                        <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                          تم الرفع بنجاح  :  {`${nickNameAr},${tadawalCode}`}
+                       
+                        </div>
+                       )} 
+
             {loading ? (
               <div className="flex flex-col items-center">
                 <div className="w-6 h-6 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
@@ -532,7 +555,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             ) : (
               <button
                 type="submit"
-                className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[1.5px] px-9 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[1.5px] px-9 rounded "
               >
                 رفع
               </button>

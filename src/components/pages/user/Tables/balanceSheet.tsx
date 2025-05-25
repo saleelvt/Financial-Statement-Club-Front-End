@@ -96,17 +96,22 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
               </thead>
 
               <tbody>
-                <tr className="bg-gray-400 text-sm font-semibold">
-                  <td colSpan={4} className="p-1 text-start">
-                    {table.assets.sassets}
-                  </td>
-                </tr>
+                {table.assets.sassets && table.assets.sassets.trim() !== "" && (
+                  <tr className="bg-gray-400 text-sm font-semibold">
+                    <td colSpan={4} className="p-1 text-start">
+                      {table.assets.sassets}
+                    </td>
+                  </tr>
+                )}
 
-                <tr className="bg-gray-200 font-medium">
-                  <td colSpan={4} className="p-1 text-start">
-                    {table.assets.nonCurrent.snonCurrentAssets}
-                  </td>
-                </tr>
+                {table.assets.nonCurrent.snonCurrentAssets &&
+                  table.assets.nonCurrent.snonCurrentAssets.trim() !== "" && (
+                    <tr className="bg-gray-200 font-medium">
+                      <td colSpan={4} className="p-1 text-start">
+                        {table.assets.nonCurrent.snonCurrentAssets}
+                      </td>
+                    </tr>
+                  )}
 
                 {table.assets.nonCurrent.nonCurrentLabels.map(
                   (label: string, idx: number) => {
@@ -144,18 +149,23 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                <tr className="bg-gray-200 font-semibold">
-                  <td className="">
-                    {table.assets.nonCurrent.sfirtsTotalnonCurrentAssets}
-                  </td>
-                  <td className="border border-gray-300"></td>
-                  <td className="border  border-gray-300">
-                    {formatValue(table.assets.nonCurrent.firstTotal)}
-                  </td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.assets.nonCurrent.firstTotalDate2)}
-                  </td>
-                </tr>
+
+{table.assets.nonCurrent.sfirtsTotalnonCurrentAssets &&
+ table.assets.nonCurrent.sfirtsTotalnonCurrentAssets.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="">
+      {table.assets.nonCurrent.sfirtsTotalnonCurrentAssets}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.assets.nonCurrent.firstTotal)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.assets.nonCurrent.firstTotalDate2)}
+    </td>
+  </tr>
+)}
+
 
                 {table.assets.nonCurrent.nonCurrentSubLabels.map(
                   (label: string, idx: number) => {
@@ -191,29 +201,31 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                <tr className="bg-gray-200 font-semibold">
-                  <td className="border  border-gray-300">
-                    {table.assets.nonCurrent.stotalNonCurrentAssets}
-                  </td>
+               {table.assets.nonCurrent.stotalNonCurrentAssets &&
+ table.assets.nonCurrent.stotalNonCurrentAssets.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="border border-gray-300">
+      {table.assets.nonCurrent.stotalNonCurrentAssets}
+    </td>
+    <td className="border border-gray-300 bg-gray-200 p-1"></td>
+    <td className="border border-gray-300 bg-gray-200 p-1 text-start">
+      {formatValue(table.assets.nonCurrent.secondTotal)}
+    </td>
+    <td className="border border-gray-300 font bg-gray-200 p-1 text-start">
+      {formatValue(table.assets.nonCurrent.secondTotalDate2)}
+    </td>
+  </tr>
+)}
 
-                  <td className="border border-gray-300 bg-gray-200 p-1"></td>
+{table.assets.current.scurrentAssets &&
+ table.assets.current.scurrentAssets.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td colSpan={4} className="p-0.5">
+      {table.assets.current.scurrentAssets}
+    </td>
+  </tr>
+)}
 
-                  <td className="border border-gray-300 bg-gray-200 p-1 text-start">
-                    {" "}
-                    {formatValue(table.assets.nonCurrent.secondTotal)}
-                  </td>
-
-                  <td className="border border-gray-300 font bg-gray-200 p-1 text-start">
-                    {" "}
-                    {formatValue(table.assets.nonCurrent.secondTotalDate2)}
-                  </td>
-                </tr>
-
-                <tr className="bg-gray-200 font-semibold">
-                  <td colSpan={4} className="p-0.5 ">
-                    {table.assets.current.scurrentAssets}
-                  </td>
-                </tr>
 
                 {table.assets.current.currentLabels.map(
                   (label: string, idx: number) => {
@@ -251,19 +263,22 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                <tr className="bg-gray-200 font-semibold">
-                  <td className="">
-                    {table.assets.current.sfirtsTotalCurrentAssets}
-                  </td>
-                  <td className="border border-gray-300"></td>
+               {table.assets.current.sfirtsTotalCurrentAssets &&
+ table.assets.current.sfirtsTotalCurrentAssets.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="">
+      {table.assets.current.sfirtsTotalCurrentAssets}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.assets.current.firstTotal)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.assets.current.firstTotalDate2)}
+    </td>
+  </tr>
+)}
 
-                  <td className="border border-gray-300">
-                    {formatValue(table.assets.current.firstTotal)}
-                  </td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.assets.current.firstTotalDate2)}
-                  </td>
-                </tr>
 
                 {table.assets.current.currentSubLabels.map(
                   (label: string, idx: number) => {
@@ -297,42 +312,59 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                     );
                   }
                 )}
-                <tr className="bg-gray-200 font-semibold">
-                  <td className="">
-                    {table.assets.current.stotalCurrentAssets}
-                  </td>
-                  <td className="border border-gray-300"></td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.assets.current.secondTotal)}
-                  </td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.assets.current.secondTotalDate2)}
-                  </td>
-                </tr>
 
-                <tr className="bg-gray-400 font-bold">
-                  <td className="">{table.assets.stotalAssets}</td>
-                  <td className="border border-gray-300"></td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.assets.totalAssets)}
-                  </td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.assets.totalAssetsDate2)}
-                  </td>
-                </tr>
 
-                <br />
-                <tr className="bg-gray-400  font-semibold">
-                  <td colSpan={4} className="">
-                    {table.sShareholdersEquityandliabilitiess}
-                  </td>
-                </tr>
+{table.assets.current.stotalCurrentAssets &&
+ table.assets.current.stotalCurrentAssets.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="">
+      {table.assets.current.stotalCurrentAssets}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.assets.current.secondTotal)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.assets.current.secondTotalDate2)}
+    </td>
+  </tr>
+)}
 
-                <tr className="bg-gray-300 font-medium">
-                  <td colSpan={4} className="">
-                    {table.equity.sShareholdersEquity}
-                  </td>
-                </tr>
+{table.assets.stotalAssets &&
+ table.assets.stotalAssets.trim() !== "" && (
+  <tr className="bg-gray-400 font-bold">
+    <td className="">{table.assets.stotalAssets}</td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.assets.totalAssets)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.assets.totalAssetsDate2)}
+    </td>
+  </tr>
+)}
+
+{table.sShareholdersEquityandliabilitiess &&
+ table.sShareholdersEquityandliabilitiess.trim() !== "" && (
+  <>
+    <br />
+    <tr className="bg-gray-400 font-semibold">
+      <td colSpan={4} className="">
+        {table.sShareholdersEquityandliabilitiess}
+      </td>
+    </tr>
+  </>
+)}
+
+{table.equity.sShareholdersEquity &&
+ table.equity.sShareholdersEquity.trim() !== "" && (
+  <tr className="bg-gray-300 font-medium">
+    <td colSpan={4} className="">
+      {table.equity.sShareholdersEquity}
+    </td>
+  </tr>
+)}
+
 
                 {table.equity.equityLabels.map((label: string, idx: number) => {
                   const note = table.equity.equityItemsNotes[idx];
@@ -368,16 +400,22 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   );
                 })}
 
-                <tr className="bg-gray-200 font-semibold">
-                  {table.equity.sfirtsTotalShareholdersEquity}
-                  <td className="border border-gray-300"></td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.equity.firstTotal)}
-                  </td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.equity.firstTotalDate2)}
-                  </td>
-                </tr>
+               {table.equity.sfirtsTotalShareholdersEquity &&
+ table.equity.sfirtsTotalShareholdersEquity.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="border border-gray-300">
+      {table.equity.sfirtsTotalShareholdersEquity}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.equity.firstTotal)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.equity.firstTotalDate2)}
+    </td>
+  </tr>
+)}
+
 
                 {table.equity.equitySubLabels.map(
                   (label: string, idx: number) => {
@@ -412,28 +450,38 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                <tr className="bg-gray-300 border-gray-300  font-bold">
-                  <td className="">{table.equity.stotalShareholdersEquity}</td>
-                  <td className="border border-gray-300"></td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.equity.totalEquity)}
-                  </td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.equity.totalEquityDate2)}
-                  </td>
-                </tr>
+               {table.equity.stotalShareholdersEquity &&
+ table.equity.stotalShareholdersEquity.trim() !== "" && (
+  <tr className="bg-gray-300 border-gray-300 font-bold">
+    <td className="">{table.equity.stotalShareholdersEquity}</td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.equity.totalEquity)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.equity.totalEquityDate2)}
+    </td>
+  </tr>
+)}
 
-                <tr className="bg-gray-200 font-semibold ">
-                  <td colSpan={4} className="">
-                    {table.liabilities.liabilities}
-                  </td>
-                </tr>
+{table.liabilities.liabilities &&
+ table.liabilities.liabilities.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td colSpan={4} className="">
+      {table.liabilities.liabilities}
+    </td>
+  </tr>
+)}
 
-                <tr className="bg-gray-200   font-semibold ">
-                  <td colSpan={4} className="">
-                    {table.liabilities.nonCurrent.sNoncurrentliabilities}
-                  </td>
-                </tr>
+{table.liabilities.nonCurrent.sNoncurrentliabilities &&
+ table.liabilities.nonCurrent.sNoncurrentliabilities.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td colSpan={4} className="">
+      {table.liabilities.nonCurrent.sNoncurrentliabilities}
+    </td>
+  </tr>
+)}
+
 
                 {table.liabilities.nonCurrent.NonCurrentLiabilitiesLabels.map(
                   (label: string, idx: number) => {
@@ -475,21 +523,21 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                <tr className="bg-gray-200 font-semibold">
-                  <td className="">
-                    {
-                      table.liabilities.nonCurrent
-                        .sfirtsTotalNoncurrentLiabilities
-                    }
-                  </td>
-                  <td className="border border-gray-300"></td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.liabilities.nonCurrent.firstTotal)}
-                  </td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.liabilities.nonCurrent.firstTotalDate2)}
-                  </td>
-                </tr>
+              {table.liabilities.nonCurrent.sfirtsTotalNoncurrentLiabilities &&
+ table.liabilities.nonCurrent.sfirtsTotalNoncurrentLiabilities.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="">
+      {table.liabilities.nonCurrent.sfirtsTotalNoncurrentLiabilities}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.nonCurrent.firstTotal)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.nonCurrent.firstTotalDate2)}
+    </td>
+  </tr>
+)}
 
                 {table.liabilities.nonCurrent.NonCurrentLiabilitiesSubLabels.map(
                   (label: string, idx: number) => {
@@ -525,29 +573,35 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                <tr className="bg-gray-200 font-semibold ">
-                  <td className="p-0.5">
-                   {table.liabilities.nonCurrent.stotalNoncurrentliabilities}
-                  </td>
-                  <td className="border border-gray-300"></td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.liabilities.nonCurrent.total)}
-                  </td>
-                  <td className="border border-gray-300">
-                    {formatValue(table.liabilities.nonCurrent.totalDate2)}
-                  </td>
-                </tr>
+{table.liabilities.nonCurrent.stotalNoncurrentliabilities &&
+ table.liabilities.nonCurrent.stotalNoncurrentliabilities.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="p-0.5">
+      {table.liabilities.nonCurrent.stotalNoncurrentliabilities}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.nonCurrent.total)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.nonCurrent.totalDate2)}
+    </td>
+  </tr>
+)}
 
+{table.liabilities.current.scurrentliabilities &&
+ table.liabilities.current.scurrentliabilities.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td colSpan={4} className="p-0.5">
+      {table.liabilities.current.scurrentliabilities}
+    </td>
+  </tr>
+)}
 
-                 <tr className="bg-gray-200 font-semibold">
-              <td colSpan={4} className="p-0.5">
-                {table.liabilities.current.scurrentliabilities}
-              </td>
-            </tr>
-
-                 {table.liabilities.current.currentLiabilitiesLabels.map(
+                {table.liabilities.current.currentLiabilitiesLabels.map(
                   (label: string, idx: number) => {
-                    const note =  table.liabilities.current.currentLiabilitiesNotes[idx];
+                    const note =
+                      table.liabilities.current.currentLiabilitiesNotes[idx];
                     const item = table.liabilities.current.items[idx];
                     const itemDate2 = table.liabilities.current.itemsDate2[idx];
 
@@ -581,28 +635,32 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                 <tr className="bg-gray-200 font-semibold">
-              <td className="">
-                {table.liabilities.current.sfirtsTotalcurrentLiabilities}
-              </td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">
-                {formatValue(table.liabilities.current.firstTotal)}
-              </td>
-              <td className="border border-gray-300">
-                {formatValue(table.liabilities.current.firstTotalDate2)}
-              </td>
-            </tr>
+{table.liabilities.current.sfirtsTotalcurrentLiabilities &&
+ table.liabilities.current.sfirtsTotalcurrentLiabilities.trim() !== "" && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="">
+      {table.liabilities.current.sfirtsTotalcurrentLiabilities}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.current.firstTotal)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.current.firstTotalDate2)}
+    </td>
+  </tr>
+)}
 
 
-
-            {table.liabilities.current.currentLiabilitiesSubLabels.map(
+                {table.liabilities.current.currentLiabilitiesSubLabels.map(
                   (label: string, idx: number) => {
                     // const note = table.assets.nonCurrent.nonCurrentNotes[idx];
                     const item = table.liabilities.current.subItems[idx];
-                    const itemDate2 = table.liabilities.current.subItemsDate2[idx];
+                    const itemDate2 =
+                      table.liabilities.current.subItemsDate2[idx];
 
-                    const allEmpty = (!label || label.trim() === "") &&
+                    const allEmpty =
+                      (!label || label.trim() === "") &&
                       //   (!note || note.trim() === "") &&
                       (!item || item.toString().trim() === "") &&
                       (!itemDate2 || itemDate2.toString().trim() === "");
@@ -628,45 +686,50 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                 <tr className="bg-gray-200 font-semibold ">
-              <td className="p-0.5">
-               {table.liabilities.current.stotalcurrentliabilities}
-               
-              </td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">
-                {formatValue(table.liabilities.current.total)}
-              </td>
-              <td className="border border-gray-300">
-                {formatValue(table.liabilities.current.totalDate2)}
-              </td>
-            </tr>
+              {table.liabilities.current.stotalcurrentliabilities?.trim() && (
+  <tr className="bg-gray-200 font-semibold">
+    <td className="p-0.5">
+      {table.liabilities.current.stotalcurrentliabilities}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.current.total)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.current.totalDate2)}
+    </td>
+  </tr>
+)}
 
-             <tr className="bg-gray-300   font-bold">
-              <td className="p-0.5">
-                 {table.liabilities.stotalliabilities}
-              </td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">
-                {formatValue(table.liabilities.totalLiabilities)}
-              </td>
-              <td className="border border-gray-300">
-                {formatValue(table.liabilities.totalLiabilitiesDate2)}
-              </td>
-            </tr>
+{table.liabilities.stotalliabilities?.trim() && (
+  <tr className="bg-gray-300 font-bold">
+    <td className="p-0.5">
+      {table.liabilities.stotalliabilities}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.totalLiabilities)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.liabilities.totalLiabilitiesDate2)}
+    </td>
+  </tr>
+)}
 
-              <tr className="bg-gray-400   font-bold">
-              <td className="p-0.5">
-                 {table.stotalEquityAndLiabilities}
-              </td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">
-                {formatValue(table.ItotalEquityAndLiabilities)}
-              </td>
-              <td className="border border-gray-300">
-                {formatValue(table.ItotalEquityAndLiabilitiesDate2)}
-              </td>
-            </tr>
+{table.stotalEquityAndLiabilities?.trim() && (
+  <tr className="bg-gray-400 font-bold">
+    <td className="p-0.5">
+      {table.stotalEquityAndLiabilities}
+    </td>
+    <td className="border border-gray-300"></td>
+    <td className="border border-gray-300">
+      {formatValue(table.ItotalEquityAndLiabilities)}
+    </td>
+    <td className="border border-gray-300">
+      {formatValue(table.ItotalEquityAndLiabilitiesDate2)}
+    </td>
+  </tr>
+)}
 
               </tbody>
             </table>

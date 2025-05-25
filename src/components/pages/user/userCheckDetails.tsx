@@ -18,8 +18,11 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
+import { ITable } from "../admin/Tables/BalanceSheet/interface";
 const BalaceSheetFormUser = lazy(() => import("./Tables/balanceSheet"));
-const BalanceSheetFormUserArabic=lazy(()=> import("./Tables/balanceSheetAr"))
+const BalanceSheetFormUserArabic = lazy(
+  () => import("./Tables/balanceSheetAr")
+);
 
 const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
@@ -150,15 +153,24 @@ const UserCompanyDetails = React.memo(() => {
     }
     // ✅ If a tableKey was selected before, check if it exists for this PDF
 
-  if (selectedTableKey) {
+    if (selectedTableKey) {
       const tableData =
-        document.formData?.[key as FieldKey]?.table?.[selectedTableKey];
+        document.formData?.[key as FieldKey]?.table?.[
+          selectedTableKey as keyof ITable
+        ];
 
-      if (tableData) {
-        setTableData(tableData);
-      } else {
-        setTableData(null);
-      }
+      const isEmptyDeep = (obj: any): boolean => {
+        if (!obj || typeof obj !== "object") return true;
+        if (Array.isArray(obj)) return obj.length === 0;
+
+        return Object.values(obj).every((value) => isEmptyDeep(value));
+      };
+
+      const isValidTable = (table: any) => {
+        return table && typeof table === "object" && !isEmptyDeep(table);
+      };
+
+      setTableData(isValidTable(tableData) ? tableData : null);
     }
   };
 
@@ -505,13 +517,13 @@ const UserCompanyDetails = React.memo(() => {
                             <button
                               onClick={handleTABLE}
                               className={`flex text-xs items-center justify-center text-[16px] px-2 py-1 rounded-md
-              ${
-                selectedTableKey
-                  ? "bg-gray-600 text-white"
-                  : selectedPdfKey
-                  ? "bg-gray-300 text-gray-800"
-                  : "bg-gray-600 text-white"
-              }`}
+                                     ${
+                                       selectedTableKey
+                                         ? "bg-gray-600 text-white"
+                                         : selectedPdfKey
+                                         ? "bg-gray-300 text-gray-800"
+                                         : "bg-gray-600 text-white"
+                                     }`}
                             >
                               Table
                             </button>
@@ -557,10 +569,14 @@ const UserCompanyDetails = React.memo(() => {
       <div className="lg:w-[65%]">
         {table && selectedTableKey ? (
           <div
-            className="h-[90vh] overflow-y-auto pr-2"
+            className="h-[90vh] w-full overflow-y-auto pr-2"
             // You can adjust height as per layout needs
           >
-          {language==="English"?<BalaceSheetFormUser Tabledata={table} />: <BalanceSheetFormUserArabic Tabledata={table} />}  
+            {language === "English" ? (
+              <BalaceSheetFormUser Tabledata={table} />
+            ) : (
+              <BalanceSheetFormUserArabic Tabledata={table} />
+            )}
           </div>
         ) : iframeSrc ? (
           <div

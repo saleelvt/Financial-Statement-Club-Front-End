@@ -14,9 +14,9 @@ import AdminSidebar from "../../sidePanals/adminSidePanel"
   
 function AdminHomePage() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-200">    
+    <div className="flex flex-col w-full bg-gray-200">    
     <AdminNavbar/> 
-    <header className="w-full bg-gray-800 text-white">
+    <header className="w-full bg-purple-500 bg-gray-800 text-white">
  
         < AdminSidebar/> 
       </header>

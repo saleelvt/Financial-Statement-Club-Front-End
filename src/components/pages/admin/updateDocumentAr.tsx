@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../../reduxKit/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../reduxKit/store";
 import { UpdateDocumentArabic } from "../../../reduxKit/actions/admin/updateArabicDocument";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FieldKey } from "../../../interfaces/admin/addDoument";
@@ -19,7 +18,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 const UpdateDocumentAr: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { loading } = useSelector((state: RootState) => state.adminEn);
+  const [loading,setLoading]=useState(false)
   const [fullNameAr, setFullNameAr] = useState("");
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
@@ -27,6 +26,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [document, setDocument] = useState<  DocumentSliceAr | null | undefined>();
+    const [showToastAr, setShowToastAr] = useState<boolean>(false);
   const location = useLocation();
   const { id, language } = location.state || {};
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
@@ -76,7 +76,6 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
     }
   }, [document]);
 
-  console.log("my language is::::::::::", id, language);
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -153,16 +152,17 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
         createdAt: new Date().toISOString(), // Example value
       };
       console.log("my data is", adminCredentials);
+      setLoading(true)
       const response = await dispatch(
         UpdateDocumentArabic({ id, language, adminCredentials })
       ).unwrap();
-      console.log(
-        "this is my last console log!!!!!!!!!!!!!!!!! ",
-        response.data
-      );
-
-      toast.success("Document updated successfully");
-      navigate(-1);
+if(response.success){
+setShowToastAr(true)
+  setLoading(false)
+   setTimeout(()=>{
+    setShowToastAr(false)
+   },30000)
+}      
     } catch (error: any) {
      console.log("erorr ",error);
      
@@ -261,6 +261,15 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
             </div>
           </div>
 
+
+
+
+
+
+
+
+
+
           <div className="grid grid-cols-2  md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm  ">
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
@@ -276,28 +285,30 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   }
                 />
 
-                {typeof formData.Q1.file === "string" && (
+                {typeof formData?.Q1?.file === "string" && (
                   <span
                     className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
-                    {formData.Q1.file.split("/").pop()}
+                    {formData?.Q1?.file.split("/").pop()}
                   </span>
                 )}
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
-                  selected={formData.Q1.date}
+                  selected={formData?.Q1?.date}
                   onChange={(date) => handleDateChange("Q1", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.Q1.year || ""}
+                  value={formData?.Q1?.year || ""}
                   onChange={(e) => handleYearChange("Q1", e.target.value)}
                 />
               </div>
@@ -317,28 +328,30 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   }
                 />
 
-                {typeof formData.Q2.file === "string" && (
+                {typeof formData?.Q2?.file === "string" && (
                   <span
                     className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
-                    {formData.Q2.file.split("/").pop()}
+                    {formData?.Q2?.file.split("/").pop()}
                   </span>
                 )}
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
-                  selected={formData.Q2.date}
+                  selected={formData?.Q2?.date}
                   onChange={(date) => handleDateChange("Q2", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.Q2.year || ""}
+                  value={formData?.Q2?.year || ""}
                   onChange={(e) => handleYearChange("Q2", e.target.value)}
                 />
               </div>
@@ -359,29 +372,31 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                 />
 
                 {/* ✅ Show filename if it's a string (S3 URL) */}
-                {typeof formData.Q3.file === "string" && (
+                {typeof formData?.Q3?.file === "string" && (
                   <span
                     className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
-                    {formData.Q3.file.split("/").pop()}
+                    {formData?.Q3?.file.split("/").pop()}
                   </span>
                 )}
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
-                  selected={formData.Q3.date}
+                  selected={formData?.Q3?.date}
                   onChange={(date) => handleDateChange("Q3", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
 
                 <input
                   type="text"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 mt- leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.Q3.year || ""}
+                  value={formData?.Q3?.year || ""}
                   onChange={(e) => handleYearChange("Q3", e.target.value)}
                 />
               </div>
@@ -401,28 +416,30 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   }
                 />
 
-                {typeof formData.Q4.file === "string" && (
+                {typeof formData?.Q4?.file === "string" && (
                   <span
                     className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
-                    {formData.Q4.file.split("/").pop()}
+                    {formData?.Q4?.file.split("/").pop()}
                   </span>
                 )}
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
-                  selected={formData.Q4.date}
+                  selected={formData?.Q4?.date}
                   onChange={(date) => handleDateChange("Q4", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.Q4.year || ""}
+                  value={formData?.Q4?.year || ""}
                   onChange={(e) => handleYearChange("Q4", e.target.value)}
                 />
               </div>
@@ -443,29 +460,31 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   }
                 />
 
-                {typeof formData.S1.file === "string" && (
+                {typeof formData?.S1?.file === "string" && (
                   <span
                     className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
-                    {formData.S1.file.split("/").pop()}
+                    {formData?.S1?.file.split("/").pop()}
                   </span>
                 )}
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
-                  selected={formData.S1.date}
+                  selected={formData?.S1?.date}
                   onChange={(date) => handleDateChange("S1", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
 
                 <input
                   type="text"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.S1.year || ""}
+                  value={formData?.S1?.year || ""}
                   onChange={(e) => handleYearChange("S1", e.target.value)}
                 />
               </div>
@@ -485,29 +504,31 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   }
                 />
 
-                {typeof formData.Year.file === "string" && (
+                {typeof formData?.Year?.file === "string" && (
                   <span
                     className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
-                    {formData.Year.file.split("/").pop()}
+                    {formData?.Year?.file.split("/").pop()}
                   </span>
                 )}
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
-                  selected={formData.Year.date}
+                  selected={formData?.Year?.date}
                   onChange={(date) => handleDateChange("Year", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
 
                 <input
                   type="text"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.Year.year || ""}
+                  value={formData?.Year?.year || ""}
                   onChange={(e) => handleYearChange("Year", e.target.value)}
                 />
               </div>
@@ -515,7 +536,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-                المجلس
+                {/* المجلس */}
               </label>
 
               <div className="relative">
@@ -527,41 +548,66 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   }
                 />
 
-                {typeof formData.Board.file === "string" && (
+                {typeof formData?.Board?.file === "string" && (
                   <span
                     className="absolute left-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}
                   >
-                    {formData.Board.file.split("/").pop()}
+                    {formData?.Board?.file.split("/").pop()}
                   </span>
                 )}
               </div>
  
               <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
-                  selected={formData.Board.date}
+                  selected={formData?.Board?.date}
                   onChange={(date) => handleDateChange("Board", date)}
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
+                  popperPlacement="bottom-start"
+                    portalId="root-portal"
                 />
                 <input
                   type="text"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholder="Enter Year"
-                  value={formData.Board.year || ""}
+                  value={formData?.Board?.year || ""}
                   onChange={(e) => handleYearChange("Board", e.target.value)}
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-4">
-            <button
-              type="submit"
-              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-1 px-9 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-            >
-              {loading ? "تحديث..." : " رفع"}
-            </button>
+
+
+
+
+
+
+
+
+
+         <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
+ {showToastAr && (
+                        <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                          تم الرفع بنجاح  :  {`${nickNameAr},${tadawalCode},${language}`}
+                       
+                        </div>
+                       )} 
+
+            {loading ? (
+              <div className="flex flex-col items-center">
+                <div className="w-6 h-6 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
+                <span className="mt-4 text-gray-700 font-bold">{`جاري التحميل...`}</span>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[1.5px] px-9 rounded "
+              >
+                رفع
+              </button>
+            )}
           </div>
         </form>
       </div>

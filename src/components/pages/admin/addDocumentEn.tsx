@@ -18,8 +18,8 @@ interface DocumentPayload {
   sector: string;
   formData: Record<FieldKey, FormField>;
 }
-import Swal from "sweetalert2";
-import toast from "react-hot-toast";
+
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -37,6 +37,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
   ({ formDataEn, tadawalCodeEn }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { loading } = useSelector((state: RootState) => state.adminEn);
+       const [showToast, setShowToast] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [fullNameEn, setFullNameEn] = useState("");
@@ -297,9 +298,12 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         const response = await dispatch(
           addDocumentEnglish(payloadData)
         ).unwrap();
-        if (response && response.success) {
-          toast.success(response.message);
-          // Only set to 100% if not already there from the progress events
+        if (response.success) {
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 30000); // 30 seconds
+      
 
           // Reset form data
           await setFormData(
@@ -307,21 +311,14 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               Object.fromEntries(
                 Object.entries(prevFormData).map(([key, value]) => [
                   key as keyof typeof prevFormData,
-                  { ...value, file: null },
+                  { ...value, file: null,year:"",date:null},
                 ])
               ) as Record<FieldKey, FormField>
           );
         }
       } catch (error: any) {
-        Swal.fire({
-          icon: "error",
-          title: "Error!",
-          text: error.message,
-          timer: 3000,
-          toast: true,
-          showConfirmButton: false,
-          timerProgressBar: true,
-        });
+       console.log(error);
+       
       }
     };
 
@@ -406,7 +403,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-            <div className="grid text-xs  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-1  ">
+            <div className="grid text-sm  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-1  ">
               <div className="">
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                   Q1
@@ -425,6 +422,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     onChange={(date) => handleDateChange("Q1", date)}
                     className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
+                    popperPlacement="bottom-start"
+                    portalId="root-portal"
                   />
 
                   <input
@@ -454,6 +453,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     onChange={(date) => handleDateChange("Q2", date)}
                     className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
+                    popperPlacement="bottom-start"
+                    portalId="root-portal"
                   />
                   <input
                     type="text"
@@ -482,6 +483,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     onChange={(date) => handleDateChange("Q3", date)}
                     className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
+                    popperPlacement="bottom-start"
+                    portalId="root-portal"
                   />
                   <input
                     type="text"
@@ -510,6 +513,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     onChange={(date) => handleDateChange("Q4", date)}
                     className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
+                    popperPlacement="bottom-start"
+                    portalId="root-portal"
                   />
                   <input
                     type="text"
@@ -537,6 +542,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     onChange={(date) => handleDateChange("S1", date)}
                     className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
+                    popperPlacement="bottom-start"
+                    portalId="root-portal"
                   />
                   <input
                     type="text"
@@ -565,6 +572,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     onChange={(date) => handleDateChange("Year", date)}
                     className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
+                    popperPlacement="bottom-start"
+                    portalId="root-portal"
                   />
                   <input
                     type="text"
@@ -593,6 +602,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     onChange={(date) => handleDateChange("Board", date)}
                     className="appearance-none  block lg:w-[170px] xs:w-[130px] bg-gray-200 mt-1 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                     placeholderText="Choose Date"
+                    popperPlacement="bottom-start"
+                    portalId="root-portal"
                   />
                   <input
                     type="text"
@@ -605,21 +616,32 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-            <div className="flex   justify-end items-center mt-2 w-full h-12 relative">
-              {loading ? (
-                <div className="flex flex-col items-center">
-                  <div className="w-4 h-4 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
-                  <span className="mt-4 text-gray-700 font-bold">{`Submiting...`}</span>
+              <div className="flex justify-between mt-4">
+            <div className="">
+              {showToast && (
+                <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                  Submited Successfully On :{" "}
+                  {`${nickNameEn}-${tadawalCode}`}
                 </div>
-              ) : (
-                <button
-                  type="submit"
-                  className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[3px] px-5 rounded focus:outline-none focus:shadow-outline hover:scale-105 transition-transform duration-300 ease-in-out"
-                >
-                  Submit
-                </button>
               )}
             </div>
+
+            {loading ? (
+              <div className="flex flex-col items-center">
+                <div className="w-4 h-4 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
+                <span className="mt-4 text-gray-700 font-bold">
+                  Submitting...
+                </span>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[3px] px-5 rounded focus:outline-none"
+              >
+                Submit
+              </button>
+            )}
+          </div>
           </form>
           <ValidationModal
             isOpen={isModalOpen}

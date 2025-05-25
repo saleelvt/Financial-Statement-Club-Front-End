@@ -1,42 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/Navbar.tsx
 
-
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { Button } from "@nextui-org/react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../reduxKit/store";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-// import "../../CSS/logoHeading.css";
-import { FaSignOutAlt } from "react-icons/fa";
-import { adminLogout } from "../../reduxKit/actions/auth/authAction";
-import { useSelector } from "react-redux";
-import { RootState } from "../../reduxKit/store";
-import { AdminLanguageChange } from "../../reduxKit/actions/admin/adminLanguage";
+import { FaSignOutAlt, FaChevronDown } from "react-icons/fa";
 import { GrLanguage } from "react-icons/gr";
-import { MdMiscellaneousServices } from "react-icons/md";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { AppDispatch, RootState } from "../../reduxKit/store";
+import { adminLogout } from "../../reduxKit/actions/auth/authAction";
+import { AdminLanguageChange } from "../../reduxKit/actions/admin/adminLanguage";
 
-<GrLanguage />
 export const AdminNavbar: React.FC = () => {
-  const { adminLanguage } = useSelector( (state: RootState) => state.adminLanguage
-  );
-  const { role } = useSelector((state: RootState) => state.auth);
+  const { adminLanguage } = useSelector((state: RootState) => state.adminLanguage);
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  console.log("this is my role  admin ", role);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleLanguage = async () => {
     const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
     await dispatch(AdminLanguageChange(newLanguage));
+    setIsDropdownOpen(false); // Close dropdown after action
   };
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
-  const handledata = async () => {
+
+  const handleLogout = async () => {
     try {
       await dispatch(adminLogout()).unwrap();
       Swal.fire({
@@ -49,61 +43,92 @@ export const AdminNavbar: React.FC = () => {
         navigate("/login");
       });
     } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Logout failed!",
-        showConfirmButton: true,
-        text: error.data,
-      });
+      console.log(error);
     }
+    setIsDropdownOpen(false); // Close dropdown after action
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <nav className="p-3">
-      <div className="container py-2 mx-auto gap-3 flex justify-between items-center">
-        <div className="w-full flex items-center justify-between ">
-          <h4 className=" font-semibold xs:font-semibold  lg:text-2xl md:text-2xl sm:1xl xs:text-xl ">
-       {adminLanguage ==="Arabic" ?"نادي القوائم المالية ":"FinStatements Club"}
-          </h4>
-          <button
-          onClick={toggleLanguage}
-          
-          className="py-1 px-2 hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
-        >
-         <GrLanguage className=" text-gray-600" />
-        </button>
-        </div>
-        <div className="lg:hidden">
-       
-          <button className=" focus:outline-none " onClick={toggleMenu}>
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+    <nav className="bg-white shadow-md border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Left side - Brand */}
+          <div className="flex-shrink-0">
+            <h1 className="font-bold text-lg sm:text-xl md:text-2xl text-gray-800">
+              {adminLanguage === "Arabic" ? "نادي القوائم المالية" : "FinStatements Club"}
+            </h1>
+          </div>
+
+          {/* Right side - Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-4">
+            <button
+              onClick={toggleLanguage}
+              className="p-2 rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all duration-200 ease-in-out"
+              title="Change Language"
             >
+              <GrLanguage className="text-xl" />
+            </button>
 
+            <button
+              onClick={handleLogout}
+              className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-all duration-200 ease-in-out flex items-center hover:shadow-lg hover:scale-105"
+            >
+              <FaSignOutAlt className="mr-2" />
+              Logout
+            </button>
+          </div>
 
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              />
-            </svg>
-          </button>
-        </div>
-        <div
-          className={`lg:flex lg:items-center ${isOpen ? "block" : "hidden"}`}
-        >
-         <MdMiscellaneousServices  className="text-gray-600 mr-8 text-2xl"/>    
-   
-          <button
-            onClick={handledata}
-            className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline hover:scale-105   transition-transform duration-300 ease-in-out text-white shadow-lg  flex items-center  rounded-md"
-          >
-            <FaSignOutAlt className="mr-2 text-white"  /> Logout
-          </button>
+          {/* Right side - Mobile Dropdown */}
+          <div className="md:hidden relative" ref={dropdownRef}>
+            <button
+              onClick={toggleDropdown}
+              className="p-2 rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all duration-200 ease-in-out flex items-center"
+            >
+              <HiOutlineMenuAlt3 className="text-xl" />
+              <FaChevronDown className={`ml-1 text-sm transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {/* Mobile Dropdown Menu */}
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className="py-2">
+                  <button
+                    onClick={toggleLanguage}
+                    className="w-full px-4 py-1 text-left text-gray-700 hover:bg-gray-50 transition-colors duration-150 ease-in-out flex items-center"
+                  >
+                    <GrLanguage className="text-lg mr-3 text-gray-600" />
+                    <span className="font-medium">
+                      {adminLanguage === "English" ? "العربية" : "English"}
+                    </span>
+                  </button>
+                  
+                  <div className="border-t border-gray-100 my-1"></div>
+                  
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-4 py-1 text-left text-red-600 hover:bg-red-50 transition-colors duration-150 ease-in-out flex items-center"
+                  >
+                    <FaSignOutAlt className="text-lg mr-3" />
+                    <span className="font-medium">Logout</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>

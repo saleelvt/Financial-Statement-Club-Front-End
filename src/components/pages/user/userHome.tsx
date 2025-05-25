@@ -50,7 +50,7 @@ const UserHomePage: React.FC = React.memo(() => {
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [error, setError] = useState("");
   const [language, setLanguage] = useState<string|null>("Arabic");
-  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null); 
   const dispatch = useDispatch<AppDispatch>();
   const { userLanguage } = useSelector(
     (state: RootState) => state.userLanguage

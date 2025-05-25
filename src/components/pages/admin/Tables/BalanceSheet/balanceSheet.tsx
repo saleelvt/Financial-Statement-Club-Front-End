@@ -736,7 +736,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
     // const { assets, equity, liabilities, ItotalEquityAndLiabilitiesDate2, ItotalEquityAndLiabilities } = data
     return (
       <div className="flex justify-start   my-2 text-black">
-        <table className="border font-semibold border-gray-300 text-xs mb-12 table-fixed ">
+        <table className="border font-semibold border-gray-300 text-xs mb-12  w-full">
           <thead>
             <tr className="bg-gray-100">
               <th className="border border-gray-100 w-96"></th>

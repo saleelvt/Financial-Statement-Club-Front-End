@@ -15,11 +15,11 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaPen } from "react-icons/fa" 
 import {DocumentSliceEn,DocumentSliceAr,} from "../../../interfaces/admin/addDoument";
 import { FormDataState } from "../../../interfaces/admin/addDoument";
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"; 
 import { RootState } from "../../../reduxKit/store";
 import { FaTrash } from "react-icons/fa";
 
-import toast from "react-hot-toast";
+
  const CheckDocumentDetails = () => {
 
   const [documents, setDocuments] = useState<
@@ -58,7 +58,7 @@ import toast from "react-hot-toast";
         }
       } catch (err: any) {
         console.error("API Error:", err);
-        setError(err.message || "An unexpected error occurred");
+       
       } finally {
         setLoading(false);
       }
@@ -76,13 +76,15 @@ import toast from "react-hot-toast";
   const handleDelete = async () => {
     if (!docToDelete) return;
     try {
-      await commonRequest(
+   const response=   await commonRequest(
         "DELETE",
         `/api/v1/admin/deleteDocument/${docToDelete}?language=${language}`,
         config
       );
-      toast.success("Document Successfully Deleted");
-      window.location.reload();
+
+      console.log("delete response ofthe document: ",response);
+      
+   
     } catch (error) {
       console.error("Failed to delete document:", error);
     } finally {

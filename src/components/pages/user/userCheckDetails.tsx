@@ -18,7 +18,7 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
-import { ITable } from "../admin/Tables/BalanceSheet/interface";
+// import { ITable } from "../admin/Tables/BalanceSheet/interface";
 const BalaceSheetFormUser = lazy(() => import("./Tables/balanceSheet"));
 const BalanceSheetFormUserArabic = lazy(
   () => import("./Tables/balanceSheetAr")
@@ -45,7 +45,8 @@ const UserCompanyDetails = React.memo(() => {
   const [selectedTableKey, setSelectedTableKey] = useState<TableKey | null>(
     null
   );
-  // const [tableButtonOn,setTableButton]=useState(false)
+  const [tableButtonOn, setTableButton] = useState(false);
+  const [validTableKeys, setValidTableKeys] = useState<typeof tableKeys>([]);
   const navigate = useNavigate();
   const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
@@ -116,6 +117,15 @@ const UserCompanyDetails = React.memo(() => {
     "ProfitLoss",
     "CashFlow",
   ];
+  const isEmptyDeep = (obj: any): boolean => {
+    if (!obj || typeof obj !== "object") return true;
+    if (Array.isArray(obj)) return obj.length === 0;
+    return Object.values(obj).every((value) => isEmptyDeep(value));
+  };
+
+  const isValidTable = (table: any) => {
+    return table && typeof table === "object" && !isEmptyDeep(table);
+  };
 
   const handleYearClick = async (year: string) => {
     setSelectedYear(year);
@@ -147,42 +157,27 @@ const UserCompanyDetails = React.memo(() => {
       const encodedUrl = encodeURIComponent(fileUrl);
       const googleViewerUrl = `https://docs.google.com/viewer?url=${encodedUrl}&embedded=true&toolbar=0&navigator=0&scrollbar=0`;
       setIframeSrc(`${googleViewerUrl}#toolbar=0`);
-      setLoading(false);
-    } else {
-      alert(`No PDF available for ${key}`);
-      setLoading(false);
     }
-    // ✅ If a tableKey was selected before, check if it exists for this PDF
+    if (document.formData[key as keyof typeof document.formData]?.table) {
+      const currentTable =
+        document.formData[key as keyof typeof document.formData]?.table;
 
-    if (selectedPdfKey) {
-      // if( document.formData?.[key as FieldKey]?.table){
+      const validKeys: typeof tableKeys = [];
 
-      //   setTableButton(true)
-
-      // }
-
-      const tableData =  document.formData?.[key as FieldKey]?.table?.[
-          selectedTableKey as keyof ITable
-        ];
-
-      const isEmptyDeep = (obj: any): boolean => {
-        if (!obj || typeof obj !== "object") return true;
-        if (Array.isArray(obj)) return obj.length === 0;
-
-        return Object.values(obj).every((value) => isEmptyDeep(value));
-      };
-
-      const isValidTable = (table: any) => {
-        return table && typeof table === "object" && !isEmptyDeep(table);
-      };
-
-      setTableData(isValidTable(tableData) ? tableData : null);
+      if (currentTable) {
+        tableKeys.forEach((tableKey) => {
+          const data = currentTable[tableKey];
+          if (isValidTable(data)) {
+            validKeys.push(tableKey);
+          }
+        });
+      }
+      setTableButton(true);
+      setValidTableKeys(validKeys);
     }
   };
 
-useEffect(()=>{
-
-},[selectedPdfKey])
+  useEffect(() => {}, [selectedPdfKey]);
 
   const handleTableViewButtonClick = (tableKey: TableKey) => {
     setSelectedTableKey(tableKey);
@@ -209,6 +204,7 @@ useEffect(()=>{
   };
 
   const handlePDF = () => {
+    setTableButton(false)
     setTableData(null);
     setSelectedTableKey(null); // reset tableKey
   };
@@ -243,6 +239,7 @@ useEffect(()=>{
         console.log("Latest FieldKey:", latestKey);
         console.log("Latest File:", latestData.file);
         setSelectedPdfKey(latestKey);
+        handlePdfButtonClick(latestKey)
         if (latestData.file) {
           if (typeof latestData.file === "string") {
             const encodedUrl = encodeURIComponent(latestData.file);
@@ -253,6 +250,7 @@ useEffect(()=>{
             console.error("fileUrl is not a valid string:", latestData.file);
           }
         }
+        
       }
     }
   }, [selectedYear, selectedFilteredDocWithYear]);
@@ -530,7 +528,7 @@ useEffect(()=>{
                         dir={userLanguage === "English" ? "ltr" : "rtl"}
                         className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
                       >
-                        {selectedFilteredDocWithYear.length > 0 ? (
+                        {selectedFilteredDocWithYear.length > 0 && validTableKeys.length>0 &&tableButtonOn ? (
                           <div className="flex flex-wrap gap-2">
                             {/* Only shown if at least one valid table exists */}
                             <button
@@ -548,22 +546,14 @@ useEffect(()=>{
                             </button>
 
                             {/* Table subkeys */}
-                            {tableKeys
-                              .filter((key) =>
-                                selectedFilteredDocWithYear.some(
-                                  (doc) =>
-                                    doc.formData[
-                                      selectedPdfKey as keyof FormDataState
-                                    ]?.table?.[key]
-                                )
-                              )
+                            {validTableKeys
                               .map((key) => (
                                 <button
                                   key={key}
                                   onClick={() =>
                                     handleTableViewButtonClick(key)
                                   }
-                                  className={`px-2 py-1 text-xs bg-gray-200 rounded-md ${
+                                  className={`px-2 py-1 text-xs rounded-md ${
                                     selectedTableKey === key
                                       ? "bg-gray-600 text-white"
                                       : "bg-gray-100 text-gray-700 hover:bg-gray-300"

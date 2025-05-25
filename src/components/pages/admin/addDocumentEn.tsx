@@ -276,7 +276,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           setErrorMessage(
-            error.response?.data?.message || "Something went wrong!"
+            error.response?.data?.message || "Api response error Please Match the data "
           );
           setIsModalOpen(true);
         }

@@ -22,8 +22,8 @@ export const Error=()=>{
                 d="M12 8v4m0 4h.01M12 6a9 9 0 100 18 9 9 0 000-18z" 
               />
             </svg>
-            <span className="font-bold">Error:  </span>
-            <h1> Not Fount : 404</h1>
+            <span className="font-bold">Warning:  </span>
+            <h1>  Working on Back-end</h1>
           </div>
           <p className="mt-2 text-sm">{}</p>
         </div>

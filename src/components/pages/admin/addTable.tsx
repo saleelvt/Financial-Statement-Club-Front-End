@@ -102,9 +102,25 @@ const AddNewTable = React.memo(() => {
   const handleClickEnglish = async () => {
     try {
    
-      setTakeShot(true);
+     
       const Language = "English";
       // create data object
+         if (
+      !Language ||
+      !tadawalCode ||
+      !quarterYear ||
+      !selectedTableType ||
+      !selectedYear
+    ) {
+      setErrorMessage(
+        "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
+      );
+
+      setIsModalOpen(true);
+      setModalOpen(false);
+      return;
+    }
+     setTakeShot(true);
       const dataforUpload = {
         tadawalCode: tadawalCode, // replace with actual value
         language: Language,
@@ -118,10 +134,15 @@ const AddNewTable = React.memo(() => {
       console.log(" submiting : ", response);
       if (response.payload.success) {
         setShowToast(true);
+
         setTakeShot(false);
+        if(updateActiveEn){
+fetchData()
+        }
+           setUpdateEn(false)
         setTimeout(() => {
           setShowToast(false); // Hide toast after 3 seconds
-          setUpdateEn(false)
+       
         }, 30000);
       }
     } catch (error) {
@@ -131,8 +152,32 @@ const AddNewTable = React.memo(() => {
 
   const handleClickArabic = async () => {
     try {
-      setTakeShot(true);
+
+      
+
+
+
+
+
+    
       const Language = "Arabic";
+
+         if (
+      !Language ||
+      !tadawalCode ||
+      !quarterYear ||
+      !selectedTableType ||
+      !selectedYear
+    ) {
+      setErrorMessage(
+        "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
+      );
+
+      setIsModalOpen(true);
+      setModalOpen(false);
+      return;
+    }
+      setTakeShot(true);
       // create data object
       const dataforUpload = {
         tadawalCode: tadawalCode, // replace with actual value
@@ -142,15 +187,18 @@ const AddNewTable = React.memo(() => {
         quarterYear: quarterYear,
         selectedTableType: selectedTableType,
       };
-      console.log("MY Saudi Arabic Data", dataforUpload);
       const response = await dispatch(AdminAddTableAction(dataforUpload));
       console.log("the Arabic after   submited Response : ", response);
       if (response.payload.success) {
         setShowToastAr(true);
         setTakeShot(false);
+        if(updateActiveAr){
+          fetchData()
+        }
+          setUpdateAr(false)
+
         setTimeout(() => {
           setShowToastAr(false); // Hide toast after 3 seconds
-          setUpdateAr(false)
         }, 30000);
       }
     } catch (error) {
@@ -328,9 +376,12 @@ const AddNewTable = React.memo(() => {
         `/api/v1/admin/deleteTable/${tadawalCode}?language=${wlanguage}&quarterYear=${quarterYear}&selectedTableType=${selectedTableType}&selectedYear=${selectedYear}`,
         config
       );
+console.log("resppos da : ",response);
 
-      if (response.payload.success) {
+      if (response.data.success) {
         if (wlanguage === "English") {
+          console.log("My language is keke: ",wlanguage);
+          
           setUpdateEn(false)
           setTableEn(null)
           setShowDeleteToast(true);
@@ -382,11 +433,17 @@ const AddNewTable = React.memo(() => {
     }
   };
 
+
+
+
+
+
+
   const renderTableContent = () => {
     // Case 1: Both English and Arabic tables exist
     if (tableEn && tableAr) {
       return (
-        <div className="flex flex-col lg:flex-row mb-8   lg:justify-center ">
+        <div className="flex flex-col lg:flex-row mb-8 w-screen  lg:justify-center ">
           <div className="">
             {updateActiveEn && tableEn ? (
               <BalaceSheetUpdateFormEnglish TableDataEn={tableEn} />
@@ -660,12 +717,12 @@ const AddNewTable = React.memo(() => {
     // Case 3: Only Arabic table exists
     else if (!tableEn && tableAr) {
       return (
-        <div className="flex mb-8  flex-col lg:flex-row lg:justify-center ">
-          <div className="">
+        <div className="flex mb-8   flex-col lg:flex-row lg:justify-center ">
+          <div className="w-screen">
             <form>
-              <div className="">
+             
                 <BalaceSheet TakingShort={takeShot} />
-              </div>
+       
               <div className=" flex justify-between">
 
                  <div className="items-start">
@@ -693,7 +750,7 @@ const AddNewTable = React.memo(() => {
 
 
 
-              <div className="  ">
+              <div className="w-screen  ">
             {updateActiveAr && tableAr ? (
               <BalaceSheetUpdateFormArabic TableDataAr={tableAr} />
             ) : (
@@ -776,10 +833,10 @@ const AddNewTable = React.memo(() => {
       );
     } else {
       return (
-        <div className="flex justify-center      flex-col lg:flex-row  gap-1   ">
+        <div className="flex justify-center     flex-col lg:flex-row  gap-1   ">
           {/* Arabic Form */}
 
-          <div className="">
+          <div className="w-screen">
             <form>
               <div className="">
                 <BalaceSheet TakingShort={takeShot} />
@@ -822,7 +879,7 @@ const AddNewTable = React.memo(() => {
           </div>
 
           {/* English Form */}
-          <div className="">
+          <div className="w-screen">
             <form>
               <div className=" pb-8">
                 <div className="  ">

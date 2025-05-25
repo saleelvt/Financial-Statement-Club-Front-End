@@ -827,7 +827,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       <div className="flex justify-start  my-2 text-black">
         <table
           dir="rtl"
-          className="border font-semibold border-gray-300 text-xs table-fixed mb-12  "
+          className="border font-semibold border-gray-300 text-xs  w-full mb-12  "
         >
           <thead>
             <tr className="bg-gray-100">

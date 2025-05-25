@@ -29,7 +29,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
       <>
         {table ? (
           <div className="flex justify-start   my-2 text-black">
-            <table dir="rtl" className="border font-semibold border-gray-300 text-xs mb-8 table-fixed ">
+            <table dir="rtl" className="border font-semibold border-gray-300 text-xs mb-8  w-full ">
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-100 w-96"></th>

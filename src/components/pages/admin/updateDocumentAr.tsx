@@ -536,7 +536,7 @@ setShowToastAr(true)
 
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
-                {/* المجلس */}
+                المجلس
               </label>
 
               <div className="relative">

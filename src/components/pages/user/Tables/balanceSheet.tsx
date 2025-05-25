@@ -29,7 +29,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
       <>
         {table ? (
           <div className="flex justify-start   my-2 text-black">
-            <table className="border font-semibold border-gray-300 text-xs mb-8 table-fixed ">
+            <table className="border font-semibold border-gray-300 text-xs mb-8  w-full ">
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-100 w-96"></th>

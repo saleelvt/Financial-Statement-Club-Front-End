@@ -45,6 +45,7 @@ const UserCompanyDetails = React.memo(() => {
   const [selectedTableKey, setSelectedTableKey] = useState<TableKey | null>(
     null
   );
+  // const [tableButtonOn,setTableButton]=useState(false)
   const navigate = useNavigate();
   const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
@@ -153,9 +154,14 @@ const UserCompanyDetails = React.memo(() => {
     }
     // ✅ If a tableKey was selected before, check if it exists for this PDF
 
-    if (selectedTableKey) {
-      const tableData =
-        document.formData?.[key as FieldKey]?.table?.[
+    if (selectedPdfKey) {
+      // if( document.formData?.[key as FieldKey]?.table){
+
+      //   setTableButton(true)
+
+      // }
+
+      const tableData =  document.formData?.[key as FieldKey]?.table?.[
           selectedTableKey as keyof ITable
         ];
 
@@ -174,6 +180,10 @@ const UserCompanyDetails = React.memo(() => {
     }
   };
 
+useEffect(()=>{
+
+},[selectedPdfKey])
+
   const handleTableViewButtonClick = (tableKey: TableKey) => {
     setSelectedTableKey(tableKey);
 
@@ -183,9 +193,18 @@ const UserCompanyDetails = React.memo(() => {
         document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
       console.log("the balancesheet data : ", filteredData, "key: ", tableKey);
 
-      if (filteredData) {
-        setTableData(filteredData);
-      }
+      const isEmptyDeep = (obj: any): boolean => {
+        if (!obj || typeof obj !== "object") return true;
+        if (Array.isArray(obj)) return obj.length === 0;
+
+        return Object.values(obj).every((value) => isEmptyDeep(value));
+      };
+
+      const isValidTable = (table: any) => {
+        return table && typeof table === "object" && !isEmptyDeep(table);
+      };
+
+      setTableData(isValidTable(filteredData) ? filteredData : null);
     }
   };
 

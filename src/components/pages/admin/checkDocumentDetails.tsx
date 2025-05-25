@@ -40,7 +40,6 @@ import { FaTrash } from "react-icons/fa";
   const [searchTerm, setSearchTerm] = useState(""); // state for search term
   const navigate = useNavigate();
 
-  useEffect(() => {
     const fetchDocuments = async () => {
       setLoading(true);
       try {
@@ -63,8 +62,11 @@ import { FaTrash } from "react-icons/fa";
         setLoading(false);
       }
     };
+  useEffect(() => {
+  
     fetchDocuments();
   }, [tadawalCode, language]);
+
 
   if (loading) {
     return <Loading />;
@@ -82,6 +84,11 @@ import { FaTrash } from "react-icons/fa";
         config
       );
 
+      if(response.data.success){
+
+        fetchDocuments();
+
+      }
       console.log("delete response ofthe document: ",response);
       
    

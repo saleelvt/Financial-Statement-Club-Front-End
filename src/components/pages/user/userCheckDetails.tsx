@@ -274,7 +274,6 @@ const handleLeftClick = () => {
           FormField
         ];
         console.log("Latest FieldKey:", latestKey);
-      
         setSelectedPdfKey(latestKey);
         handlePdfButtonClick(latestKey);
         if (latestData.file) {
@@ -448,15 +447,19 @@ const handleLeftClick = () => {
     className="flex justify-start gap-[6px] text-xs justify-center lg:justify-start"
   >
     <div className="flex items-center">
-      <button
-        onClick={handleRightClick}
-        disabled={startIndex === 0}
+
+       <button
+        onClick={handleLeftClick }
+        disabled={startIndex + maxVisible >= sortedYears.length}
         className={`text-gray-600 px-2 py-1 bg-gray-200 rounded-md ${
-          startIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
+          startIndex + maxVisible >= sortedYears.length
+            ? "opacity-50 cursor-not-allowed"
+            : ""
         }`}
       >
         {"<"}
       </button>
+     
     </div>
     <div className="flex flex-wrap gap-2 py-1 items-center justify-center lg:justify-start">
 {[...visibleYears]
@@ -475,20 +478,20 @@ const handleLeftClick = () => {
     </button>
   ))}
 
-
-    </div>
-    <div className="flex items-center">
-      <button
-        onClick={handleLeftClick }
-        disabled={startIndex + maxVisible >= sortedYears.length}
+ <button
+        onClick={handleRightClick}
+        disabled={startIndex === 0}
         className={`text-gray-600 px-2 py-1 bg-gray-200 rounded-md ${
-          startIndex + maxVisible >= sortedYears.length
-            ? "opacity-50 cursor-not-allowed"
-            : ""
+          startIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >
         {">"}
       </button>
+
+    </div>
+    <div className="flex items-center">
+
+     
     </div>
   </div>
 </div>

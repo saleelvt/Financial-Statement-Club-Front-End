@@ -256,7 +256,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           formData.append("fullNameEn", adminCredentials?.fullNameEn);
           formData.append("nickNameEn", adminCredentials?.nickNameEn);
           formData.append("tadawalCode", adminCredentials?.tadawalCode);
-          formData.append("sector", adminCredentials?.sector);
+          formData.append("sector", adminCredentials?.sector); 
 
           console.log("FormData contents:");
           formData.forEach((value, key) => {
@@ -300,9 +300,19 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         ).unwrap();
         if (response.success) {
         setShowToast(true);
+        setFormData({
+    Q1: { file: null, date: null, year: "", createAt: "" },
+    Q2: { file: null, date: null, year: "", createAt: "" },
+    Q3: { file: null, date: null, year: "", createAt: "" },
+    Q4: { file: null, date: null, year: "", createAt: "" },
+    S1: { file: null, date: null, year: "", createAt: "" },
+    Board: { file: null, date: null, year: "", createAt: "" },
+    Year: { file: null, date: null, year: "", createAt: "" },
+  });
         setTimeout(() => {
           setShowToast(false);
-        }, 30000); // 30 seconds
+            window.location.reload()
+        }, 10000); // 30 seconds
       
 
           // Reset form data
@@ -424,6 +434,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   />
 
                   <input
@@ -455,6 +468,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -485,6 +501,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -515,6 +534,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -544,6 +566,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -574,6 +599,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -604,6 +632,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   />
                   <input
                     type="text"

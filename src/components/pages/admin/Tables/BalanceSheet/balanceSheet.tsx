@@ -843,8 +843,9 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={sassets}
+                  readOnly
                   onChange={(e) => setAssets(e.target.value)}
-                  className=" text-start   bg-gray-400 fext-row"
+                  className=" text-start  cursor-not-allowed  bg-gray-400 fext-row"
                 />
               </td>
             </tr>
@@ -854,8 +855,9 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={snonCurrentAssets}
+                          readOnly
                   onChange={(e) => ssetnonCurrentAssets(e.target.value)}
-                  className=" text-start  w-full bg-gray-200 fext-row"
+                  className=" text-start  w-full cursor-not-allowed bg-gray-200 fext-row"
                 />
               </td>
             </tr>
@@ -1110,7 +1112,8 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
               <td className="">
                 
                 <input   value={sfirtsTotalnonCurrentAssets}
-                  onChange={(e) => ssetfirtsTotalnonCurrentAssets(e.target.value)}  className="w-full bg-gray-200 text-black p-1" />
+                       
+                  onChange={(e) => ssetfirtsTotalnonCurrentAssets(e.target.value)}  className="w-full  bg-gray-200 text-black p-1" />
               </td>
               <td className="border border-gray-300"></td>
               <td className="border  border-gray-300">
@@ -1327,9 +1330,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
               <td className="border border-gray-300">
                 <input
                   placeholder=""
+                          readOnly
                   value={stotalNonCurrentAssets}
                   onChange={(e) => ssetTotalNonCurrentAssets(e.target.value)}
-                  className=" text-start p-0.5  w-full bg-gray-200  fext-row"
+                  className=" text-start p-0.5 cursor-not-allowed w-full bg-gray-200  fext-row"
                 />
               </td>
 
@@ -1355,8 +1359,9 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={scurrentAssets}
+                          readOnly
                   onChange={(e) => ssetCurrentAssets(e.target.value)}
-                  className=" text-start   bg-gray-200 fext-row"
+                  className=" text-start cursor-not-allowed   bg-gray-200 fext-row"
                 />
               </td>
             </tr>
@@ -1570,8 +1575,9 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             <tr className="bg-gray-200 font-semibold">
               <td className="">
               <input   value={sfirtsTotalCurrentAssets}
+                
                   onChange={(e) => ssetfirtsTotalCurrentAssets(e.target.value)} 
-                   className="w-full bg-gray-200 text-black p-1" />
+                   className="w-full  bg-gray-200 text-black p-1" />
               </td>
               <td className="border border-gray-300"></td>
 
@@ -1749,8 +1755,9 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={stotalCurrentAssets}
+                          readOnly
                   onChange={(e) => ssetTotalCurrentAssets(e.target.value)}
-                  className=" text-start p-0.5   bg-gray-200 fext-row"
+                  className=" text-start p-0.5 cursor-not-allowed   bg-gray-200 fext-row"
                 />
               </td>
               <td className="border border-gray-300"></td>
@@ -1766,9 +1773,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 {" "}
                 <input
                   placeholder=""
+                          readOnly
                   value={stotalAssets}
                   onChange={(e) => ssetTotalAssets(e.target.value)}
-                  className=" text-start p-1  bg-gray-400 fext-row"
+                  className=" text-start p-1  cursor-not-allowed bg-gray-400 fext-row"
                 />{" "}
               </td>
               <td className="border border-gray-300"></td>

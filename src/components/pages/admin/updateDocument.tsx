@@ -14,6 +14,7 @@ import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { FaArrowCircleLeft } from "react-icons/fa";
+import ValidationModal from "../validationModal";
 
 const UpdateDocument: React.FC = React.memo(() => {
   const navigate = useNavigate();
@@ -26,8 +27,10 @@ const UpdateDocument: React.FC = React.memo(() => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showToast, setShowToast] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
   const [document, setDocument] = useState<
-    DocumentSliceEn | null | undefined
+    DocumentSliceEn | null | undefined  
   >();
   const location = useLocation();
   const { id, language } = location.state || {};
@@ -175,18 +178,35 @@ const UpdateDocument: React.FC = React.memo(() => {
         createdAt: new Date().toISOString(), // Example value
       };
 
-      const response = await dispatch(
-        UpdateDocumentEnglish({ id, language, adminCredentials })
+      const response = await dispatch(  UpdateDocumentEnglish({ id, language, adminCredentials })
+     
+      
       ).unwrap();
+    
       if (response.success) {
         setShowToast(true);
         setLoading(false);
+ setFormData({
+    Q1: { file: null, date: null, year: "", createAt: "" },
+    Q2: { file: null, date: null, year: "", createAt: "" },
+    Q3: { file: null, date: null, year: "", createAt: "" },
+    Q4: { file: null, date: null, year: "", createAt: "" },
+    S1: { file: null, date: null, year: "", createAt: "" },
+    Board: { file: null, date: null, year: "", createAt: "" },
+    Year: { file: null, date: null, year: "", createAt: "" },
+  });
+
         setTimeout(() => {
           setShowToast(false);
-        }, 30000); // 30 seconds
+          window.location.reload()
+        }, 10000); // 30 seconds
       }
     } catch (error: any) {
-      console.log(error);
+         console.log("thrinooti engins",error);
+            setLoading(false);
+      setIsModalOpen(true)
+        setErrorMessage(error.message)
+    
     }
   };
 
@@ -307,6 +327,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                   portalId="root-portal"
+                    showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
 
                 <input
@@ -348,6 +371,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                   portalId="root-portal"
+                    showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -388,6 +414,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                   portalId="root-portal"
+                    showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -403,7 +432,7 @@ const UpdateDocument: React.FC = React.memo(() => {
               <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                 Q4
               </label>
-              <div className="">
+              <div className="relative">
                 <input
                   type="file"
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
@@ -428,6 +457,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                   portalId="root-portal"
+                    showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -468,6 +500,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                   portalId="root-portal"
+                    showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -484,7 +519,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                   Annual
                 </label>
-                <div className="">
+                <div className="relative">
                   <input
                     type="file"
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
@@ -509,6 +544,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -551,6 +589,9 @@ const UpdateDocument: React.FC = React.memo(() => {
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                   portalId="root-portal"
+                    showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -590,6 +631,11 @@ const UpdateDocument: React.FC = React.memo(() => {
             )}
           </div>
         </form>
+          <ValidationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message={errorMessage}
+        />
       </div>
     </div>
   );

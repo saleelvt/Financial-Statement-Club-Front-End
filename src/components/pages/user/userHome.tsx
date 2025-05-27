@@ -146,7 +146,7 @@ const UserHomePage: React.FC = React.memo(() => {
         index === self.findIndex((t) => t?.nickNameEn === item?.nickNameEn)
     )
     .sort((a, b) =>
-      userLanguage === "English"
+      userLanguage === "English" 
         ? a.nickNameEn.localeCompare(b.nickNameEn, "en", {
             sensitivity: "base",
           })
@@ -180,7 +180,6 @@ const UserHomePage: React.FC = React.memo(() => {
          <GrLanguage />
         </button>
       </div>
-
 
       <div
       dir={ language === "Arabic" ? "rtl" : "ltr"}

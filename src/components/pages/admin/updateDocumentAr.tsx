@@ -14,10 +14,13 @@ import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
+import ValidationModal from "../validationModal";
 
 const UpdateDocumentAr: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+      const [errorMessage, setErrorMessage] = useState("");
   const [loading,setLoading]=useState(false)
   const [fullNameAr, setFullNameAr] = useState("");
   const [nickNameAr, setnickNameAr] = useState("");
@@ -157,13 +160,26 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
         UpdateDocumentArabic({ id, language, adminCredentials })
       ).unwrap();
 if(response.success){
+   setFormData({
+    Q1: { file: null, date: null, year: "", createAt: "" },
+    Q2: { file: null, date: null, year: "", createAt: "" },
+    Q3: { file: null, date: null, year: "", createAt: "" },
+    Q4: { file: null, date: null, year: "", createAt: "" },
+    S1: { file: null, date: null, year: "", createAt: "" },
+    Board: { file: null, date: null, year: "", createAt: "" },
+    Year: { file: null, date: null, year: "", createAt: "" },
+  });
 setShowToastAr(true)
   setLoading(false)
    setTimeout(()=>{
+      window.location.reload()
     setShowToastAr(false)
-   },30000)
+   },10000)
 }      
     } catch (error: any) {
+       setLoading(false)
+        setIsModalOpen(true)
+        setErrorMessage(error.message)
      console.log("erorr ",error);
      
     }
@@ -303,6 +319,9 @@ setShowToastAr(true)
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -346,6 +365,9 @@ setShowToastAr(true)
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -390,6 +412,9 @@ setShowToastAr(true)
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
 
                 <input
@@ -434,6 +459,9 @@ setShowToastAr(true)
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -478,6 +506,9 @@ setShowToastAr(true)
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
 
                 <input
@@ -522,6 +553,9 @@ setShowToastAr(true)
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
 
                 <input
@@ -546,7 +580,7 @@ setShowToastAr(true)
                   onChange={(e) =>
                     handleFileChange("Board", e.target.files?.[0] || null)
                   }
-                />
+                /> 
 
                 {typeof formData?.Board?.file === "string" && (
                   <span
@@ -566,6 +600,9 @@ setShowToastAr(true)
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -610,6 +647,11 @@ setShowToastAr(true)
             )}
           </div>
         </form>
+        <ValidationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message={errorMessage}
+        />
       </div>
     </div>
   );

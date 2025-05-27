@@ -286,12 +286,14 @@ fetchData()
 
     const dataArray = Array.from(yearsSet);
     let largestYear = dataArray[0];
+console.log("kindam data of hte dta ",largestYear);
 
     for (const x of dataArray) {
       if (x > largestYear) {
         largestYear = x;
       }
     }
+    console.log("kindam data of hte dta ",largestYear);
 
     setSelectedYear(largestYear);
     setYears(dataArray);
@@ -299,7 +301,7 @@ fetchData()
     const selectedData = preferredOrder
       .map((priority) => datanew.find((x) => x.quarter === priority))
       .find(Boolean); // returns the first non-undefined match
-    console.log("Selected data:", selectedData);
+      console.log("Selected data:", selectedData);
     // console.log("the quater sist the data : ",quartersMap,datanew);
     if (selectedData) {
       setQuarterYear(selectedData.quarter);
@@ -340,7 +342,6 @@ fetchData()
 
       console.log("English Table Response:", response.data.englishTable);
       console.log("Arabic Table Response:", response.data.arabicTable);
-
       setTableDataAr(response.data.arabicTable);
       setTableData(response.data.englishTable);
     } catch (error) {
@@ -364,12 +365,10 @@ fetchData()
       setErrorMessage(
         "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
       );
-
       setIsModalOpen(true);
       setModalOpen(false);
       return;
     }
-
     try {
       const response = await commonRequest(
         "DELETE",
@@ -403,7 +402,6 @@ console.log("resppos da : ",response);
       setModalOpen(false);
     }
   };
-
   const handleUpdateTable = async (wlanguage: string | null) => {
     if (
       !wlanguage ||

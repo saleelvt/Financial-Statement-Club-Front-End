@@ -14,7 +14,7 @@ type BalaceSheetFormArProps = {
 
 const BalaceSheetUpdateFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
   ({ TableDataAr }) => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch<AppDispatch>(); 
     // Updated state declarations with empty strings as initial values
     const [nonCurrentAssets, setNonCurrentAssets] = useState<string[]>(
       Array(12).fill("")
@@ -1071,6 +1071,9 @@ useEffect(() => {
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
                   dateFormat="dd MMMM yyyy" // 30 April 2025
+                    showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
 
                 <input
@@ -1107,6 +1110,9 @@ useEffect(() => {
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
                   dateFormat="yyyy MMMM dd"
+                    showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
 
                 <input

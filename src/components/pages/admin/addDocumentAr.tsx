@@ -211,21 +211,20 @@ const AddDocumentArabic: React.FC = React.memo(() => {
 
  if(response.success){
 setShowToastAr(true)
+ setFormData({
+    Q1: { file: null, date: null, year: "", createAt: "" },
+    Q2: { file: null, date: null, year: "", createAt: "" },
+    Q3: { file: null, date: null, year: "", createAt: "" },
+    Q4: { file: null, date: null, year: "", createAt: "" },
+    S1: { file: null, date: null, year: "", createAt: "" },
+    Board: { file: null, date: null, year: "", createAt: "" },
+    Year: { file: null, date: null, year: "", createAt: "" },
+  });
    setTimeout(()=>{
     setShowToastAr(false)
-   },30000)
+      window.location.reload()
+   },10000)
 
-
-        // Reset form data
-        await setFormData(
-          (prevFormData) =>
-            Object.fromEntries(
-              Object.entries(prevFormData).map(([key, value]) => [
-                key as keyof typeof prevFormData,
-                { ...value, file: null,date:null,year:"" },
-              ])
-            ) as Record<FieldKey, FormField> 
-        );
       }
     } catch (error: any) {
       console.error("Submit error:", error);
@@ -351,6 +350,9 @@ setShowToastAr(true)
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
 
                 <input
@@ -382,6 +384,9 @@ setShowToastAr(true)
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -411,6 +416,9 @@ setShowToastAr(true)
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -440,6 +448,9 @@ setShowToastAr(true)
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -453,7 +464,7 @@ setShowToastAr(true)
             <div className=" ">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ن.س
-              </label>
+              </label> 
               <input
                 type="file"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
@@ -469,6 +480,9 @@ setShowToastAr(true)
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -498,6 +512,9 @@ setShowToastAr(true)
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"
@@ -528,6 +545,9 @@ setShowToastAr(true)
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
                     portalId="root-portal"
+                      showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                 />
                 <input
                   type="text"

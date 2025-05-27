@@ -903,7 +903,7 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     return (
       <div className="flex justify-start   my-2 text-black">
         <table className="border font-semibold border-gray-300 text-xs mb-12 table-fixed ">
-          <thead>
+          <thead> 
             <tr className="bg-gray-100">
               <th className="border border-gray-100 w-96"></th>
               <th className="border border-gray-100 w-16">Notes</th>

@@ -51,7 +51,25 @@ const UserCompanyDetails = React.memo(() => {
   const [selectedFilteredDocWithYear, setSelectedFilteredDocWithYear] =
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<any>("");
-  const [visibleYears, setVisibleYears] = useState<number>(0);
+
+
+
+
+const sortedYears = [...yearList].map(Number).sort((a, b) => b - a); // ascending
+const maxVisible = 5;
+
+const [startIndex, setStartIndex] = useState(() => {
+  const lastIndex = sortedYears.length - maxVisible;
+  return lastIndex >= 0 ? lastIndex : 0
+});
+
+const visibleYears = sortedYears.slice(startIndex, startIndex + maxVisible);
+
+useEffect(()=>{
+  console.log("the visible ", visibleYears);
+  
+
+},[visibleYears]) 
 
   const [iframeSrc, setIframeSrc] = useState<string>("");
   const [table, setTableData] = useState<any>(null);
@@ -117,6 +135,25 @@ const UserCompanyDetails = React.memo(() => {
     "ProfitLoss",
     "CashFlow",
   ];
+
+
+
+
+  const handleRightClick  = () => {
+  if (startIndex > 0) {
+    setStartIndex((prev) => prev - 1);
+  }
+};
+
+const handleLeftClick = () => {
+  if (startIndex + maxVisible < sortedYears.length) {
+    setStartIndex((prev) => prev + 1);
+  }
+};
+
+
+
+
   const isEmptyDeep = (obj: any): boolean => {
     if (!obj || typeof obj !== "object") return true;
     if (Array.isArray(obj)) return obj.length === 0;
@@ -127,7 +164,7 @@ const UserCompanyDetails = React.memo(() => {
     return table && typeof table === "object" && !isEmptyDeep(table);
   };
 
-  const handleYearClick = async (year: string) => {
+  const handleYearClick = async (year: any) => {
     setSelectedYear(year);
     setSelectedFilteredDocWithYear([]); // Clear previous filtered documents
     setSelectedPdfKey(null); // Reset selected PDF key
@@ -204,7 +241,7 @@ const UserCompanyDetails = React.memo(() => {
   };
 
   const handlePDF = () => {
-    setTableButton(false)
+    setTableButton(false);
     setTableData(null);
     setSelectedTableKey(null); // reset tableKey
   };
@@ -237,9 +274,9 @@ const UserCompanyDetails = React.memo(() => {
           FormField
         ];
         console.log("Latest FieldKey:", latestKey);
-        console.log("Latest File:", latestData.file);
+      
         setSelectedPdfKey(latestKey);
-        handlePdfButtonClick(latestKey)
+        handlePdfButtonClick(latestKey);
         if (latestData.file) {
           if (typeof latestData.file === "string") {
             const encodedUrl = encodeURIComponent(latestData.file);
@@ -250,20 +287,10 @@ const UserCompanyDetails = React.memo(() => {
             console.error("fileUrl is not a valid string:", latestData.file);
           }
         }
-        
       }
     }
   }, [selectedYear, selectedFilteredDocWithYear]);
-  const handleRightClick = () => {
-    if (visibleYears > 0) {
-      setVisibleYears(visibleYears - 1);
-    }
-  };
-  const handleLeftClick = () => {
-    if (visibleYears > 5) {
-      setVisibleYears(visibleYears + 1);
-    }
-  };
+
 
   const isDocumentEn = (
     document: DocumentSliceEn | DocumentSliceAr
@@ -414,48 +441,58 @@ const UserCompanyDetails = React.memo(() => {
                         : document.sector}
                     </h3>
                   </div>
-                  <div className="mt-4">
-                    <div
-                      dir={userLanguage === "English" ? "ltr" : "rtl"}
-                      className="flex justify-start gap-[6px]  text-xs justify-center lg:justify-start "
-                    >
-                      <div className="flex  items-center ">
-                        <button
-                          onClick={handleLeftClick}
-                          className="text-gray-600 flex   items-center    justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md     "
-                        >
-                          {" "}
-                          {"<"}
-                        </button>
-                      </div>
-                      <div className="flex flex-wrap gap-2 py-1  items-center justify-center lg:justify-start ">
-                        {yearList
-                          .slice(visibleYears, visibleYears + 5)
-                          .map((year) => (
-                            <button
-                              key={year}
-                              onClick={() => handleYearClick(year)}
-                              className={`px-2  py-1 rounded-md ${
-                                selectedYear === year
-                                  ? "bg-gray-600 text-white"
-                                  : "bg-gray-200 text-gray-700 "
-                              }`}
-                            >
-                              {year}
-                            </button>
-                          ))}
-                      </div>
-                      <div className="flex items-center ">
-                        <button
-                          onClick={handleRightClick}
-                          className="text-gray-600 flex    items-center justify-center text-[16px] px-2 py-1   bg-gray-200 rounded-md   "
-                        >
-                          {" "}
-                          {">"}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+
+                 <div className="mt-4">
+  <div
+    dir={userLanguage === "English" ? "ltr" : "rtl"}
+    className="flex justify-start gap-[6px] text-xs justify-center lg:justify-start"
+  >
+    <div className="flex items-center">
+      <button
+        onClick={handleRightClick}
+        disabled={startIndex === 0}
+        className={`text-gray-600 px-2 py-1 bg-gray-200 rounded-md ${
+          startIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+      >
+        {"<"}
+      </button>
+    </div>
+    <div className="flex flex-wrap gap-2 py-1 items-center justify-center lg:justify-start">
+{[...visibleYears]
+  .sort((a, b) => a - b)  // Sort descending numerically
+  .map((year) => (
+    <button
+      key={year.toString()}
+      onClick={() => handleYearClick(year.toString())}
+      className={`px-2 py-1 rounded-md ${
+        selectedYear === year.toString()
+          ? "bg-gray-600 text-white"
+          : "bg-gray-200 text-gray-700"
+      }`}
+    >
+      {year}
+    </button>
+  ))}
+
+
+    </div>
+    <div className="flex items-center">
+      <button
+        onClick={handleLeftClick }
+        disabled={startIndex + maxVisible >= sortedYears.length}
+        className={`text-gray-600 px-2 py-1 bg-gray-200 rounded-md ${
+          startIndex + maxVisible >= sortedYears.length
+            ? "opacity-50 cursor-not-allowed"
+            : ""
+        }`}
+      >
+        {">"}
+      </button>
+    </div>
+  </div>
+</div>
+
 
                   <div
                     dir={userLanguage === "English" ? "ltr" : "rtl"}
@@ -528,7 +565,9 @@ const UserCompanyDetails = React.memo(() => {
                         dir={userLanguage === "English" ? "ltr" : "rtl"}
                         className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
                       >
-                        {selectedFilteredDocWithYear.length > 0 && validTableKeys.length>0 &&tableButtonOn ? (
+                        {selectedFilteredDocWithYear.length > 0 &&
+                        validTableKeys.length > 0 &&
+                        tableButtonOn ? (
                           <div className="flex flex-wrap gap-2">
                             {/* Only shown if at least one valid table exists */}
                             <button
@@ -546,22 +585,19 @@ const UserCompanyDetails = React.memo(() => {
                             </button>
 
                             {/* Table subkeys */}
-                            {validTableKeys
-                              .map((key) => (
-                                <button
-                                  key={key}
-                                  onClick={() =>
-                                    handleTableViewButtonClick(key)
-                                  }
-                                  className={`px-2 py-1 text-xs rounded-md ${
-                                    selectedTableKey === key
-                                      ? "bg-gray-600 text-white"
-                                      : "bg-gray-100 text-gray-700 hover:bg-gray-300"
-                                  }`}
-                                >
-                                  {key}
-                                </button>
-                              ))}
+                            {validTableKeys.map((key) => (
+                              <button
+                                key={key}
+                                onClick={() => handleTableViewButtonClick(key)}
+                                className={`px-2 py-1 text-xs rounded-md ${
+                                  selectedTableKey === key
+                                    ? "bg-gray-600 text-white"
+                                    : "bg-gray-100 text-gray-700 hover:bg-gray-300"
+                                }`}
+                              >
+                                {key}
+                              </button>
+                            ))}
                           </div>
                         ) : (
                           <p className="text-center text-gray-600"></p>

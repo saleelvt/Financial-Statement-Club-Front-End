@@ -2,18 +2,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 
-import DatePicker from "react-datepicker";
+import DatePicker from "react-datepicker"; 
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../reduxKit/store";
+import { parse, isValid } from "date-fns";
 import { setBalanceSheetDataAction } from "../../../../../reduxKit/actions/Tables/balancSheet";
 type BalaceSheetFormArProps = {
   TableDataEn: any;
-};
+}; 
 
 const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
-  ({ TableDataEn }) => {
-    // Updated state declarations with empty strings as initial values
+  ({ TableDataEn }) => { 
+    // Updated state declarations with empty strings as initial values 
     const dispatch = useDispatch<AppDispatch>();
     const [nonCurrentAssetsAr, setNonCurrentAssets] = useState<string[]>(
       Array(12).fill("")
@@ -381,8 +382,8 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     const totalEquityAndLiabilitiesDate2 =
       totalEquityDate2 + totalLiabilitiesDate2;
 
-    const [data1En, setDate1En] = useState<Date | null>(null);
-    const [data2En, setDate2En] = useState<Date | null>(null);
+    const [data1EnN, setDate1En] = useState<Date | null>(null);
+    const [data2EnN, setDate2En] = useState<Date | null>(null);
 
     const [date1Rl, setDate1Rl] = useState("'000");
     const [date2Rl, setDate2Rl] = useState("'000");
@@ -442,6 +443,26 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(
       "Total shareholder's equity and Liabilities"
     );
+
+
+
+
+
+    const handleDateChangeRaw = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+
+    // Try to parse the manually entered date in dd/MM/yyyy format
+    const parsedDate = parse(inputValue, "dd/MM/yyyy", new Date());
+
+    if (isValid(parsedDate)) {
+      setDate1En(parsedDate);
+    }
+  };
+
+
+
+
+
 
     useEffect(() => {
       console.log(
@@ -659,8 +680,8 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
       stotalliabilities,
       stotalEquityAndLiabilities,
 
-      data1En,
-      data2En,
+      data1EnN,
+      data2EnN,
       nonCurrentAssetsAr,
       nonCurrentSubAssetsAr,
       nonCurrentAssetsDate2Ar,
@@ -801,8 +822,8 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
         stotalEquityAndLiabilities: stotalEquityAndLiabilities,
         ItotalEquityAndLiabilities: totalEquityAndLiabilities,
         ItotalEquityAndLiabilitiesDate2: totalEquityAndLiabilitiesDate2,
-        data1En: data1En,
-        data2En: data2En,
+        data1En: data1EnN,
+        data2En: data2EnN,
       };
 
       await dispatch(setBalanceSheetDataAction(formData));
@@ -909,11 +930,12 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
               <th className="border border-gray-100 w-16">Notes</th>
               <th className="border border-gray-100 p-1 w-28   ">
                 <DatePicker
-                  selected={data1En}
+                  selected={data1EnN}
                   onChange={(date) => setDate1En(date)}
+                   onChangeRaw ={()=>handleDateChangeRaw}
                   className="bg-gray-100 w-24 text-center font-bold"
                   calendarClassName="custom-datepicker"
-                  placeholderText="Date"
+                  placeholderText="Date" 
                   dateFormat="dd MMMM yyyy"
                   showMonthDropdown
                   showYearDropdown
@@ -946,7 +968,7 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
               </th>
               <th className="border   border-gray-100 p-1 w-28 ">
                 <DatePicker
-                  selected={data2En}
+                  selected={data2EnN}
                   onChange={(date) => setDate2En(date)}
                   className="bg-gray-100 w-24 text-center font-bold"
                   calendarClassName="custom-datepicker"
@@ -973,7 +995,7 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
                     alt="Riyal"
                     className="w-3 h-3 "
                   />
-                  <input
+                  <input 
                     placeholder=""
                     value={date2Rl}
                     onChange={(e) => setDate2Rl(e.target.value)}

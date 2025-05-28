@@ -211,7 +211,7 @@ useEffect(() => {
                 {language === "Arabic" ? "قائمة المستندات " : "Document List"}
               </h4>
             </div>
-          </div>
+          </div> 
           <div className="overflow-x-auto">
             <table className="table-auto w-full border-collapse border border-gray-300 text-left">
               <thead>

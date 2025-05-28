@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
@@ -17,6 +16,7 @@ import BalanceSheetFormUserArabic from "../user/Tables/balanceSheetAr";
 import BalaceSheetUpdateFormArabic from "../admin/Tables/BalanceSheetUpdate/balanceSheetUpdateAr";
 import BalaceSheetUpdateFormEnglish from "../admin/Tables/BalanceSheetUpdate/balanceSheetUpdateEn";
 import { ITable } from "./Tables/BalanceSheet/interface";
+
 
 import { ConfirmationModalTable } from "./Tables/ConfirmationModalTable";
 import { ConfirmationUpdateModalTable } from "./Tables/updateConfirmationModalTable";
@@ -100,9 +100,7 @@ const AddNewTable = React.memo(() => {
   }, [selectedTableType, tableData, tableDataAr]);
 
   const handleClickEnglish = async () => {
-    try {
-   
-     
+    try {  
       const Language = "English";
       // create data object
          if (

@@ -311,7 +311,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
   });
         setTimeout(() => {
           setShowToast(false);
-            window.location.reload()
+  
         }, 10000); // 30 seconds
       
 

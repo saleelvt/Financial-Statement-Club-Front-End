@@ -30,6 +30,7 @@ export const App: React.FC = React.memo(() => {
     <Fragment>
       <Toaster position="top-center" />
       <Suspense fallback={<Loading />}>
+ 
         <Routes>
           <Route path="/" element={ <UserHomePage/>} />
           <Route path="/dd" element={ <Sekelton/>} />
@@ -46,6 +47,7 @@ export const App: React.FC = React.memo(() => {
           <Route path="/documentDetails" element={isLogged &&  role === 'admin' ? <CheckDocumentDetails /> : <AdminLogin />} />
           <Route path="/admin/profile" element={isLogged &&  role === 'admin' ? <AdminProfilePage /> : <AdminLogin />} />
         </Routes>
+
       </Suspense>
     </Fragment>
   );

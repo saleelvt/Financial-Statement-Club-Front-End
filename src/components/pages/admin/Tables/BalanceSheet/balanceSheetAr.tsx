@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../reduxKit/store";
+import { parse, isValid } from "date-fns";
 
 import { setBalanceSheetDataArAction } from "../../../../../reduxKit/actions/Tables/balanceSheetAr";
 type BalaceSheetFormArProps = {
@@ -291,6 +292,18 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
         // add other types of notes here if needed (e.g., nonCurrentSubNote, currentNote, etc.)
       }
     };
+
+
+          const handleDateChangeRaw = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const inputValue = e.target.value;
+        
+            // Try to parse the manually entered date in dd/MM/yyyy format
+            const parsedDate = parse(inputValue, "dd/MM/yyyy", new Date());
+        
+            if (isValid(parsedDate)) {
+              setDate1Ar(parsedDate);
+            }
+          };
 
     // Helper function to safely parse numeric values from strings
     const parseNumericValue = (value: string): number => {
@@ -877,6 +890,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                   selected={data2Ar}
                   onChange={(date) => setDate2Ar(date)}
                   className="bg-gray-100   w-24 text-center font-bold"
+                         onChangeRaw ={()=>handleDateChangeRaw} 
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
                    dateFormat="dd MMMM yyyy" // 30 April 2025

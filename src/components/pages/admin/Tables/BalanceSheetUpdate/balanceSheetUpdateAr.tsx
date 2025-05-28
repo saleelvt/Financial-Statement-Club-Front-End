@@ -1070,7 +1070,7 @@ useEffect(() => {
                   className="bg-gray-100  w-24 text-center font-bold direction-ltr"
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
-                  dateFormat="dd MMMM yyyy" // 30 April 2025
+                  dateFormat="  dd  yyyy MMMM" // 30 April 2025
                     showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"

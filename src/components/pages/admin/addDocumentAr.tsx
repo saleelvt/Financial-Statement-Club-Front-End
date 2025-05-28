@@ -222,7 +222,7 @@ setShowToastAr(true)
   });
    setTimeout(()=>{
     setShowToastAr(false)
-      window.location.reload()
+   
    },10000)
 
       }

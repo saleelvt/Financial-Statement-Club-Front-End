@@ -10,9 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.0",
+    "@mui/x-date-pickers": "^8.4.0",
     "@reduxjs/toolkit": "^2.3.0",
     "axios": "^1.7.7",
     "chart.js": "^4.4.8",
+    "date-fns": "^4.1.0",
+    "dayjs": "^1.11.13",
     "formik": "^2.4.6",
     "html-to-image": "^1.11.13",
     "html-to-image-no-fonts": "^0.1.2",

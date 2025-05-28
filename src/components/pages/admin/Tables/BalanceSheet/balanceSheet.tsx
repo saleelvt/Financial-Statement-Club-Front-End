@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../reduxKit/store";
 import { setBalanceSheetDataAction } from "../../../../../reduxKit/actions/Tables/balancSheet";
 type BalaceSheetFormArProps = { TakingShort: boolean };
-
 const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
   ({ TakingShort }) => {
     // Updated state declarations with empty strings as initial values
@@ -738,11 +737,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     const selectedDate = e.target.value;
                     setDate1En(selectedDate ? new Date(selectedDate) : null);
                   }}
-             
+                  
                 />
-
                 <input
-                  placeholder=""
+                  placeholder="" 
                   value={date1}
                   onChange={(e) => setDate1(e.target.value)}
                   className="w-full text-center bg-gray-100 fext-row"
@@ -1589,7 +1587,6 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                           handleChange(idx, "", "currentSub");
                           return;
                         }
-
                         const formatted = new Intl.NumberFormat("en-US").format(
                           Number(rawValue)
                         );

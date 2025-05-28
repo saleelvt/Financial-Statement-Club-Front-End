@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-multi-date-picker";
 import gregorian_ar from "react-date-object/locales/gregorian_ar";
 import arabic from "react-date-object/calendars/gregorian";
+import type { DateObject } from "react-multi-date-picker";
+
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../reduxKit/store";
@@ -397,8 +399,8 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
     //   (val, idx) => val || currentSubLiabilitiesDate2[idx]
     // );
 
-    const [data1Ar, setDate1Ar] = useState<any>(null);
-    const [data2Ar, setDate2Ar] = useState<any>(null);
+    const [data1Ar, setDate1Ar] = useState<Date |null|any>(null);
+    const [data2Ar, setDate2Ar] = useState<Date | null |any>(null);
 
     const [date1, setDate1] = useState("(غير مراجعة)");
     const [date2, setDate2] = useState("(مراجعة)");
@@ -774,18 +776,30 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               <th className="border border-gray-100 w-96"></th>
               <th className="border border-gray-100 w-16">إيضاحات</th>
               <th className="border border-gray-100 p-1 w-28">
-                <div dir="rtl" className="items-center bg-green">
-                  <DatePicker
-                   className="text-right"
-                    value={data1Ar}
-                    onChange={(date) => setDate1Ar(date)}
-                    calendar={arabic}
-                    locale={gregorian_ar}
-                    inputClass=" text-center  bg-gray-100 w-28 "
-                    placeholder="اختر التاريخ"
-                    // calendarPosition="bottom-right"
-                  />
-                </div>
+
+<div dir="rtl" className="items-center bg-green">
+  <DatePicker
+    className="text-right"
+    value={data1Ar}
+    onChange={(date: DateObject | null) => {
+      if (date) {
+        const jsDate = new Date(
+        date.year,
+        date.month.number - 1, // ✅ Correct usage
+        date.day
+      );
+        setDate1Ar(jsDate);
+      } else {
+        setDate1Ar(null);
+      }
+    }}
+    calendar={arabic}
+    locale={gregorian_ar}
+    inputClass="text-center bg-gray-100 w-28"
+    placeholder="اختر التاريخ"
+  />
+</div>
+
 
                 {/* <div dir="rtl">
       <Calendar
@@ -825,15 +839,27 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
               <th className="border border-gray-100  w-28 p-1 ">
                 <div dir="rtl" className="items-center bg-green">
-                  <DatePicker
-                    className="text-right"
-                    value={data2Ar}
-                    onChange={(date) => setDate2Ar(date)}
-                    calendar={arabic}
-                    locale={gregorian_ar}
-                    inputClass=" text-center  bg-gray-100 w-28 "
-                    placeholder="اختر التاريخ"
-                  />
+                 <DatePicker
+  className="text-right"
+  value={data2Ar}
+  onChange={(date: DateObject | null) => {
+    if (date) {
+ const jsDate = new Date(
+        date.year,
+        date.month.number - 1, // ✅ Correct usage
+        date.day
+      );
+      setDate2Ar(jsDate);
+    } else {
+      setDate2Ar(null);
+    }
+  }}
+  calendar={arabic}
+  locale={gregorian_ar}
+  inputClass="text-center bg-gray-100 w-28"
+  placeholder="اختر التاريخ"
+/>
+
                 </div>
 
                 <input

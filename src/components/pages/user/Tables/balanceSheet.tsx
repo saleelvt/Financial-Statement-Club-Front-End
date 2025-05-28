@@ -136,7 +136,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                           {label || "-"}
                         </td>
                         <td className="border border-gray-300 p-1">
-                          {note || "-"}
+                          {note || ""}
                         </td>
                         <td className="border border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
@@ -250,7 +250,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                           {label || "-"}
                         </td>
                         <td className="border border-gray-300 p-1">
-                          {note || "-"}
+                          {note || ""}
                         </td>
                         <td className="border border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
@@ -388,7 +388,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                         {label || "-"}
                       </td>
                       <td className="border border-gray-300 p-1">
-                        {note || "-"}
+                        {note || ""}
                       </td>
                       <td className="border border-gray-300 p-1">
                         {item ? formatValue(item) : "-"}
@@ -510,7 +510,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                           {label || "-"}
                         </td>
                         <td className="border border-gray-300 p-1">
-                          {note || "-"}
+                          {note || ""}
                         </td>
                         <td className="border border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
@@ -622,7 +622,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                           {label || "-"}
                         </td>
                         <td className="border border-gray-300 p-1">
-                          {note || "-"}
+                          {note || ""}
                         </td>
                         <td className="border border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}

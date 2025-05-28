@@ -135,7 +135,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
                           {label || "-"}
                         </td>
                         <td className="border border-gray-300 p-1">
-                          {note || "-"}
+                          {note || ""}
                         </td>
                         <td className="border border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
@@ -248,7 +248,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
                           {label || "-"}
                         </td>
                         <td className="border border-gray-300 p-1">
-                          {note || "-"}
+                          {note || ""}
                         </td>
                         <td className="border border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
@@ -384,7 +384,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
                         {label || "-"}
                       </td>
                       <td className="border border-gray-300 p-1">
-                        {note || "-"}
+                        {note || ""}
                       </td>
                       <td className="border border-gray-300 p-1">
                         {item ? formatValue(item) : "-"}
@@ -506,7 +506,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
                           {label || "-"}
                         </td>
                         <td className="border border-gray-300 p-1">
-                          {note || "-"}
+                          {note || ""}
                         </td>
                         <td className="border border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
@@ -618,7 +618,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
                           {label || "-"}
                         </td>
                         <td className="border border-gray-300 p-1">
-                          {note || "-"}
+                          {note || ""}
                         </td>
                         <td className="border border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
@@ -725,7 +725,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
     </td>
   </tr>
 )}
-
+ 
               </tbody>
             </table>
           </div>

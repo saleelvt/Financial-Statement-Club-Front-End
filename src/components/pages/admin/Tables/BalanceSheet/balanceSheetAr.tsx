@@ -668,7 +668,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           setNonCurrentSubAssets(
             data.assets.nonCurrent.subItems || Array(3).fill("")
           );
-          setNonCurrentNotes(data.assets.nonCurrent.nonCurrentNotes);
+        
 
           setNonCurrentAssetsDate2(
             data.assets.nonCurrent.itemsDate2 || Array(12).fill("")
@@ -681,7 +681,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
         // Assets - Current
         if (data.assets?.current) {
           setCurrentAssets(data.assets.current.items || Array(12).fill(""));
-          setCurrentAssetsNotes(data.assets.current.CurrentAssetsNotes);
+      
           setCurrentSubAssets(
             data.assets.current.subItems || Array(3).fill("")
           );
@@ -697,7 +697,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
         // Equity
         if (data.equity) {
           setEquityItems(data.equity.items || Array(12).fill(""));
-          setEquityItemsNotes(data.equity.equityItemsNotes);
+      
           setEquitySubItems(data.equity.subItems || Array(3).fill(""));
 
           setEquityItemsDate2(data.equity.itemsDate2 || Array(12).fill(""));
@@ -711,9 +711,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           setNonCurrentLiabilities(
             data.liabilities.nonCurrent.items || Array(12).fill("")
           );
-          setNonCurrentLiabilitiesNotes(
-            data.liabilities.nonCurrent.nonCurrentLiabilitiesNotes
-          );
+     
           setNonCurrentSubLiabilities(
             data.liabilities.nonCurrent.subItems || Array(3).fill("")
           );
@@ -731,9 +729,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           setCurrentLiabilities(
             data.liabilities.current.items || Array(12).fill("")
           );
-          setCurrentLiabilitiesNotes(
-            data.liabilities.current.currentLiabilitiesNotes
-          );
+     
           setCurrentSubLiabilities(
             data.liabilities.current.subItems || Array(3).fill("")
           );

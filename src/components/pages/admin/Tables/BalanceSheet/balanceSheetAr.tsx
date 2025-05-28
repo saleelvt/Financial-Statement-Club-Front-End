@@ -897,9 +897,9 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={assets}
-                  readOnly
+                  
                   onChange={(e) => setAssets(e.target.value)}
-                  className=" text-start  cursor-not-allowed   bg-gray-400 fext-row"
+                  className=" text-start     bg-gray-400 fext-row"
                   type="text"
                 />
               </td>
@@ -909,9 +909,9 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={lnonCurrentAssets}
-                  readOnly
+                  
                   onChange={(e) => ssetnonCurrentAssets(e.target.value)}
-                  className=" text-start w-full  cursor-not-allowed bg-gray-200 fext-row"
+                  className=" text-start w-full   bg-gray-200 fext-row"
                   type="text"
                 />
               </td>
@@ -1056,9 +1056,9 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={totalNonCurrentAssets}
-                  readOnly
+                  
                   onChange={(e) => ssetTotalNonCurrentAssets(e.target.value)}
-                  className=" text-start  cursor-not-allowed bg-gray-200 p-0.5   fext-row"
+                  className=" text-start   bg-gray-200 p-0.5   fext-row"
                 />
               </td>
 
@@ -1082,10 +1082,10 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               <td colSpan={4} className="p-0.5">
                 <input
                   placeholder=""
-                  readOnly
+                  
                   value={lcurrentAssets}
                   onChange={(e) => ssetCurrentAssets(e.target.value)}
-                  className=" text-start cursor-not-allowed   bg-gray-200 fext-row"
+                  className=" text-start    bg-gray-200 fext-row"
                 />
               </td>
             </tr>
@@ -1224,9 +1224,9 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={totalCurrentAssets}
-                  readOnly
+                  
                   onChange={(e) => ssetTotalCurrentAssets(e.target.value)}
-                  className=" text-start p-0.5 cursor-not-allowed  bg-gray-200 fext-row"
+                  className=" text-start p-0.5   bg-gray-200 fext-row"
                   type="text"
                 />
               </td>
@@ -1245,9 +1245,9 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 <input
                   placeholder=""
                   value={totalAssets}
-                  readOnly
+                  
                   onChange={(e) => ssetTotalAssets(e.target.value)}
-                  className=" text-start p-1 cursor-not-allowed  bg-gray-400 fext-row"
+                  className=" text-start p-1   bg-gray-400 fext-row"
                   type="text"
                 />{" "}
               </td>

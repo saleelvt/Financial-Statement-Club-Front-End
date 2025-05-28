@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import axios from "axios";
@@ -18,11 +18,8 @@ interface DocumentPayload {
   sector: string;
   formData: Record<FieldKey, FormField>;
 }
-
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 import { FormField } from "../../../interfaces/admin/addDoument";
 import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../config/api";
@@ -94,6 +91,18 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         };
       }
     );
+
+    
+  const fileInputRefs = {
+  Q1: useRef<HTMLInputElement>(null),
+  Q2: useRef<HTMLInputElement>(null),
+  Q3: useRef<HTMLInputElement>(null),
+  Q4: useRef<HTMLInputElement>(null),
+  S1: useRef<HTMLInputElement>(null),
+  Board: useRef<HTMLInputElement>(null),
+  Year: useRef<HTMLInputElement>(null),
+};
+
 
     useEffect(() => {
       // console.log("my form data is from the english document  ", formDataEn);
@@ -309,6 +318,12 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
     Board: { file: null, date: null, year: "", createAt: "" },
     Year: { file: null, date: null, year: "", createAt: "" },
   });
+
+   Object.keys(fileInputRefs).forEach((key) => {
+    if (fileInputRefs[key as keyof typeof fileInputRefs].current) {
+      fileInputRefs[key as keyof typeof fileInputRefs].current!.value = "";
+    }
+  });
         setTimeout(() => {
           setShowToast(false);
   
@@ -425,6 +440,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   onChange={(e) =>
                     handleFileChange("Q1", e.target.files?.[0] || null)
                   }
+                     ref={fileInputRefs.Q1}
                 />
                 <div className=" flex justify-start gap-1  ">
                   <DatePicker
@@ -455,6 +471,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
+                     ref={fileInputRefs.Q2}
                   className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q2", e.target.files?.[0] || null)
@@ -488,6 +505,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
+                     ref={fileInputRefs.Q3}
                   className="appearance-none block  w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q3", e.target.files?.[0] || null)
@@ -521,6 +539,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
+                     ref={fileInputRefs.Q4}
                   className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q4", e.target.files?.[0] || null)
@@ -553,6 +572,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
+                     ref={fileInputRefs.S1}
                   className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("S1", e.target.files?.[0] || null)
@@ -572,6 +592,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                   />
                   <input
                     type="text"
+              
                     className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.S1.year}
@@ -586,6 +607,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
+                           ref={fileInputRefs.Year}
                   className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Year", e.target.files?.[0] || null)
@@ -619,6 +641,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
+                           ref={fileInputRefs.Board}
                   className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Board", e.target.files?.[0] || null)

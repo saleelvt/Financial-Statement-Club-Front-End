@@ -15,7 +15,7 @@ import { commonRequest } from "../../../config/api";
 import { config, URL } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
 import ValidationModal from "../validationModal";
-import { AddDocument } from "./addDocumentEn";
+import { AddDocument } from "./addDocumentEn"; 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
@@ -254,7 +254,7 @@ setShowToastAr(true)
           onSubmit={handleSubmitArabicDoc}
           className="bg-white      w-full p-2 "
           dir="rtl"
-        >
+        > 
           <div className="flex xs:gap-2">
             <FaArrowCircleRight
               className="text-3xl text-gray-500"
@@ -270,8 +270,8 @@ setShowToastAr(true)
               <div className="relative  ">
                 <label className="block uppercase  tracking-wide text-sm text-gray-700 font-semibold ">
                   رمز تداول
-                </label>
-                <input
+                </label> 
+                <input 
                   className="appearance-none xs:w-24 block  text-sm p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                   type="text"
                   placeholder="أدخل رمز تداول"
@@ -388,6 +388,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
+                   ref={fileInputRefs.Q2}
                 className="appearance-none block  w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q2", e.target.files?.[0] || null)
@@ -420,6 +421,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
+                   ref={fileInputRefs.Q3}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q3", e.target.files?.[0] || null)
@@ -452,6 +454,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
+                   ref={fileInputRefs.Q4}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q4", e.target.files?.[0] || null)
@@ -484,6 +487,7 @@ setShowToastAr(true)
               </label> 
               <input
                 type="file"
+                   ref={fileInputRefs.S1}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("S1", e.target.files?.[0] || null)
@@ -516,6 +520,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
+                   ref={fileInputRefs.Year}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Year", e.target.files?.[0] || null)
@@ -549,6 +554,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
+                   ref={fileInputRefs.Board}
                 className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Board", e.target.files?.[0] || null)

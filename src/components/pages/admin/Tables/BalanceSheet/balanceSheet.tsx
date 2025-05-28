@@ -727,18 +727,17 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
               <th className="border border-gray-100 w-16">Notes</th>
               <th className="border border-gray-100 p-1 w-28   ">
                 <input
-                
                   type="date"
-                  className="text-center text-align:right;  bg-gray-100"
-                
+                  className="text-center   bg-gray-100"              
                   placeholder=""
                   value={data1En ? data1En.toISOString().split("T")[0] : ""}
                   onChange={(e) => {
                     const selectedDate = e.target.value;
                     setDate1En(selectedDate ? new Date(selectedDate) : null);
                   }}
-                  
+                  lang="en"
                 />
+
                 <input
                   placeholder="" 
                   value={date1}
@@ -757,6 +756,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <input
                     placeholder=""
                     value={date1Rl}
+                    readOnly
                     onChange={(e) => setDate1Rl(e.target.value)}
                     className="w-8 selection: text-center bg-gray-100 focus:outline-none"
                     type="text"
@@ -773,10 +773,12 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   placeholder=""
                   className="text-center bg-gray-100"
                   type="date"
+                  lang="en"
                 />
 
                 <input
                   placeholder=""
+                  readOnly
                   value={date2}
                   onChange={(e) => setDate2(e.target.value)}
                   className="w-full text-center bg-gray-100 fext-row"

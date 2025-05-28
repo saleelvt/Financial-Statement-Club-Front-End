@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
@@ -52,6 +52,17 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     Board: { file: null, date: null, year: "", createAt: "" },
     Year: { file: null, date: null, year: "", createAt: "" },
   });
+
+  const fileInputRefs = {
+  Q1: useRef<HTMLInputElement>(null),
+  Q2: useRef<HTMLInputElement>(null),
+  Q3: useRef<HTMLInputElement>(null),
+  Q4: useRef<HTMLInputElement>(null),
+  S1: useRef<HTMLInputElement>(null),
+  Board: useRef<HTMLInputElement>(null),
+  Year: useRef<HTMLInputElement>(null),
+};
+
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -212,13 +223,18 @@ const AddDocumentArabic: React.FC = React.memo(() => {
  if(response.success){
 setShowToastAr(true)
  setFormData({
-    Q1: { file: null, date: null, year: "", createAt: "" },
-    Q2: { file: null, date: null, year: "", createAt: "" },
-    Q3: { file: null, date: null, year: "", createAt: "" },
-    Q4: { file: null, date: null, year: "", createAt: "" },
-    S1: { file: null, date: null, year: "", createAt: "" },
-    Board: { file: null, date: null, year: "", createAt: "" },
-    Year: { file: null, date: null, year: "", createAt: "" },
+    Q1: { file: "", date: null, year: "", createAt: "" },
+    Q2: { file: "", date: null, year: "", createAt: "" },
+    Q3: { file: "", date: null, year: "", createAt: "" },
+    Q4: { file: "", date: null, year: "", createAt: "" },
+    S1: { file: "", date: null, year: "", createAt: "" },
+    Board: { file: "", date: null, year: "", createAt: "" },
+    Year: { file: "", date: null, year: "", createAt: "" },
+  });
+   Object.keys(fileInputRefs).forEach((key) => {
+    if (fileInputRefs[key as keyof typeof fileInputRefs].current) {
+      fileInputRefs[key as keyof typeof fileInputRefs].current!.value = "";
+    }
   });
    setTimeout(()=>{
     setShowToastAr(false)
@@ -232,7 +248,7 @@ setShowToastAr(true)
   };
 
   return (
-    <div className="lg:mx-10 m ">
+    <div className="lg:mx-10  ">
       <div className="flex flex-col items-center min-h-screen ">
         <form
           onSubmit={handleSubmitArabicDoc}
@@ -336,6 +352,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
+                 ref={fileInputRefs.Q1}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q1", e.target.files?.[0] || null)

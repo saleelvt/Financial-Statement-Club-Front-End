@@ -413,7 +413,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-            <div className="grid text-sm  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-1  ">
+            <div className="grid text-sm  grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-1  gap-2  ">
               <div className="">
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold ">
                   Q1

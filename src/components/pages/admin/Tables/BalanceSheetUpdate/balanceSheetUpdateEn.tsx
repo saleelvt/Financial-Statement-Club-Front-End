@@ -2,11 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 
-import DatePicker from "react-datepicker"; 
-import "react-datepicker/dist/react-datepicker.css";
+
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../reduxKit/store";
-import { parse, isValid } from "date-fns";
+
 import { setBalanceSheetDataAction } from "../../../../../reduxKit/actions/Tables/balancSheet";
 type BalaceSheetFormArProps = {
   TableDataEn: any;
@@ -382,8 +381,8 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     const totalEquityAndLiabilitiesDate2 =
       totalEquityDate2 + totalLiabilitiesDate2;
 
-    const [data1EnN, setDate1En] = useState<Date | null>(null);
-    const [data2EnN, setDate2En] = useState<Date | null>(null);
+    const [data1EnN, setDate1En] = useState< Date | null>(null);
+    const [data2EnN, setDate2En] = useState< Date | null>(null);
 
     const [date1Rl, setDate1Rl] = useState("'000");
     const [date2Rl, setDate2Rl] = useState("'000");
@@ -446,33 +445,16 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
 
 
 
-
-
-    const handleDateChangeRaw = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-
-    // Try to parse the manually entered date in dd/MM/yyyy format
-    const parsedDate = parse(inputValue, "dd/MM/yyyy", new Date());
-
-    if (isValid(parsedDate)) {
-      setDate1En(parsedDate);
-    }
-  };
-
-
-
-
-
-
     useEffect(() => {
       console.log(
         "The Update section of the Data Set in the Part english : ",
-        TableDataEn
+        TableDataEn.data1En,TableDataEn.data2En
       );
 
       if (TableDataEn) {
-        setDate1En(TableDataEn.data1En);
-        setDate2En(TableDataEn.data2En);
+        
+ setDate1En(new Date(TableDataEn.data1En)); // ensure it's a Date object
+    setDate2En(new Date(TableDataEn.data2En)); // same here
         setAssets(TableDataEn.assets.sassets);
         ssetTotalAssets(TableDataEn.assets.stotalAssets);
         if (TableDataEn.assets?.nonCurrent) {
@@ -929,17 +911,23 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
               <th className="border border-gray-100 w-96"></th>
               <th className="border border-gray-100 w-16">Notes</th>
               <th className="border border-gray-100 p-1 w-28   ">
-                <DatePicker
-                  selected={data1EnN}
-                  onChange={(date) => setDate1En(date)}
-                   onChangeRaw ={()=>handleDateChangeRaw}
-                  className="bg-gray-100 w-24 text-center font-bold"
-                  calendarClassName="custom-datepicker"
-                  placeholderText="Date" 
-                  dateFormat="dd MMMM yyyy"
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select" // enables a larger dropdown
+                <input
+                
+                  type="date"
+                  className="text-center text-align:right;  bg-gray-100"
+                
+                  placeholder=""
+                value={
+  data1EnN instanceof Date && !isNaN(data1EnN.getTime())
+    ? data1EnN.toISOString().split("T")[0]
+    : ""
+}
+
+                  onChange={(e) => {
+                    const selectedDate = e.target.value;
+                    setDate1En(selectedDate ? new Date(selectedDate) : null);
+                  }}
+                  
                 />
 
                 <input
@@ -967,16 +955,19 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
                 </div>
               </th>
               <th className="border   border-gray-100 p-1 w-28 ">
-                <DatePicker
-                  selected={data2EnN}
-                  onChange={(date) => setDate2En(date)}
-                  className="bg-gray-100 w-24 text-center font-bold"
-                  calendarClassName="custom-datepicker"
-                  placeholderText="Date"
-                  dateFormat="dd MMMM yyyy"
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select" // enables dropdown selection
+                <input
+                 value={
+  data2EnN instanceof Date && !isNaN(data2EnN.getTime())
+    ? data2EnN.toISOString().split("T")[0]
+    : ""
+}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setDate2En(value ? new Date(value) : null);
+                  }}
+                  placeholder=""
+                  className="text-center bg-gray-100"
+                  type="date"
                 />
 
                 <input

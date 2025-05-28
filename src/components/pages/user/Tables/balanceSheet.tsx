@@ -41,7 +41,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                       {table.data1En
                         ? new Date(table.data1En).toLocaleDateString("en-GB", {
                             day: "2-digit",
-                            month: "long",
+                            month: "2-digit",
                             year: "numeric",
                           })
                         : "-"}
@@ -67,10 +67,10 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   {/* Date 2 Display */}
                   <th className="border border-gray-100 p-1 w-28">
                     <div className="bg-gray-100 w-24 text-center font-bold">
-                      {table.data1En
-                        ? new Date(table.data1En).toLocaleDateString("en-GB", {
+                      {table.data2En
+                        ? new Date(table.data2En).toLocaleDateString("en-GB", {
                             day: "2-digit",
-                            month: "long",
+                            month: "2-digit",
                             year: "numeric",
                           })
                         : "-"}

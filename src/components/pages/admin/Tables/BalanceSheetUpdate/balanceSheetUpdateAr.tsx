@@ -1,9 +1,9 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-multi-date-picker";
+import gregorian_ar from "react-date-object/locales/gregorian_ar";
+import arabic from "react-date-object/calendars/gregorian";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../reduxKit/store";
 
@@ -394,8 +394,8 @@ const BalaceSheetUpdateFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
     //   (val, idx) => val || currentSubLiabilitiesDate2[idx]
     // );
 
-    const [data1Ar, setDate1Ar] = useState<Date | null>(null);
-    const [data2Ar, setDate2Ar] = useState<Date | null>(null);
+    const [data1Ar, setDate1Ar] = useState<Date | null |any>(null);
+    const [data2Ar, setDate2Ar] = useState<Date | null |any >(null);
 
     const [date1, setDate1] = useState("(غير مراجعة)");
     const [date2, setDate2] = useState("(مراجعة)");
@@ -484,8 +484,9 @@ useEffect(() => {
       );
 
       if (TableDataAr) {
-        setDate1Ar(TableDataAr.data1En);
-        setDate2Ar(TableDataAr.data2En);
+
+        setDate1Ar( new Date(TableDataAr.data1En))
+        setDate2Ar( new Date(TableDataAr.data2En))
         setAssets(TableDataAr.assets.sassets);
         ssetTotalAssets(TableDataAr.assets.stotalAssets);
         if (TableDataAr.assets?.nonCurrent) {
@@ -1064,17 +1065,18 @@ useEffect(() => {
               <th className="border border-gray-100 w-96"></th>
               <th className="border border-gray-100 w-16">إيضاحات</th>
               <th className="border border-gray-100 p-1 w-28">
-                <DatePicker
-                  selected={data1Ar}
-                  onChange={(date) => setDate1Ar(date)}
-                  className="bg-gray-100  w-24 text-center font-bold direction-ltr"
-                  calendarClassName="custom-datepicker"
-                  placeholderText="اختر التاريخ"
-                  dateFormat="  dd  yyyy MMMM" // 30 April 2025
-                    showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                />
+                <div dir="rtl" className="items-center bg-green">
+                  <DatePicker
+                   className="text-right"
+                    value={data1Ar}
+                    onChange={(date) => setDate1Ar(date)}
+                    calendar={arabic}
+                    locale={gregorian_ar}
+                    inputClass=" text-center  bg-gray-100 w-28 "
+                    placeholder="اختر التاريخ"
+                    // calendarPosition="bottom-right"
+                  />
+                </div>
 
                 <input
                   placeholder=""
@@ -1103,18 +1105,18 @@ useEffect(() => {
               </th>
 
               <th className="border border-gray-100  w-28 p-1 ">
-                <DatePicker
-                  selected={data2Ar}
-                  onChange={(date) => setDate2Ar(date)}
-                  className="bg-gray-100   w-24 text-center font-bold"
-                  calendarClassName="custom-datepicker"
-                  placeholderText="اختر التاريخ"
-                
-                    dateFormat="dd MMMM yyyy" // 30 April 2025
-                    showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                />
+                <div dir="rtl" className="items-center bg-green">
+                  <DatePicker
+                    className="text-right"
+                    value={data2Ar}
+                    onChange={(date) => setDate2Ar(date)}
+                    calendar={arabic}
+                    locale={gregorian_ar}
+                    inputClass=" text-center  bg-gray-100 w-28 "
+                    placeholder="اختر التاريخ"
+                  />
+                </div>
+
 
                 <input
                   placeholder=""

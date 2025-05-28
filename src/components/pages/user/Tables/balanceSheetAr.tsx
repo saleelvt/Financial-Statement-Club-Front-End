@@ -39,11 +39,7 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
                   <th className="border border-gray-100 p-1 w-28">
                     <div className="bg-gray-100 w-24 text-center font-bold">
                       {table.data1En
-                        ? new Date(table.data1En).toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "long",
-                            year: "numeric",
-                          })
+                        ? table.data1En
                         : "-"}
                     </div>
                     <div className="w-full text-center bg-gray-100">
@@ -67,12 +63,8 @@ const BalanceSheetFormUserArabic: React.FC<BalanceSheetFormUserProps> = React.me
                   {/* Date 2 Display */}
                   <th className="border border-gray-100 p-1 w-28">
                     <div className="bg-gray-100 w-24 text-center font-bold">
-                      {table.data1En
-                        ? new Date(table.data1En).toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "long",
-                            year: "numeric",
-                          })
+                      {table.data2En
+                        ? table.data2En
                         : "-"}
                     </div>
                     <div className="w-full text-center bg-gray-100">

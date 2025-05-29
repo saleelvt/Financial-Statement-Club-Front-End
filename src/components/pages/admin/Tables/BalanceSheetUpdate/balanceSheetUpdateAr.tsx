@@ -420,7 +420,7 @@ const BalaceSheetUpdateFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
     );
     const [totalAssets, ssetTotalAssets] = useState("إجمالي الأصول");
 
-    const [   ShareholdersEquityandliabilitiess,  setShareholdersEquityandliabilities, ]  = useState("إجمالي حقوق المساهمين والمطلوبات");
+    const [   ShareholdersEquityandliabilitiess,  setShareholdersEquityandliabilities, ]  = useState(" حقوق المساهمين والمطلوبات");
     const [ShareholdersEquity, setShareholdersEquity] = useState("حقوق المساهمين");
     const [firtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =
       useState("");

@@ -385,56 +385,56 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
     const [date1, setDate1] = useState("(Unaudited)");
     const [date2, setDate2] = useState("(Audited)");
 
-    const [sassets, setAssets] = useState("Assets");
+    const [sassets, setAssets] = useState("ASSETS");
     const [snonCurrentAssets, ssetnonCurrentAssets] =
-      useState("Non-current Assets");
+      useState("Non-current assets");
     const [sfirtsTotalnonCurrentAssets, ssetfirtsTotalnonCurrentAssets] =
       useState("");
     const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(
-      "Total non-current Assets"
+      "Total non-current assets"
     );
-    const [scurrentAssets, ssetCurrentAssets] = useState("Current Assets");
+    const [scurrentAssets, ssetCurrentAssets] = useState("Current assets");
     const [sfirtsTotalCurrentAssets, ssetfirtsTotalCurrentAssets] =
       useState("");
     const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(
-      "Total Current Assets"
+      "Total current assets"
     );
-    const [stotalAssets, ssetTotalAssets] = useState("Total Assets");
+    const [stotalAssets, ssetTotalAssets] = useState("TOTAL ASSETS");
 
     const [
       sShareholdersEquityandliabilitiess,
       setShareholdersEquityandliabilities,
-    ] = useState("Shareholder's Equity and Liabilities");
+    ] = useState("EQUITY AND LIABILITIES");
     const [sShareholdersEquity, setShareholdersEquity] = useState(
-      "Shareholder's Equity"
+      "Equity"
     );
     const [sfirtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =
       useState("");
     const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState(
-      "Total Shareholder's Equity"
+      "Total equity"
     );
 
     const [sliabilities, setLiabilities] = useState("Liabilities");
     const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(
-      "Non-current Liabilities"
+      "Non-current liabilities"
     );
     const [sfirtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] =
       useState("");
     const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] =
-      useState("Total non-current Liabilities");
+      useState("Total non-current liabilities");
 
     const [scurrentliabilities, setcurrentliabilities] = useState(
-      "Current Liabilities"
+      "Current liabilities"
     );
     const [sfirtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] =
       useState("");
     const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState(
-      "Total Current Liabilities"
+      "Total current liabilities"
     );
     const [stotalliabilities, setTotalliabilities] =
-      useState("Total  Liabilities");
+      useState("Total liabilities");
     const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(
-      "Total shareholder's equity and Liabilities"
+      "TOTAL EQUITY AND LIABILITIES"
     );
 
     useEffect(() => {

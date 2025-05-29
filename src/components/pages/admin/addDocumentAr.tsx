@@ -194,11 +194,14 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             },
           }
         );
-        // Always set progress to 100% on successful completio
+       
+        
         return response.data;
       } catch (error: any) {
         // Reset progress on error
+         console.log("the ersponse of the data while add  : ",error.response.data.message);
         setIsModalOpen(true);
+        setErrorMessage(error.response.data.message)
         throw error; // Re-throw to be caught by the component
       }
     }
@@ -239,7 +242,7 @@ setShowToastAr(true)
    setTimeout(()=>{
     setShowToastAr(false)
    
-   },10000)
+   },30000)
 
       }
     } catch (error: any) {

@@ -1,7 +1,5 @@
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../reduxKit/store";
@@ -9,11 +7,11 @@ import { AppDispatch } from "../../../../../reduxKit/store";
 import { setBalanceSheetDataAction } from "../../../../../reduxKit/actions/Tables/balancSheet";
 type BalaceSheetFormArProps = {
   TableDataEn: any;
-}; 
+};
 
 const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
-  ({ TableDataEn }) => { 
-    // Updated state declarations with empty strings as initial values 
+  ({ TableDataEn }) => {
+    // Updated state declarations with empty strings as initial values
     const dispatch = useDispatch<AppDispatch>();
     const [nonCurrentAssetsAr, setNonCurrentAssets] = useState<string[]>(
       Array(12).fill("")
@@ -381,8 +379,8 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     const totalEquityAndLiabilitiesDate2 =
       totalEquityDate2 + totalLiabilitiesDate2;
 
-    const [data1EnN, setDate1En] = useState< Date | null>(null);
-    const [data2EnN, setDate2En] = useState< Date | null>(null);
+    const [data1EnN, setDate1En] = useState<Date | null>(null);
+    const [data2EnN, setDate2En] = useState<Date | null>(null);
 
     const [date1Rl, setDate1Rl] = useState("'000");
     const [date2Rl, setDate2Rl] = useState("'000");
@@ -390,71 +388,41 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     const [date1, setDate1] = useState("(Unaudited)");
     const [date2, setDate2] = useState("(Audited)");
 
-    const [sassets, setAssets] = useState("Assets");
+    const [sassets, setAssets] = useState("ASSETS");
     const [snonCurrentAssets, ssetnonCurrentAssets] =
-      useState("Non-current Assets");
+      useState("Non-current assets");
     const [sfirtsTotalnonCurrentAssets, ssetfirtsTotalnonCurrentAssets] =
       useState("");
     const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(
-      "Total non-current Assets"
-    );
-
-    const [scurrentAssets, ssetCurrentAssets] = useState("Current Assets");
-    const [sfirtsTotalCurrentAssets, ssetfirtsTotalCurrentAssets] =
-      useState("");
-    const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(
-      "Total Current Assets"
-    );
-    const [stotalAssets, ssetTotalAssets] = useState("Total Assets");
-
-    const [
-      sShareholdersEquityandliabilitiess,
-      setShareholdersEquityandliabilities,
-    ] = useState("Shareholder's Equity and Liabilities");
-    const [sShareholdersEquity, setShareholdersEquity] = useState(
-      "Shareholder's Equity"
-    );
-    const [sfirtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =
-      useState("");
-    const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState(
-      "Total Shareholder's Equity"
-    );
-
+      "Total non-current assets"  );
+    const [scurrentAssets, ssetCurrentAssets] = useState("Current assets");
+    const [sfirtsTotalCurrentAssets, ssetfirtsTotalCurrentAssets] =   useState("");
+    const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(    "Total current assets"  );
+    const [stotalAssets, ssetTotalAssets] = useState("TOTAL ASSETS");
+    const [   sShareholdersEquityandliabilitiess,  setShareholdersEquityandliabilities,  ] = useState("EQUITY AND LIABILITIES");
+    const [sShareholdersEquity, setShareholdersEquity] = useState(   "Equity" );
+    const [sfirtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =  useState("");
+    const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState(  "Tota equity");
     const [sliabilities, setLiabilities] = useState("Liabilities");
-    const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(
-      "Non-current Liabilities"
-    );
-    const [sfirtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] =
-      useState("");
-    const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] =
-      useState("Total non-current Liabilities");
-
-    const [scurrentliabilities, setcurrentliabilities] = useState(
-      "Current Liabilities"
-    );
-    const [sfirtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] =
-      useState("");
-    const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState(
-      "Total Current Liabilities"
-    );
-    const [stotalliabilities, setTotalliabilities] =
-      useState("Total  Liabilities");
-    const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(
-      "Total shareholder's equity and Liabilities"
-    );
-
-
+    const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(    "Non-current Liabilities" );
+    const [sfirtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] =  useState("");
+    const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] =  useState("Total non-current liabilities");
+    const [scurrentliabilities, setcurrentliabilities] = useState(   "Current Liabilities" );
+    const [sfirtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] =  useState("");
+    const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState(  "Total current liabilities" );
+    const [stotalliabilities, setTotalliabilities] =    useState("Total  liabilities");
+    const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(  "TOTAL EQUITY AND LIABILITIES" );
 
     useEffect(() => {
       console.log(
         "The Update section of the Data Set in the Part english : ",
-        TableDataEn.data1En,TableDataEn.data2En
+        TableDataEn.data1En,
+        TableDataEn.data2En
       );
 
       if (TableDataEn) {
-        
- setDate1En(new Date(TableDataEn.data1En)); // ensure it's a Date object
-    setDate2En(new Date(TableDataEn.data2En)); // same here
+        setDate1En(new Date(TableDataEn.data1En)); // ensure it's a Date object
+        setDate2En(new Date(TableDataEn.data2En)); // same here
         setAssets(TableDataEn.assets.sassets);
         ssetTotalAssets(TableDataEn.assets.stotalAssets);
         if (TableDataEn.assets?.nonCurrent) {
@@ -493,10 +461,9 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
             TableDataEn.assets?.current.sfirtsTotalCurrentAssets
           );
           ssetTotalCurrentAssets(
-            TableDataEn
-            .assets?.current.stotalCurrentAssets
+            TableDataEn.assets?.current.stotalCurrentAssets
           );
-            setCurrentLabels(TableDataEn.assets?.current.currentLabels);
+          setCurrentLabels(TableDataEn.assets?.current.currentLabels);
           setCurrentSubLabels(TableDataEn.assets?.current.currentSubLabels);
           setCurrentAssets(
             TableDataEn.assets.current.items || Array(12).fill("")
@@ -906,28 +873,24 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     return (
       <div className="flex justify-start   my-2 text-black">
         <table className="border font-semibold border-gray-300 text-xs mb-12 table-fixed ">
-          <thead> 
+          <thead>
             <tr className="bg-gray-100">
               <th className="border border-gray-100 w-96"></th>
               <th className="border border-gray-100 w-16">Notes</th>
               <th className="border border-gray-100 p-1 w-28   ">
                 <input
-                
                   type="date"
                   className="text-center text-align:right;  bg-gray-100"
-                
                   placeholder=""
-                value={
-  data1EnN instanceof Date && !isNaN(data1EnN.getTime())
-    ? data1EnN.toISOString().split("T")[0]
-    : ""
-}
-
+                  value={
+                    data1EnN instanceof Date && !isNaN(data1EnN.getTime())
+                      ? data1EnN.toISOString().split("T")[0]
+                      : ""
+                  }
                   onChange={(e) => {
                     const selectedDate = e.target.value;
                     setDate1En(selectedDate ? new Date(selectedDate) : null);
                   }}
-                  
                 />
 
                 <input
@@ -956,11 +919,11 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
               </th>
               <th className="border   border-gray-100 p-1 w-28 ">
                 <input
-                 value={
-  data2EnN instanceof Date && !isNaN(data2EnN.getTime())
-    ? data2EnN.toISOString().split("T")[0]
-    : ""
-}
+                  value={
+                    data2EnN instanceof Date && !isNaN(data2EnN.getTime())
+                      ? data2EnN.toISOString().split("T")[0]
+                      : ""
+                  }
                   onChange={(e) => {
                     const value = e.target.value;
                     setDate2En(value ? new Date(value) : null);
@@ -986,7 +949,7 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
                     alt="Riyal"
                     className="w-3 h-3 "
                   />
-                  <input 
+                  <input
                     placeholder=""
                     value={date2Rl}
                     onChange={(e) => setDate2Rl(e.target.value)}

@@ -486,7 +486,7 @@ console.log("resppos da : ",response);
                       disabled={takeShot}
                       type="button"
                     >
-                      {takeShot ? "Updating..." : "Update"}
+                      {takeShot ? "Editing..." : "Edit"}
                     </button>
                     <button
                       className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
@@ -546,7 +546,7 @@ console.log("resppos da : ",response);
                   disabled={takeShot}
                   type="button"
                 >
-                  {takeShot ? "   حذف..." : "يمسح"}
+                  {takeShot ? "   حذف..." : "حذف"}
                 </button>
 
                 <button
@@ -558,7 +558,7 @@ console.log("resppos da : ",response);
                   disabled={takeShot}
                   type="button"
                 >
-                  {takeShot ? "   تحديث..." : "تحديث"}
+                  {takeShot ? "تعديل..." : "تعديل"}
                 </button>
               </>
             )}
@@ -639,7 +639,7 @@ console.log("resppos da : ",response);
                       disabled={takeShot}
                       type="button"
                     >
-                      {takeShot ? "Updating..." : "Update"}
+                      {takeShot ? "Editing..." : "Edit"}
                     </button>
                     <button
                       className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
@@ -787,7 +787,7 @@ console.log("resppos da : ",response);
                   disabled={takeShot}
                   type="button"
                 >
-                  {takeShot ? "   حذف..." : "يمسح"}
+                  {takeShot ? "   حذف..." : "حذف"}
                 </button>
 
                 <button
@@ -799,7 +799,7 @@ console.log("resppos da : ",response);
                   disabled={takeShot}
                   type="button"
                 >
-                  {takeShot ? "   تحديث..." : "تحديث"}
+                  {takeShot ? "تعديل..." : "تعديل"}
                 </button>
               </>
             )}
@@ -892,7 +892,7 @@ console.log("resppos da : ",response);
                         disabled={takeShot}
                         type="button"
                       >
-                        {takeShot ? "   حذف..." : "يمسح"}
+                        {takeShot ? "   حذف..." : "حذف"}
                       </button>
                     ) : (
                       <button
@@ -954,13 +954,12 @@ console.log("resppos da : ",response);
           </h4>
         </div>
       </div>
-
-      <div className="flex flex-wrap items-start mt-1 gap-4 text-sm text-gray-700 font-semibold">
-        <div className="relative  ">
+      <div className="flex flex-wrap  items-start mt-1 gap-4  text-sm text-gray-700 font-semibold">
+        <div className="relative ">
           <label className="block mb-1">Tadawul Code</label>
           <input
-            className="p-1 w-44 bg-gray-100 text-black border rounded focus:outline-none focus:bg-white"
-            type="text"
+            className="p-1 w-28 placeholder:text-xs bg-gray-100 text-black border rounded focus:outline-none focus:bg-white"
+            type="text" 
             placeholder="Tadawul Code"
             value={tadawalCode}
             required
@@ -995,7 +994,7 @@ console.log("resppos da : ",response);
           )}
           {/* Suggestions */}
           {suggestions.length > 0 && (
-            <ul className="absolute z-10 w-44 mt-1 border border-gray-300 bg-white rounded max-h-40 overflow-y-auto">
+            <ul className="absolute z-10 w-10/12 mt-1 border border-gray-300 bg-white rounded max-h-40 overflow-y-auto">
               {suggestions.map((suggestion, index) => (
                 <li
                   key={index}

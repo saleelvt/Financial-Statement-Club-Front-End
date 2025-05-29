@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../reduxKit/store";
 import { UpdateDocumentArabic } from "../../../reduxKit/actions/admin/updateArabicDocument";
@@ -42,8 +42,21 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
     Year: { file: null, date: null, year: "", createAt: "" },
   });
 
+      const fileInputRefs = {
+      Q1: useRef<HTMLInputElement>(null),
+      Q2: useRef<HTMLInputElement>(null),
+      Q3: useRef<HTMLInputElement>(null),
+      Q4: useRef<HTMLInputElement>(null),
+      S1: useRef<HTMLInputElement>(null),
+      Board: useRef<HTMLInputElement>(null),
+      Year: useRef<HTMLInputElement>(null),
+    };
+    
   useEffect(() => {
     // Fetch document details by ID and Language
+
+    if (id && language) fetchDocument(); // Ensure both `id` and `language` are present
+  }, [id, language]);
     const fetchDocument = async () => {
       try {
         const response = await commonRequest(
@@ -53,15 +66,11 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
           {}
         );
         const data = response.data.data[0];
-        console.log("...................................", data);
         setDocument(data); // Ensure you have the latest value for document
       } catch (error) {
         console.error("Error fetching document details:", error);
       }
     };
-
-    if (id && language) fetchDocument(); // Ensure both `id` and `language` are present
-  }, [id, language]);
 
   useEffect(() => {
     if (document) {
@@ -160,6 +169,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
         UpdateDocumentArabic({ id, language, adminCredentials })
       ).unwrap();
 if(response.success){
+  setShowToastAr(true)
+  setLoading(false)
    setFormData({
     Q1: { file: null, date: null, year: "", createAt: "" },
     Q2: { file: null, date: null, year: "", createAt: "" },
@@ -169,12 +180,16 @@ if(response.success){
     Board: { file: null, date: null, year: "", createAt: "" },
     Year: { file: null, date: null, year: "", createAt: "" },
   });
-setShowToastAr(true)
-  setLoading(false)
+    Object.keys(fileInputRefs).forEach((key) => {
+    if (fileInputRefs[key as keyof typeof fileInputRefs].current) {
+      fileInputRefs[key as keyof typeof fileInputRefs].current!.value = "";
+    }
+  });
+fetchDocument()
    setTimeout(()=>{
-      window.location.reload()
+ 
     setShowToastAr(false)
-   },10000)
+   },30000)
 }      
     } catch (error: any) {
        setLoading(false)
@@ -295,6 +310,7 @@ setShowToastAr(true)
               <div className="relative">
                 <input
                   type="file"
+                         ref={fileInputRefs.Q1}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Q1", e.target.files?.[0] || null)
@@ -341,6 +357,7 @@ setShowToastAr(true)
               <div className="relative">
                 <input
                   type="file"
+                         ref={fileInputRefs.Q2}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Q2", e.target.files?.[0] || null)
@@ -387,6 +404,7 @@ setShowToastAr(true)
               <div className="relative">
                 <input
                   type="file"
+                         ref={fileInputRefs.Q3}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Q3", e.target.files?.[0] || null)
@@ -435,6 +453,7 @@ setShowToastAr(true)
               <div className="relative">
                 <input
                   type="file"
+                         ref={fileInputRefs.Q4}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Q4", e.target.files?.[0] || null)
@@ -482,6 +501,7 @@ setShowToastAr(true)
               <div className="relative">
                 <input
                   type="file"
+                         ref={fileInputRefs.S1}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("S1", e.target.files?.[0] || null)
@@ -529,6 +549,7 @@ setShowToastAr(true)
               <div className="relative">
                 <input
                   type="file"
+                         ref={fileInputRefs.Year}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Year", e.target.files?.[0] || null)
@@ -576,6 +597,7 @@ setShowToastAr(true)
               <div className="relative">
                 <input
                   type="file"
+                         ref={fileInputRefs.Board}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Board", e.target.files?.[0] || null)

@@ -266,11 +266,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           formData.append("nickNameEn", adminCredentials?.nickNameEn);
           formData.append("tadawalCode", adminCredentials?.tadawalCode);
           formData.append("sector", adminCredentials?.sector); 
-
-          console.log("FormData contents:");
-          formData.forEach((value, key) => {
-            console.log(key, value);
-          });
+;
 
           const response = await axiosIn.post(
             `/api/v1/admin/addDocumentEnglish`,
@@ -327,7 +323,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         setTimeout(() => {
           setShowToast(false);
   
-        }, 10000); // 30 seconds
+        }, 30000); // 30 seconds
       
 
           // Reset form data

@@ -18,6 +18,7 @@ export const config ={
     withCredentials:true
 }
 
+
 export const configWithToken = () => {
     let token = localStorage.getItem("accessTokenFins");
     token = token ? token.replace(/^"|"$/g, "").trim() : null;

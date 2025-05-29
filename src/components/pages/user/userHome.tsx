@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect, lazy, useRef } from "react";
+import React, { useState, useEffect, lazy } from "react";
 import "../../../global.css";
 import { config } from "../../../config/constants";
 import { commonRequest } from "../../../config/api";
@@ -17,13 +17,7 @@ import {
   DocumentSliceEn,
 } from "../../../interfaces/admin/addDoument";
 import { useNavigate } from "react-router-dom";
-
-const BATCH_SIZE = 200;
-const INTERVAL_MS = 1000; // 1 second
-
 const UserHomePage: React.FC = React.memo(() => {
-  const skipRef = useRef(0);
-  const hasMoreRef = useRef(true);
 
   const [brandsEn, setBrandsEn] = useState<
     {
@@ -47,7 +41,7 @@ const UserHomePage: React.FC = React.memo(() => {
       id: string;
     }[]
   >([]);
-  const [loadingInitial, setLoadingInitial] = useState(true);
+  const [loadingInitial, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [language, setLanguage] = useState<string|null>("Arabic");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null); 
@@ -58,58 +52,29 @@ const UserHomePage: React.FC = React.memo(() => {
 
 
   
-  const fetchBatch = async (isInitial = false) => {
-    try {
-      const endpoint =
-        userLanguage === "English"
-          ? `/api/v1/admin/getDocuments?skip=${skipRef.current}&limit=${BATCH_SIZE}`
-          : `/api/v1/admin/getArabicDocuments?skip=${skipRef.current}&limit=${BATCH_SIZE}`;
-
-      const response = await commonRequest("GET", endpoint, config, null);
-
-      if (response.status === 200 && response.data?.data?.length > 0) {
-        const newDocs = response.data.data;
-        if (isInitial) {
-          setDocuments(newDocs);
-        } else {
-          setDocuments((prev) => [...prev, ...newDocs]);
-        }
-
-        // Update refs and states
-        skipRef.current += BATCH_SIZE;
-
-        if (newDocs.length < BATCH_SIZE) {
-          hasMoreRef.current = false;
-        }
-      } else {
-        hasMoreRef.current = false;
-      }
-    } catch (err: any) {
-      setError(err.message || "Failed to load documents");
-      hasMoreRef.current = false;
-    } finally {
-      if (isInitial) {
-        setLoadingInitial(false);
-      }
-    }
-  };
-
   useEffect(() => {
-    setDocuments([]);
-    skipRef.current = 0;
-    hasMoreRef.current = true;
-    setError("");
-    setLoadingInitial(true);
-    fetchBatch(true);
-    const intervalId = setInterval(() => {
-      if (hasMoreRef.current) {
-        fetchBatch();
-      } else {
-        clearInterval(intervalId);
-      }
-    }, INTERVAL_MS);
+    const fetchDocuments = async () => {
+      setLoading(true);
+      try {
+        if (userLanguage) setLanguage(userLanguage);
+        const endpoint =
+          userLanguage === "English"
+            ? "/api/v1/admin/getDocuments"
+            : "/api/v1/admin/getArabicDocuments";
+        const response = await commonRequest("GET", endpoint, config, null);
 
-    return () => clearInterval(intervalId);
+        if (response.status === 200 && response.data?.data) {
+          setDocuments(response.data.data);
+        } else {
+          setError("Failed to fetch documents");
+        }
+      } catch (err: any) {
+        setError(err.message || "An unexpected error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDocuments();
   }, [userLanguage]);
 
   useEffect(() => {

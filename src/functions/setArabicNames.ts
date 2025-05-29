@@ -13,7 +13,7 @@ export const setArabicNames = (documents: any) => {
                 sector:x?.sector,
                 id:x?._id
             });
-            if (x?.formData) arabicFormFiles.push(x?.formData);  // Push file to Arabic files array
+            // if (x?.formData) arabicFormFiles.push(x?.formData);  // Push file to Arabic files array
         }
         // arabicNamesArray.sort((a, b) => b.nickNameEn.localeCompare(a.nickNameEn, 'ar'));
 

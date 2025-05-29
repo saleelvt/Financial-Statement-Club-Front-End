@@ -51,6 +51,31 @@ export interface DocumentSliceEn  {
 
 
 
+export interface DocumentSliceAdminAr {
+  _id?:string;
+ fullNameAr: string;
+ nickNameAr: string;
+ tadawalCode: string;
+ sector: string;
+ createdAt: string; // Add this line
+
+}
+
+export interface DocumentSliceAdminEn  {
+  _id?:string;
+ fullNameEn: string;
+ nickNameEn: string;
+ tadawalCode: string;
+ sector: string;
+
+ createdAt: string; // Add this line
+
+}
+
+
+
+
+
 export interface ShowDocumentSliceForUser {
   fullName: string;
  nickName: string;

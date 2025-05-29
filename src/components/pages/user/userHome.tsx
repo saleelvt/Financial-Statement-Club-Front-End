@@ -32,8 +32,7 @@ const UserHomePage: React.FC = React.memo(() => {
   const [documents, setDocuments] = useState<
     (DocumentSliceAr | DocumentSliceEn)[]
   >([]);
-  const [brandsAr, setBrandsAr] = useState<
-    {
+  const [brandsAr, setBrandsAr] = useState<{
       fullNameEn: string;
       nickNameEn: string;
       tadawalCode: string;

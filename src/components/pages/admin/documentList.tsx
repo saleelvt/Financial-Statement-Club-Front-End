@@ -12,8 +12,7 @@ import { Error } from "../Error";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { GrLanguage } from "react-icons/gr";
 import {
-  DocumentSliceAr,
-  DocumentSliceEn,
+ DocumentSliceAdminAr,DocumentSliceAdminEn
 } from "../../../interfaces/admin/addDoument";
 import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
 
@@ -25,12 +24,12 @@ const DocumentList: React.FC = React.memo(() => {
   const [language, setLanguage] = useState<string>("Arabic");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [documents, setDocuments] = useState< (DocumentSliceAr | DocumentSliceEn)[] >([]);
+  // const [documents, setDocuments] = useState< (DocumentSliceAr | DocumentSliceEn)[] >([]);
   // const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [loadingInitial, setLoading] = useState(true);
   const [uniqeDocument, setUniqueDocument] = useState<
-    (DocumentSliceAr | DocumentSliceEn)[]
+    (DocumentSliceAdminAr | DocumentSliceAdminEn)[]
   >([]);
 
 
@@ -44,9 +43,12 @@ const DocumentList: React.FC = React.memo(() => {
 
         const endpoint =
           adminLanguage === "English"
-            ? "/api/v1/admin/getDocuments"
+            ? "/api/v1/admin/getAdminDocuments"
             : "/api/v1/admin/getArabicDocuments";
         const response = await commonRequest("GET", endpoint, configWithToken(), null);
+
+        console.log("Ther basic resopnse data ",response);
+        
 
         if (response.status === 200 && response.data?.data) {
           const fetchedDocuments = response.data.data;
@@ -54,7 +56,7 @@ const DocumentList: React.FC = React.memo(() => {
           // Filter unique documents based on nickNameEn or nickNameAr
           const uniqueDocs = fetchedDocuments.filter(
             (
-              doc: DocumentSliceAr | DocumentSliceEn,
+              doc: DocumentSliceAdminEn | DocumentSliceAdminAr,
               index: number,
               self: any[]
             ) => {
@@ -71,7 +73,7 @@ const DocumentList: React.FC = React.memo(() => {
             }
           );
 
-          setDocuments(fetchedDocuments);
+          // setDocuments(fetchedDocuments);
           setUniqueDocument(uniqueDocs);
         } else {
           setError("Failed to fetch documents");
@@ -86,14 +88,14 @@ const DocumentList: React.FC = React.memo(() => {
     fetchDocuments();
   }, [adminLanguage]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const documentsPerPage = 10;
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const documentsPerPage = 10;
 
-  const totalPages = Math.ceil(documents.length / documentsPerPage);
+  // const totalPages = Math.ceil(documents.length / documentsPerPage);
   // const indexOfLastDoc = currentPage * documentsPerPage;
   // const indexOfFirstDoc = indexOfLastDoc - documentsPerPage;
   // const currentDocuments = uniqeDocument.slice(indexOfFirstDoc, indexOfLastDoc);
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   if (loadingInitial) {
     return <Loading />;
@@ -102,7 +104,7 @@ const DocumentList: React.FC = React.memo(() => {
     return <Error />;
   }
 
-  const handleBrand = (doc: DocumentSliceAr | DocumentSliceEn) => {
+  const handleBrand = (doc: DocumentSliceAdminAr | DocumentSliceAdminEn) => {
     if (doc) {
       const tadawalCode = "tadawalCode" in doc ? doc.tadawalCode : "";
       navigate(
@@ -196,21 +198,21 @@ const DocumentList: React.FC = React.memo(() => {
                     className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition-colors"
                   >
                     <td className="px-1 sm:px-4 border border-gray-300">
-                      {(doc as DocumentSliceAr | DocumentSliceEn).tadawalCode}
+                      {(doc as DocumentSliceAdminAr | DocumentSliceAdminEn).tadawalCode}
                     </td>
                     <td className="px-1 sm:px-4 border border-gray-300">
                       {language === "Arabic"
-                        ? (doc as DocumentSliceAr).fullNameAr
-                        : (doc as DocumentSliceEn).fullNameEn}
+                        ? (doc as DocumentSliceAdminAr).fullNameAr
+                        : (doc as DocumentSliceAdminEn).fullNameEn}
                     </td>
                     <td className="px-1 sm:px-4 border border-gray-300">
                       {language === "Arabic"
-                        ? (doc as DocumentSliceAr).nickNameAr
-                        : (doc as DocumentSliceEn).nickNameEn}
+                        ? (doc as DocumentSliceAdminAr).nickNameAr
+                        : (doc as DocumentSliceAdminEn).nickNameEn}
                     </td>
 
                     <td className="px-1 sm:px-4 border border-gray-300">
-                      {(doc as DocumentSliceAr | DocumentSliceEn).sector}
+                      {(doc as DocumentSliceAdminAr | DocumentSliceAdminEn).sector}
                     </td>
 
                     <td className="py-1  sm:px-4 border flex justify-center border-gray-300 flex space-x-4">
@@ -235,7 +237,7 @@ const DocumentList: React.FC = React.memo(() => {
             </table>
           </div>
 
-          <div className="flex justify-between lg:hidden mt-8 md:hidden sm:hidden xs:hidden">
+          {/* <div className="flex justify-between lg:hidden mt-8 md:hidden sm:hidden xs:hidden">
             <button
               onClick={() => paginate(currentPage - 1)}
               disabled={currentPage === 1}
@@ -273,7 +275,7 @@ const DocumentList: React.FC = React.memo(() => {
             >
               Next
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

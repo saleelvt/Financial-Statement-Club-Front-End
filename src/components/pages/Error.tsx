@@ -23,7 +23,7 @@ export const Error=()=>{
               />
             </svg>
             <span className="font-bold">Warning:  </span>
-            <h1>  Working on Back-end</h1>
+            <h1>  Working on Back-end || Api Not Found</h1>
           </div>
           <p className="mt-2 text-sm">{}</p>
         </div>

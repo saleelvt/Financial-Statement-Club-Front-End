@@ -14,7 +14,7 @@ export const setEnglishNames = (documents: any) => {
                 sector:x?.sector,
                 id:x?._id
             });
-            if (x?.formData) englishFormFiles.push(x?.formData);  // Push file to English files array
+            // if (x?.formData) englishFormFiles.push(x?.formData);  // Push file to English files array
         }
     
         return { englishNamesArray, englishFormFiles };

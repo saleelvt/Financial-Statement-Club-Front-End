@@ -91,7 +91,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         };
       }
     );
-
     
   const fileInputRefs = {
   Q1: useRef<HTMLInputElement>(null),
@@ -266,7 +265,6 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           formData.append("nickNameEn", adminCredentials?.nickNameEn);
           formData.append("tadawalCode", adminCredentials?.tadawalCode);
           formData.append("sector", adminCredentials?.sector); 
-;
 
           const response = await axiosIn.post(
             `/api/v1/admin/addDocumentEnglish`,
@@ -305,37 +303,27 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         ).unwrap();
         if (response.success) {
         setShowToast(true);
-        setFormData({
-    Q1: { file: null, date: null, year: "", createAt: "" },
-    Q2: { file: null, date: null, year: "", createAt: "" },
-    Q3: { file: null, date: null, year: "", createAt: "" },
-    Q4: { file: null, date: null, year: "", createAt: "" },
-    S1: { file: null, date: null, year: "", createAt: "" },
-    Board: { file: null, date: null, year: "", createAt: "" },
-    Year: { file: null, date: null, year: "", createAt: "" },
-  });
+       
 
-   Object.keys(fileInputRefs).forEach((key) => {
-    if (fileInputRefs[key as keyof typeof fileInputRefs].current) {
-      fileInputRefs[key as keyof typeof fileInputRefs].current!.value = "";
+ Object.keys(fileInputRefs).forEach((key) => {
+    const ref = fileInputRefs[key as keyof typeof fileInputRefs];
+    if (ref.current) {
+      ref.current.value = "";
     }
   });
+
+   // ✅ Clear all file states in formData
+    setFormData((prev) => {
+      const updatedData = { ...prev };
+      (Object.keys(prev) as FieldKey[]).forEach((key) => {
+        updatedData[key] = { ...updatedData[key], file: null };
+      });
+      return updatedData;
+    });
         setTimeout(() => {
           setShowToast(false);
   
         }, 30000); // 30 seconds
-      
-
-          // Reset form data
-          await setFormData(
-            (prevFormData) =>
-              Object.fromEntries(
-                Object.entries(prevFormData).map(([key, value]) => [
-                  key as keyof typeof prevFormData,
-                  { ...value, file: null,year:"",date:null},
-                ])
-              ) as Record<FieldKey, FormField>
-          );
         }
       } catch (error: any) {
        console.log(error);

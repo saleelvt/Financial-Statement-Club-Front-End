@@ -15,9 +15,8 @@ import { commonRequest } from "../../../config/api";
 import { config, URL } from "../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
 import ValidationModal from "../validationModal";
-import { AddDocument } from "./addDocumentEn"; 
+import { AddDocument } from "./addDocumentEn";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 
 interface DocumentPayload {
   fullNameAr: string;
@@ -38,7 +37,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
   const [sector, setSector] = useState("");
-    const [showToastAr, setShowToastAr] = useState<boolean>(false);
+  const [showToastAr, setShowToastAr] = useState<boolean>(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,15 +53,14 @@ const AddDocumentArabic: React.FC = React.memo(() => {
   });
 
   const fileInputRefs = {
-  Q1: useRef<HTMLInputElement>(null),
-  Q2: useRef<HTMLInputElement>(null),
-  Q3: useRef<HTMLInputElement>(null),
-  Q4: useRef<HTMLInputElement>(null),
-  S1: useRef<HTMLInputElement>(null),
-  Board: useRef<HTMLInputElement>(null),
-  Year: useRef<HTMLInputElement>(null),
-};
-
+    Q1: useRef<HTMLInputElement>(null),
+    Q2: useRef<HTMLInputElement>(null),
+    Q3: useRef<HTMLInputElement>(null),
+    Q4: useRef<HTMLInputElement>(null),
+    S1: useRef<HTMLInputElement>(null),
+    Board: useRef<HTMLInputElement>(null),
+    Year: useRef<HTMLInputElement>(null),
+  };
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -143,7 +141,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
 
   // Your Redux thunk - with minimal changes
   const addDocumentArabic = createAsyncThunk(
-    "admin/addDocumentArabic", 
+    "admin/addDocumentArabic",
     async (adminCredentials: DocumentPayload) => {
       try {
         const formDataf = adminCredentials.formData;
@@ -194,14 +192,16 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             },
           }
         );
-       
-        
+
         return response.data;
       } catch (error: any) {
         // Reset progress on error
-         console.log("the ersponse of the data while add  : ",error.response.data.message);
+        console.log(
+          "the ersponse of the data while add  : ",
+          error.response.data.message
+        );
         setIsModalOpen(true);
-        setErrorMessage(error.response.data.message)
+        setErrorMessage(error.response.data.message);
         throw error; // Re-throw to be caught by the component
       }
     }
@@ -223,28 +223,31 @@ const AddDocumentArabic: React.FC = React.memo(() => {
 
       const response = await dispatch(addDocumentArabic(payloadData)).unwrap();
 
- if(response.success){
-setShowToastAr(true)
- setFormData({
-    Q1: { file: "", date: null, year: "", createAt: "" },
-    Q2: { file: "", date: null, year: "", createAt: "" },
-    Q3: { file: "", date: null, year: "", createAt: "" },
-    Q4: { file: "", date: null, year: "", createAt: "" },
-    S1: { file: "", date: null, year: "", createAt: "" },
-    Board: { file: "", date: null, year: "", createAt: "" },
-    Year: { file: "", date: null, year: "", createAt: "" },
-  });
-   Object.keys(fileInputRefs).forEach((key) => {
-    if (fileInputRefs[key as keyof typeof fileInputRefs].current) {
-      fileInputRefs[key as keyof typeof fileInputRefs].current!.value = "";
+    if (response.success) {
+  setShowToastAr(true);
+
+  // ✅ Clear all file input refs
+  Object.keys(fileInputRefs).forEach((key) => {
+    const ref = fileInputRefs[key as keyof typeof fileInputRefs];
+    if (ref.current) {
+      ref.current.value = "";
     }
   });
-   setTimeout(()=>{
-    setShowToastAr(false)
-   
-   },30000)
 
-      }
+  // ✅ Clear all file states in formData
+  setFormData((prev) => {
+    const updatedData = { ...prev };
+    (Object.keys(prev) as FieldKey[]).forEach((key) => {
+      updatedData[key] = { ...updatedData[key], file: null };
+    });
+    return updatedData;
+  });
+
+  setTimeout(() => {
+    setShowToastAr(false);
+  }, 30000);
+}
+
     } catch (error: any) {
       console.error("Submit error:", error);
     }
@@ -257,7 +260,7 @@ setShowToastAr(true)
           onSubmit={handleSubmitArabicDoc}
           className="bg-white      w-full p-2 "
           dir="rtl"
-        > 
+        >
           <div className="flex xs:gap-2">
             <FaArrowCircleRight
               className="text-3xl text-gray-500"
@@ -273,8 +276,8 @@ setShowToastAr(true)
               <div className="relative  ">
                 <label className="block uppercase  tracking-wide text-sm text-gray-700 font-semibold ">
                   رمز تداول
-                </label> 
-                <input 
+                </label>
+                <input
                   className="appearance-none xs:w-24 block  text-sm p-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                   type="text"
                   placeholder="أدخل رمز تداول"
@@ -355,7 +358,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
-                 ref={fileInputRefs.Q1}
+                ref={fileInputRefs.Q1}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q1", e.target.files?.[0] || null)
@@ -369,8 +372,8 @@ setShowToastAr(true)
                   calendarClassName="custom-datepicker"
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
-                    portalId="root-portal"
-                      showMonthDropdown
+                  portalId="root-portal"
+                  showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -391,7 +394,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
-                   ref={fileInputRefs.Q2}
+                ref={fileInputRefs.Q2}
                 className="appearance-none block  w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q2", e.target.files?.[0] || null)
@@ -404,8 +407,8 @@ setShowToastAr(true)
                   className="appearance-none block lg:w-[170px] xs:w-[130px]  p-1 mt-1 bg-gray-200 text-gray-700 border rounded  leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
-                    portalId="root-portal"
-                      showMonthDropdown
+                  portalId="root-portal"
+                  showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -424,7 +427,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
-                   ref={fileInputRefs.Q3}
+                ref={fileInputRefs.Q3}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q3", e.target.files?.[0] || null)
@@ -437,8 +440,8 @@ setShowToastAr(true)
                   className="appearance-none block  mt-1 lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
-                    portalId="root-portal"
-                      showMonthDropdown
+                  portalId="root-portal"
+                  showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -457,7 +460,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
-                   ref={fileInputRefs.Q4}
+                ref={fileInputRefs.Q4}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Q4", e.target.files?.[0] || null)
@@ -470,8 +473,8 @@ setShowToastAr(true)
                   className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
-                    portalId="root-portal"
-                      showMonthDropdown
+                  portalId="root-portal"
+                  showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -487,10 +490,10 @@ setShowToastAr(true)
             <div className=" ">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
                 ن.س
-              </label> 
+              </label>
               <input
                 type="file"
-                   ref={fileInputRefs.S1}
+                ref={fileInputRefs.S1}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("S1", e.target.files?.[0] || null)
@@ -503,8 +506,8 @@ setShowToastAr(true)
                   className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
-                    portalId="root-portal"
-                      showMonthDropdown
+                  portalId="root-portal"
+                  showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -523,7 +526,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
-                   ref={fileInputRefs.Year}
+                ref={fileInputRefs.Year}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Year", e.target.files?.[0] || null)
@@ -536,8 +539,8 @@ setShowToastAr(true)
                   className="appearance-none block lg:w-[170px] xs:w-[130px] mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
-                    portalId="root-portal"
-                      showMonthDropdown
+                  portalId="root-portal"
+                  showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -557,7 +560,7 @@ setShowToastAr(true)
               </label>
               <input
                 type="file"
-                   ref={fileInputRefs.Board}
+                ref={fileInputRefs.Board}
                 className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                 onChange={(e) =>
                   handleFileChange("Board", e.target.files?.[0] || null)
@@ -570,8 +573,8 @@ setShowToastAr(true)
                   className="appearance-none block lg:w-[170px] xs:w-[130px]  mt-1 bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="اختر التاريخ"
                   popperPlacement="bottom-start"
-                    portalId="root-portal"
-                      showMonthDropdown
+                  portalId="root-portal"
+                  showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -585,13 +588,12 @@ setShowToastAr(true)
               </div>
             </div>
           </div>
-   <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
- {showToastAr && (
-                        <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
-                          تم الرفع بنجاح  :  {`${nickNameAr},${tadawalCode}`}
-                       
-                        </div>
-                       )} 
+          <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
+            {showToastAr && (
+              <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                تم الرفع بنجاح : {`${nickNameAr},${tadawalCode}`}
+              </div>
+            )}
 
             {loading ? (
               <div className="flex flex-col items-center">

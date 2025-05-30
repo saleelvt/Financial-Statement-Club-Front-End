@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { URL } from "../../../config/constants";
 import { createAxiosConfig } from "../../../config/constants";
@@ -18,9 +19,8 @@ interface DocumentPayload {
 
 export const UpdateDocumentEnglish = createAsyncThunk(
   "admin/update doc ",
-  async ( { id, language, adminCredentials }:{ id: string; language: string; adminCredentials: DocumentPayload }, { rejectWithValue }) => {
+  async ( { id, language, adminCredentials }:{ id: any; language: any; adminCredentials: DocumentPayload }, { rejectWithValue }) => {
     try {
-
         console.log("adminCredentials", adminCredentials);
       const formData = new FormData();
       for (const [key, value] of Object.entries(

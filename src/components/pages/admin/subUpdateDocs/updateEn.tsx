@@ -1,31 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../reduxKit/store";
-import { UpdateDocumentEnglish } from "../../../reduxKit/actions/admin/updateEnglishDocument";
+import { AppDispatch } from "../../../../reduxKit/store";
+import { UpdateDocumentEnglish } from "../../../../reduxKit/actions/admin/updateEnglishDocument";
 import { useNavigate } from "react-router-dom";
-import SubUpdateDocumentAr from "./subUpdateDocs/updateAr";
-import { useLocation } from "react-router-dom";
 
+// import { useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { DocumentSliceAr, FieldKey } from "../../../interfaces/admin/addDoument";
-import { FormField } from "../../../interfaces/admin/addDoument";
-import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
-import { commonRequest } from "../../../config/api";
-import { config } from "../../../config/constants";
+import {FieldKey } from "../../../../interfaces/admin/addDoument";
+import { FormField } from "../../../../interfaces/admin/addDoument";
+import { DocumentSliceEn } from "../../../../interfaces/admin/addDoument";
+import { commonRequest } from "../../../../config/api";
+import { config } from "../../../../config/constants";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import ValidationModal from "../validationModal";
+import ValidationModal from "../../validationModal";
 
 
+interface UpdateDocumentEnProps {
+  DocData: DocumentSliceEn | null | undefined;
+}
 
-const UpdateDocument: React.FC = React.memo(() => {
+const SubUpdateDocumentEn: React.FC<UpdateDocumentEnProps> = React.memo(({DocData}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
   const [fullNameEn, setFullNameEn] = useState("");
   const [nickNameEn, setnickNameEn] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
+  // const [updaidteId,setUpdateId]=useState<any>("")
+  // const [updateLanguage,setUpdateLnag]=useState<any>("")
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showToast, setShowToast] = useState<boolean>(false);
@@ -33,10 +37,10 @@ const UpdateDocument: React.FC = React.memo(() => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
   const [document, setDocument] = useState< DocumentSliceEn | null | undefined   >();
-  const [documentAr, setDocumentAr] = useState< DocumentSliceAr| null | undefined   >();
-  const location = useLocation();
-  const { id, language } = location.state || {};
 
+
+ const id=DocData?._id
+ const language="English"
   // Initialize formData with default structure
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
     Q1: { file: null, date: null, year: "", createAt: "" },
@@ -57,35 +61,16 @@ const UpdateDocument: React.FC = React.memo(() => {
     Year: useRef<HTMLInputElement>(null),
   };
 
+  useEffect(()=>{
+console.log("the id of the update : ",DocData);
 
+    setDocument(DocData)
+
+  },[DocData])
   
   
 
-  useEffect(() => {
-    // Fetch document details by ID and Language
-  
-
-    if (id && language) fetchDocument(); // Ensure both `id` and `language` are present
-  }, [id, language]);
-  const fetchDocument = async () => {
-      try {
-        const response = await commonRequest(
-          "GET",
-          `/api/v1/admin/getDocumentById/${id}?language=${language}`, // Include language as a query parameter
-          config,
-          {}
-        );
-        const dataEn = response.data.data.data
-        const dataAr = response.data.data.matchedOppositeLanguageDoc
-
-        console.log("...................................En", dataEn);
-        console.log("...................................Ar", dataAr);
-        setDocument(dataEn); // Ensure you have the latest value for document
-        setDocumentAr(dataAr)
-      } catch (error) {
-        console.error("Error fetching document details:", error);
-      }
-    };
+ 
   useEffect(() => {
     if (document) {
       setFullNameEn(document.fullNameEn || "");
@@ -196,7 +181,7 @@ const UpdateDocument: React.FC = React.memo(() => {
         createdAt: new Date().toISOString(), // Example value
       };
 
-      const response = await dispatch(  UpdateDocumentEnglish({ id, language, adminCredentials })
+      const response = await dispatch(  UpdateDocumentEnglish({ id , language, adminCredentials })
       ).unwrap();
       if (response.success) {
         setShowToast(true);
@@ -223,7 +208,7 @@ const UpdateDocument: React.FC = React.memo(() => {
   };
 
   return (
-    <div className="p-1 lg:px-8 border   w-full">
+    <div className="p-1 lg:px-8 border-t   w-full">
       <div className="">
         <form onSubmit={handleSubmit} className="">
           <div className="flex justify-between ">
@@ -322,7 +307,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                     handleFileChange("Q1", e.target.files?.[0] || null)
                   }
                 />
-           
+               
               </div>
 
               <div className="flex justify-start gap-1">
@@ -361,7 +346,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                     handleFileChange("Q2", e.target.files?.[0] || null)
                   }
                 />
-             
+
               </div>
               <div className=" flex justify-start gap-1">
                 <DatePicker
@@ -398,7 +383,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                     handleFileChange("Q3", e.target.files?.[0] || null)
                   }
                 />
-              
+             
               </div>
               <div className=" flex justify-start gap-1  ">
                 <DatePicker
@@ -435,7 +420,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                     handleFileChange("Q4", e.target.files?.[0] || null)
                   }
                 />
-              
+             
               </div>
               <div className=" flex justify-start gap-1  ">
                 <DatePicker
@@ -472,7 +457,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                     handleFileChange("S1", e.target.files?.[0] || null)
                   }
                 />
-              
+
               </div>
               <div className=" flex justify-start gap-1  ">
                 <DatePicker
@@ -549,7 +534,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                     handleFileChange("Board", e.target.files?.[0] || null)
                   }
                 />
-               
+                
               </div>
               <div className=" flex justify-start gap-1  ">
                 <DatePicker
@@ -601,7 +586,7 @@ const UpdateDocument: React.FC = React.memo(() => {
             )}
           </div>
         </form>
-        <SubUpdateDocumentAr DocData={documentAr} />
+
           <ValidationModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
@@ -612,4 +597,4 @@ const UpdateDocument: React.FC = React.memo(() => {
   );
 });
 
-export default UpdateDocument;
+export default SubUpdateDocumentEn;

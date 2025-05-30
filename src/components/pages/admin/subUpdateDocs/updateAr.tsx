@@ -1,46 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../reduxKit/store";
-import { UpdateDocumentArabic } from "../../../reduxKit/actions/admin/updateArabicDocument";
+import { AppDispatch } from "../../../../reduxKit/store";
+import { UpdateDocumentArabic } from "../../../../reduxKit/actions/admin/updateArabicDocument";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import SubUpdateDocumentEn from "./subUpdateDocs/updateEn";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  DocumentSliceEn,
-  FieldKey,
-} from "../../../interfaces/admin/addDoument";
-import { FormField } from "../../../interfaces/admin/addDoument";
-import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
-import { commonRequest } from "../../../config/api";
-import { config } from "../../../config/constants";
+import { FieldKey } from "../../../../interfaces/admin/addDoument";
+import { FormField } from "../../../../interfaces/admin/addDoument";
+import { DocumentSliceAr } from "../../../../interfaces/admin/addDoument";
 import { FaArrowCircleRight } from "react-icons/fa";
-import ValidationModal from "../validationModal";
-
-const UpdateDocumentAr: React.FC = React.memo(() => {
+import ValidationModal from "../../validationModal";
+import { config } from "../../../../config/constants";
+import { commonRequest } from "../../../../config/api";
+interface UpdateDocumentArProps {
+  DocData: DocumentSliceAr | null | undefined;
+}
+const SubUpdateDocumentAr: React.FC<UpdateDocumentArProps> = React.memo(({DocData}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+      const [errorMessage, setErrorMessage] = useState("");
+  const [loading,setLoading]=useState(false)
   const [fullNameAr, setFullNameAr] = useState("");
   const [nickNameAr, setnickNameAr] = useState("");
   const [tadawalCode, setTadawalCode] = useState("");
   const [sector, setSector] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [document, setDocument] = useState<
-    DocumentSliceAr | null | undefined
-  >();
-  const [documentEn, setDocumentEn] = useState<
-    DocumentSliceEn | null | undefined
-  >();
-  const [showToastAr, setShowToastAr] = useState<boolean>(false);
-  const location = useLocation();
-  const { id, language } = location.state || {};
+  const [document, setDocument] = useState<  DocumentSliceAr | null | undefined>();
+    const [showToastAr, setShowToastAr] = useState<boolean>(false);
+
+
   const [formData, setFormData] = useState<Record<FieldKey, FormField>>({
     Q1: { file: null, date: null, year: "", createAt: "" },
     Q2: { file: null, date: null, year: "", createAt: "" },
@@ -51,43 +43,20 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
     Year: { file: null, date: null, year: "", createAt: "" },
   });
 
-  const fileInputRefs = {
-    Q1: useRef<HTMLInputElement>(null),
-    Q2: useRef<HTMLInputElement>(null),
-    Q3: useRef<HTMLInputElement>(null),
-    Q4: useRef<HTMLInputElement>(null),
-    S1: useRef<HTMLInputElement>(null),
-    Board: useRef<HTMLInputElement>(null),
-    Year: useRef<HTMLInputElement>(null),
-  };
+      const fileInputRefs = {
+      Q1: useRef<HTMLInputElement>(null),
+      Q2: useRef<HTMLInputElement>(null),
+      Q3: useRef<HTMLInputElement>(null),
+      Q4: useRef<HTMLInputElement>(null),
+      S1: useRef<HTMLInputElement>(null),
+      Board: useRef<HTMLInputElement>(null),
+      Year: useRef<HTMLInputElement>(null),
+    }; 
 
-  useEffect(() => {
-    // Fetch document details by ID and Language
+     const id=DocData?._id
+ const language="English"
+    
 
-    if (id && language) fetchDocument(); // Ensure both `id` and `language` are present
-  }, [id, language]);
-  const fetchDocument = async () => {
-    try {
-      const response = await commonRequest(
-        "GET",
-        `/api/v1/admin/getDocumentById/${id}?language=${language}`, // Include language as a query parameter
-        config,
-        {}
-      );
-
-      console.log("the arabic update resoponse : ", response);
-
-      const dataAr = response.data.data.data;
-      const dataEn = response.data.data.matchedOppositeLanguageDoc;
-
-      console.log("...................................En", dataEn);
-      console.log("...................................Ar", dataAr);
-      setDocument(dataAr); // Ensure you have the latest value for document
-      setDocumentEn(dataEn);
-    } catch (error) {
-      console.error("Error fetching document details:", error);
-    }
-  };
 
   useEffect(() => {
     if (document) {
@@ -105,9 +74,13 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
     }
   }, [document]);
 
-  //   useEffect(()=>{
-  // setDocument(DocData)
-  //   },[DocData])
+
+
+  useEffect(()=>{
+setDocument(DocData)
+  },[DocData])
+
+
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -184,29 +157,31 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
         createdAt: new Date().toISOString(), // Example value
       };
       console.log("my data is", adminCredentials);
-      setLoading(true);
+      setLoading(true)
       const response = await dispatch(
         UpdateDocumentArabic({ id, language, adminCredentials })
       ).unwrap();
-      if (response.success) {
-        setShowToastAr(true);
-        setLoading(false);
-        Object.keys(fileInputRefs).forEach((key) => {
-          if (fileInputRefs[key as keyof typeof fileInputRefs].current) {
-            fileInputRefs[key as keyof typeof fileInputRefs].current!.value =
-              "";
-          }
-        });
+if(response.success){
+  setShowToastAr(true)
+  setLoading(false)
 
-        setTimeout(() => {
-          setShowToastAr(false);
-        }, 30000);
-      }
+    Object.keys(fileInputRefs).forEach((key) => {
+    if (fileInputRefs[key as keyof typeof fileInputRefs].current) {
+      fileInputRefs[key as keyof typeof fileInputRefs].current!.value = "";
+    }
+  });
+
+   setTimeout(()=>{
+ 
+    setShowToastAr(false)
+   },30000)
+}      
     } catch (error: any) {
-      setLoading(false);
-      setIsModalOpen(true);
-      setErrorMessage(error.message);
-      console.log("erorr ", error);
+       setLoading(false)
+        setIsModalOpen(true)
+        setErrorMessage(error.message)
+     console.log("erorr ",error);
+     
     }
   };
 
@@ -302,6 +277,15 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
             </div>
           </div>
 
+
+
+
+
+
+
+
+
+
           <div className="grid grid-cols-2  md:grid-cols-2 lg:grid-cols-4  gap-2 text-sm  ">
             <div className="">
               <label className="block uppercase tracking-wide text-gray-700 font-semibold">
@@ -311,12 +295,14 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <div className="relative">
                 <input
                   type="file"
-                  ref={fileInputRefs.Q1}
+                         ref={fileInputRefs.Q1}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Q1", e.target.files?.[0] || null)
                   }
                 />
+
+
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
@@ -326,8 +312,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
-                  portalId="root-portal"
-                  showMonthDropdown
+                    portalId="root-portal"
+                      showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -349,12 +335,14 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <div className="relative">
                 <input
                   type="file"
-                  ref={fileInputRefs.Q2}
+                         ref={fileInputRefs.Q2}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Q2", e.target.files?.[0] || null)
                   }
                 />
+
+
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
@@ -364,8 +352,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
-                  portalId="root-portal"
-                  showMonthDropdown
+                    portalId="root-portal"
+                      showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -387,12 +375,14 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <div className="relative">
                 <input
                   type="file"
-                  ref={fileInputRefs.Q3}
+                         ref={fileInputRefs.Q3}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Q3", e.target.files?.[0] || null)
                   }
                 />
+
+             
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
@@ -402,8 +392,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
-                  portalId="root-portal"
-                  showMonthDropdown
+                    portalId="root-portal"
+                      showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -426,12 +416,14 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <div className="relative">
                 <input
                   type="file"
-                  ref={fileInputRefs.Q4}
+                         ref={fileInputRefs.Q4}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Q4", e.target.files?.[0] || null)
                   }
                 />
+
+             
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
@@ -441,8 +433,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
-                  portalId="root-portal"
-                  showMonthDropdown
+                    portalId="root-portal"
+                      showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -465,12 +457,14 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <div className="relative">
                 <input
                   type="file"
-                  ref={fileInputRefs.S1}
+                         ref={fileInputRefs.S1}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("S1", e.target.files?.[0] || null)
                   }
                 />
+
+
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
@@ -480,8 +474,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
-                  portalId="root-portal"
-                  showMonthDropdown
+                    portalId="root-portal"
+                      showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -504,12 +498,14 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <div className="relative">
                 <input
                   type="file"
-                  ref={fileInputRefs.Year}
+                         ref={fileInputRefs.Year}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Year", e.target.files?.[0] || null)
                   }
                 />
+
+             
               </div>
 
               <div className="flex justify-start gap-1 mt-1">
@@ -519,8 +515,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
-                  portalId="root-portal"
-                  showMonthDropdown
+                    portalId="root-portal"
+                      showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -543,14 +539,16 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               <div className="relative">
                 <input
                   type="file"
-                  ref={fileInputRefs.Board}
+                         ref={fileInputRefs.Board}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white file:mr-2"
                   onChange={(e) =>
                     handleFileChange("Board", e.target.files?.[0] || null)
                   }
-                />
-              </div>
+                /> 
 
+               
+              </div>
+ 
               <div className="flex justify-start gap-1 mt-1">
                 <DatePicker
                   selected={formData?.Board?.date}
@@ -558,8 +556,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
                   className="appearance-none block lg:w-[170px] xs:w-[130px] bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   placeholderText="Choose Date"
                   popperPlacement="bottom-start"
-                  portalId="root-portal"
-                  showMonthDropdown
+                    portalId="root-portal"
+                      showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                 />
@@ -574,12 +572,22 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
-            {showToastAr && (
-              <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
-                تم الرفع بنجاح : {`${nickNameAr},${tadawalCode},${language}`}
-              </div>
-            )}
+
+
+
+
+
+
+
+
+
+         <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
+ {showToastAr && (
+                        <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                          تم الرفع بنجاح  :  {`${nickNameAr},${tadawalCode},${language}`}
+                       
+                        </div>
+                       )} 
 
             {loading ? (
               <div className="flex flex-col items-center">
@@ -597,7 +605,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
           </div>
         </form>
 
-        <SubUpdateDocumentEn DocData={documentEn} />
+            {/* <UpdateDocument  DocData={documentEn}/> */}
 
         <ValidationModal
           isOpen={isModalOpen}
@@ -608,4 +616,4 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
     </div>
   );
 });
-export default UpdateDocumentAr;
+export default SubUpdateDocumentAr;

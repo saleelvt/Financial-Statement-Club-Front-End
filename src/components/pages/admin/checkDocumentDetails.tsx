@@ -36,7 +36,6 @@ import { FaTrash } from "react-icons/fa";
   );
   const [docToDelete, setDocToDelete] = useState<any>(null);
   const [modalOpen, setModalOpen] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState(""); // state for search term
   const navigate = useNavigate();
 
@@ -89,9 +88,7 @@ import { FaTrash } from "react-icons/fa";
         fetchDocuments();
 
       }
-      console.log("delete response ofthe document: ",response);
-      
-   
+
     } catch (error) {
       console.error("Failed to delete document:", error);
     } finally {

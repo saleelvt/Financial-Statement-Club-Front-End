@@ -212,12 +212,11 @@ const UpdateDocument: React.FC = React.memo(() => {
 
         setTimeout(() => {
           setShowToast(false);
-   
         }, 30000); // 30 seconds
       }
     } catch (error: any) {
          console.log("thrinooti engins",error);
-            setLoading(false);
+        setLoading(false);
       setIsModalOpen(true)
         setErrorMessage(error.message)
     
@@ -593,7 +592,7 @@ const UpdateDocument: React.FC = React.memo(() => {
                     handleFileChange("Board", e.target.files?.[0] || null)
                   }
                 />
-                {typeof formData?.Board?.file === "string" && (
+                {typeof formData?.Board?.file === "string" && ( 
                   <span
                     className="absolute right-2 top-[9px] text-xs text-gray-900 pointer-events-none truncate max-w-[80px]"
                     style={{ direction: "rtl", textAlign: "right" }}

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import axios from "axios";
@@ -34,7 +34,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
   ({ formDataEn, tadawalCodeEn }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { loading } = useSelector((state: RootState) => state.adminEn);
-       const [showToast, setShowToast] = useState<boolean>(false);
+    const [showToast, setShowToast] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [fullNameEn, setFullNameEn] = useState("");
@@ -91,17 +91,16 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         };
       }
     );
-    
-  const fileInputRefs = {
-  Q1: useRef<HTMLInputElement>(null),
-  Q2: useRef<HTMLInputElement>(null),
-  Q3: useRef<HTMLInputElement>(null),
-  Q4: useRef<HTMLInputElement>(null),
-  S1: useRef<HTMLInputElement>(null),
-  Board: useRef<HTMLInputElement>(null),
-  Year: useRef<HTMLInputElement>(null),
-};
 
+    const fileInputRefs = {
+      Q1: useRef<HTMLInputElement>(null),
+      Q2: useRef<HTMLInputElement>(null),
+      Q3: useRef<HTMLInputElement>(null),
+      Q4: useRef<HTMLInputElement>(null),
+      S1: useRef<HTMLInputElement>(null),
+      Board: useRef<HTMLInputElement>(null),
+      Year: useRef<HTMLInputElement>(null),
+    };
 
     useEffect(() => {
       // console.log("my form data is from the english document  ", formDataEn);
@@ -264,7 +263,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           formData.append("fullNameEn", adminCredentials?.fullNameEn);
           formData.append("nickNameEn", adminCredentials?.nickNameEn);
           formData.append("tadawalCode", adminCredentials?.tadawalCode);
-          formData.append("sector", adminCredentials?.sector); 
+          formData.append("sector", adminCredentials?.sector);
 
           const response = await axiosIn.post(
             `/api/v1/admin/addDocumentEnglish`,
@@ -279,7 +278,8 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           setErrorMessage(
-            error.response?.data?.message || "Api response error Please Match the data "
+            error.response?.data?.message ||
+              "Api response error Please Match the data "
           );
           setIsModalOpen(true);
         }
@@ -302,32 +302,27 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
           addDocumentEnglish(payloadData)
         ).unwrap();
         if (response.success) {
-        setShowToast(true);
-       
+          setShowToast(true);
 
- Object.keys(fileInputRefs).forEach((key) => {
-    const ref = fileInputRefs[key as keyof typeof fileInputRefs];
-    if (ref.current) {
-      ref.current.value = "";
-    }
-  });
-
-   // ✅ Clear all file states in formData
-    setFormData((prev) => {
-      const updatedData = { ...prev };
-      (Object.keys(prev) as FieldKey[]).forEach((key) => {
-        updatedData[key] = { ...updatedData[key], file: null };
-      });
-      return updatedData;
-    });
-        setTimeout(() => {
-          setShowToast(false);
-  
-        }, 30000); // 30 seconds
+          Object.keys(fileInputRefs).forEach((key) => {
+            const ref = fileInputRefs[key as keyof typeof fileInputRefs];
+            if (ref.current) {
+              ref.current.value = "";
+            }
+          });
+          setFormData((prev) => {
+            const updatedData = { ...prev };
+            (Object.keys(prev) as FieldKey[]).forEach((key) => {
+              updatedData[key] = { ...updatedData[key], file: null };
+            });
+            return updatedData;
+          });
+          setTimeout(() => {
+            setShowToast(false);
+          }, 30000); // 30 seconds
         }
       } catch (error: any) {
-       console.log(error);
-       
+        console.log(error);
       }
     };
 
@@ -420,11 +415,11 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
 
                 <input
                   type="file"
+                  ref={fileInputRefs.Q1}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q1", e.target.files?.[0] || null)
                   }
-                     ref={fileInputRefs.Q1}
                 />
                 <div className=" flex justify-start gap-1  ">
                   <DatePicker
@@ -434,9 +429,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
-                      showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
 
                   <input
@@ -455,7 +450,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                     ref={fileInputRefs.Q2}
+                  ref={fileInputRefs.Q2}
                   className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q2", e.target.files?.[0] || null)
@@ -469,9 +464,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
-                      showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -489,7 +484,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                     ref={fileInputRefs.Q3}
+                  ref={fileInputRefs.Q3}
                   className="appearance-none block  w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q3", e.target.files?.[0] || null)
@@ -503,9 +498,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
-                      showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -523,7 +518,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                     ref={fileInputRefs.Q4}
+                  ref={fileInputRefs.Q4}
                   className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Q4", e.target.files?.[0] || null)
@@ -537,9 +532,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
-                      showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -556,7 +551,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                     ref={fileInputRefs.S1}
+                  ref={fileInputRefs.S1}
                   className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("S1", e.target.files?.[0] || null)
@@ -570,13 +565,12 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
-                      showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
                   <input
                     type="text"
-              
                     className="appearance-none block w-full  mt-1 bg-gray-200 text-gray-700 border rounded p-1  leading-tight focus:outline-none focus:bg-white"
                     placeholder="Enter Year"
                     value={formData.S1.year}
@@ -591,7 +585,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                           ref={fileInputRefs.Year}
+                  ref={fileInputRefs.Year}
                   className="appearance-none block w-full   bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Year", e.target.files?.[0] || null)
@@ -605,9 +599,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
-                      showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -625,7 +619,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                 </label>
                 <input
                   type="file"
-                           ref={fileInputRefs.Board}
+                  ref={fileInputRefs.Board}
                   className="appearance-none block w-full  bg-gray-200 text-gray-700 border rounded p-1 leading-tight focus:outline-none focus:bg-white"
                   onChange={(e) =>
                     handleFileChange("Board", e.target.files?.[0] || null)
@@ -639,9 +633,9 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
                     placeholderText="Choose Date"
                     popperPlacement="bottom-start"
                     portalId="root-portal"
-                      showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
                   <input
                     type="text"
@@ -654,32 +648,31 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
               </div>
             </div>
 
-              <div className="flex justify-between mt-4">
-            <div className="">
-              {showToast && (
-                <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
-                  Submited Successfully On :{" "}
-                  {`${nickNameEn}-${tadawalCode}`}
+            <div className="flex justify-between mt-4">
+              <div className="">
+                {showToast && (
+                  <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                    Submited Successfully On : {`${nickNameEn}-${tadawalCode}`}
+                  </div>
+                )}
+              </div>
+
+              {loading ? (
+                <div className="flex flex-col items-center">
+                  <div className="w-4 h-4 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
+                  <span className="mt-4 text-gray-700 font-bold">
+                    Submitting...
+                  </span>
                 </div>
+              ) : (
+                <button
+                  type="submit"
+                  className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[3px] px-5 rounded focus:outline-none"
+                >
+                  Submit
+                </button>
               )}
             </div>
-
-            {loading ? (
-              <div className="flex flex-col items-center">
-                <div className="w-4 h-4 border-4 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
-                <span className="mt-4 text-gray-700 font-bold">
-                  Submitting...
-                </span>
-              </div>
-            ) : (
-              <button
-                type="submit"
-                className="bg-gradient-to-r mr-4 from-gray-500 via-gray-600 to-gray-700 text-white font-bold py-[3px] px-5 rounded focus:outline-none"
-              >
-                Submit
-              </button>
-            )}
-          </div>
           </form>
           <ValidationModal
             isOpen={isModalOpen}

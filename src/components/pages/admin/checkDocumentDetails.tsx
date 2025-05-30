@@ -14,7 +14,7 @@ import { ConfirmationModal } from "./ConfirmationModal";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaPen } from "react-icons/fa" 
 import {DocumentSliceEn,DocumentSliceAr,} from "../../../interfaces/admin/addDoument";
-import { FormDataState } from "../../../interfaces/admin/addDoument";
+import { FormDataState } from "../../../interfaces/admin/addDoument"; 
 import { useSelector } from "react-redux"; 
 import { RootState } from "../../../reduxKit/store";
 import { FaTrash } from "react-icons/fa";
@@ -85,7 +85,7 @@ import { FaTrash } from "react-icons/fa";
       );
 
       if(response.data.success){
-
+        setSelectedPdf(null)
         fetchDocuments();
 
       }

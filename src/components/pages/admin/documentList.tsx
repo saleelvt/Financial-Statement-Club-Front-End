@@ -51,7 +51,7 @@ const DocumentList: React.FC = React.memo(() => {
         
 
         if (response.status === 200 && response.data?.data) {
-          const fetchedDocuments = response.data.data;
+          const fetchedDocuments = response.data.data; 
 
           // Filter unique documents based on nickNameEn or nickNameAr
           const uniqueDocs = fetchedDocuments.filter(

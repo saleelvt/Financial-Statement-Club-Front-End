@@ -50,7 +50,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
       S1: useRef<HTMLInputElement>(null),
       Board: useRef<HTMLInputElement>(null),
       Year: useRef<HTMLInputElement>(null),
-    };
+    }; 
     
   useEffect(() => {
     // Fetch document details by ID and Language

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../reduxKit/store";
 import { UpdateDocumentEnglish } from "../../../../reduxKit/actions/admin/updateEnglishDocument";
-import { useNavigate } from "react-router-dom";
+
 
 // import { useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -13,7 +13,7 @@ import { FormField } from "../../../../interfaces/admin/addDoument";
 import { DocumentSliceEn } from "../../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../../config/api";
 import { config } from "../../../../config/constants";
-import { FaArrowCircleLeft } from "react-icons/fa";
+
 import ValidationModal from "../../validationModal";
 
 
@@ -22,7 +22,7 @@ interface UpdateDocumentEnProps {
 }
 
 const SubUpdateDocumentEn: React.FC<UpdateDocumentEnProps> = React.memo(({DocData}) => {
-  const navigate = useNavigate();
+
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
   const [fullNameEn, setFullNameEn] = useState("");
@@ -208,15 +208,15 @@ console.log("the id of the update : ",DocData);
   };
 
   return (
-    <div className="p-1 lg:px-8 border-t   w-full">
+    <div className="p-1 border-t  mb-4   w-full">
       <div className="">
         <form onSubmit={handleSubmit} className="">
-          <div className="flex justify-between ">
+          {/* <div className="flex justify-between ">
             <FaArrowCircleLeft
               className="text-3xl text-gray-500"
               onClick={() => navigate(-1)}
             />
-          </div>
+          </div> */}
 
           <div className="flex   items-center  lg:w-1/2 mt-1 ">
             <div className="">

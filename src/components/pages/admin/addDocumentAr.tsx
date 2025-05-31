@@ -226,22 +226,22 @@ const AddDocumentArabic: React.FC = React.memo(() => {
     if (response.success) {
   setShowToastAr(true);
 
-  // ✅ Clear all file input refs
-  Object.keys(fileInputRefs).forEach((key) => {
-    const ref = fileInputRefs[key as keyof typeof fileInputRefs];
-    if (ref.current) {
-      ref.current.value = "";
-    }
-  });
+  // // ✅ Clear all file input refs
+  // Object.keys(fileInputRefs).forEach((key) => {
+  //   const ref = fileInputRefs[key as keyof typeof fileInputRefs];
+  //   if (ref.current) {
+  //     ref.current.value = "";
+  //   }
+  // });
 
-  // ✅ Clear all file states in formData
-  setFormData((prev) => {
-    const updatedData = { ...prev };
-    (Object.keys(prev) as FieldKey[]).forEach((key) => {
-      updatedData[key] = { ...updatedData[key], file: null };
-    });
-    return updatedData;
-  });
+  // // ✅ Clear all file states in formData
+  // setFormData((prev) => {
+  //   const updatedData = { ...prev };
+  //   (Object.keys(prev) as FieldKey[]).forEach((key) => {
+  //     updatedData[key] = { ...updatedData[key], file: null };
+  //   });
+  //   return updatedData;
+  // });
 
   setTimeout(() => {
     setShowToastAr(false);
@@ -322,7 +322,7 @@ const AddDocumentArabic: React.FC = React.memo(() => {
             </div>
 
             <div className="flex   items-center  lg:w-1/2   ">
-              <div className=" lg:w-full w-full  p-1">
+              <div className=" lg:w-full w-full  ">
                 <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm ">
                   الاسم المختصر{" "}
                 </label>

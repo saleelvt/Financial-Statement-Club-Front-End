@@ -304,19 +304,19 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
         if (response.success) {
           setShowToast(true);
 
-          Object.keys(fileInputRefs).forEach((key) => {
-            const ref = fileInputRefs[key as keyof typeof fileInputRefs];
-            if (ref.current) {
-              ref.current.value = "";
-            }
-          });
-          setFormData((prev) => {
-            const updatedData = { ...prev };
-            (Object.keys(prev) as FieldKey[]).forEach((key) => {
-              updatedData[key] = { ...updatedData[key], file: null };
-            });
-            return updatedData;
-          });
+          // Object.keys(fileInputRefs).forEach((key) => {
+          //   const ref = fileInputRefs[key as keyof typeof fileInputRefs];
+          //   if (ref.current) {
+          //     ref.current.value = "";
+          //   }
+          // });
+          // setFormData((prev) => {
+          //   const updatedData = { ...prev };
+          //   (Object.keys(prev) as FieldKey[]).forEach((key) => {
+          //     updatedData[key] = { ...updatedData[key], file: null };
+          //   });
+          //   return updatedData;
+          // });
           setTimeout(() => {
             setShowToast(false);
           }, 30000); // 30 seconds
@@ -327,7 +327,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
     };
 
     return (
-      <div className="p-2 border-t   w-full">
+      <div className="p-2 border-t  w-full">
         <div className="">
           <form onSubmit={handleSubmit} className="">
             <div className="flex items-center lg:w-1/2 mt-1">

@@ -8,11 +8,14 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2"; 
+
+import ValidationModal from "../../pages/validationModal";
 
 
  const AdminLogin = React.memo(() => {
   const dispatch=useDispatch<AppDispatch>()
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate()
   const {loading}=useSelector((state:RootState)=>state.auth)
   const initialValues: IAdminLogin = {
@@ -37,28 +40,31 @@ import Swal from "sweetalert2";
       } catch (error:any) {
 
         console.error("Login failed:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Error!",
-          text: error,
-          timer: 3000,
-          toast: true,
-          showConfirmButton: false,
-          timerProgressBar: true,
-          background: '#fff', // Light red background for an error message
-          color: '#721c24', // Darker red text color for better readability
-          iconColor: '#f44336', // Custom color for the icon
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer); // Pause timer on hover
-            toast.addEventListener('mouseleave', Swal.resumeTimer); // Resume timer on mouse leave
-          },
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown' // Animation when the toast appears
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp' // Animation when the toast disappears
-          }
-        });
+
+        setIsModalOpen(true)
+        setErrorMessage(error)
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Error!",
+        //   text: error,
+        //   timer: 3000,
+        //   toast: true,
+        //   showConfirmButton: false,
+        //   timerProgressBar: true,
+        //   background: '#fff', // Light red background for an error message
+        //   color: '#721c24', // Darker red text color for better readability
+        //   iconColor: '#f44336', // Custom color for the icon
+        //   didOpen: (toast) => {
+        //     toast.addEventListener('mouseenter', Swal.stopTimer); // Pause timer on hover
+        //     toast.addEventListener('mouseleave', Swal.resumeTimer); // Resume timer on mouse leave
+        //   },
+        //   showClass: {
+        //     popup: 'animate__animated animate__fadeInDown' // Animation when the toast appears
+        //   },
+        //   hideClass: {
+        //     popup: 'animate__animated animate__fadeOutUp' // Animation when the toast disappears
+        //   }
+        // });
       }
     },
   });
@@ -67,7 +73,7 @@ import Swal from "sweetalert2";
 
   return (
     <div  className="flex items-center justify-center min-h-screen bg-white p-4">
-      <div className="flex flex-col items-center p-6 w-full max-w-lg shadow-lg  border border-gray-300 rounded-lg bg-white transform transition-all duration-500 hover:scale-105">
+      <div className="flex flex-col items-center p-6 w-full max-w-lg shadow-lg  border border-gray-300 rounded-lg bg-white ">
         <h2 className="text-3xl font-serif mb-6 text-center text-gray-800 animate-pulse">
           LogIn Account
         </h2>
@@ -146,14 +152,20 @@ import Swal from "sweetalert2";
           <div className="text-center mt-6">
   <button
     type="submit"
-    className="relative overflow-hidden w-full p-3 rounded-lg mt-4 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-gray-300 hover:text-white font-semibold focus:ring-2 focus:ring-gray-400 transition duration-300 transform hover:scale-105"
+    className="relative overflow-hidden w-full p-3 rounded-full mt-4 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-gray-300 hover:text-white font-semibold focus:ring-2 focus:ring-gray-400 "
   >
-    <span className="absolute inset-0 bg-gray-600 rounded-full transform scale-0 transition-transform duration-500 ease-in-out opacity-50 hover:scale-150"></span>
+    <span className="absolute inset-0 bg-gray-600 rounded-full"></span>
     <span className="relative">{loading ? "Loading..." : "Login"}</span>
   </button>
 </div>
 
         </form>
+              <ValidationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message={errorMessage}
+        />
+
       </div>
     </div>
   

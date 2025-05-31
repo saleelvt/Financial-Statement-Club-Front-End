@@ -3,14 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../reduxKit/store";
 import { UpdateDocumentArabic } from "../../../../reduxKit/actions/admin/updateArabicDocument";
-import { useNavigate } from "react-router-dom";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FieldKey } from "../../../../interfaces/admin/addDoument";
 import { FormField } from "../../../../interfaces/admin/addDoument";
 import { DocumentSliceAr } from "../../../../interfaces/admin/addDoument";
-import { FaArrowCircleRight } from "react-icons/fa";
+
 import ValidationModal from "../../validationModal";
 import { config } from "../../../../config/constants";
 import { commonRequest } from "../../../../config/api";
@@ -18,7 +17,7 @@ interface UpdateDocumentArProps {
   DocData: DocumentSliceAr | null | undefined;
 }
 const SubUpdateDocumentAr: React.FC<UpdateDocumentArProps> = React.memo(({DocData}) => {
-  const navigate = useNavigate();
+
   const dispatch = useDispatch<AppDispatch>();
   const [isModalOpen, setIsModalOpen] = useState(false);
       const [errorMessage, setErrorMessage] = useState("");
@@ -186,19 +185,19 @@ if(response.success){
   };
 
   return (
-    <div className="lg:mx-6">
-      <div className="flex flex-col items-center min-h-screen  ">
+    <div className="">
+      <div className="flex mb-4 flex-col items-center min-h-screen  ">
         <form
           dir="rtl"
           onSubmit={handleSubmit}
           className="bg-white     w-full p-2 "
         >
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <FaArrowCircleRight
               className="text-3xl text-gray-500"
               onClick={() => navigate(-1)}
             />
-          </div>
+          </div> */}
           <div className="flex   items-center  lg:w-1/2 mt-1">
             <div className=" ">
               <label className="block uppercase  tracking-wide text-sm text-gray-700 font-semibold">

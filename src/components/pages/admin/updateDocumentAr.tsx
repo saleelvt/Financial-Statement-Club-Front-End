@@ -255,8 +255,8 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
           </div>
 
           <div className="flex xs:w-full    lg:w-1/2  justify-between">
-            <div className="lg:w-full xs:w-full  p-1">
-              <label className="block uppercase tracking-wide text-gray-700 font-semibold text-sm">
+            <div className="lg:w-full xs:w-full   p-1 ">
+              <label  className="block uppercase  tracking-wide text-gray-700 font-semibold text-sm">
                 الاسم المختصر
                 <span className="text-xs font-mono">(بالعربية)</span>
               </label>
@@ -287,7 +287,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
               )}
             </div>
 
-            <div className="p-1 ">
+            <div className="p-1  ">
               <label className="block uppercase text-sm tracking-wide text-gray-700 font-semibold ">
                 القطاع
               </label>

@@ -341,8 +341,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
     const totalEquity = firstTotalEquity + sumStringValues(equitySubItems);
 
     const firstTotalEquityDate2 = sumStringValues(equityItemsDate2);
-    const totalEquityDate2 =
-      firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2);
+    const totalEquityDate2 = firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2);
 
     // Calculate totals for Non-Current Liabilities
     const firstTotalNonCurrentLiabilities = sumStringValues(

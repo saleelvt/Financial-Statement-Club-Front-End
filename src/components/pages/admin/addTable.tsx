@@ -451,13 +451,13 @@ console.log("resppos da : ",response);
               <div className="items-start">
                 <div className="items-start">
                   {showDeleteToast && (
-                    <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
                       Delete Successfully :{" "}
                       {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
                     </div>
                   )}
                   {showToast && (
-                    <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
                       Updated Successfully :{" "}
                       {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
                     </div>
@@ -525,13 +525,13 @@ console.log("resppos da : ",response);
               <>
                 <div className="   flex justify-end ">
                   {showToastAr && (
-                    <div className="absolute  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                    <div className="absolute text-xs  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                       {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
                       تم تحديث بنجاح
                     </div>
                   )}
                   {showDeleteToastAr && (
-                    <div className="absolute  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                    <div className="absolute text-xs  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                       {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
                       تم الحذف بنجاح{" "}
                     </div>
@@ -604,13 +604,13 @@ console.log("resppos da : ",response);
               <div className="items-start">
                 <div className="items-start">
                   {showDeleteToast && (
-                    <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
                       Delete Successfully :{" "}
                       {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
                     </div>
                   )}
                   {showToast && (
-                    <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
                       Updated Successfully :{" "}
                       {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
                     </div>
@@ -675,7 +675,7 @@ console.log("resppos da : ",response);
 
                      <div className="items-end ">
                       {showToastAr && (
-                        <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        <div className="absolute right-14 text-xs bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                           {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
                           تم الرفع بنجاح
                         </div>
@@ -723,7 +723,7 @@ console.log("resppos da : ",response);
 
                  <div className="items-start">
                     {showToast && (
-                      <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
                         Submitted Successfully :{" "}
                         {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
                       </div>
@@ -772,7 +772,7 @@ console.log("resppos da : ",response);
                     </div>
                   )}
                   {showDeleteToastAr && (
-                    <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                    <div className="absolute right-14 text-xs bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                       {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
                       تم الحذف بنجاح{" "}
                     </div>
@@ -840,7 +840,7 @@ console.log("resppos da : ",response);
                 <div className="relative flex justify-between    ">
                   <div className="items-start">
                     {showToast && (
-                      <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
                         Submitted Successfully :{" "}
                         {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
                       </div>
@@ -907,7 +907,7 @@ console.log("resppos da : ",response);
 
                     <div className="items-end">
                       {showToastAr && (
-                        <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        <div className="absolute text-xs right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                           {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
                           تم الرفع بنجاح
                         </div>

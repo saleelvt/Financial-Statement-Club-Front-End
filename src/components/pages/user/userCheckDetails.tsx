@@ -471,7 +471,7 @@ const handleLeftClick = () => {
       className={`px-2 py-1 rounded-md ${
         selectedYear === year.toString()
           ? "bg-gray-600 text-white"
-          : "bg-gray-200 text-gray-700"
+          : "bg-gray-100 text-gray-700"
       }`}
     >
       {year}
@@ -617,11 +617,16 @@ const handleLeftClick = () => {
       <div className="lg:w-[65%]">
         {table && selectedTableKey ? (
           <div
-            className="h-[90vh] w-full overflow-y-auto pr-2"
+            className="h-screen   w-full overflow-y-auto pr-2"
             // You can adjust height as per layout needs
           >
             {language === "English" ? (
-              <BalaceSheetFormUser Tabledata={table} />
+<div className=" flex items-center justify-center  ">
+  <div className="w-full  p-1  border-[6px]     border-gray-700 ">
+    <BalaceSheetFormUser Tabledata={table} />
+  </div>
+</div>
+
             ) : (
               <BalanceSheetFormUserArabic Tabledata={table} />
             )}

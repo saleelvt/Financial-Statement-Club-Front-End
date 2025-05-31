@@ -651,7 +651,7 @@ export const AddDocument: React.FC<AddDocumentEnglishProps> = React.memo(
             <div className="flex justify-between mt-4">
               <div className="">
                 {showToast && (
-                  <div className="absolute left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                  <div className="absolute text-xs left-13 bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
                     Submited Successfully On : {`${nickNameEn}-${tadawalCode}`}
                   </div>
                 )}

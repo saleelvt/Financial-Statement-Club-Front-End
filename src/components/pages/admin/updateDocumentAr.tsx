@@ -576,7 +576,7 @@ const UpdateDocumentAr: React.FC = React.memo(() => {
 
           <div className="flex  justify-end items-center mt-4 w-full h-12 relative">
             {showToastAr && (
-              <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+              <div className="absolute right-14 text-xs bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                 تم الرفع بنجاح : {`${nickNameAr},${tadawalCode},${language}`}
               </div>
             )}

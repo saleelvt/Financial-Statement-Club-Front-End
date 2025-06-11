@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/components/Navbar.tsx
+
 
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { FaSignOutAlt, FaChevronDown } from "react-icons/fa";
-import { GrLanguage } from "react-icons/gr";
+
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { AppDispatch, RootState } from "../../reduxKit/store";
 import { adminLogout } from "../../reduxKit/actions/auth/authAction";
-import { AdminLanguageChange } from "../../reduxKit/actions/admin/adminLanguage";
+
 
 export const AdminNavbar: React.FC = () => {
   const { adminLanguage } = useSelector((state: RootState) => state.adminLanguage);
@@ -20,14 +20,9 @@ export const AdminNavbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleLanguage = async () => {
-    const newLanguage = adminLanguage === "English" ? "Arabic" : "English";
-    await dispatch(AdminLanguageChange(newLanguage));
-    setIsDropdownOpen(false); // Close dropdown after action
-  };
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen(!isDropdownOpen); 
   };
 
   const handleLogout = async () => {
@@ -75,14 +70,7 @@ export const AdminNavbar: React.FC = () => {
 
           {/* Right side - Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <button
-              onClick={toggleLanguage}
-              className="p-2 rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all duration-200 ease-in-out"
-              title="Change Language"
-            >
-              <GrLanguage className="text-xl" />
-            </button>
-
+        
             <button
               onClick={handleLogout}
               className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-all duration-200 ease-in-out flex items-center hover:shadow-lg hover:scale-105"
@@ -106,15 +94,7 @@ export const AdminNavbar: React.FC = () => {
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                 <div className="py-2">
-                  <button
-                    onClick={toggleLanguage}
-                    className="w-full px-4 py-1 text-left text-gray-700 hover:bg-gray-50 transition-colors duration-150 ease-in-out flex items-center"
-                  >
-                    <GrLanguage className="text-lg mr-3 text-gray-600" />
-                    <span className="font-medium">
-                      {adminLanguage === "English" ? "العربية" : "English"}
-                    </span>
-                  </button>
+                
                   
                   <div className="border-t border-gray-100 my-1"></div>
                   

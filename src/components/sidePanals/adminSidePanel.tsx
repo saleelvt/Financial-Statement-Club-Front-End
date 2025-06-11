@@ -17,7 +17,7 @@ const AdminSidebar = () => {
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
-  };
+  }; 
   const arabicDocuments = new Array(932).fill("Arabic Doc"); // Replace with real data
   const englishDocuments = new Array(934).fill("English Doc"); // Replace with real data
   const totalTables = 10; // Dummy table count

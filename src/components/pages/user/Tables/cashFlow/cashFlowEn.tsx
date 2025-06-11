@@ -202,7 +202,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                     "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className="px-1">
-                        {table.sectionTwo.sectionTwoTotalLabel} my cost 
+                        {table.sectionTwo.sectionTwoTotalLabel}
                       </td>
                       <td className="border border-gray-300"></td>
                       <td className="border   px-1  text-right border-gray-300">
@@ -561,8 +561,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
 
 
 <br />
-
-
 
 
 

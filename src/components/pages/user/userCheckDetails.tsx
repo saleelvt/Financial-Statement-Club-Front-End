@@ -72,9 +72,9 @@ const UserCompanyDetails = React.memo(() => {
   const pdfKeys: (keyof FormDataState)[] = [
     "Q1",
     "Q2",
-    "Q3",
-    "Q4",
     "S1",
+    "Q3", 
+    "Q4",
     "Year",
     "Board",
   ];
@@ -170,9 +170,13 @@ const UserCompanyDetails = React.memo(() => {
 
   const handlePdfButtonClick = async (key: FieldKey) => {
     setSelectedPdfKey(key);
-    setTableData(null);
-    setSelectedTableKey(null);
-    // Reset iframe
+    // setTableData(null);
+
+    // setSelectedTableKey(null);
+    if(selectedTableKey){
+      handleTableViewButtonClick(selectedTableKey)
+    }
+
     setIframeSrc("");
 
     // Load PDF
@@ -230,14 +234,20 @@ const UserCompanyDetails = React.memo(() => {
     }
   };
 
-  const handlePDF = () => {
-    setTableButton(false);
+  const handlePDF = async () => {
+    console.log("handle pdf got ");
+    
     setTableData(null);
-    setSelectedTableKey(null); // reset tableKey
+      setSelectedTableKey(null);
+  //     if (!selectedPdfKey) return; // Exit early if null
+  //   setTableButton(false);
+  //  await handlePdfButtonClick(selectedPdfKey)
+   
   };
 
   const handleTABLE = () => {
-    setIframeSrc(""); // hide PDF
+    // setIframeSrc(""); // hide PDF
+   
   };
 
   useEffect(() => {
@@ -554,19 +564,20 @@ const UserCompanyDetails = React.memo(() => {
                         dir={userLanguage === "English" ? "ltr" : "rtl"}
                         className="mt-2 flex justify-center lg:justify-start rounded-lg text-xs"
                       >
+                         
                         {selectedFilteredDocWithYear.length > 0 &&
                         validTableKeys.length > 0 &&
                         tableButtonOn ? (
                           <div className="flex flex-wrap gap-2">
                             {/* Only shown if at least one valid table exists */}
-                            <button
-                              onClick={handleTABLE}
-                              className={`flex text-xs items-center justify-center text-[16px] px-2 py-1 rounded-md
+                           <button
+                              onClick={handleTABLE} 
+                              className={`flex text-xs items-center  justify-center text-[16px] px-2 py-1 rounded-md
                                      ${
                                        selectedTableKey
                                          ? "bg-gray-600 text-white"
                                          : selectedPdfKey
-                                         ? "bg-gray-300 text-gray-800"
+                                         ? "bg-gray-200 text-gray-800"
                                          : "bg-gray-600 text-white"
                                      }`}
                             >

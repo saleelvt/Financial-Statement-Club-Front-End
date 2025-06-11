@@ -9,14 +9,22 @@ import { useDispatch } from "react-redux";
 import { AdminAddTableAction } from "../../../reduxKit/actions/admin/addTableAction";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
+
+import { ITable } from "./Tables/BalanceSheet/interface";
+
 import BalaceSheet from "./Tables/BalanceSheet/balanceSheet";
 import BalaceSheetFormAr from "./Tables/BalanceSheet/balanceSheetAr";
 import BalanceSheetFormUser from "../user/Tables/balanceSheet";
 import BalanceSheetFormUserArabic from "../user/Tables/balanceSheetAr";
 import BalaceSheetUpdateFormArabic from "../admin/Tables/BalanceSheetUpdate/balanceSheetUpdateAr";
 import BalaceSheetUpdateFormEnglish from "../admin/Tables/BalanceSheetUpdate/balanceSheetUpdateEn";
-import { ITable } from "./Tables/BalanceSheet/interface";
 
+import CashFlowFormEn from "./Tables/cashFlow/addCashFlowEn";
+import CashFlowFormAr from "./Tables/cashFlow/addCashFlowAr";
+import CashFlowUserArabic from "../user/Tables/cashFlow/cashFlowAr";
+import CashFlowUserEnglish from "../user/Tables/cashFlow/cashFlowEn";
+import CashFlowUpdateFormAr from "./Tables/updateCashFlow/updateCashFlowAr";
+import CashFlowUpdateFormEn from "./Tables/updateCashFlow/updateCashFlowEn";
 
 import { ConfirmationModalTable } from "./Tables/ConfirmationModalTable";
 import { ConfirmationUpdateModalTable } from "./Tables/updateConfirmationModalTable";
@@ -45,6 +53,9 @@ const AddNewTable = React.memo(() => {
   const [tableEn, setTableEn] = useState<any>(null);
   const [tableAr, setTableAr] = useState<any>(null);
 
+  const [tableCashFlowEn, setTableCashFlowEn] = useState<any>(null);
+  const [tableCashFlowAr, setTableCashFlowAr] = useState<any>(null);
+
   //   const [FormDocument, setDocument] = useState<DocumentSliceEn[] | DocumentSliceAr[]>();
   // const []=useState<>(null)
   const [years, setYears] = useState<string[]>([]); // List of years
@@ -69,15 +80,39 @@ const AddNewTable = React.memo(() => {
 
   const { data } = useSelector((state: RootState) => state.table);
   const { dataAr } = useSelector((state: RootState) => state.tableAr);
+  const { cashFlowDataEn } = useSelector(
+    (state: RootState) => state.cashFlowEn
+  );
+  const { cashFlowDataAr } = useSelector(
+    (state: RootState) => state.cashFlowAr
+  );
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+
+
+    useEffect(()=>{
+      console.log("the English active botton oned : ",updateActiveEn);
+      
+    },[updateActiveEn])
+    useEffect(()=>{
+      console.log("the ARabic  active bottonAr oned : ",updateActiveAr);
+      
+    },[updateActiveAr])
+
+
+
   // Update tableIframeSrc when selectedTableType or tableData changes
   useEffect(() => {
     console.log("The Latest Data set of the Data: English : +++:", data);
     console.log(" The Latest Data set of the Data: Arabic : &&&:", dataAr);
   }, [data, dataAr]);
+  useEffect(() => {
+    console.log("The Latest Cash Flow English ", cashFlowDataEn);
+    console.log(" The Latest Cash Flow Arabic", cashFlowDataAr);
+  }, [cashFlowDataEn, cashFlowDataAr]);
 
   useEffect(() => {
-    if (selectedTableType) {
+    if (selectedTableType === "BalanceSheet") {
       const arTable = tableDataAr?.[selectedTableType as keyof ITable];
       const enTable = tableData?.[selectedTableType as keyof ITable];
 
@@ -97,32 +132,56 @@ const AddNewTable = React.memo(() => {
       setTableAr(null);
       setTableEn(null);
     }
+    if (selectedTableType === "CashFlow") {
+      const arTableCashFlow = tableDataAr?.[selectedTableType as keyof ITable];
+      const enTableCashFlow = tableData?.[selectedTableType as keyof ITable];
+
+      const isEmptyDeep = (obj: any): boolean => {
+        if (!obj || typeof obj !== "object") return true;
+        if (Array.isArray(obj)) return obj.length === 0;
+
+        return Object.values(obj).every((value) => isEmptyDeep(value));
+      };
+
+      const isValidTable = (table: any) => {
+        return table && typeof table === "object" && !isEmptyDeep(table);
+      };
+      setTableCashFlowAr(
+        isValidTable(arTableCashFlow) ? arTableCashFlow : null
+      );
+      setTableCashFlowEn(
+        isValidTable(enTableCashFlow) ? enTableCashFlow : null
+      );
+    } else {
+      setTableCashFlowAr(null);
+      setTableCashFlowEn(null);
+    }
   }, [selectedTableType, tableData, tableDataAr]);
 
   const handleClickEnglish = async () => {
-    try {  
+    try {
       const Language = "English";
       // create data object
-         if (
-      !Language ||
-      !tadawalCode ||
-      !quarterYear ||
-      !selectedTableType ||
-      !selectedYear
-    ) {
-      setErrorMessage(
-        "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
-      );
+      if (
+        !Language ||
+        !tadawalCode ||
+        !quarterYear ||
+        !selectedTableType ||
+        !selectedYear
+      ) {
+        setErrorMessage(
+          "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
+        );
 
-      setIsModalOpen(true);
-      setModalOpen(false);
-      return;
-    }
-     setTakeShot(true);
+        setIsModalOpen(true);
+        setModalOpen(false);
+        return;
+      }
+      setTakeShot(true);
       const dataforUpload = {
         tadawalCode: tadawalCode, // replace with actual value
         language: Language,
-        data: data, // replace with actual data
+        data: selectedTableType == "BalanceSheet" ? data : cashFlowDataEn, // replace with actual data
         selectedYear: selectedYear,
         quarterYear: quarterYear,
         selectedTableType: selectedTableType,
@@ -134,13 +193,12 @@ const AddNewTable = React.memo(() => {
         setShowToast(true);
 
         setTakeShot(false);
-        if(updateActiveEn){
-fetchData()
+        if (updateActiveEn) {
+          fetchData();
         }
-           setUpdateEn(false)
+        setUpdateEn(false);
         setTimeout(() => {
           setShowToast(false); // Hide toast after 3 seconds
-       
         }, 30000);
       }
     } catch (error) {
@@ -150,37 +208,29 @@ fetchData()
 
   const handleClickArabic = async () => {
     try {
-
-      
-
-
-
-
-
-    
       const Language = "Arabic";
 
-         if (
-      !Language ||
-      !tadawalCode ||
-      !quarterYear ||
-      !selectedTableType ||
-      !selectedYear
-    ) {
-      setErrorMessage(
-        "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
-      );
+      if (
+        !Language ||
+        !tadawalCode ||
+        !quarterYear ||
+        !selectedTableType ||
+        !selectedYear
+      ) {
+        setErrorMessage(
+          "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
+        );
 
-      setIsModalOpen(true);
-      setModalOpen(false);
-      return;
-    }
+        setIsModalOpen(true);
+        setModalOpen(false);
+        return;
+      }
       setTakeShot(true);
       // create data object
       const dataforUpload = {
         tadawalCode: tadawalCode, // replace with actual value
         language: Language,
-        data: dataAr, // replace with actual data
+        data: selectedTableType == "BalanceSheet" ? dataAr : cashFlowDataAr, // replace with actual data
         selectedYear: selectedYear,
         quarterYear: quarterYear,
         selectedTableType: selectedTableType,
@@ -190,10 +240,10 @@ fetchData()
       if (response.payload.success) {
         setShowToastAr(true);
         setTakeShot(false);
-        if(updateActiveAr){
-          fetchData()
+        if (updateActiveAr) {
+          fetchData();
         }
-          setUpdateAr(false)
+        setUpdateAr(false);
 
         setTimeout(() => {
           setShowToastAr(false); // Hide toast after 3 seconds
@@ -219,7 +269,6 @@ fetchData()
   ) => {
     const value = e.target.value;
     setTadawalCode(value);
-
     if (value.length > 0) {
       // Fetch suggestions only if input has 3 or more characters
       setIsLoading(true);
@@ -284,14 +333,14 @@ fetchData()
 
     const dataArray = Array.from(yearsSet);
     let largestYear = dataArray[0];
-console.log("kindam data of hte dta ",largestYear);
+    console.log("kindam data of hte dta ", largestYear);
 
     for (const x of dataArray) {
       if (x > largestYear) {
         largestYear = x;
       }
     }
-    console.log("kindam data of hte dta ",largestYear);
+    console.log("kindam data of hte dta ", largestYear);
 
     setSelectedYear(largestYear);
     setYears(dataArray);
@@ -299,15 +348,13 @@ console.log("kindam data of hte dta ",largestYear);
     const selectedData = preferredOrder
       .map((priority) => datanew.find((x) => x.quarter === priority))
       .find(Boolean); // returns the first non-undefined match
-      console.log("Selected data:", selectedData);
+    console.log("Selected data:", selectedData);
     // console.log("the quater sist the data : ",quartersMap,datanew);
     if (selectedData) {
       setQuarterYear(selectedData.quarter);
       setTableType("BalanceSheet");
     }
-
     // if(tableIframeSrc||tableIframeSrcAr){}
-
     setQuarters(quartersMap);
     // setIsDropdownOpen(true); // Open the year dropdown
   };
@@ -337,7 +384,6 @@ console.log("kindam data of hte dta ",largestYear);
         config,
         {}
       );
-
       console.log("English Table Response:", response.data.englishTable);
       console.log("Arabic Table Response:", response.data.arabicTable);
       setTableDataAr(response.data.arabicTable);
@@ -373,21 +419,19 @@ console.log("kindam data of hte dta ",largestYear);
         `/api/v1/admin/deleteTable/${tadawalCode}?language=${wlanguage}&quarterYear=${quarterYear}&selectedTableType=${selectedTableType}&selectedYear=${selectedYear}`,
         config
       );
-console.log("resppos da : ",response);
+      console.log("resppos da : ", response);
 
       if (response.data.success) {
         if (wlanguage === "English") {
-          console.log("My language is keke: ",wlanguage);
-          
-          setUpdateEn(false)
-          setTableEn(null)
+          setUpdateEn(false);
+          setTableEn(null);
           setShowDeleteToast(true);
           setTimeout(() => {
             setShowDeleteToast(false);
           }, 30000); // 30 seconds
-        } else {  
-          setUpdateAr(false)
-          setTableAr(null)
+        } else {
+          setUpdateAr(false);
+          setTableAr(null);
           setShowDeleteToastAr(true);
           setTimeout(() => {
             setShowDeleteToastAr(false);
@@ -400,40 +444,42 @@ console.log("resppos da : ",response);
       setModalOpen(false);
     }
   };
-  const handleUpdateTable = async (wlanguage: string | null) => {
-    if (
-      !wlanguage ||
-      !tadawalCode ||
-      !quarterYear ||
-      !selectedTableType ||
-      !selectedYear
-    ) {
-      setErrorMessage(
-        "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
-      );
-      setModalOpen(false);
-      return;
+const handleUpdateTable = async (wlanguage: string | null) => {
+  if (
+    !wlanguage ||
+    !tadawalCode ||
+    !quarterYear ||
+    !selectedTableType ||
+    !selectedYear
+  ) {
+    setErrorMessage(
+      "Required Fields are Missing : You Must Have Select : TadawulCode,Report,TableType,Year"
+    );
+    setModalOpen(false);
+    return;
+  }
+  setUpdateModalOpen(false);
+  try {
+    console.log("appidate language : is : 9893: ", wlanguage);
+    
+    if (wlanguage === "English" && (tableEn || tableCashFlowEn)) {
+      setUpdateEn(true);
+      setUpdateAr(false); // Ensure Arabic is false when English is selected
+    } else if (wlanguage === "Arabic" && (tableAr || tableCashFlowAr)) {
+      setUpdateAr(true);
+      setUpdateEn(false); // Ensure English is false when Arabic is selected
+    } else {
+      // Neither condition met - reset both
+      setUpdateEn(false);
+      setUpdateAr(false);
     }
-    setUpdateModalOpen(false);
-    try {
-      if (wlanguage == "Arabic" && tableAr) {
-        setUpdateAr(true);
-      } else if (wlanguage == "English" && tableEn) {
-        setUpdateEn(true);
-      }
-      return;
-    } catch (error) {
-      console.error("Failed to delete document:", error);
-    } finally {
-      setModalOpen(false);
-    }
-  };
-
-
-
-
-
-
+    return;
+  } catch (error) {
+    console.error("Failed to delete document:", error);
+  } finally {
+    setModalOpen(false);
+  }
+};
 
   const renderTableContent = () => {
     // Case 1: Both English and Arabic tables exist
@@ -511,89 +557,68 @@ console.log("resppos da : ",response);
             ) : (
               <BalanceSheetFormUserArabic Tabledata={tableAr} />
             )}
-             <div className="">
-            {updateActiveAr && tableAr ? (
-              <button
-                className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
-                onClick={handleClickArabic}
-                disabled={takeShot}
-                type="button"
-              >
-                {takeShot ? "   رفع..." : " رفع"}
-              </button>
-            ) : (
-              <>
-                <div className="   flex justify-end ">
-                  {showToastAr && (
-                    <div className="absolute text-xs  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
-                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
-                      تم تحديث بنجاح
-                    </div>
-                  )}
-                  {showDeleteToastAr && (
-                    <div className="absolute text-xs  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
-                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
-                      تم الحذف بنجاح{" "}
-                    </div>
-                  )}
-                </div>
+            <div className="">
+              {updateActiveAr && tableAr ? (
                 <button
-                  className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => {
-                    setLanguage("Arabic");
-                    setModalOpen(true);
-                  }}
+                  className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                  onClick={handleClickArabic}
                   disabled={takeShot}
                   type="button"
                 >
-                  {takeShot ? "   حذف..." : "حذف"}
+                  {takeShot ? "   رفع..." : " رفع"}
                 </button>
+              ) : (
+                <>
+                  <div className="   flex justify-end ">
+                    {showToastAr && (
+                      <div className="absolute text-xs  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                        تم تحديث بنجاح
+                      </div>
+                    )}
+                    {showDeleteToastAr && (
+                      <div className="absolute text-xs  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                        تم الحذف بنجاح{" "}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => {
+                      setLanguage("Arabic");
+                      setModalOpen(true);
+                    }}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "   حذف..." : "حذف"}
+                  </button>
 
-                <button
-                  className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => {
-                    setLanguage("Arabic");
-                    setUpdateModalOpen(true);
-                  }}
-                  disabled={takeShot}
-                  type="button"
-                >
-                  {takeShot ? "تعديل..." : "تعديل"}
-                </button>
-              </>
-            )}
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => {
+                      setLanguage("Arabic");
+                      setUpdateModalOpen(true);
+                    }}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "تعديل..." : "تعديل"}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
       );
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Case 2: Only English table exists
     else if (tableEn && !tableAr) {
       return (
         <div className="flex mb-8  flex-col lg:flex-row lg:justify-center  ">
-           <div className="">
+          <div className="">
             {updateActiveEn && tableEn ? (
               <BalaceSheetUpdateFormEnglish TableDataEn={tableEn} />
             ) : (
@@ -673,7 +698,7 @@ console.log("resppos da : ",response);
                   >
                     {takeShot ? "   رفع..." : " رفع"}
 
-                     <div className="items-end ">
+                    <div className="items-end ">
                       {showToastAr && (
                         <div className="absolute right-14 text-xs bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                           {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
@@ -690,45 +715,23 @@ console.log("resppos da : ",response);
       );
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
     // Case 3: Only Arabic table exists
     else if (!tableEn && tableAr) {
       return (
         <div className="flex mb-8   flex-col lg:flex-row lg:justify-center ">
           <div className="w-screen">
             <form>
-             
-                <BalaceSheet TakingShort={takeShot} />
-       
-              <div className=" flex justify-between">
+              <BalaceSheet TakingShort={takeShot} />
 
-                 <div className="items-start">
-                    {showToast && (
-                      <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
-                        Submitted Successfully :{" "}
-                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
-                      </div>
-                    )}
-                  </div>
+              <div className=" flex justify-between">
+                <div className="items-start">
+                  {showToast && (
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      Submitted Successfully :{" "}
+                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
+                    </div>
+                  )}
+                </div>
                 <button
                   className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
                   onClick={handleClickEnglish}
@@ -741,90 +744,65 @@ console.log("resppos da : ",response);
             </form>
           </div>
 
-
-
-
-
-
-              <div className="w-screen  ">
+          <div className="w-screen  ">
             {updateActiveAr && tableAr ? (
               <BalaceSheetUpdateFormArabic TableDataAr={tableAr} />
             ) : (
               <BalanceSheetFormUserArabic Tabledata={tableAr} />
             )}
-             <div className="">
-            {updateActiveAr && tableAr ? (
-              <button
-                className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
-                onClick={handleClickArabic}
-                disabled={takeShot}
-                type="button"
-              >
-                {takeShot ? "   رفع..." : " رفع"}
-              </button>
-            ) : (
-              <>
-                <div className="items-end ">
-                  {showToastAr && (
-                    <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
-                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
-                      تم تحديث بنجاح
-                    </div>
-                  )}
-                  {showDeleteToastAr && (
-                    <div className="absolute right-14 text-xs bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
-                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
-                      تم الحذف بنجاح{" "}
-                    </div>
-                  )}
-                </div>
+            <div className="">
+              {updateActiveAr && tableAr ? (
                 <button
-                  className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => {
-                    setLanguage("Arabic");
-                    setModalOpen(true);
-                  }}
+                  className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                  onClick={handleClickArabic}
                   disabled={takeShot}
                   type="button"
                 >
-                  {takeShot ? "   حذف..." : "حذف"}
+                  {takeShot ? "   رفع..." : " رفع"}
                 </button>
+              ) : (
+                <>
+                  <div className="items-end ">
+                    {showToastAr && (
+                      <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                        تم تحديث بنجاح
+                      </div>
+                    )}
+                    {showDeleteToastAr && (
+                      <div className="absolute right-14 text-xs bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                        تم الحذف بنجاح{" "}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => {
+                      setLanguage("Arabic");
+                      setModalOpen(true);
+                    }}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "   حذف..." : "حذف"}
+                  </button>
 
-                <button
-                  className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
-                  onClick={() => {
-                    setLanguage("Arabic");
-                    setUpdateModalOpen(true);
-                  }}
-                  disabled={takeShot}
-                  type="button"
-                >
-                  {takeShot ? "تعديل..." : "تعديل"}
-                </button>
-              </>
-            )}
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => {
+                      setLanguage("Arabic");
+                      setUpdateModalOpen(true);
+                    }}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "تعديل..." : "تعديل"}
+                  </button>
+                </>
+              )}
             </div>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
       );
     } else {
@@ -913,7 +891,424 @@ console.log("resppos da : ",response);
                         </div>
                       )}
                     </div>
-                  </div> 
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  const renderTableContentCashflow = () => {
+    // Case 1: Both English and Arabic tables exist
+    if (tableCashFlowEn && tableCashFlowAr) {
+      return (
+        <div className="flex flex-col  lg:flex-row mb-4 w-screen  lg:justify-center ">
+          <div className="">
+            {updateActiveEn && tableCashFlowEn ? (
+              // <h1>saleetyl</h1>
+              <CashFlowUpdateFormEn TableDataEn={tableCashFlowEn} />
+            ) : (
+              <CashFlowUserEnglish Tabledata={tableCashFlowEn} />
+            )}
+
+            <div className="flex justify-between">
+              <div className="items-start">
+                <div className="items-start">
+                  {showDeleteToast && (
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      Delete Successfully :{" "}
+                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
+                    </div>
+                  )}
+                  {showToast && (
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      Updated Successfully :{" "}
+                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                {updateActiveEn && tableCashFlowEn ? (
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                    onClick={handleClickEnglish}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "Submitting..." : "Submit"}
+                  </button>
+                ) : !showToast ? (
+                  <>
+                    <button
+                      className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                      onClick={ async() => {
+                        await setLanguage("English");
+                        setUpdateModalOpen(true);
+                      }}
+                      disabled={takeShot}
+                      type="button"
+                    >
+                      {takeShot ? "Editing..." : "Edit"}
+                    </button>
+                    <button
+                      className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                      onClick={() => {
+                        setLanguage("English");
+                        setModalOpen(true);
+                      }}
+                      disabled={takeShot}
+                      type="button"
+                    >
+                      {takeShot ? "Deleting..." : "Delete"}
+                    </button>
+                  </>
+                ) : null}
+              </div>
+            </div>
+          </div>
+
+          <div className="  ">
+            {updateActiveAr && tableCashFlowAr ? (
+              <CashFlowUpdateFormAr TableDataAr={tableCashFlowAr} />
+            ) : (
+              <CashFlowUserArabic Tabledata={tableCashFlowAr} />
+            )}
+            <div className="">
+              {updateActiveAr && tableCashFlowAr ? (
+                <button
+                  className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                  onClick={handleClickArabic}
+                  disabled={takeShot}
+                  type="button"
+                >
+                  {takeShot ? "   رفع..." : " رفع"}
+                </button>
+              ) : (
+                <>
+                  <div className="   flex justify-end ">
+                    {showToastAr && (
+                      <div className="absolute text-xs  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                        تم تحديث بنجاح
+                      </div>
+                    )}
+                    {showDeleteToastAr && (
+                      <div className="absolute text-xs  bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                        تم الحذف بنجاح{" "}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => {
+                      setLanguage("Arabic");
+                      setModalOpen(true);
+                    }}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "   حذف..." : "حذف"}
+                  </button>
+
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => {
+                      setLanguage("Arabic");
+                      setUpdateModalOpen(true);
+                    }}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "تعديل..." : "تعديل"}
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Case 2: Only English table exists
+    else if (tableCashFlowEn && !tableCashFlowAr) {
+      return (
+        <div className="flex mb-8  flex-col lg:flex-row lg:justify-center  ">
+          <div className="">
+            {updateActiveEn && tableCashFlowEn ? (
+              <CashFlowUpdateFormEn TableDataEn={tableCashFlowEn} />
+            ) : (
+              <CashFlowUserEnglish Tabledata={tableCashFlowEn} />
+            )}
+
+            <div className="flex justify-between">
+              <div className="items-start">
+                <div className="items-start">
+                  {showDeleteToast && (
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      Delete Successfully :{" "}
+                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
+                    </div>
+                  )}
+                  {showToast && (
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      Updated Successfully :{" "}
+                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                {updateActiveEn && tableCashFlowEn ? (
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                    onClick={handleClickEnglish}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "Submitting..." : "Submit"}
+                  </button>
+                ) : !showToast ? (
+                  <>
+                    <button
+                      className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                      onClick={() => {
+                        setLanguage("English");
+                        setUpdateModalOpen(true);
+                      }}
+                      disabled={takeShot}
+                      type="button"
+                    >
+                      {takeShot ? "Editing..." : "Edit"}
+                    </button>
+                    <button
+                      className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                      onClick={() => {
+                        setLanguage("English");
+                        setModalOpen(true);
+                      }}
+                      disabled={takeShot}
+                      type="button"
+                    >
+                      {takeShot ? "Deleting..." : "Delete"}
+                    </button>
+                  </>
+                ) : null}
+              </div>
+            </div>
+          </div>
+          {/* Right side - Arabic form */}
+          <div className=" overflow-x-auto">
+            <form>
+              <div className="">
+                <div className="">
+                  <CashFlowFormAr TakingShort={takeShot} />
+                </div>
+                <div className=" flex justify-between">
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                    onClick={handleClickArabic}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "   رفع..." : " رفع"}
+
+                    <div className="items-end ">
+                      {showToastAr && (
+                        <div className="absolute right-14 text-xs bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                          {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                          تم الرفع بنجاح
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    // Case 3: Only Arabic table exists
+    else if (!tableCashFlowEn && tableCashFlowAr) {
+      return (
+        <div className="flex mb-8   flex-col lg:flex-row lg:justify-center ">
+          <div className="w-screen">
+            <form>
+              <CashFlowFormEn TakingShort={takeShot} />
+
+              <div className=" flex justify-between">
+                <div className="items-start">
+                  {showToast && (
+                    <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                      Submitted Successfully :{" "}
+                      {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
+                    </div>
+                  )}
+                </div>
+                <button
+                  className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                  onClick={handleClickEnglish}
+                  disabled={takeShot}
+                  type="button"
+                >
+                  {takeShot ? "Submiting..." : "Submit"}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="w-screen  ">
+            {updateActiveAr && tableCashFlowAr ? (
+              <CashFlowUpdateFormAr TableDataAr={tableCashFlowAr} />
+            ) : (
+              <CashFlowUserArabic Tabledata={tableCashFlowAr} />
+            )}
+            <div className="">
+              {updateActiveAr && tableCashFlowAr ? (
+                <button
+                  className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                  onClick={handleClickArabic}
+                  disabled={takeShot}
+                  type="button"
+                >
+                  {takeShot ? "   رفع..." : " رفع"}
+                </button>
+              ) : (
+                <>
+                  <div className="items-end ">
+                    {showToastAr && (
+                      <div className="absolute right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                        تم تحديث بنجاح
+                      </div>
+                    )}
+                    {showDeleteToastAr && (
+                      <div className="absolute right-14 text-xs bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                        تم الحذف بنجاح{" "}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => {
+                      setLanguage("Arabic");
+                      setModalOpen(true);
+                    }}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "   حذف..." : "حذف"}
+                  </button>
+
+                  <button
+                    className="bg-slate-300 rounded text-black py-1 px-9 font-semibold mx-2 font-serif text-sm"
+                    onClick={() => {
+                      setLanguage("Arabic");
+                      setUpdateModalOpen(true);
+                    }}
+                    disabled={takeShot}
+                    type="button"
+                  >
+                    {takeShot ? "تعديل..." : "تعديل"}
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex justify-center     flex-col lg:flex-row  gap-1   ">
+          <div className="w-screen">
+            <form>
+              <div className="">
+                <CashFlowFormEn TakingShort={takeShot} />
+                <div className="relative flex justify-between    ">
+                  <div className="items-start">
+                    {showToast && (
+                      <div className="absolute left-13 text-xs bg-green-100 border border-green-400 text-green-700 px-10  py-1 font-semibold rounded shadow">
+                        Submitted Successfully :{" "}
+                        {`${nickName},${selectedYear},${quarterYear},${selectedTableType}`}
+                      </div>
+                    )}
+                  </div>
+                  {tableCashFlowEn ? (
+                    <button
+                      className="bg-slate-300 rounded text-black py-1 px-5  font-semibold mx-2 font-serif text-sm"
+                      onClick={() => {
+                        setLanguage("English");
+                        setModalOpen(true);
+                      }}
+                      disabled={takeShot}
+                      type="button"
+                    >
+                      {takeShot ? "Deleting..." : "Delete"}
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
+                      onClick={handleClickEnglish}
+                      disabled={takeShot}
+                      type="button"
+                    >
+                      {takeShot ? "Submitting..." : "Submit"}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </form>
+          </div>
+
+          {/* English Form */}
+          <div className="w-screen">
+            <form>
+              <div className=" pb-8">
+                <div className="  ">
+                  <CashFlowFormAr TakingShort={takeShot} />
+
+                  <div className=" flex justify-between ">
+                    {tableCashFlowAr ? (
+                      <button
+                        className="bg-slate-300 rounded text-black py-1 px-9  font-semibold mx-2 font-serif text-sm"
+                        onClick={() => {
+                          setLanguage("Arabic");
+                          setModalOpen(true);
+                        }}
+                        disabled={takeShot}
+                        type="button"
+                      >
+                        {takeShot ? "   حذف..." : "حذف"}
+                      </button>
+                    ) : (
+                      <button
+                        className="bg-slate-300 rounded text-black py-1 px-9  font-semibold mx-2 font-serif text-sm"
+                        onClick={handleClickArabic}
+                        disabled={takeShot}
+                        type="button"
+                      >
+                        {takeShot ? "   رفع..." : "رفع"}
+                      </button>
+                    )}
+
+                    <div className="items-end">
+                      {showToastAr && (
+                        <div className="absolute text-xs right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                          {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
+                          تم الرفع بنجاح
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
@@ -924,7 +1319,7 @@ console.log("resppos da : ",response);
   };
 
   return (
-    <div className="p-1">
+    <div className="p-1  ">
       <div className="flex flex-wrap justify-between items-center">
         <FaArrowCircleLeft
           className="text-3xl text-gray-500"
@@ -954,12 +1349,12 @@ console.log("resppos da : ",response);
           </h4>
         </div>
       </div>
-      <div className="flex flex-wrap  items-start mt-1 gap-4  text-sm text-gray-700 font-semibold">
+      <div className="flex flex-wrap  items-start mt-1 mb-1 gap-4  text-sm text-gray-700 font-semibold">
         <div className="relative ">
           <label className="block mb-1">Tadawul Code</label>
           <input
             className="p-1 w-28 placeholder:text-xs bg-gray-100 text-black border rounded focus:outline-none focus:bg-white"
-            type="text" 
+            type="text"
             placeholder="Tadawul Code"
             value={tadawalCode}
             required
@@ -1099,7 +1494,15 @@ console.log("resppos da : ",response);
         onClose={() => setIsModalOpen(false)}
         message={errorMessage}
       />
-      {renderTableContent()}
+
+      {(() => {
+        if (selectedTableType === "BalanceSheet") {
+          return renderTableContent();
+        } else if (selectedTableType === "CashFlow") {
+          return renderTableContentCashflow();
+        }
+        return renderTableContent();
+      })()}
     </div>
   );
 });

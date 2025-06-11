@@ -7,7 +7,8 @@ import { adminLanguageSlice } from "./reducers/admin/adminLanguage";
 import { AddArabicDocumentSlice } from "./reducers/admin/addDocumentArabic";
 import setBalanceSheetDataSlice from "./reducers/Tables/balanceSheet";
 import setBalanceSheetDataArSlice from "./reducers/Tables/balanceSheetAr";
-
+import setCashFlowEnDataSlice from "./reducers/Tables/cashFlowEn";
+import setCashFlowArDataSlice from "./reducers/Tables/cashFlowAr";
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
@@ -17,6 +18,8 @@ export const store = configureStore({
     adminLanguage: adminLanguageSlice.reducer,
     table:setBalanceSheetDataSlice.reducer,
     tableAr:setBalanceSheetDataArSlice.reducer,
+    cashFlowEn:setCashFlowEnDataSlice.reducer,
+    cashFlowAr:setCashFlowArDataSlice.reducer,
   },
 });
 

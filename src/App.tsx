@@ -19,7 +19,7 @@ const AddNewTable=lazy(() => import("./components/pages/admin/addTable"));
 const AddDocumentArabic = lazy(() => import("./components/pages/admin/addDocumentAr"));
 const UpdateDocument = lazy(() => import("./components/pages/admin/updateDocument"));
 const AdminProfilePage = lazy(() => import("./components/pages/admin/adminProfile"));
-const Sekelton =lazy(()=> import("./components/pages/user/skeltonLoading"))
+
 
 
 export const App: React.FC = React.memo(() => {
@@ -33,7 +33,7 @@ export const App: React.FC = React.memo(() => {
  
         <Routes>
           <Route path="/" element={ <UserHomePage/>} />
-          <Route path="/dd" element={ <Sekelton/>} />
+  
           <Route path="/verify" element={ <EmailVerification/>} />
           <Route path="/companyDetails" element={ <UserCompanyDetails /> } />
           <Route path="/login" element={isLogged && role === 'admin' ? <Navigate to="/home" /> : <AdminLogin />} />

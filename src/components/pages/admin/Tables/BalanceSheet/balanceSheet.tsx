@@ -728,7 +728,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
               <th className="border  border-gray-100 p-1 w-28   ">
                 <input
                   type="date"
-                  className="text-center   bg-gray-100"              
+                  className="text-center   h-5  bg-gray-100"              
                   placeholder=""
                   value={data1En ? data1En.toISOString().split("T")[0] : ""}
                   onChange={(e) => {

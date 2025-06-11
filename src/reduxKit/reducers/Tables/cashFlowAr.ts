@@ -1,25 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 
-import { setBalanceSheetDataArAction } from "../../actions/Tables/balanceSheetAr";
-
+import { SetCashFlowDataArabicAction } from "../../actions/Tables/cashFlowAr";
 
 
  export interface  AddTableArState{
     error: string | null;
     loading: boolean;
-    dataAr:any
+    cashFlowDataAr:any
 
 }
 
 const initialState: AddTableArState={
     error: null,
     loading: false,
-    dataAr:null,
-   
+    cashFlowDataAr:null,
 }
 
- export const setBalanceSheetDataArSlice = createSlice({
+ export const setCashFlowArDataSlice = createSlice({
     name: "admin",
     initialState,
     reducers: {
@@ -29,16 +27,16 @@ const initialState: AddTableArState={
     },
     extraReducers: (builder) => {
       builder  
-      .addCase(setBalanceSheetDataArAction.pending, (state) => {
+      .addCase(SetCashFlowDataArabicAction.pending, (state) => {
           state.loading = true;
           state.error = null;
         })
-        .addCase(setBalanceSheetDataArAction.fulfilled, (state, { payload }) => {
+        .addCase(SetCashFlowDataArabicAction.fulfilled, (state, { payload }) => {
           state.loading = false;
           state.error = null;
-          state.dataAr=payload
+          state.cashFlowDataAr=payload
         }) 
-        .addCase(setBalanceSheetDataArAction.rejected, (state, { payload }) => {
+        .addCase(SetCashFlowDataArabicAction.rejected, (state, { payload }) => {
           state.loading = false;
           state.error = payload as string;
         })
@@ -48,5 +46,5 @@ const initialState: AddTableArState={
   
   
   
-  export const {updateError}= setBalanceSheetDataArSlice.actions
-  export default setBalanceSheetDataArSlice
+  export const {updateError}= setCashFlowArDataSlice.actions
+  export default setCashFlowArDataSlice

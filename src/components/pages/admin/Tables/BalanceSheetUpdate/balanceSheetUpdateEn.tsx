@@ -15,7 +15,7 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     const dispatch = useDispatch<AppDispatch>();
     const [nonCurrentAssetsAr, setNonCurrentAssets] = useState<string[]>(
       Array(12).fill("")
-    );
+    ); 
     const [nonCurrentNotes, setNonCurrentNotes] = useState<string[]>(
       Array(12).fill("")
     );

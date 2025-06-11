@@ -20,9 +20,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../reduxKit/store";
 // import { ITable } from "../admin/Tables/BalanceSheet/interface";
 const BalaceSheetFormUser = lazy(() => import("./Tables/balanceSheet"));
-const BalanceSheetFormUserArabic = lazy(
-  () => import("./Tables/balanceSheetAr")
-);
+const BalanceSheetFormUserArabic = lazy( () => import("./Tables/balanceSheetAr"));
+const CashFlowUserEn =lazy(()=> import("./Tables/cashFlow/cashFlowEn"))
+const CashFlowUserArabic =lazy(()=> import("./Tables/cashFlow/cashFlowAr"))
 
 const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
@@ -52,24 +52,19 @@ const UserCompanyDetails = React.memo(() => {
     useState<(DocumentSliceEn | DocumentSliceAr)[]>([]);
   const [selectedYear, setSelectedYear] = useState<any>("");
 
+  const sortedYears = [...yearList].map(Number).sort((a, b) => b - a); // ascending
+  const maxVisible = 5;
 
+  const [startIndex, setStartIndex] = useState(() => {
+    const lastIndex = sortedYears.length - maxVisible;
+    return lastIndex >= 0 ? lastIndex : 0;
+  });
 
+  const visibleYears = sortedYears.slice(startIndex, startIndex + maxVisible);
 
-const sortedYears = [...yearList].map(Number).sort((a, b) => b - a); // ascending
-const maxVisible = 5;
-
-const [startIndex, setStartIndex] = useState(() => {
-  const lastIndex = sortedYears.length - maxVisible;
-  return lastIndex >= 0 ? lastIndex : 0
-});
-
-const visibleYears = sortedYears.slice(startIndex, startIndex + maxVisible);
-
-useEffect(()=>{
-  console.log("the visible ", visibleYears);
-  
-
-},[visibleYears]) 
+  useEffect(() => {
+    console.log("the visible ", visibleYears);
+  }, [visibleYears]);
 
   const [iframeSrc, setIframeSrc] = useState<string>("");
   const [table, setTableData] = useState<any>(null);
@@ -83,6 +78,7 @@ useEffect(()=>{
     "Year",
     "Board",
   ];
+  
   const keyTranslations: Record<
     string,
     { en: string; fullEn: string; ar: string; fullAr: string }
@@ -136,23 +132,17 @@ useEffect(()=>{
     "CashFlow",
   ];
 
+  const handleRightClick = () => {
+    if (startIndex > 0) {
+      setStartIndex((prev) => prev - 1);
+    }
+  };
 
-
-
-  const handleRightClick  = () => {
-  if (startIndex > 0) {
-    setStartIndex((prev) => prev - 1);
-  }
-};
-
-const handleLeftClick = () => {
-  if (startIndex + maxVisible < sortedYears.length) {
-    setStartIndex((prev) => prev + 1);
-  }
-};
-
-
-
+  const handleLeftClick = () => {
+    if (startIndex + maxVisible < sortedYears.length) {
+      setStartIndex((prev) => prev + 1);
+    }
+  };
 
   const isEmptyDeep = (obj: any): boolean => {
     if (!obj || typeof obj !== "object") return true;
@@ -289,7 +279,6 @@ const handleLeftClick = () => {
       }
     }
   }, [selectedYear, selectedFilteredDocWithYear]);
-
 
   const isDocumentEn = (
     document: DocumentSliceEn | DocumentSliceAr
@@ -441,61 +430,58 @@ const handleLeftClick = () => {
                     </h3>
                   </div>
 
-                 <div className="mt-4">
-  <div
-    dir={userLanguage === "English" ? "ltr" : "rtl"}
-    className="flex justify-start gap-[6px] text-xs justify-center lg:justify-start"
-  >
-    <div className="flex items-center">
+                  <div className="mt-4">
+                    <div
+                      dir={userLanguage === "English" ? "ltr" : "rtl"}
+                      className="flex justify-start gap-[6px] text-xs justify-center lg:justify-start"
+                    >
+                      <div className="flex items-center">
+                        <button
+                          onClick={handleLeftClick}
+                          disabled={
+                            startIndex + maxVisible >= sortedYears.length
+                          }
+                          className={`text-gray-600 px-2 py-1 bg-gray-200 rounded-md ${
+                            startIndex + maxVisible >= sortedYears.length
+                              ? "opacity-50 cursor-not-allowed"
+                              : ""
+                          }`}
+                        >
+                          {"<"}
+                        </button>
+                      </div>
+                      <div className="flex flex-wrap gap-2 py-1 items-center justify-center lg:justify-start">
+                        {[...visibleYears]
+                          .sort((a, b) => a - b) // Sort descending numerically
+                          .map((year) => (
+                            <button
+                              key={year.toString()}
+                              onClick={() => handleYearClick(year.toString())}
+                              className={`px-2 py-1 rounded-md ${
+                                selectedYear === year.toString()
+                                  ? "bg-gray-600 text-white"
+                                  : "bg-gray-100 text-gray-700"
+                              }`}
+                            >
+                              {year}
+                            </button>
+                          ))}
 
-       <button
-        onClick={handleLeftClick }
-        disabled={startIndex + maxVisible >= sortedYears.length}
-        className={`text-gray-600 px-2 py-1 bg-gray-200 rounded-md ${
-          startIndex + maxVisible >= sortedYears.length
-            ? "opacity-50 cursor-not-allowed"
-            : ""
-        }`}
-      >
-        {"<"}
-      </button>
-     
-    </div>
-    <div className="flex flex-wrap gap-2 py-1 items-center justify-center lg:justify-start">
-{[...visibleYears]
-  .sort((a, b) => a - b)  // Sort descending numerically
-  .map((year) => (
-    <button
-      key={year.toString()}
-      onClick={() => handleYearClick(year.toString())}
-      className={`px-2 py-1 rounded-md ${
-        selectedYear === year.toString()
-          ? "bg-gray-600 text-white"
-          : "bg-gray-100 text-gray-700"
-      }`}
-    >
-      {year}
-    </button>
-  ))}
-
- <button
-        onClick={handleRightClick}
-        disabled={startIndex === 0}
-        className={`text-gray-600 px-2 py-1 bg-gray-200 rounded-md ${
-          startIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-      >
-        {">"}
-      </button>
-
-    </div>
-    <div className="flex items-center">
-
-     
-    </div>
-  </div>
-</div>
-
+                        <button
+                          onClick={handleRightClick}
+                          disabled={startIndex === 0}
+                          className={`text-gray-600 px-2 py-1 bg-gray-200 rounded-md ${
+                            startIndex === 0
+                              ? "opacity-50 cursor-not-allowed"
+                              : ""
+                          }`}
+                        >
+                          {">"}
+                        </button>
+                      </div>
+                      <div className="flex items-center"></div>
+                    </div>
+                  </div>
 
                   <div
                     dir={userLanguage === "English" ? "ltr" : "rtl"}
@@ -615,49 +601,64 @@ const handleLeftClick = () => {
       </div>
 
       <div className="lg:w-[65%]">
-        {table && selectedTableKey ? (
-          <div
-            className="h-screen   w-full overflow-y-auto pr-2"
-            // You can adjust height as per layout needs
-          >
-            {language === "English" ? (
-<div className=" flex items-center justify-center  ">
-  <div className="w-full  p-1  border-[6px]     border-gray-700 ">
-    <BalaceSheetFormUser Tabledata={table} />
-  </div>
+  {table && selectedTableKey ? (
+    <>
+      {selectedTableKey === "BalanceSheet" && (
+        <div className="h-screen w-full overflow-y-auto pr-2">
+          {language === "English" ? (
+            <div className="flex items-center justify-center">
+              <div className="w-full p-1 border-[6px] border-gray-700">
+                <BalaceSheetFormUser Tabledata={table} />
+              </div>
+            </div>
+          ) : (
+            <BalanceSheetFormUserArabic Tabledata={table} />
+          )}
+        </div>
+      )}
+
+      {selectedTableKey === "CashFlow" && (
+        <div className="h-screen w-full overflow-y-auto pr-2">
+          {language === "English" ? (
+            <div className="flex items-center justify-center">
+              <div className="w-full p-1 border-[6px] border-gray-700">
+                <CashFlowUserEn Tabledata={table} />
+              </div>
+            </div>
+          ) : (
+            <CashFlowUserArabic Tabledata={table} />
+          )}
+        </div>
+      )}
+    </>
+  ) : iframeSrc ? (
+    <div
+      className=""
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100vh",
+        overflow: "hidden",
+      }}
+    >
+      <iframe
+        src={iframeSrc}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          overflow: "auto",
+          display: "block",
+          objectFit: "contain",
+        }}
+        title="PDF Viewer"
+      />
+    </div>
+  ) : (
+    <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white "></div>
+  )}
 </div>
 
-            ) : (
-              <BalanceSheetFormUserArabic Tabledata={table} />
-            )}
-          </div>
-        ) : iframeSrc ? (
-          <div
-            className=""
-            style={{
-              position: "relative",
-              width: "100%",
-              height: "100vh",
-              overflow: "hidden",
-            }}
-          >
-            <iframe
-              src={iframeSrc}
-              style={{
-                width: "100%",
-                height: "100%",
-                border: "none",
-                overflow: "auto",
-                display: "block",
-                objectFit: "contain",
-              }}
-              title="PDF Viewer"
-            />
-          </div>
-        ) : (
-          <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-white "></div>
-        )}
-      </div>
     </div>
   );
 });

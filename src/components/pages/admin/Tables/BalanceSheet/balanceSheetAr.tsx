@@ -772,7 +772,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               <th className="border border-gray-100 w-16">إيضاحات</th>
               <th className="border border-gray-100 p-1 w-28">
 
-<div dir="rtl" className="items-center bg-green">
+<div dir="rtl" className="items-center h-5">
   <DatePicker
     className="text-right"
     value={data1Ar}

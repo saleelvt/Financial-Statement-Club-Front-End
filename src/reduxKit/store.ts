@@ -9,6 +9,7 @@ import setBalanceSheetDataSlice from "./reducers/Tables/balanceSheet";
 import setBalanceSheetDataArSlice from "./reducers/Tables/balanceSheetAr";
 import setCashFlowEnDataSlice from "./reducers/Tables/cashFlowEn";
 import setCashFlowArDataSlice from "./reducers/Tables/cashFlowAr";
+
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,

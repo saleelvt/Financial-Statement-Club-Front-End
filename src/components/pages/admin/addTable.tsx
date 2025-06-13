@@ -880,16 +880,19 @@ const handleUpdateTable = async (wlanguage: string | null) => {
                         type="button"
                       >
                         {takeShot ? "   رفع..." : "رفع"}
-                      </button>
+                      </button> 
                     )}
 
-                    <div className="items-end">
+                    <div className="relative flex justify-between ">
+
+                    <div className="items-start">
                       {showToastAr && (
-                        <div className="absolute text-xs right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        <div className=" text-xs right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                           {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
                           تم الرفع بنجاح
                         </div>
                       )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -901,6 +904,13 @@ const handleUpdateTable = async (wlanguage: string | null) => {
     }
   };
 
+
+
+
+
+
+
+  
   const renderTableContentCashflow = () => {
     // Case 1: Both English and Arabic tables exist
     if (tableCashFlowEn && tableCashFlowAr) {
@@ -1299,14 +1309,15 @@ const handleUpdateTable = async (wlanguage: string | null) => {
                         {takeShot ? "   رفع..." : "رفع"}
                       </button>
                     )}
-
-                    <div className="items-end">
+                 <div className="relative flex justify-between ">
+                    <div className=" items-start  ">
                       {showToastAr && (
-                        <div className="absolute text-xs right-14 bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
+                        <div className="  text-xs   bg-green-100 border border-green-400 text-green-700 px-12 py-1 font-semibold rounded shadow">
                           {`${nickName},${selectedYear},${quarterYear},${selectedTableType} : `}
                           تم الرفع بنجاح
                         </div>
-                      )}
+                   )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1501,7 +1512,7 @@ const handleUpdateTable = async (wlanguage: string | null) => {
         } else if (selectedTableType === "CashFlow") {
           return renderTableContentCashflow();
         }
-        return renderTableContent();
+        return renderTableContentCashflow();
       })()}
     </div>
   );

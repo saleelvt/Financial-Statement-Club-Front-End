@@ -50,6 +50,7 @@ const CashFlowUpdateFormEn: React.FC<TableFormProps> = React.memo(
       const [data1En, setDate1En] = useState<Date | null>(null);
     const [data2En, setDate2En] = useState<Date | null>(null);
     // section One
+        const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState("Continuing Operations AR");
     const [sectionOneLabelsEn, setSectionOneLabelsEn] = useState<string[]>(    Array(5).fill(""));
     const [sectionOneNotesEn, setFlowSectionOneNotesEn] = useState<string[]>(   Array(5).fill(""));
     const [sectionOneItemsEn, setFlowSectionOneEn] = useState<string[]>(    Array(5).fill(""));
@@ -485,6 +486,7 @@ const handleChangeOtherComprehensiveIncome = (
         date2: data2En,
 
         sectionOne: {
+          sectionOneFirstLabelEn,
           sectionOneLabelsEn,
           sectionOneNotesEn,
           sectionOneItemsEn,
@@ -703,6 +705,22 @@ TotalsectionFourAttributeItemsDate2En,
 
           <tbody>
 
+  <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                <input
+                  value={sectionOneFirstLabelEn}
+                  onChange={(e) => setSectionOneFirstLabelEn(e.target.value)}
+                  className="w-full  bg-gray-200 text-black p-1"
+                />
+              </td>
+              <td className=""></td>
+              <td className="">
+              
+              </td>
+              <td className="">
+              
+              </td>
+            </tr>
 
             {sectionOneLabelsEn.map((_, idx) => {
          

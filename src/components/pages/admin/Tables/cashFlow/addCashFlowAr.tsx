@@ -46,12 +46,14 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
     const [date1, setDate1] = useState("(غير مراجعة)");
     const [date2, setDate2] = useState("(مراجعة)");
+
     // section One
+        const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState("Continuing Operations AR");
       const [sectionOneLabelsEn, setSectionOneLabelsEn] = useState<string[]>( Array(5).fill("") );
        const [sectionOneNotesEn, setFlowSectionOneNotesEn] = useState<string[]>(   Array(5).fill("")   );
        const [sectionOneItemsEn, setFlowSectionOneEn] = useState<string[]>(    Array(5).fill("")  );
        const [sectionOneItemsDate2En, setFlowSectionOneDate2En] = useState<     string[]  >(Array(5).fill(""));
-       const [sectionOneTotalLabel, setSectionOneTotalLabel] =    useState("");
+       const [sectionOneTotalLabel, setSectionOneTotalLabel] =    useState("1");
        const TotalsectionOneItemsEn = sumStringValues(sectionOneItemsEn);
        const TotalsectionOneItemsDate2En = sumStringValues(sectionOneItemsDate2En);
    
@@ -60,7 +62,7 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionTwoNotesEn, setFlowSectionTwoNotesEn] = useState<string[]>(      Array(12).fill("")  );
        const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(    Array(12).fill("")  );
        const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[] >(Array(12).fill(""));
-       const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState(    ""  );
+       const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState(    "2"  );
        const TotalsectionTwoItemsEn = TotalsectionOneItemsEn+ sumStringValues(sectionTwoItemsEn);
        const TotalsectionTwoItemsDate2En = TotalsectionOneItemsDate2En+ sumStringValues(sectionTwoItemsDate2En);
    
@@ -69,7 +71,7 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionThreeNotesEn, setFlowSectionThreeNotesEn] = useState<string[]>(Array(7).fill(""));
        const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(Array(7).fill("") );
        const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<string[]>(Array(7).fill(""));
-       const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("");
+       const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("3");
        const TotalsectionThreeItemsEn =TotalsectionTwoItemsEn+ sumStringValues(sectionThreeItemsEn);
        const TotalsectionThreeItemsDate2En = TotalsectionTwoItemsDate2En+ sumStringValues(sectionThreeItemsDate2En);
    
@@ -78,9 +80,24 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionFourNotesEn, setFlowSectionFourNotesEn] = useState<string[]>(  Array(5).fill("") );
        const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(  Array(5).fill("") );
        const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<string[]>(Array(5).fill(""));
-       const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState( "" );
+       const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState( "4" );
        const TotalsectionFourItemsEn = TotalsectionThreeItemsEn+ sumStringValues(sectionFourItemsEn);
        const TotalsectionFourItemsDate2En = TotalsectionThreeItemsDate2En+ sumStringValues( sectionFourItemsDate2En );
+       // sectoin SubFour
+
+      //  const [sectionFourSubFirstLabelEn, setSectionFourSubFirstLabelEn] = useState("Discontinued Operation"); 
+      //  const [sectionFourSubLabelsEn, setSectionFourSubLabelsEn] = useState<string[]>(Array(3).fill(""));
+      //  const [sectionFourSubNotesEn, setFlowSectionFourSubNotesEn] = useState<string[]>(Array(3).fill(""));
+      //  const [sectionFourSubItemsEn, setFlowSectionFourSubEn] = useState<string[]>(Array(3).fill(""));
+      //  const [sectionFourSubItemsDate2En, setFlowSectionFourSubDate2En] = useState<string[]>(Array(3).fill(""));
+      //  const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] = useState( "LOSS FOR THE YEAR" );
+      //  const TotalsectionFourSubItemsEn = TotalsectionThreeItemsEn+ sumStringValues(sectionFourSubItemsEn);
+      //  const TotalsectionFourSubItemsDate2En = TotalsectionThreeItemsDate2En+ sumStringValues( sectionFourSubItemsDate2En );
+
+
+
+
+
    
        
          const [sectionFourAttribute, setSectionFourAttributeLabel] = useState("");
@@ -113,20 +130,20 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       
 
        // section Five
-       const [sectionFiveLabelsEn, setSectionFiveLabelsEn] = useState<string[]>(   Array(12).fill("")  );
-       const [sectionFiveNotesEn, setFlowSectionFiveNotesEn] = useState<string[]>(  Array(12).fill("")  );
-       const [sectionFiveItemsEn, setFlowSectionFiveEn] = useState<string[]>(   Array(12).fill("")  );
-       const [sectionFiveItemsDate2En, setFlowSectionFiveDate2En] = useState<   string[] >(Array(12).fill(""));
-       const [sectionFiveTotalLabel, setSectionFiveTotalLabel] = useState("");
+       const [sectionFiveLabelsEn, setSectionFiveLabelsEn] = useState<string[]>(   Array(8).fill("")  );
+       const [sectionFiveNotesEn, setFlowSectionFiveNotesEn] = useState<string[]>(  Array(8).fill("")  );
+       const [sectionFiveItemsEn, setFlowSectionFiveEn] = useState<string[]>(   Array(8).fill("")  );
+       const [sectionFiveItemsDate2En, setFlowSectionFiveDate2En] = useState<   string[] >(Array(8).fill(""));
+       const [sectionFiveTotalLabel, setSectionFiveTotalLabel] = useState("5");
        const TotalsectionFiveItemsEn =TotalsectionFourItemsEn+ sumStringValues(sectionFiveItemsEn);
        const TotalsectionFiveItemsDate2En =TotalsectionFourItemsDate2En+ sumStringValues( sectionFiveItemsDate2En );
    
        // section Six
-       const [sectionSixLabelsEn, setSectionSixLabelsEn] = useState<string[]>( Array(12).fill("") );
-       const [sectionSixNotesEn, setFlowSectionSixNotesEn] = useState<string[]>(   Array(12).fill("")  );
-       const [sectionSixItemsEn, setFlowSectionSixEn] = useState<string[]>(    Array(12).fill("")  );
-       const [sectionSixItemsDate2En, setFlowSectionSixDate2En] = useState<   string[]   >(Array(12).fill(""));
-       const [sectionSixTotalLabel, setSectionSixTotalLabel] =  useState("");
+       const [sectionSixLabelsEn, setSectionSixLabelsEn] = useState<string[]>( Array(8).fill("") );
+       const [sectionSixNotesEn, setFlowSectionSixNotesEn] = useState<string[]>(   Array(8).fill("")  );
+       const [sectionSixItemsEn, setFlowSectionSixEn] = useState<string[]>(    Array(8).fill("")  );
+       const [sectionSixItemsDate2En, setFlowSectionSixDate2En] = useState<   string[]   >(Array(8).fill(""));
+       const [sectionSixTotalLabel, setSectionSixTotalLabel] =  useState("6");
        const TotalsectionSixItemsEn =  TotalsectionFiveItemsEn+sumStringValues(sectionSixItemsEn);
        const TotalsectionSixItemsDate2En = TotalsectionFiveItemsDate2En+sumStringValues(sectionSixItemsDate2En);
 
@@ -194,8 +211,7 @@ const handleChangeAttribute2 = (
   }
 };
 
-
-
+ 
 const handleChangeOtherComprehensiveIncome = (
   index: number,
   value: string,
@@ -378,6 +394,7 @@ const handleChangeOtherComprehensiveIncome = (
   qdate1: data1Ar,
   qdate2: data2Ar,
     sectionOne: {
+      qsectionOneFirstLabelEn:sectionOneFirstLabelEn,
   qsectionOneLabelsEn: sectionOneLabelsEn,
   qsectionOneNotesEn: sectionOneNotesEn,
   qsectionOneItemsEn: sectionOneItemsEn,
@@ -669,6 +686,26 @@ const handleChangeOtherComprehensiveIncome = (
             </tr>
           </thead>
           <tbody>
+
+
+
+             <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                <input
+                  value={sectionOneFirstLabelEn}
+                  onChange={(e) => setSectionOneFirstLabelEn(e.target.value)}
+                  className="w-full  bg-gray-200 text-black p-1"
+                />
+              </td>
+              <td className=""></td>
+              <td className="">
+              
+              </td>
+              <td className="">
+              
+              </td>
+            </tr>
+
             {sectionOneLabelsEn.map((val, idx) => {
               const isRowEmpty = !val && !sectionOneItemsDate2En[idx];
               // 🧠 Only hide the row *after* submission if it's empty
@@ -2227,7 +2264,7 @@ const handleChangeOtherComprehensiveIncome = (
 
 
 
-
+<div className="hidden">
 
 
 
@@ -2702,10 +2739,124 @@ const handleChangeOtherComprehensiveIncome = (
             </tr>
 
 
-
+</div>
 
 
           </tbody>
+
+
+            <thead>
+            <tr className="bg-gray-100">
+              <th className="border border-gray-100 w-96"></th>
+              <th className="border border-gray-100 w-16">إيضاحات</th>
+              <th className="border border-gray-100 p-1 w-28">
+                <div dir="rtl" className="items-center h-5">
+                  <DatePicker
+                    className="text-right"
+                    value={data1Ar}
+                    onChange={(date: DateObject | null) => {
+                      if (date) {
+                        const jsDate = new Date(
+                          date.year,
+                          date.month.number - 1, // ✅ Correct usage
+                          date.day
+                        );
+                        setDate1Ar(jsDate);
+                      } else {
+                        setDate1Ar(null);
+                      }
+                    }}
+                    calendar={arabic}
+                    locale={gregorian_ar}
+                    inputClass="text-center bg-gray-100 w-28"
+                    placeholder="اختر التاريخ"
+                  />
+                </div>
+
+     
+
+                <input
+                  placeholder=""
+                  value={date1}
+                  onChange={(e) => setDate1(e.target.value)}
+                  className="w-full text-center bg-gray-100 fext-row"
+                  type="text"
+                />
+                <div
+                  dir="ltr"
+                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
+                >
+                  <img
+                    src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
+                    alt="Riyal"
+                    className="w-3 h-3 "
+                  />
+                  <input
+                    placeholder=""
+                    value={date1Rl}
+                    onChange={(e) => setDate1Rl(e.target.value)}
+                    className="w-8  text-center bg-gray-100 focus:outline-none"
+                    type="text"
+                  />
+                </div>
+              </th>
+
+              <th className="border border-gray-100  w-28 p-1 ">
+                <div dir="rtl" className="items-center bg-green">
+                  <DatePicker
+                    className="text-right"
+                    value={data2Ar}
+                    onChange={(date: DateObject | null) => {
+                      if (date) {
+                        const jsDate = new Date(
+                          date.year,
+                          date.month.number - 1, // ✅ Correct usage
+                          date.day
+                        );
+                        setDate2Ar(jsDate);
+                      } else {
+                        setDate2Ar(null);
+                      }
+                    }}
+                    calendar={arabic}
+                    locale={gregorian_ar}
+                    inputClass="text-center bg-gray-100 w-28"
+                    placeholder="اختر التاريخ"
+                  />
+                </div>
+
+                <input
+                  placeholder=""
+                  value={date2}
+                  onChange={(e) => setDate2(e.target.value)}
+                  className="w-full text-center bg-gray-100"
+                  type="text"
+                />
+
+                {/* Riyal symbol + input as flex */}
+                <div
+                  dir="ltr"
+                  className="flex items-center justify-center bg-gray-100   rounded"
+                >
+                  <img
+                    src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
+                    alt="Riyal"
+                    className="w-3 h-3 "
+                  />
+                  <input
+                    placeholder=""
+                    value={date2Rl}
+                    onChange={(e) => setDate2Rl(e.target.value)}
+                    className="w-8  text-center bg-gray-100 focus:outline-none"
+                    type="text"
+                  />
+                </div>
+              </th>
+            </tr>
+
+
+            
+          </thead>
 
         </table>
       </div>

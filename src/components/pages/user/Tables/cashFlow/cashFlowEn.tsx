@@ -10,9 +10,8 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
     const [table, setTable] = useState<any>(null);
 
     useEffect(() => {
+      console.log("my cashFlow on for show the data  English: ", Tabledata);
 
-          console.log("my cashFlow on for show the data  English: ",Tabledata);
-        
       setTable(Tabledata);
     }, [Tabledata]);
 
@@ -29,7 +28,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
     };
 
     return (
-      <> 
+      <>
         {table ? (
           <div className="flex justify-start  mb-4   text-black">
             <table className="border font-semibold border-gray-300 text-xs   w-full ">
@@ -99,12 +98,24 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
               </thead>
 
               <tbody>
-            
+                {table.sectionOne.sectionOneFirstLabelEn &&
+                  table.sectionOne.sectionOneFirstLabelEn.trim() !== "" && (
+                    <tr className="bg-gray-200 px-1   font-semibold">
+                      <td className="">
+                        {table.sectionOne.sectionOneFirstLabelEn}
+                      </td>
+                      <td className="  "></td>
+                      <td className="  px-1 text-right  "></td>
+                      <td className="  px-1  text-right "></td>
+                    </tr>
+                  )}
+
                 {table.sectionOne.sectionOneLabelsEn.map(
                   (label: string, idx: number) => {
                     const note = table.sectionOne.sectionOneNotesEn[idx];
                     const item = table.sectionOne.sectionOneItemsEn[idx];
-                    const itemDate2 = table.sectionOne.sectionOneItemsDate2En[idx];
+                    const itemDate2 =
+                      table.sectionOne.sectionOneItemsDate2En[idx];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
@@ -137,8 +148,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                 )}
 
                 {table.sectionOne.sectionOneTotalLabel &&
-                  table.sectionOne.sectionOneTotalLabel.trim() !==
-                    "" && (
+                  table.sectionOne.sectionOneTotalLabel.trim() !== "" && (
                     <tr className="bg-gray-200 px-1   font-semibold">
                       <td className="">
                         {table.sectionOne.sectionOneTotalLabel}
@@ -148,24 +158,19 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                         {formatValue(table.sectionOne.TotalsectionOneItemsEn)}
                       </td>
                       <td className="border  px-1  text-right border-gray-300">
-                        {formatValue(table.sectionOne.TotalsectionOneItemsDate2En)}
+                        {formatValue(
+                          table.sectionOne.TotalsectionOneItemsDate2En
+                        )}
                       </td>
                     </tr>
                   )}
-
-
-
-
-
-              
-
-               
 
                 {table.sectionTwo.sectionTwoLabelsEn.map(
                   (label: string, idx: number) => {
                     const note = table.sectionTwo.sectionTwoNotesEn[idx];
                     const item = table.sectionTwo.sectionTwoItemsEn[idx];
-                    const itemDate2 = table.sectionTwo.sectionTwoItemsDate2En[idx];
+                    const itemDate2 =
+                      table.sectionTwo.sectionTwoItemsDate2En[idx];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
@@ -197,9 +202,8 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                   }
                 )}
 
-                {table.sectionTwo.sectionTwoTotalLabel&&
-                  table.sectionTwo.sectionTwoTotalLabel.trim() !==
-                    "" && (
+                {table.sectionTwo.sectionTwoTotalLabel &&
+                  table.sectionTwo.sectionTwoTotalLabel.trim() !== "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className="px-1">
                         {table.sectionTwo.sectionTwoTotalLabel}
@@ -209,18 +213,14 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                         {formatValue(table.sectionTwo.TotalsectionTwoItemsEn)}
                       </td>
                       <td className="border  px-1   text-right border-gray-300">
-                        {formatValue(table.sectionTwo.TotalsectionTwoItemsDate2En)}
+                        {formatValue(
+                          table.sectionTwo.TotalsectionTwoItemsDate2En
+                        )}
                       </td>
                     </tr>
                   )}
 
-
-
-              
-
-              
-
-         {/* {Array.isArray(table.sectionThree?.sectionThreeLabelsEn) &&
+                {/* {Array.isArray(table.sectionThree?.sectionThreeLabelsEn) &&
  Array.isArray(table.sectionThree?.sectionThreeItemsNotes) &&
  Array.isArray(table.sectionThree?.sectionThreeItemsEn) &&
  Array.isArray(table.sectionThree?.sectionThreeItemsDate2En) &&
@@ -252,11 +252,12 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
     );
 })} */}
 
-   {table.sectionThree.sectionThreeLabelsEn.map(
+                {table.sectionThree.sectionThreeLabelsEn.map(
                   (label: string, idx: number) => {
                     const note = table.sectionThree.sectionThreeNotesEn[idx];
                     const item = table.sectionThree.sectionThreeItemsEn[idx];
-                    const itemDate2 = table.sectionThree.sectionThreeItemsDate2En[idx];
+                    const itemDate2 =
+                      table.sectionThree.sectionThreeItemsDate2En[idx];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
@@ -288,8 +289,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                   }
                 )}
 
-
-                
                 {table.sectionThree.sectionThreeTotalLabel &&
                   table.sectionThree.sectionThreeTotalLabel.trim() !== "" && (
                     <tr className="bg-gray-300 border-gray-300 font-bold">
@@ -298,23 +297,24 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       </td>
                       <td className="border border-gray-300"></td>
                       <td className="border  px-1   text-right border-gray-300">
-                        {formatValue(table.sectionThree.TotalsectionThreeItemsEn)}
+                        {formatValue(
+                          table.sectionThree.TotalsectionThreeItemsEn
+                        )}
                       </td>
                       <td className="border   px-1   text-right border-gray-300">
-                        {formatValue(table.sectionThree.TotalsectionThreeItemsDate2En)}
+                        {formatValue(
+                          table.sectionThree.TotalsectionThreeItemsDate2En
+                        )}
                       </td>
                     </tr>
                   )}
-          
 
-
-
-             
                 {table.sectionFour.sectionFourLabelsEn.map(
                   (label: string, idx: number) => {
                     const note = table.sectionFour.sectionFourNotesEn[idx];
                     const item = table.sectionFour.sectionFourItemsEn[idx];
-                    const itemDate2 = table.sectionFour.sectionFourItemsDate2En[idx];
+                    const itemDate2 =
+                      table.sectionFour.sectionFourItemsDate2En[idx];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
@@ -344,16 +344,12 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                     );
                   }
                 )}
-            
 
-                {table.sectionFour.sectionFourTotalLabel&&
-                 table.sectionFour.sectionFourTotalLabel.trim() !==
-                    "" && (
+                {table.sectionFour.sectionFourTotalLabel &&
+                  table.sectionFour.sectionFourTotalLabel.trim() !== "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className="p-1">
-                        {
-                         table.sectionFour.sectionFourTotalLabel
-                        }
+                        {table.sectionFour.sectionFourTotalLabel}
                       </td>
                       <td className="border border-gray-300"></td>
                       <td className="border   px-1  text-right border-gray-300">
@@ -367,40 +363,33 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                     </tr>
                   )}
 
-
-
-                      <br />
                 <br />
-                {table.sectionFourAttributeOne.sectionFourAttribute&&
-                 table.sectionFourAttributeOne.sectionFourAttribute.trim() !==
+                <br />
+                {table.sectionFourAttributeOne.sectionFourAttribute &&
+                  table.sectionFourAttributeOne.sectionFourAttribute.trim() !==
                     "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className="p-1">
-                        {
-                         table.sectionFourAttributeOne.sectionFourAttribute
-                        }
+                        {table.sectionFourAttributeOne.sectionFourAttribute}
                       </td>
                       <td className=" border-gray-300"></td>
-                      <td className="   px-1  text-right border-gray-300">
-                      
-                      </td>
-                      <td className="   px-1  text-right border-gray-300">
-                        
-                      </td>
+                      <td className="   px-1  text-right border-gray-300"></td>
+                      <td className="   px-1  text-right border-gray-300"></td>
                     </tr>
                   )}
 
-
-
-    {table.sectionFourAttributeOne.sectionFourAttributeLabelsEn.map(
+                {table.sectionFourAttributeOne.sectionFourAttributeLabelsEn.map(
                   (label: string, idx: number) => {
-       
-                    const item = table.sectionFourAttributeOne.sectionFourAttributeItemsEn[idx];
-                    const itemDate2 = table.sectionFourAttributeOne.sectionFourAttributeItemsDate2En[idx];
+                    const item =
+                      table.sectionFourAttributeOne.sectionFourAttributeItemsEn[
+                        idx
+                      ];
+                    const itemDate2 =
+                      table.sectionFourAttributeOne
+                        .sectionFourAttributeItemsDate2En[idx];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
-               
                       (!item || item.toString().trim() === "") &&
                       (!itemDate2 || itemDate2.toString().trim() === "");
                     if (allEmpty) return null; // Skip this row entirely
@@ -413,9 +402,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                         <td className="border border-gray-300 p-1">
                           {label || "-"}
                         </td>
-                        <td className="border  text-center border-gray-300 p-1">
-                  
-                        </td>
+                        <td className="border  text-center border-gray-300 p-1"></td>
                         <td className="border  text-right border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
                         </td>
@@ -428,81 +415,87 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                 )}
                 <br />
 
-    
+                {(table.sectionFourAttributeOne
+                  .TotalsectionFourAttributeItemsEn ||
+                  table.sectionFourAttributeOne
+                    .TotalsectionFourAttributeItemsDate2En) && (
+                  <tr className="bg-gray-100 font-semibold">
+                    <td className="bg-white"></td>
+                    <td className=""></td>
+                    <td className="p-2">
+                      {table.sectionFourAttributeOne
+                        .TotalsectionFourAttributeItemsEn
+                        ? formatValue(
+                            table.sectionFourAttributeOne
+                              .TotalsectionFourAttributeItemsEn
+                          )
+                        : "-"}
+                    </td>
+                    <td className="">
+                      {table.sectionFourAttributeOne
+                        .TotalsectionFourAttributeItemsDate2En
+                        ? formatValue(
+                            table.sectionFourAttributeOne
+                              .TotalsectionFourAttributeItemsDate2En
+                          )
+                        : "-"}
+                    </td>
+                  </tr>
+                )}
 
+                <br />
 
-
-{(table.sectionFourAttributeOne.TotalsectionFourAttributeItemsEn ||
-  table.sectionFourAttributeOne.TotalsectionFourAttributeItemsDate2En) && (
-  <tr className="bg-gray-100 font-semibold">
-    <td className="bg-white"></td>
-    <td className=""></td>
-    <td className="p-2">
-      {table.sectionFourAttributeOne.TotalsectionFourAttributeItemsEn
-        ? formatValue(table.sectionFourAttributeOne.TotalsectionFourAttributeItemsEn)
-        : "-"}
-    </td>
-    <td className="">
-      {table.sectionFourAttributeOne.TotalsectionFourAttributeItemsDate2En
-        ? formatValue(table.sectionFourAttributeOne.TotalsectionFourAttributeItemsDate2En)
-        : "-"}
-    </td>
-  </tr>
-)}
-
-
-<br />
-
-
-
-
- {table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncome&&
-                 table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncome.trim() !==
+                {table.sectionOtherComprehensiveIncome
+                  .sectionFourOtherComprehensiveIncome &&
+                  table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncome.trim() !==
                     "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className=" w-full   bg-gray-200 text-black px-1 ">
                         {
-                         table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncome
+                          table.sectionOtherComprehensiveIncome
+                            .sectionFourOtherComprehensiveIncome
                         }
                       </td>
                       <td className=" border-gray-300"></td>
-                      <td className="   px-1  text-right border-gray-300">
-                      
-                      </td>
-                      <td className="   px-1  text-right border-gray-300">
-                        
-                      </td>
+                      <td className="   px-1  text-right border-gray-300"></td>
+                      <td className="   px-1  text-right border-gray-300"></td>
                     </tr>
                   )}
 
-
-
-
-             {table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheading&&
-                 table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheading.trim() !==
+                {table.sectionOtherComprehensiveIncome
+                  .sectionFourOtherComprehensiveIncomeSubheading &&
+                  table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheading.trim() !==
                     "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className=" w-full  px-1  text-[9px]   bg-gray-200 text-black  ">
                         {
-                         table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheading
+                          table.sectionOtherComprehensiveIncome
+                            .sectionFourOtherComprehensiveIncomeSubheading
                         }
                       </td>
                       <td className=" border-gray-300"></td>
-                      <td className="   px-1  text-right border-gray-300">
-                      
-                      </td>
-                      <td className="   px-1  text-right border-gray-300">
-                        
-                      </td>
+                      <td className="   px-1  text-right border-gray-300"></td>
+                      <td className="   px-1  text-right border-gray-300"></td>
                     </tr>
                   )}
 
-
-                               {table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheadingLabelsEn.map(
+                {table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheadingLabelsEn.map(
                   (label: string, idx: number) => {
-                    const note = table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheadingNotesEn[idx];
-                    const item = table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheadingItemsEn[idx];
-                    const itemDate2 = table.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[idx];
+                    const note =
+                      table.sectionOtherComprehensiveIncome
+                        .sectionFourOtherComprehensiveIncomeSubheadingNotesEn[
+                        idx
+                      ];
+                    const item =
+                      table.sectionOtherComprehensiveIncome
+                        .sectionFourOtherComprehensiveIncomeSubheadingItemsEn[
+                        idx
+                      ];
+                    const itemDate2 =
+                      table.sectionOtherComprehensiveIncome
+                        .sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[
+                        idx
+                      ];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
@@ -533,69 +526,62 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                   }
                 )}
 
-
-
-
-
-
-                {table.sectionOtherComprehensiveIncome.sectionFourOtherTotalComprehensiveIncome&&
-                 table.sectionOtherComprehensiveIncome.sectionFourOtherTotalComprehensiveIncome.trim() !==
+                {table.sectionOtherComprehensiveIncome
+                  .sectionFourOtherTotalComprehensiveIncome &&
+                  table.sectionOtherComprehensiveIncome.sectionFourOtherTotalComprehensiveIncome.trim() !==
                     "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className="p-1">
                         {
-                         table.sectionOtherComprehensiveIncome.sectionFourOtherTotalComprehensiveIncome
+                          table.sectionOtherComprehensiveIncome
+                            .sectionFourOtherTotalComprehensiveIncome
                         }
                       </td>
                       <td className="border border-gray-300"></td>
                       <td className="border   px-1  text-right border-gray-300">
-                        {formatValue(table.sectionOtherComprehensiveIncome.TotalsectionFourOtherComprehensiveIncomeSubheadingItemsEn)}
+                        {formatValue(
+                          table.sectionOtherComprehensiveIncome
+                            .TotalsectionFourOtherComprehensiveIncomeSubheadingItemsEn
+                        )}
                       </td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(
-                          table.sectionOtherComprehensiveIncome.TotalsectionFourOtherComprehensiveIncomeSubheadingItemsDate2En
+                          table.sectionOtherComprehensiveIncome
+                            .TotalsectionFourOtherComprehensiveIncomeSubheadingItemsDate2En
                         )}
                       </td>
                     </tr>
                   )}
 
-
-<br />
-
-
-
-             <br />
                 <br />
-                {table.sectionAttributeTwo.sectionFourAttribute2&&
-                 table.sectionAttributeTwo.sectionFourAttribute2.trim() !==
+
+                <br />
+                <br />
+                {table.sectionAttributeTwo.sectionFourAttribute2 &&
+                  table.sectionAttributeTwo.sectionFourAttribute2.trim() !==
                     "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className="p-1">
-                        {
-                         table.sectionAttributeTwo.sectionFourAttribute2
-                        }
+                        {table.sectionAttributeTwo.sectionFourAttribute2}
                       </td>
                       <td className=" border-gray-300"></td>
-                      <td className="   px-1  text-right border-gray-300">
-                      
-                      </td>
-                      <td className="   px-1  text-right border-gray-300">
-                        
-                      </td>
+                      <td className="   px-1  text-right border-gray-300"></td>
+                      <td className="   px-1  text-right border-gray-300"></td>
                     </tr>
                   )}
 
-
-
-    {table.sectionAttributeTwo.sectionFourAttribute2LabelsEn.map(
+                {table.sectionAttributeTwo.sectionFourAttribute2LabelsEn.map(
                   (label: string, idx: number) => {
-       
-                    const item = table.sectionAttributeTwo.sectionFourAttribute2ItemsEn[idx];
-                    const itemDate2 = table.sectionAttributeTwo.sectionFourAttribute2ItemsDate2En[idx];
+                    const item =
+                      table.sectionAttributeTwo.sectionFourAttribute2ItemsEn[
+                        idx
+                      ];
+                    const itemDate2 =
+                      table.sectionAttributeTwo
+                        .sectionFourAttribute2ItemsDate2En[idx];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
-               
                       (!item || item.toString().trim() === "") &&
                       (!itemDate2 || itemDate2.toString().trim() === "");
                     if (allEmpty) return null; // Skip this row entirely
@@ -608,9 +594,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                         <td className="border border-gray-300 p-1">
                           {label || "-"}
                         </td>
-                        <td className="border  text-center border-gray-300 p-1">
-                  
-                        </td>
+                        <td className="border  text-center border-gray-300 p-1"></td>
                         <td className="border  text-right border-gray-300 p-1">
                           {item ? formatValue(item) : "-"}
                         </td>
@@ -623,36 +607,40 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                 )}
                 <br />
 
-    
+                {(table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsEn ||
+                  table.sectionAttributeTwo
+                    .TotalsectionFourAttribute2ItemsDate2En) && (
+                  <tr className="bg-gray-100 font-semibold">
+                    <td className="bg-white"></td>
+                    <td className=""></td>
+                    <td className="p-2">
+                      {table.sectionAttributeTwo
+                        .TotalsectionFourAttribute2ItemsEn
+                        ? formatValue(
+                            table.sectionAttributeTwo
+                              .TotalsectionFourAttribute2ItemsEn
+                          )
+                        : "-"}
+                    </td>
+                    <td className="">
+                      {table.sectionAttributeTwo
+                        .TotalsectionFourAttribute2ItemsDate2En
+                        ? formatValue(
+                            table.sectionAttributeTwo
+                              .TotalsectionFourAttribute2ItemsDate2En
+                          )
+                        : "-"}
+                    </td>
+                  </tr>
+                )}
 
-
-
-{(table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsEn ||
-  table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsDate2En) && (
-  <tr className="bg-gray-100 font-semibold">
-    <td className="bg-white"></td>
-    <td className=""></td>
-    <td className="p-2">
-      {table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsEn
-        ? formatValue(table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsEn)
-        : "-"}
-    </td>
-    <td className="">
-      {table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsDate2En
-        ? formatValue(table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsDate2En)
-        : "-"}
-    </td>
-  </tr>
-)}
-
-
-<br />
+                <br />
                 {table.sectionFive.sectionFiveLabelsEn.map(
                   (label: string, idx: number) => {
-                    const note =
-                      table.sectionFive.sectionFiveNotesEn[idx];
+                    const note = table.sectionFive.sectionFiveNotesEn[idx];
                     const item = table.sectionFive.sectionFiveItemsEn[idx];
-                    const itemDate2 = table.sectionFive.sectionFiveItemsDate2En[idx];
+                    const itemDate2 =
+                      table.sectionFive.sectionFiveItemsDate2En[idx];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
@@ -685,32 +673,29 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                 )}
 
                 {table.sectionFive.sectionFiveTotalLabel &&
-                  table.sectionFive.sectionFiveTotalLabel.trim() !==
-                    "" && (
+                  table.sectionFive.sectionFiveTotalLabel.trim() !== "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className="p-1">
-                        {
-                          table.sectionFive.sectionFiveTotalLabel
-                        }
+                        {table.sectionFive.sectionFiveTotalLabel}
                       </td>
                       <td className="border border-gray-300"></td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(table.sectionFive.TotalsectionFiveItemsEn)}
                       </td>
                       <td className="border  px-1   text-right border-gray-300">
-                        {formatValue(table.sectionFive.TotalsectionFiveItemsDate2En)}
+                        {formatValue(
+                          table.sectionFive.TotalsectionFiveItemsDate2En
+                        )}
                       </td>
                     </tr>
                   )}
 
-
-
                 {table.sectionSix.sectionSixLabelsEn.map(
                   (label: string, idx: number) => {
-                    const note =
-                      table.sectionSix.sectionSixNotesEn[idx];
+                    const note = table.sectionSix.sectionSixNotesEn[idx];
                     const item = table.sectionSix.sectionSixItemsEn[idx];
-                    const itemDate2 = table.sectionSix.sectionSixItemsDate2En[idx];
+                    const itemDate2 =
+                      table.sectionSix.sectionSixItemsDate2En[idx];
 
                     const allEmpty =
                       (!label || label.trim() === "") &&
@@ -743,29 +728,22 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                 )}
 
                 {table.sectionSix.sectionSixTotalLabel &&
-                  table.sectionSix.sectionSixTotalLabel.trim() !==
-                    "" && (
+                  table.sectionSix.sectionSixTotalLabel.trim() !== "" && (
                     <tr className="bg-gray-200 font-semibold">
                       <td className="p-1">
-                        {
-                          table.sectionSix.sectionSixTotalLabel
-                        }
+                        {table.sectionSix.sectionSixTotalLabel}
                       </td>
                       <td className="border border-gray-300"></td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(table.sectionSix.TotalsectionSixItemsEn)}
                       </td>
                       <td className="border  px-1   text-right border-gray-300">
-                        {formatValue(table.sectionSix.TotalsectionSixItemsDate2En)}
+                        {formatValue(
+                          table.sectionSix.TotalsectionSixItemsDate2En
+                        )}
                       </td>
                     </tr>
                   )}
-
-               
-
-               
-
-              
               </tbody>
             </table>
           </div>

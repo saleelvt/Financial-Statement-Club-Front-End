@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-multi-date-picker";
 import gregorian_ar from "react-date-object/locales/gregorian_ar";
 import arabic from "react-date-object/calendars/gregorian";
@@ -90,8 +90,8 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionFourSubItemsEn, setFlowSectionFourSubEn] = useState<string[]>(  Array(3).fill("")    );
        const [sectionFourSubItemsDate2En, setFlowSectionFourSubDate2En] = useState<   string[]   >(Array(3).fill(""));
        const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("Fifth Total (Loss for the year)");
-       const TotalsectionFourSubItemsEn =   TotalsectionThreeItemsEn + sumStringValues(sectionFourSubItemsEn);
-       const TotalsectionFourSubItemsDate2En =  TotalsectionThreeItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
+       const TotalsectionFourSubItemsEn = TotalsectionFourItemsEn+  sumStringValues(sectionFourSubItemsEn);
+       const TotalsectionFourSubItemsDate2En = TotalsectionFourItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
    
    
    
@@ -153,9 +153,9 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           const [SectionSevenSecondLastLabel2,   setSectionSevenSecondLastLabel2 ] = useState("Total other comprehensive income");
           const TotalsectionSevenSecondLastItemEn = TotalSectionLastLabelItemsEn+TotalSectionLastLabelItemsEn2
           const TotalsectionSevenSecondLastItemsDate2En = TotalSectionLastItemsDate2En+TotalSectionLastItemsDate2En2
-          const [ SectionSevenLastLabel2,   setSectionSevenLastLabel2 ] = useState("Total comprehensive (loss) income for the year ");
-          const TotalsectionSevenLastItemEn =     TotalsectionSevenSecondLastItemEn
-          const TotalsectionSevenLastItemsDate2En = TotalsectionSevenSecondLastItemsDate2En
+          const [ SectionSevenLastLabel2,   setSectionSevenLastLabel2 ] = useState("Total comprehensive (loss) income for the year");
+          const TotalsectionSevenLastItemEn =    TotalsectionFourSubItemsEn+   TotalsectionSevenSecondLastItemEn
+          const TotalsectionSevenLastItemsDate2En = TotalsectionFourSubItemsDate2En+ TotalsectionSevenSecondLastItemsDate2En 
    
           
        
@@ -186,7 +186,19 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
 
 
+const autoResizeTextarea = (el: any | null) => {
+  if (el) {
+    el.style.height = 'auto'; // Reset height
+    el.style.height = el.scrollHeight + 'px'; // Set new height
+  }
+};
 
+const textareaRef = useRef<any | null>(null);
+
+
+useEffect(() => {
+  autoResizeTextarea(textareaRef.current);
+},);
 
       
 // Handle Change Function
@@ -2802,14 +2814,18 @@ useEffect(() => {
 
             <tr className="bg-gray-200 font-semibold  ">
               <td className="">
-                <textarea 
-                  value={sectionFourOtherComprehensiveIncome}
-                  onChange={(e) =>
-                    setSectionFourOtherComprehensiveIncomeLabel(e.target.value)
-                  }
-                  className="w-full   bg-gray-200 text-black px-1"
-                />
-              </td>
+ <textarea 
+    value={sectionFourOtherComprehensiveIncome}
+    onChange={(e) => {
+      setSectionFourOtherComprehensiveIncomeLabel(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
+
               <td className=" "></td>
               <td className="   "></td>
               <td className=""></td>
@@ -3289,17 +3305,19 @@ useEffect(() => {
 
             </tr>
                <tr className="bg-gray-200 font-semibold  ">
-              <td className="">
-                <textarea
-                  value={sectionSevenSubheading}
-                  onChange={(e) =>
-                    setSectionSevenSubheadingLabel(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                />
-              </td>
+             <td className="">
+  <textarea
+    value={sectionSevenSubheading}
+    onChange={(e) => {
+      setSectionSevenSubheadingLabel(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
+
               <td className=" "></td>
               <td className="   "></td>
               <td className=""></td>
@@ -3475,15 +3493,18 @@ useEffect(() => {
 
 
             <tr className="bg-gray-200 font-semibold">
-              <td className="bg-white"> <textarea
-                  value={sectionLastTotalLabelEn}
-                  onChange={(e) =>
-                    setSectionLastTotalLabelEn(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                /></td>
+              <td className="">
+  <textarea
+    value={sectionLastTotalLabelEn}
+    onChange={(e) => {
+      setSectionLastTotalLabelEn(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
               <td></td>
               <td className="p-2">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn)}
@@ -3499,17 +3520,20 @@ useEffect(() => {
 
             
                <tr className="bg-gray-200 font-semibold  ">
-              <td className="">
-                <textarea
-                  value={sectionSevenSubheading2}
-                  onChange={(e) =>
-                    setSectionSevenSubheadingLabel2(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                />
-              </td>
+            <td className="">
+  <textarea
+    value={sectionSevenSubheading2}
+    onChange={(e) => {
+      setSectionSevenSubheadingLabel2(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
+
+
               <td className=" "></td>
               <td className="   "></td>
               <td className=""></td>
@@ -3675,15 +3699,18 @@ useEffect(() => {
 
 
 <tr className="bg-gray-200 font-semibold">
-              <td className="bg-white"><textarea
-                  value={sectionLastTotalLabelEn2}
-                  onChange={(e) =>
-                    setSectionToatalLastLabelEn2(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                /></td>
+<td className="bg-white">
+  <textarea
+    value={sectionLastTotalLabelEn2}
+    onChange={(e) => {
+      setSectionToatalLastLabelEn2(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
               <td></td>
               <td className="p-2">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn2)}
@@ -4144,15 +4171,19 @@ useEffect(() => {
 
 
 <tr className="bg-gray-200 font-semibold">
-  <td>
-    <textarea
-      value={sectionFourOtherComprehensiveIncomeTable2}
-      onChange={(e) =>
-        setSectionFourOtherComprehensiveIncomeLabelTable2(e.target.value)
-      }
-      className="w-full bg-gray-200 text-black px-1"
-    />
-  </td>
+<td>
+  <textarea
+    value={sectionFourOtherComprehensiveIncomeTable2}
+    onChange={(e) => {
+      setSectionFourOtherComprehensiveIncomeLabelTable2(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
+
   <td></td>
   <td></td>
   <td></td>

@@ -40,16 +40,14 @@ const CashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
 
     const [data1En, setDate1En] = useState<Date | null>(null);
     const [data2En, setDate2En] = useState<Date | null>(null);
-    const [dataTwo1En, setDateTwo1En] = useState<Date | null>(null);
-    const [dataTwo2En, setDateTwo2En] = useState<Date | null>(null);
+  
     // section One
-
-    const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState(     "Continuing Operations"   );
+    const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState(     "Continuing operation:"   );
     const [sectionOneLabelsEn, setSectionOneLabelsEn] = useState<string[]>(      Array(5).fill("")   );
     const [sectionOneNotesEn, setFlowSectionOneNotesEn] = useState<string[]>(     Array(5).fill("")   );
     const [sectionOneItemsEn, setFlowSectionOneEn] = useState<string[]>(     Array(5).fill("")   );
     const [sectionOneItemsDate2En, setFlowSectionOneDate2En] = useState<    string[]   >(Array(5).fill(""));
-    const [sectionOneTotalLabel, setSectionOneTotalLabel] = useState("");
+    const [sectionOneTotalLabel, setSectionOneTotalLabel] = useState("First Total (Gross income)");
     const TotalsectionOneItemsEn = sumStringValues(sectionOneItemsEn);
     const TotalsectionOneItemsDate2En = sumStringValues(sectionOneItemsDate2En);
 
@@ -58,7 +56,7 @@ const CashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     const [sectionTwoNotesEn, setFlowSectionTwoNotesEn] = useState<string[]>(     Array(12).fill("")   );
     const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(     Array(12).fill("")   );
     const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(12).fill(""));
-    const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("");
+    const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("Second Total (Operating loss)");
     const TotalsectionTwoItemsEn =    TotalsectionOneItemsEn + sumStringValues(sectionTwoItemsEn);
     const TotalsectionTwoItemsDate2En =   TotalsectionOneItemsDate2En + sumStringValues(sectionTwoItemsDate2En);
 
@@ -67,127 +65,124 @@ const CashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
    const [sectionThreeNotesEn, setFlowSectionThreeNotesEn] = useState<    string[]   >(Array(7).fill(""));
     const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(7).fill("")   );
     const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(7).fill(""));
-    const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("");
+    const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("Third Total (Income (loss) before zakat and foreign Income)");
     const TotalsectionThreeItemsEn =      TotalsectionTwoItemsEn + sumStringValues(sectionThreeItemsEn);
     const TotalsectionThreeItemsDate2En =      TotalsectionTwoItemsDate2En + sumStringValues(sectionThreeItemsDate2En);
+
 
     // sectoin Four
     const [sectionFourLabelsEn, setSectionFourLabelsEn] = useState<string[]>(     Array(5).fill("")    );
     const [sectionFourNotesEn, setFlowSectionFourNotesEn] = useState<string[]>(      Array(5).fill("")   );
     const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(      Array(5).fill("")    );
     const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<      string[]    >(Array(5).fill(""));
-    const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("");
+    const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("Four Total (Loss for the year from continuing operations)");
     const TotalsectionFourItemsEn =      TotalsectionThreeItemsEn + sumStringValues(sectionFourItemsEn);
     const TotalsectionFourItemsDate2En =     TotalsectionThreeItemsDate2En + sumStringValues(sectionFourItemsDate2En);
 
-    const [sectionFourSubFirstLabelEn, setSectionFourSubFirstLabelEn] =  useState("Discontinued Operation");
+    const [sectionFourSubFirstLabelEn, setSectionFourSubFirstLabelEn] =  useState("Discontinued operation:");
     const [sectionFourSubLabelsEn, setSectionFourSubLabelsEn] = useState< string[] >(Array(3).fill(""));
     const [sectionFourSubNotesEn, setFlowSectionFourSubNotesEn] = useState< string[] >(Array(3).fill(""));
     const [sectionFourSubItemsEn, setFlowSectionFourSubEn] = useState<string[]>(  Array(3).fill("")    );
     const [sectionFourSubItemsDate2En, setFlowSectionFourSubDate2En] = useState<   string[]   >(Array(3).fill(""));
-    const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("LOSS FOR THE YEAR");
+    const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("Fifth Total (Loss for the year)");
     const TotalsectionFourSubItemsEn =   TotalsectionThreeItemsEn + sumStringValues(sectionFourSubItemsEn);
     const TotalsectionFourSubItemsDate2En =  TotalsectionThreeItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
 
-    const [sectionFourAttribute, setSectionFourAttributeLabel] = useState("");
+
+
+
+
+    const [sectionFourAttribute, setSectionFourAttributeLabel] = useState("Net income from continuing operations Attributable to:1");
     const [sectionFourAttributeLabelsEn, setSectionFourAttributeLabelsEn] =    useState<string[]>(Array(2).fill(""));
     const [sectionFourAttributeItemsEn, setSectionFourAttributeItemsEn] =   useState<string[]>(Array(2).fill(""));
     const [sectionFourAttributeItemsDate2En,   setSectionFourAttributeItemsDate2En,  ] = useState<string[]>(Array(2).fill(""));
     const TotalsectionFourAttributeItemsEn = sumStringValues(  sectionFourAttributeItemsEn  );
     const TotalsectionFourAttributeItemsDate2En = sumStringValues(  sectionFourAttributeItemsDate2En );
 
-    const [ sectionFourOtherComprehensiveIncome,    setSectionFourOtherComprehensiveIncomeLabel,  ] = useState("OtherComprehensiveIncome");
-    const [ sectionFourOtherComprehensiveIncomeSubheading,   setSectionFourOtherComprehensiveIncomeSubheadingLabel ] = useState("OtherComprehensiveIncome subbb");
 
+    const [sectionFourAttribute2, setSectionFourAttribute2Label] = useState("Net (Loss) income Attributable to:2");
+    const [sectionFourAttribute2LabelsEn, setSectionFourAttribute2LabelsEn] =  useState<string[]>(Array(2).fill(""));
+    const [sectionFourAttribute2ItemsEn, setSectionFourAttribute2ItemsEn] = useState<string[]>(Array(2).fill(""));
+    const [sectionFourAttribute2ItemsDate2En,     setSectionFourAttribute2ItemsDate2En] = useState<string[]>(Array(2).fill(""));
+    const TotalsectionFourAttribute2ItemsEn = sumStringValues( sectionFourAttribute2ItemsEn);
+    const TotalsectionFourAttribute2ItemsDate2En = sumStringValues( sectionFourAttribute2ItemsDate2En);
+    
+    const [ sectionFourOtherComprehensiveIncome,    setSectionFourOtherComprehensiveIncomeLabel,  ] = useState("Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
     const [ sectionFourOtherComprehensiveIncomeSubheadingLabelsEn,   setSectionFourOtherComprehensiveIncomeSubheadingLabelsEn,  ] = useState<string[]>(Array(2).fill(""));
     const [  sectionFourOtherComprehensiveIncomeSubheadingNotesEn,   setSectionFourOtherComprehensiveIncomeSubheadingNotesEn,   ] = useState<string[]>(Array(2).fill(""));
     const [  sectionFourOtherComprehensiveIncomeSubheadingItemsEn,     setSectionFourOtherComprehensiveIncomeSubheadingItemsEn,   ] = useState<string[]>(Array(2).fill(""));
     const [ sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,    setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,   ] = useState<string[]>(Array(2).fill(""));
-    const [   sectionFourOtherTotalComprehensiveIncome,     setSectionFourOtherToatalComprehensiveIncomeLabel,   ] = useState("");
-    const TotalsectionFourOtherComprehensiveIncomeSubheadingItemsEn =    TotalsectionFourAttributeItemsEn +    sumStringValues(sectionFourOtherComprehensiveIncomeSubheadingItemsEn);
-    const TotalsectionFourOtherComprehensiveIncomeSubheadingItemsDate2En =   TotalsectionFourAttributeItemsDate2En +   sumStringValues(     sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En     );
-
-    const [sectionFourAttribute2, setSectionFourAttribute2Label] = useState("");
-    const [sectionFourAttribute2LabelsEn, setSectionFourAttribute2LabelsEn] =  useState<string[]>(Array(2).fill(""));
-    const [sectionFourAttribute2ItemsEn, setSectionFourAttribute2ItemsEn] = useState<string[]>(Array(2).fill(""));
-    const [sectionFourAttribute2ItemsDate2En,     setSectionFourAttribute2ItemsDate2En,   ] = useState<string[]>(Array(2).fill(""));
-    const TotalsectionFourAttribute2ItemsEn = sumStringValues( sectionFourAttribute2ItemsEn   );
-  const TotalsectionFourAttribute2ItemsDate2En = sumStringValues( sectionFourAttribute2ItemsDate2En   );
 
 
-  //does't added
-    const [sectionFourAfterAttribute2Label, setSectionFourAfterAttribute2Label] = useState("after attribut ");
-    const [sectionFourAfterAttribute2LabelsEn, setSectionFourAfterAttribute2LabelsEn] = useState< string[] >(Array(3).fill(""));
-    const [sectionFourAfterAttribute2NotesEn, setFlowSectionFourAfterAttribute2NotesEn] = useState<   string[]   >(Array(3).fill(""));
-    const [sectionFourAfterAttribute2ItemsEn, setFlowSectionFourAfterAttribute2En] = useState<string[]>(  Array(3).fill("") );
-    const [sectionFourAfterAttribute2ItemsDate2En, setFlowSectionFourAfterAttribute2Date2En]  = useState<   string[]   >(Array(3).fill(""));
-//
 
-      const [sectionLastLabel, setSectionLastLabel] =  useState("LOSS FOR THE YEAR 2");
-      const [sectionSevenLastLabel, setSectionSevenLastLabel] =  useState("Other comprehensive income(loss)");
-       const [ sectionSevenSubheading,   setSectionSevenSubheadingLabel ] = useState("OtherComprehens1");
 
-    const [ sectionLastLabelsEn,  setSectionLastLabelsEn,  ] = useState<string[]>(Array(2).fill(""));
-    const [ sectionLastNotesEn, setSectionLastNotesEn,   ] = useState<string[]>(Array(2).fill(""));
-    const [ sectionLastItemsEn,    setSectionLastItemsEn,   ] = useState<string[]>(Array(2).fill(""));
-    const [ sectionLastItemsDate2En,   setSectionLastItemsDate2En,   ] = useState<string[]>(Array(2).fill(""));
+
+
+    // table two Seciton 
+
+
+      const [dataTwo1En, setDateTwo1En] = useState<Date | null>(null);
+      const [dataTwo2En, setDateTwo2En] = useState<Date | null>(null);
+
+      const [sectionLastLabel, setSectionLastLabel] =  useState("Fifth Total (Loss for the year)2");
+      const [sectionSevenLastLabel, setSectionSevenLastLabel] =  useState("Other comprehensive income");
+      const [ sectionSevenSubheading,   setSectionSevenSubheadingLabel ] = useState("Other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years:");
+      const [ sectionLastLabelsEn,  setSectionLastLabelsEn,  ] = useState<string[]>(Array(8).fill(""));
+      const [ sectionLastNotesEn, setSectionLastNotesEn,   ] = useState<string[]>(Array(8).fill(""));
+      const [ sectionLastItemsEn,    setSectionLastItemsEn,   ] = useState<string[]>(Array(8).fill(""));
+      const [ sectionLastItemsDate2En,   setSectionLastItemsDate2En,   ] = useState<string[]>(Array(8).fill(""));
+      const [ sectionLastTotalLabelEn,  setSectionLastTotalLabelEn,  ] = useState("Total other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years");
+      const TotalSectionLastLabelItemsEn =      sumStringValues(sectionLastItemsEn);
+      const TotalSectionLastItemsDate2En =  sumStringValues(sectionLastItemsDate2En);
+
+
+
+
+       const [ sectionSevenSubheading2,   setSectionSevenSubheadingLabel2 ] = useState("Other comprehensive income (loss) not reclassified to profit or loss in subsequent years:1");
+       const [ sectionLastLabelsEn2,  setSectionLastLabelsEn2 ] = useState<string[]>(Array(8).fill(""));
+       const [ sectionLastNotesEn2, setSectionLastNotesEn2 ] = useState<string[]>(Array(8).fill(""));
+       const [ sectionLastItemsEn2,    setSectionLastItemsEn2] = useState<string[]>(Array(8).fill(""));
+       const [ sectionLastItemsDate2En2,   setSectionLastItemsDate2En2 ] = useState<string[]>(Array(8).fill(""));
+
  
-    const TotalSectionLastLabelItemsEn =      sumStringValues(sectionLastItemsEn);
-    const TotalSectionLastItemsDate2En =  sumStringValues(sectionLastItemsDate2En);
+       const [ sectionLastTotalLabelEn2,  setSectionToatalLastLabelEn2 ] = useState("Total other comprehensive income (loss) not reclassified to profit or loss in subsequent years:2");
+       const TotalSectionLastLabelItemsEn2 =      sumStringValues(sectionLastItemsEn2);
+       const TotalSectionLastItemsDate2En2 =  sumStringValues(sectionLastItemsDate2En2);
 
-
-
-
-       const [ sectionSevenSubheading2,   setSectionSevenSubheadingLabel2 ] = useState("OtherComprehs 2");
-    const [ sectionLastLabelsEn2,  setSectionLastLabelsEn2 ] = useState<string[]>(Array(2).fill(""));
-    const [ sectionLastNotesEn2, setSectionLastNotesEn2 ] = useState<string[]>(Array(2).fill(""));
-    const [ sectionLastItemsEn2,    setSectionLastItemsEn2] = useState<string[]>(Array(2).fill(""));
-    const [ sectionLastItemsDate2En2,   setSectionLastItemsDate2En2 ] = useState<string[]>(Array(2).fill(""));
- 
-    const TotalSectionLastLabelItemsEn2 =      sumStringValues(sectionLastItemsEn2);
-    const TotalSectionLastItemsDate2En2 =  sumStringValues(sectionLastItemsDate2En2);
-
-      const [SectionSevenSecondLastLabel2,   setSectionSevenSecondLastLabel2 ] = useState("Other Comprehensive Income total");
-
+       const [SectionSevenSecondLastLabel2,   setSectionSevenSecondLastLabel2 ] = useState("Total other comprehensive income");
        const TotalsectionSevenSecondLastItemEn = TotalSectionLastLabelItemsEn+TotalSectionLastLabelItemsEn2
        const TotalsectionSevenSecondLastItemsDate2En = TotalSectionLastItemsDate2En+TotalSectionLastItemsDate2En2
-    
-      const [ SectionSevenLastLabel2,   setSectionSevenLastLabel2 ] = useState("Total Comprehensive (Loss) Income For The Year");
-
+       const [ SectionSevenLastLabel2,   setSectionSevenLastLabel2 ] = useState("Total comprehensive (loss) income for the year ");
        const TotalsectionSevenLastItemEn =     TotalsectionSevenSecondLastItemEn
        const TotalsectionSevenLastItemsDate2En = TotalsectionSevenSecondLastItemsDate2En
 
+       
+    
+      // Table 2 States
+      const [sectionFourAttributeTable2, setSectionFourAttributeLabelTable2] = useState("Net income from continuing operations Attributable to:");
+      const [sectionFourAttributeLabelsEnTable2, setSectionFourAttributeLabelsEnTable2] = useState<string[]>(Array(2).fill(""));
+      const [sectionFourAttributeItemsEnTable2, setSectionFourAttributeItemsEnTable2] = useState<string[]>(Array(2).fill(""));
+      const [sectionFourAttributeItemsDate2EnTable2, setSectionFourAttributeItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
+      const TotalsectionFourAttributeItemsEnTable2 = sumStringValues(sectionFourAttributeItemsEnTable2);
+      const TotalsectionFourAttributeItemsDate2EnTable2 = sumStringValues(sectionFourAttributeItemsDate2EnTable2);
+ 
+      const [sectionFourAttribute2Table2, setSectionFourAttribute2LabelTable2] = useState("Net (Loss) income Attributable to:");
+      const [sectionFourAttribute2LabelsEnTable2, setSectionFourAttribute2LabelsEnTable2] = useState<string[]>(Array(2).fill(""));
+      const [sectionFourAttribute2ItemsEnTable2, setSectionFourAttribute2ItemsEnTable2] = useState<string[]>(Array(2).fill(""));
+      const [sectionFourAttribute2ItemsDate2EnTable2, setSectionFourAttribute2ItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
+      const TotalsectionFourAttribute2ItemsEnTable2 = sumStringValues(sectionFourAttribute2ItemsEnTable2);
+      const TotalsectionFourAttribute2ItemsDate2EnTable2 = sumStringValues(sectionFourAttribute2ItemsDate2EnTable2);
+
+
+      const [sectionFourOtherComprehensiveIncomeTable2, setSectionFourOtherComprehensiveIncomeLabelTable2] = useState("Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
+      const [sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2] = useState<string[]>(Array(2).fill(""));
+      const [sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2] = useState<string[]>(Array(2).fill(""));
+      const [sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2] = useState<string[]>(Array(2).fill(""));
+      const [sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2, setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-    // section Five
-    const [sectionFiveLabelsEn, setSectionFiveLabelsEn] = useState<string[]>(     Array(8).fill("")   );
-    const [sectionFiveNotesEn, setFlowSectionFiveNotesEn] = useState<string[]>(     Array(8).fill("")  );
-    const [sectionFiveItemsEn, setFlowSectionFiveEn] = useState<string[]>(    Array(8).fill("")   );
-    const [sectionFiveItemsDate2En, setFlowSectionFiveDate2En] = useState<     string[]    >(Array(8).fill(""));
-    const [sectionFiveTotalLabel, setSectionFiveTotalLabel] = useState("");
-    const TotalsectionFiveItemsEn =      TotalsectionFourItemsEn + sumStringValues(sectionFiveItemsEn);
-    const TotalsectionFiveItemsDate2En =     TotalsectionFourItemsDate2En + sumStringValues(sectionFiveItemsDate2En);
-
-    // section Six
-    const [sectionSixLabelsEn, setSectionSixLabelsEn] = useState<string[]>(     Array(8).fill("")  );
-    const [sectionSixNotesEn, setFlowSectionSixNotesEn] = useState<string[]>(    Array(8).fill("")  );
-    const [sectionSixItemsEn, setFlowSectionSixEn] = useState<string[]>(     Array(8).fill("")  );
-    const [sectionSixItemsDate2En, setFlowSectionSixDate2En] = useState<    string[]  >(Array(8).fill(""));
-    const [sectionSixTotalLabel, setSectionSixTotalLabel] = useState("");
-    const TotalsectionSixItemsEn =   TotalsectionFiveItemsEn + sumStringValues(sectionSixItemsEn);
-    const TotalsectionSixItemsDate2En =  TotalsectionFiveItemsDate2En + sumStringValues(sectionSixItemsDate2En);
 
 
 
@@ -260,6 +255,7 @@ const handleChangeSectionFourSub = (
         }
       }
     };
+
     const handleChangeAttribute2 = (
       index: number,
       value: string,
@@ -291,49 +287,133 @@ const handleChangeSectionFourSub = (
           break;
       }
     };
+ 
 
 
-    const handleChangeAfterAttribute2 = (
-  index: number,
+
+
+
+
+
+const handleChangeAttributeTable2 = (
+  idx: number,
   value: string,
-  section: "sectionFourAfterAttribute2",
-  type: "label" | "note" | "item" | "date2"
+  section: "sectionFourAttribute",
+  field: "label" | "item" | "date2" = "item"
 ) => {
-  if (section === "sectionFourAfterAttribute2") {
-    switch (type) {
-      case "label":
-        setSectionFourAfterAttribute2LabelsEn((prev) => {
-          const updated = [...prev];
-          updated[index] = value;
-          return updated;
-        });
-        break;
-      case "note":
-        setFlowSectionFourAfterAttribute2NotesEn((prev) => {
-          const updated = [...prev];
-          updated[index] = value;
-          return updated;
-        });
-        break;
-      case "item":
-        setFlowSectionFourAfterAttribute2En((prev) => {
-          const updated = [...prev];
-          updated[index] = value;
-          return updated;
-        });
-        break;
-      case "date2":
-        setFlowSectionFourAfterAttribute2Date2En((prev) => {
-          const updated = [...prev];
-          updated[index] = value;
-          return updated;
-        });
-        break;
-      default:
-        break;
+  if (section === "sectionFourAttribute") {
+    if (field === "label") {
+      const updated = [...sectionFourAttributeLabelsEnTable2];
+      updated[idx] = value;
+      setSectionFourAttributeLabelsEnTable2(updated);
+    } else if (field === "date2") {
+      const updated = [...sectionFourAttributeItemsDate2EnTable2];
+      updated[idx] = value;
+      setSectionFourAttributeItemsDate2EnTable2(updated);
+    } else {
+      const updated = [...sectionFourAttributeItemsEnTable2];
+      updated[idx] = value;
+      setSectionFourAttributeItemsEnTable2(updated);
     }
   }
 };
+const handleChangeAttribute2Table2 = (
+  index: number,
+  value: string,
+  type: "label" | "item" | "date2"
+) => {
+  switch (type) {
+    case "label":
+      setSectionFourAttribute2LabelsEnTable2((prev) => {
+        const updated = [...prev];
+        updated[index] = value;
+        return updated;
+      });
+      break;
+    case "item":
+      setSectionFourAttribute2ItemsEnTable2((prev) => {
+        const updated = [...prev];
+        updated[index] = value;
+        return updated;
+      });
+      break;
+    case "date2":
+      setSectionFourAttribute2ItemsDate2EnTable2((prev) => {
+        const updated = [...prev];
+        updated[index] = value;
+        return updated;
+      });
+      break;
+    default:
+      break;
+  }
+};
+
+const handleChangeOtherComprehensiveIncomeTable2 = (
+  index: number,
+  value: string,
+  type: "label" | "note" | "item" | "date2"
+) => {
+  switch (type) {
+    case "label":
+      setSectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2((prev) => {
+        const updated = [...prev];
+        updated[index] = value;
+        return updated;
+      });
+      break;
+    case "note":
+      setSectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2((prev) => {
+        const updated = [...prev];
+        updated[index] = value;
+        return updated;
+      });
+      break;
+    case "item":
+      setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2((prev) => {
+        const updated = [...prev];
+        updated[index] = value;
+        return updated;
+      });
+      break;
+    case "date2":
+      setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2((prev) => {
+        const updated = [...prev];
+        updated[index] = value;
+        return updated;
+      });
+      break;
+    default:
+      break;
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const handleChangeSectionLast = (
   index: number,
@@ -491,14 +571,6 @@ const handleChangeSectionLast2 = (
           const updated = [...sectionFourLabelsEn];
           updated[index] = value;
           setSectionFourLabelsEn(updated);
-        } else if (type === "sectionFiveLabel") {
-          const updated = [...sectionFiveLabelsEn];
-          updated[index] = value;
-          setSectionFiveLabelsEn(updated);
-        } else if (type === "sectionSixLabel") {
-          const updated = [...sectionSixLabelsEn];
-          updated[index] = value;
-          setSectionSixLabelsEn(updated);
         }
         return;
       }
@@ -521,14 +593,6 @@ const handleChangeSectionLast2 = (
           const updated = [...sectionFourItemsEn];
           updated[index] = value;
           setFlowSectionFourEn(updated);
-        } else if (type === "sectionFive") {
-          const updated = [...sectionFiveItemsEn];
-          updated[index] = value;
-          setFlowSectionFiveEn(updated);
-        } else if (type === "sectionSix") {
-          const updated = [...sectionSixItemsEn];
-          updated[index] = value;
-          setFlowSectionSixEn(updated);
         }
       } else if (column === "date2") {
         if (type === "sectionOne") {
@@ -547,14 +611,6 @@ const handleChangeSectionLast2 = (
           const updated = [...sectionFourItemsDate2En];
           updated[index] = value;
           setFlowSectionFourDate2En(updated);
-        } else if (type === "sectionFive") {
-          const updated = [...sectionFiveItemsDate2En];
-          updated[index] = value;
-          setFlowSectionFiveDate2En(updated);
-        } else if (type === "sectionSix") {
-          const updated = [...sectionSixItemsDate2En];
-          updated[index] = value;
-          setFlowSectionSixDate2En(updated);
         }
       } else if (column === "note") {
         if (type === "sectionOneNote") {
@@ -573,202 +629,280 @@ const handleChangeSectionLast2 = (
           const updated = [...sectionFourNotesEn];
           updated[index] = value;
           setFlowSectionFourNotesEn(updated);
-        } else if (type === "sectionFiveNote") {
-          const updated = [...sectionFiveNotesEn];
-          updated[index] = value;
-          setFlowSectionFiveNotesEn(updated);
-        } else if (type === "sectionSixNote") {
-          const updated = [...sectionSixNotesEn];
-          updated[index] = value;
-          setFlowSectionSixNotesEn(updated);
         }
       }
     };
 
-    useEffect(() => {
-      const handleDispatch = async () => {
-        try {
-          const formData = {
-            date1: data1En,
-            date2: data2En,
+ useEffect(() => {
+  const handleDispatch = async () => {
+    try {
+      const formData = {
+        date1: data1En,
+        date2: data2En,
 
-            sectionOne: {
-              sectionOneFirstLabelEn,
-              sectionOneLabelsEn,
-              sectionOneNotesEn,
-              sectionOneItemsEn,
-              sectionOneItemsDate2En,
-              sectionOneTotalLabel,
-              TotalsectionOneItemsEn,
-              TotalsectionOneItemsDate2En,
+        sectionOne: {
+          sectionOneFirstLabelEn,
+          sectionOneLabelsEn,
+          sectionOneNotesEn,
+          sectionOneItemsEn,
+          sectionOneItemsDate2En,
+          sectionOneTotalLabel,
+          TotalsectionOneItemsEn,
+          TotalsectionOneItemsDate2En,
+        },
+        sectionTwo: {
+          sectionTwoLabelsEn,
+          sectionTwoNotesEn,
+          sectionTwoItemsEn,
+          sectionTwoItemsDate2En,
+          sectionTwoTotalLabel,
+          TotalsectionTwoItemsEn,
+          TotalsectionTwoItemsDate2En,
+        },
+        sectionThree: {
+          sectionThreeLabelsEn,
+          sectionThreeNotesEn,
+          sectionThreeItemsEn,
+          sectionThreeItemsDate2En,
+          sectionThreeTotalLabel,
+          TotalsectionThreeItemsEn,
+          TotalsectionThreeItemsDate2En,
+        },
+        sectionFour: {
+          sectionFourLabelsEn,
+          sectionFourNotesEn,
+          sectionFourItemsEn,
+          sectionFourItemsDate2En,
+          sectionFourTotalLabel,
+          TotalsectionFourItemsEn,
+          TotalsectionFourItemsDate2En,
+        },
+        //new setion 12/6/25
+        sectionFourSub: {
+          sectionFourSubFirstLabelEn,
+          sectionFourSubLabelsEn,
+          sectionFourSubNotesEn,
+          sectionFourSubItemsEn,
+          sectionFourSubItemsDate2En,
+          sectionFourSubTotalLabel,
+          TotalsectionFourSubItemsEn,
+          TotalsectionFourSubItemsDate2En,
+        },
+        sectionAttributeOne: {
+          sectionFourAttribute,
+          sectionFourAttributeLabelsEn,
+          sectionFourAttributeItemsEn,
+          sectionFourAttributeItemsDate2En,
+          TotalsectionFourAttributeItemsEn,
+          TotalsectionFourAttributeItemsDate2En,
+        },
+        sectionAttributeTwo: {
+          sectionFourAttribute2,
+          sectionFourAttribute2LabelsEn,
+          sectionFourAttribute2ItemsEn,
+          sectionFourAttribute2ItemsDate2En,
+          TotalsectionFourAttribute2ItemsEn,
+          TotalsectionFourAttribute2ItemsDate2En,
+        },
+        sectionOtherComprehensiveIncome: {
+          sectionFourOtherComprehensiveIncome,
+          sectionFourOtherComprehensiveIncomeSubheadingLabelsEn,
+          sectionFourOtherComprehensiveIncomeSubheadingNotesEn,
+          sectionFourOtherComprehensiveIncomeSubheadingItemsEn,
+          sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,
+        },
+        Table2: {
+          dateTwo1En: dataTwo1En,
+          dateTwo2En: dataTwo2En,
+          sectionOneTable2: {
+            sectionLastLabel: sectionLastLabel,
+            TotalsectionFourSubItemsEn,
+            TotalsectionFourSubItemsDate2En,
+            sectionSevenLastLabel,
+            sectionSevenSubheading,
+            sectionLastLabelsEn,
+            sectionLastNotesEn,
+            sectionLastItemsEn,
+            sectionLastItemsDate2En,
+            sectionLastTotalLabelEn,
+            TotalSectionLastLabelItemsEn,
+            TotalSectionLastItemsDate2En,
+          },
+          sectionTwoTable2: {
+            sectionSevenSubheading2,
+            sectionLastLabelsEn2,
+            sectionLastNotesEn2,
+            sectionLastItemsEn2,
+            sectionLastItemsDate2En2,
+            sectionLastTotalLabelEn2,
+            TotalSectionLastLabelItemsEn2,
+            TotalSectionLastItemsDate2En2,
+            totalOtherComp: {
+              SectionSevenSecondLastLabel2,
+              TotalsectionSevenSecondLastItemEn,
+              TotalsectionSevenSecondLastItemsDate2En,
             },
-            sectionTwo: {
-              sectionTwoLabelsEn,
-              sectionTwoNotesEn,
-              sectionTwoItemsEn,
-              sectionTwoItemsDate2En,
-              sectionTwoTotalLabel,
-              TotalsectionTwoItemsEn,
-              TotalsectionTwoItemsDate2En,
+            totalComprehensiveLoss: {
+              SectionSevenLastLabel2,
+              TotalsectionSevenLastItemEn,
+              TotalsectionSevenLastItemsDate2En
             },
-            sectionThree: {
-              sectionThreeLabelsEn,
-              sectionThreeNotesEn,
-              sectionThreeItemsEn,
-              sectionThreeItemsDate2En,
-              sectionThreeTotalLabel,
-              TotalsectionThreeItemsEn,
-              TotalsectionThreeItemsDate2En,
+          },
+           sectionAttributeOneTable2: {
+              sectionFourAttributeTable2,
+              sectionFourAttributeLabelsEnTable2,
+              sectionFourAttributeItemsEnTable2,
+              sectionFourAttributeItemsDate2EnTable2,
+              TotalsectionFourAttributeItemsEnTable2,
+              TotalsectionFourAttributeItemsDate2EnTable2,
             },
-            sectionFour: {
-              sectionFourLabelsEn,
-              sectionFourNotesEn,
-              sectionFourItemsEn,
-              sectionFourItemsDate2En,
-              sectionFourTotalLabel,
-              TotalsectionFourItemsEn,
-              TotalsectionFourItemsDate2En,
+            sectionAttributeTwoTable2: {
+              sectionFourAttribute2Table2,
+              sectionFourAttribute2LabelsEnTable2,
+              sectionFourAttribute2ItemsEnTable2,
+              sectionFourAttribute2ItemsDate2EnTable2,
+              TotalsectionFourAttribute2ItemsEnTable2,
+              TotalsectionFourAttribute2ItemsDate2EnTable2,
             },
-
-            //new setion 12/6/25
-            sectionFourSub: {
-              sectionFourSubFirstLabelEn,
-              sectionFourSubLabelsEn,
-              sectionFourSubNotesEn,
-              sectionFourSubItemsEn,
-              sectionFourSubItemsDate2En,
-              sectionFourSubTotalLabel,
-              TotalsectionFourSubItemsEn,
-              TotalsectionFourSubItemsDate2En,
-            },
-
-
-
-            sectionAttributeOne: {
-              sectionFourAttribute,
-              sectionFourAttributeLabelsEn,
-              sectionFourAttributeItemsEn,
-              sectionFourAttributeItemsDate2En,
-              TotalsectionFourAttributeItemsEn,
-              TotalsectionFourAttributeItemsDate2En,
-            },
-
-            sectionOtherComprehensiveIncome: {
-              sectionFourOtherComprehensiveIncome,
-              sectionFourOtherComprehensiveIncomeSubheading,
-              sectionFourOtherComprehensiveIncomeSubheadingLabelsEn,
-              sectionFourOtherComprehensiveIncomeSubheadingNotesEn,
-              sectionFourOtherComprehensiveIncomeSubheadingItemsEn,
-              sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,
-              sectionFourOtherTotalComprehensiveIncome,
-              TotalsectionFourOtherComprehensiveIncomeSubheadingItemsEn,
-              TotalsectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,
-            },
-            sectionAttributeTwo: {
-              sectionFourAttribute2,
-              sectionFourAttribute2LabelsEn,
-              sectionFourAttribute2ItemsEn,
-              sectionFourAttribute2ItemsDate2En,
-              TotalsectionFourAttribute2ItemsEn,
-              TotalsectionFourAttribute2ItemsDate2En,
-            },
-
-            sectionFive: {
-              sectionFiveLabelsEn,
-              sectionFiveNotesEn,
-              sectionFiveItemsEn,
-              sectionFiveItemsDate2En,
-              sectionFiveTotalLabel,
-              TotalsectionFiveItemsEn,
-              TotalsectionFiveItemsDate2En,
-            },
-            sectionSix: {
-              sectionSixLabelsEn,
-              sectionSixNotesEn,
-              sectionSixItemsEn,
-              sectionSixItemsDate2En,
-              sectionSixTotalLabel,
-              TotalsectionSixItemsEn,
-              TotalsectionSixItemsDate2En,
-            },
-          };
-
-          await dispatch(SetCashFlowDataEnglishAction(formData));
-        } catch (error) {
-          console.log("Dispatch Error:", error);
+            sectionOtherComprehensiveIncomeTable2: {
+              sectionFourOtherComprehensiveIncomeTable2,
+              sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2,
+              sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2,
+              sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2,
+              sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2,
+            }
         }
       };
+      await dispatch(SetCashFlowDataEnglishAction(formData));
+    } catch (error) {
+      console.log("Dispatch Error:", error);
+    }
+  };
 
-      handleDispatch();
-    }, [
-      data1En,
-      data2En,
-      sectionOneFirstLabelEn,
-      sectionOneLabelsEn,
-      sectionOneNotesEn,
-      sectionOneItemsEn,
-      sectionOneItemsDate2En,
-      sectionOneTotalLabel,
-      TotalsectionOneItemsEn,
-      TotalsectionOneItemsDate2En,
-      sectionTwoLabelsEn,
-      sectionTwoNotesEn,
-      sectionTwoItemsEn,
-      sectionTwoItemsDate2En,
-      sectionTwoTotalLabel,
-      TotalsectionTwoItemsEn,
-      TotalsectionTwoItemsDate2En,
-      sectionThreeLabelsEn,
-      sectionThreeNotesEn,
-      sectionThreeItemsEn,
-      sectionThreeItemsDate2En,
-      sectionThreeTotalLabel,
-      TotalsectionThreeItemsEn,
-      TotalsectionThreeItemsDate2En,
-      sectionFourLabelsEn,
-      sectionFourNotesEn,
-      sectionFourItemsEn,
-      sectionFourItemsDate2En,
-      sectionFourTotalLabel,
-      TotalsectionFourItemsEn,
-      TotalsectionFourItemsDate2En,
-      sectionFiveLabelsEn,
-      sectionFiveNotesEn,
-      sectionFiveItemsEn,
-      sectionFiveItemsDate2En,
-      sectionFiveTotalLabel,
-      TotalsectionFiveItemsEn,
-      TotalsectionFiveItemsDate2En,
-      sectionSixLabelsEn,
-      sectionSixNotesEn,
-      sectionSixItemsEn,
-      sectionSixItemsDate2En,
-      sectionSixTotalLabel,
-      TotalsectionSixItemsEn,
-      TotalsectionSixItemsDate2En,
-      sectionFourAttribute,
-      sectionFourAttributeLabelsEn,
-      sectionFourAttributeItemsEn,
-      sectionFourAttributeItemsDate2En,
-      TotalsectionFourAttributeItemsEn,
-      TotalsectionFourAttributeItemsDate2En,
-      sectionFourOtherComprehensiveIncome,
-      sectionFourOtherComprehensiveIncomeSubheading,
-      sectionFourOtherComprehensiveIncomeSubheadingLabelsEn,
-      sectionFourOtherComprehensiveIncomeSubheadingNotesEn,
-      sectionFourOtherComprehensiveIncomeSubheadingItemsEn,
-      sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,
-      sectionFourOtherTotalComprehensiveIncome,
-      TotalsectionFourOtherComprehensiveIncomeSubheadingItemsEn,
-      TotalsectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,
-      sectionFourAttribute2,
-      sectionFourAttribute2LabelsEn,
-      sectionFourAttribute2ItemsEn,
-      sectionFourAttribute2ItemsDate2En,
-      TotalsectionFourAttribute2ItemsEn,
-      TotalsectionFourAttribute2ItemsDate2En,
-    ]);
+  handleDispatch();
+}, [
+  // Original dependencies
+  data1En,
+  data2En,
+  sectionOneFirstLabelEn,
+  sectionOneLabelsEn,
+  sectionOneNotesEn,
+  sectionOneItemsEn,
+  sectionOneItemsDate2En,
+  sectionOneTotalLabel,
+  TotalsectionOneItemsEn,
+  TotalsectionOneItemsDate2En,
+  sectionTwoLabelsEn,
+  sectionTwoNotesEn,
+  sectionTwoItemsEn,
+  sectionTwoItemsDate2En,
+  sectionTwoTotalLabel,
+  TotalsectionTwoItemsEn,
+  TotalsectionTwoItemsDate2En,
+  sectionThreeLabelsEn,
+  sectionThreeNotesEn,
+  sectionThreeItemsEn,
+  sectionThreeItemsDate2En,
+  sectionThreeTotalLabel,
+  TotalsectionThreeItemsEn,
+  TotalsectionThreeItemsDate2En,
+  sectionFourLabelsEn,
+  sectionFourNotesEn,
+  sectionFourItemsEn,
+  sectionFourItemsDate2En,
+  sectionFourTotalLabel,
+  TotalsectionFourItemsEn,
+  TotalsectionFourItemsDate2En,
+  sectionFourAttribute,
+  sectionFourAttributeLabelsEn,
+  sectionFourAttributeItemsEn,
+  sectionFourAttributeItemsDate2En,
+  TotalsectionFourAttributeItemsEn,
+  TotalsectionFourAttributeItemsDate2En,
+  sectionFourOtherComprehensiveIncome,
+  sectionFourOtherComprehensiveIncomeSubheadingLabelsEn,
+  sectionFourOtherComprehensiveIncomeSubheadingNotesEn,
+  sectionFourOtherComprehensiveIncomeSubheadingItemsEn,
+  sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,
+  sectionFourAttribute2,
+  sectionFourAttribute2LabelsEn,
+  sectionFourAttribute2ItemsEn,
+  sectionFourAttribute2ItemsDate2En,
+  TotalsectionFourAttribute2ItemsEn,
+  TotalsectionFourAttribute2ItemsDate2En,
 
+  // MISSING DEPENDENCIES - Added below:
+  
+  // sectionFourSub variables
+  sectionFourSubFirstLabelEn,
+  sectionFourSubLabelsEn,
+  sectionFourSubNotesEn,
+  sectionFourSubItemsEn,
+  sectionFourSubItemsDate2En,
+  sectionFourSubTotalLabel,
+  TotalsectionFourSubItemsEn,
+  TotalsectionFourSubItemsDate2En,
+
+  // Table2 variables
+  dataTwo1En,
+  dataTwo2En,
+
+  // sectionOneTable2 variables
+  sectionLastLabel,
+  sectionSevenLastLabel,
+  sectionSevenSubheading,
+  sectionLastLabelsEn,
+  sectionLastNotesEn,
+  sectionLastItemsEn,
+  sectionLastItemsDate2En,
+  sectionLastTotalLabelEn,
+  TotalSectionLastLabelItemsEn,
+  TotalSectionLastItemsDate2En,
+
+  // sectionTwo (Table2) variables
+  sectionSevenSubheading2,
+  sectionLastLabelsEn2,
+  sectionLastNotesEn2,
+  sectionLastItemsEn2,
+  sectionLastItemsDate2En2,
+  sectionLastTotalLabelEn2,
+  TotalSectionLastLabelItemsEn2,
+  TotalSectionLastItemsDate2En2,
+
+  // totalOtherComp variables
+  SectionSevenSecondLastLabel2,
+  TotalsectionSevenSecondLastItemEn,
+  TotalsectionSevenSecondLastItemsDate2En,
+
+  // totalComprehensiveLoss variables
+  SectionSevenLastLabel2,
+  TotalsectionSevenLastItemEn,
+  TotalsectionSevenLastItemsDate2En,
+
+  // sectionAttributeOneTable2 variables
+  sectionFourAttributeTable2,
+  sectionFourAttributeLabelsEnTable2,
+  sectionFourAttributeItemsEnTable2,
+  sectionFourAttributeItemsDate2EnTable2,
+  TotalsectionFourAttributeItemsEnTable2,
+  TotalsectionFourAttributeItemsDate2EnTable2,
+
+  // sectionAttributeTwoTable2 variables
+  sectionFourAttribute2Table2,
+  sectionFourAttribute2LabelsEnTable2,
+  sectionFourAttribute2ItemsEnTable2,
+  sectionFourAttribute2ItemsDate2EnTable2,
+  TotalsectionFourAttribute2ItemsEnTable2,
+  TotalsectionFourAttribute2ItemsDate2EnTable2,
+
+  // sectionOtherComprehensiveIncomeTable2 variables
+  sectionFourOtherComprehensiveIncomeTable2,
+  sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2,
+  sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2,
+  sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2,
+  sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2,
+  dispatch
+]);
     return (
       <div className="flex justify-start  my-2 text-black">
         <table className="border  font-semibold border-gray-300 text-xs mb-12  w-full">
@@ -2049,6 +2183,20 @@ const handleChangeSectionLast2 = (
 
 
             <br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
@@ -2285,11 +2433,244 @@ const handleChangeSectionLast2 = (
               </td>
             </tr>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <br />
+
+
+
+
+
+
+
+
+              <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                <input
+                  value={sectionFourAttribute2}
+                  onChange={(e) =>
+                    setSectionFourAttribute2Label(e.target.value)
+                  }
+                  className="w-full  bg-gray-200 text-black p-1"
+                />
+              </td>
+              <td className=" "></td>
+              <td className=" "></td>
+              <td className=""></td>
+            </tr>
+
+            {sectionFourAttribute2LabelsEn.map((val, idx) => {
+              const isRowEmpty =
+                !val && !sectionFourAttribute2ItemsDate2En[idx];
+              if (TakingShort && isRowEmpty) return null;
+
+              return (
+                <tr
+                  key={`section-four-attribute2-${idx}`}
+                  className="bg-gray-100"
+                >
+                  {/* Label Input */}
+                  <td className="border border-gray-300">
+                    <input
+                      className="w-full h-7 bg-gray-100 text-black p-1"
+                      value={sectionFourAttribute2LabelsEn[idx]}
+                      placeholder={`${idx + 1}`}
+                      onChange={(e) =>
+                        handleChangeAttribute2(idx, e.target.value, "label")
+                      }
+                    />
+                  </td>
+
+                  {/* Spacer cell (empty column) */}
+                  <td className="border border-gray-300"></td>
+
+                  {/* Item Input */}
+                  <td className="border border-gray-300">
+                    <input
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={sectionFourAttribute2ItemsEn[idx]}
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChangeAttribute2(idx, newVal, "item");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChangeAttribute2(idx, "-", "item");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChangeAttribute2(idx, "-", "item");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChangeAttribute2(idx, "", "item");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChangeAttribute2(idx, finalValue, "item");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
+                    />
+                  </td>
+
+                  <td className="border border-gray-300">
+                    <input
+                      className="w-full bg-gray-100 text-black p-1"
+                      value={sectionFourAttribute2ItemsDate2En[idx]}
+                      onKeyDown={(e) => {
+                        const input = e.currentTarget;
+                        const caretPos = input.selectionStart ?? 0;
+                        if (
+                          e.key === "Backspace" &&
+                          caretPos === input.value.length &&
+                          input.value.endsWith(")")
+                        ) {
+                          e.preventDefault();
+                          const newVal = input.value.slice(0, -1);
+                          handleChangeAttribute2(idx, newVal, "date2");
+                        }
+                      }}
+                      onChange={(e) => {
+                        const input = e.target;
+                        const inputValue = input.value;
+                        const caretPos = input.selectionStart ?? 0;
+
+                        if (inputValue === "-") {
+                          handleChangeAttribute2(idx, "-", "date2");
+                          return;
+                        }
+
+                        let rawValue = inputValue.replace(/[(),\s]/g, "");
+                        const isNegative =
+                          inputValue.startsWith("-") ||
+                          inputValue.startsWith("(");
+                        rawValue = rawValue.replace(/^-/, "");
+
+                        if (!/^\d*$/.test(rawValue)) return;
+                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+                        if (rawValue === "0") {
+                          handleChangeAttribute2(idx, "-", "date2");
+                          return;
+                        }
+
+                        if (rawValue === "") {
+                          handleChangeAttribute2(idx, "", "date2");
+                          return;
+                        }
+
+                        const formatted = new Intl.NumberFormat("en-US").format(
+                          Number(rawValue)
+                        );
+                        const finalValue = isNegative 
+                          ? `(${formatted})`
+                          : formatted;
+
+                        handleChangeAttribute2(idx, finalValue, "date2");
+
+                        setTimeout(() => {
+                          const newLength = finalValue.length;
+                          const offset = newLength - inputValue.length;
+                          const newPos = caretPos + offset;
+                          input.setSelectionRange(newPos, newPos);
+                        }, 0);
+                      }}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+
+            {/* Total Row */}
+            <tr className="bg-gray-100 font-semibold">
+              <td className="bg-white"></td>
+              <td></td>
+              <td className="p-2">
+                {formatWithParentheses(TotalsectionFourAttribute2ItemsEn)}
+              </td>
+              <td>
+                {formatWithParentheses(TotalsectionFourAttribute2ItemsDate2En)}
+              </td>
+            </tr>
+            <br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <tr className="bg-gray-200 font-semibold  ">
               <td className="">
-                <input
+                <textarea 
                   value={sectionFourOtherComprehensiveIncome}
                   onChange={(e) =>
                     setSectionFourOtherComprehensiveIncomeLabel(e.target.value)
@@ -2301,40 +2682,21 @@ const handleChangeSectionLast2 = (
               <td className="   "></td>
               <td className=""></td>
             </tr>
-            <tr className="bg-gray-200 font-semibold  text-[9px] ">
-              <td className="">
-                <input
-                  value={sectionFourOtherComprehensiveIncomeSubheading}
-                  onChange={(e) =>
-                    setSectionFourOtherComprehensiveIncomeSubheadingLabel(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                />
-              </td>
-              <td className=" "></td>
-              <td className="   "></td>
-              <td className=""></td>
-            </tr>
-
-
-
+           
 
             {sectionFourOtherComprehensiveIncomeSubheadingLabelsEn.map(
               (val, idx) => {
                 const isRowEmpty =
-                  !val &&
-                  !sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[
-                    idx
-                  ];
-                if (TakingShort && isRowEmpty) return null;
-
-                return (
-                  <tr key={`section-four-other-${idx}`} className="bg-gray-100">
-                    {/* Label */}
-                    <td className="border border-gray-300">
-                      <input
+                    !val &&
+                    !sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[
+                        idx
+                    ];
+                  if (TakingShort && isRowEmpty) return null;
+                  return (
+                    <tr key={`section-four-other-${idx}`} className="bg-gray-100">
+                        {/* Label */}
+                      <td className="border border-gray-300">
+                        <input
                         className="w-full h-7 bg-gray-100 text-black p-1"
                         value={
                           sectionFourOtherComprehensiveIncomeSubheadingLabelsEn[
@@ -2567,393 +2929,49 @@ const handleChangeSectionLast2 = (
               }
             )}
 
-            <tr className="bg-gray-200 font-semibold  ">
-              <td className="">
-                <input
-                  value={sectionFourOtherTotalComprehensiveIncome}
-                  onChange={(e) =>
-                    setSectionFourOtherToatalComprehensiveIncomeLabel(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                />
-              </td>
-              <td className=" "></td>
-              <td className="p-2  ">
-                {formatWithParentheses(
-                  TotalsectionFourOtherComprehensiveIncomeSubheadingItemsEn
-                )}
-              </td>
-              <td className="">
-                {formatWithParentheses(
-                  TotalsectionFourOtherComprehensiveIncomeSubheadingItemsDate2En
-                )}
-              </td>
-            </tr>
+          
 
             <br />
             <br />
-            <tr className="bg-gray-200 font-semibold">
-              <td className="">
-                <input
-                  value={sectionFourAttribute2}
-                  onChange={(e) =>
-                    setSectionFourAttribute2Label(e.target.value)
-                  }
-                  className="w-full  bg-gray-200 text-black p-1"
-                />
-              </td>
-              <td className=" "></td>
-              <td className=" "></td>
-              <td className=""></td>
-            </tr>
-
-            {sectionFourAttribute2LabelsEn.map((val, idx) => {
-              const isRowEmpty =
-                !val && !sectionFourAttribute2ItemsDate2En[idx];
-              if (TakingShort && isRowEmpty) return null;
-
-              return (
-                <tr
-                  key={`section-four-attribute2-${idx}`}
-                  className="bg-gray-100"
-                >
-                  {/* Label Input */}
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full h-7 bg-gray-100 text-black p-1"
-                      value={sectionFourAttribute2LabelsEn[idx]}
-                      placeholder={`${idx + 1}`}
-                      onChange={(e) =>
-                        handleChangeAttribute2(idx, e.target.value, "label")
-                      }
-                    />
-                  </td>
-
-                  {/* Spacer cell (empty column) */}
-                  <td className="border border-gray-300"></td>
-
-                  {/* Item Input */}
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full bg-gray-100 text-black p-1"
-                      value={sectionFourAttribute2ItemsEn[idx]}
-                      onKeyDown={(e) => {
-                        const input = e.currentTarget;
-                        const caretPos = input.selectionStart ?? 0;
-                        if (
-                          e.key === "Backspace" &&
-                          caretPos === input.value.length &&
-                          input.value.endsWith(")")
-                        ) {
-                          e.preventDefault();
-                          const newVal = input.value.slice(0, -1);
-                          handleChangeAttribute2(idx, newVal, "item");
-                        }
-                      }}
-                      onChange={(e) => {
-                        const input = e.target;
-                        const inputValue = input.value;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        if (inputValue === "-") {
-                          handleChangeAttribute2(idx, "-", "item");
-                          return;
-                        }
-
-                        let rawValue = inputValue.replace(/[(),\s]/g, "");
-                        const isNegative =
-                          inputValue.startsWith("-") ||
-                          inputValue.startsWith("(");
-                        rawValue = rawValue.replace(/^-/, "");
-
-                        if (!/^\d*$/.test(rawValue)) return;
-                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
-
-                        if (rawValue === "0") {
-                          handleChangeAttribute2(idx, "-", "item");
-                          return;
-                        }
-
-                        if (rawValue === "") {
-                          handleChangeAttribute2(idx, "", "item");
-                          return;
-                        }
-
-                        const formatted = new Intl.NumberFormat("en-US").format(
-                          Number(rawValue)
-                        );
-                        const finalValue = isNegative
-                          ? `(${formatted})`
-                          : formatted;
-
-                        handleChangeAttribute2(idx, finalValue, "item");
-
-                        setTimeout(() => {
-                          const newLength = finalValue.length;
-                          const offset = newLength - inputValue.length;
-                          const newPos = caretPos + offset;
-                          input.setSelectionRange(newPos, newPos);
-                        }, 0);
-                      }}
-                    />
-                  </td>
-
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full bg-gray-100 text-black p-1"
-                      value={sectionFourAttribute2ItemsDate2En[idx]}
-                      onKeyDown={(e) => {
-                        const input = e.currentTarget;
-                        const caretPos = input.selectionStart ?? 0;
-                        if (
-                          e.key === "Backspace" &&
-                          caretPos === input.value.length &&
-                          input.value.endsWith(")")
-                        ) {
-                          e.preventDefault();
-                          const newVal = input.value.slice(0, -1);
-                          handleChangeAttribute2(idx, newVal, "date2");
-                        }
-                      }}
-                      onChange={(e) => {
-                        const input = e.target;
-                        const inputValue = input.value;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        if (inputValue === "-") {
-                          handleChangeAttribute2(idx, "-", "date2");
-                          return;
-                        }
-
-                        let rawValue = inputValue.replace(/[(),\s]/g, "");
-                        const isNegative =
-                          inputValue.startsWith("-") ||
-                          inputValue.startsWith("(");
-                        rawValue = rawValue.replace(/^-/, "");
-
-                        if (!/^\d*$/.test(rawValue)) return;
-                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
-
-                        if (rawValue === "0") {
-                          handleChangeAttribute2(idx, "-", "date2");
-                          return;
-                        }
-
-                        if (rawValue === "") {
-                          handleChangeAttribute2(idx, "", "date2");
-                          return;
-                        }
-
-                        const formatted = new Intl.NumberFormat("en-US").format(
-                          Number(rawValue)
-                        );
-                        const finalValue = isNegative
-                          ? `(${formatted})`
-                          : formatted;
-
-                        handleChangeAttribute2(idx, finalValue, "date2");
-
-                        setTimeout(() => {
-                          const newLength = finalValue.length;
-                          const offset = newLength - inputValue.length;
-                          const newPos = caretPos + offset;
-                          input.setSelectionRange(newPos, newPos);
-                        }, 0);
-                      }}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-
-            {/* Total Row */}
-            <tr className="bg-gray-100 font-semibold">
-              <td className="bg-white"></td>
-              <td></td>
-              <td className="p-2">
-                {formatWithParentheses(TotalsectionFourAttribute2ItemsEn)}
-              </td>
-              <td>
-                {formatWithParentheses(TotalsectionFourAttribute2ItemsDate2En)}
-              </td>
-            </tr>
-            <br />
 
 
 
 
- <tr className="bg-gray-200 font-semibold">
-              <td className="">
-                <input
-                  value={sectionFourAfterAttribute2Label}
-                  onChange={(e) =>
-                    setSectionFourAfterAttribute2Label(e.target.value)
-                  }
-                  className="w-full  bg-gray-200 text-black p-1"
-                />
-              </td>
-              <td className=""></td>
-              <td className=""></td>
-              <td className=""></td>
-            </tr>
 
-{/* <h1>saleel</h1> */}
-{sectionFourAfterAttribute2LabelsEn.map((val, idx) => {
-  const isRowEmpty =
-    !val && !sectionFourAfterAttribute2ItemsDate2En[idx];
-  if (TakingShort && isRowEmpty) return null;
 
-  return (
-    <tr key={`section-four-after-${idx}`} className="bg-gray-100">
-      {/* Label */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full h-7 bg-gray-100 text-black p-1"
-          value={sectionFourAfterAttribute2LabelsEn[idx]}
-          placeholder={`${idx + 1}`}
-          onChange={(e) =>
-            handleChangeAfterAttribute2(idx, e.target.value, "sectionFourAfterAttribute2", "label")
-          }
-        />
-      </td>
 
-      {/* Note */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full bg-gray-100 text-black p-1"
-          value={sectionFourAfterAttribute2NotesEn[idx]}
-          onChange={(e) =>
-            handleChangeAfterAttribute2(idx, e.target.value, "sectionFourAfterAttribute2", "note")
-          }
-        />
-      </td>
 
-      {/* Item */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full bg-gray-100 text-black p-1"
-          value={sectionFourAfterAttribute2ItemsEn[idx]}
-          onKeyDown={(e) => {
-            const input = e.currentTarget;
-            const caretPos = input.selectionStart ?? 0;
-            if (
-              e.key === "Backspace" &&
-              caretPos === input.value.length &&
-              input.value.endsWith(")")
-            ) {
-              e.preventDefault();
-              const newVal = input.value.slice(0, -1);
-              handleChangeAfterAttribute2(idx, newVal, "sectionFourAfterAttribute2", "item");
-            }
-          }}
-          onChange={(e) => {
-            const input = e.target;
-            const inputValue = input.value;
-            const caretPos = input.selectionStart ?? 0;
 
-            if (inputValue === "-") {
-              handleChangeAfterAttribute2(idx, "-", "sectionFourAfterAttribute2", "item");
-              return;
-            }
 
-            let rawValue = inputValue.replace(/[(),\s]/g, "");
-            const isNegative =
-              inputValue.startsWith("-") || inputValue.startsWith("(");
-            rawValue = rawValue.replace(/^-/, "");
 
-            if (!/^\d*$/.test(rawValue)) return;
-            rawValue = rawValue.replace(/^0+(?=\d)/, "");
 
-            if (rawValue === "0") {
-              handleChangeAfterAttribute2(idx, "-", "sectionFourAfterAttribute2", "item");
-              return;
-            }
 
-            if (rawValue === "") {
-              handleChangeAfterAttribute2(idx, "", "sectionFourAfterAttribute2", "item");
-              return;
-            }
 
-            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
-            const finalValue = isNegative ? `(${formatted})` : formatted;
 
-            handleChangeAfterAttribute2(idx, finalValue, "sectionFourAfterAttribute2", "item");
 
-            setTimeout(() => {
-              const newLength = finalValue.length;
-              const offset = newLength - inputValue.length;
-              const newPos = caretPos + offset;
-              input.setSelectionRange(newPos, newPos);
-            }, 0);
-          }}
-        />
-      </td>
 
-      {/* Date2 */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full bg-gray-100 text-black p-1"
-          value={sectionFourAfterAttribute2ItemsDate2En[idx]}
-          onKeyDown={(e) => {
-            const input = e.currentTarget;
-            const caretPos = input.selectionStart ?? 0;
-            if (
-              e.key === "Backspace" &&
-              caretPos === input.value.length &&
-              input.value.endsWith(")")
-            ) {
-              e.preventDefault();
-              const newVal = input.value.slice(0, -1);
-              handleChangeAfterAttribute2(idx, newVal, "sectionFourAfterAttribute2", "date2");
-            }
-          }}
-          onChange={(e) => {
-            const input = e.target;
-            const inputValue = input.value;
-            const caretPos = input.selectionStart ?? 0;
 
-            if (inputValue === "-") {
-              handleChangeAfterAttribute2(idx, "-", "sectionFourAfterAttribute2", "date2");
-              return;
-            }
 
-            let rawValue = inputValue.replace(/[(),\s]/g, "");
-            const isNegative =
-              inputValue.startsWith("-") || inputValue.startsWith("(");
-            rawValue = rawValue.replace(/^-/, "");
 
-            if (!/^\d*$/.test(rawValue)) return;
-            rawValue = rawValue.replace(/^0+(?=\d)/, "");
 
-            if (rawValue === "0") {
-              handleChangeAfterAttribute2(idx, "-", "sectionFourAfterAttribute2", "date2");
-              return;
-            }
 
-            if (rawValue === "") {
-              handleChangeAfterAttribute2(idx, "", "sectionFourAfterAttribute2", "date2");
-              return;
-            }
 
-            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
-            const finalValue = isNegative ? `(${formatted})` : formatted;
 
-            handleChangeAfterAttribute2(idx, finalValue, "sectionFourAfterAttribute2", "date2");
 
-            setTimeout(() => {
-              const newLength = finalValue.length;
-              const offset = newLength - inputValue.length;
-              const newPos = caretPos + offset;
-              input.setSelectionRange(newPos, newPos);
-            }, 0);
-          }}
-        />
-      </td>
-    </tr>
-  );
-})}
+
+
+
+
+
+
+
+
+
+
+          
+
+
+
 
 
 <br />
@@ -2970,509 +2988,9 @@ const handleChangeSectionLast2 = (
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       <div className="hidden">
-
-
-
-            {sectionFiveLabelsEn.map((val, idx) => {
-              const isRowEmpty = !val && !sectionFiveItemsDate2En[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
-              if (TakingShort && isRowEmpty) return null;
-
-              return (
-                <tr key={`section-five-${idx}`} className="bg-gray-100">
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full h-7 bg-gray-100 text-black p-1"
-                      value={sectionFiveLabelsEn[idx]}
-                      placeholder={`${idx + 1}`}
-                      onChange={(e) =>
-                        handleChange(
-                          idx,
-                          e.target.value,
-                          "sectionFiveLabel",
-                          "label"
-                        )
-                      }
-                    />
-                  </td>
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full bg-gray-100 text-black p-1"
-                      value={sectionFiveNotesEn[idx]}
-                      onChange={(e) =>
-                        handleChange(
-                          idx,
-                          e.target.value,
-                          "sectionFiveNote",
-                          "note"
-                        )
-                      }
-                    />
-                  </td>
-
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full bg-gray-100 text-black p-1"
-                      placeholder=""
-                      value={sectionFiveItemsEn[idx]}
-                      onKeyDown={(e) => {
-                        const input = e.currentTarget;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        // Only handle Backspace when caret is at the end and value ends with ')'
-                        if (
-                          e.key === "Backspace" &&
-                          caretPos === input.value.length &&
-                          input.value.endsWith(")")
-                        ) {
-                          e.preventDefault();
-                          const newVal = input.value.slice(0, -1); // remove last ')'
-                          handleChange(idx, newVal, "sectionFive");
-                        }
-                      }}
-                      onChange={(e) => {
-                        const input = e.target;
-                        const inputValue = input.value;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        // Special case: user is typing just "-"
-                        if (inputValue === "-") {
-                          handleChange(idx, "-", "sectionFive");
-                          return;
-                        }
-
-                        // Remove formatting (commas, parentheses, spaces)
-                        let rawValue = inputValue.replace(/[(),\s]/g, "");
-
-                        // Check if negative number (starts with "-" or "(")
-                        const isNegative =
-                          inputValue.startsWith("-") ||
-                          inputValue.startsWith("(");
-
-                        // Strip the minus sign for digit-only processing
-                        rawValue = rawValue.replace(/^-/, "");
-
-                        // Only allow digits
-                        if (!/^\d*$/.test(rawValue)) return;
-
-                        // Remove leading zeros
-                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
-
-                        // Special case: Input is zero → treat as "-"
-                        if (rawValue === "0") {
-                          handleChange(idx, "-", "sectionFive");
-                          return;
-                        }
-
-                        // Handle case where the value is empty after backspace (clear all)
-                        if (rawValue === "") {
-                          handleChange(idx, "", "sectionFive");
-                          return;
-                        }
-
-                        // Format the number with commas
-                        const formatted = new Intl.NumberFormat("en-US").format(
-                          Number(rawValue)
-                        );
-
-                        // Final value with parentheses for negative numbers
-                        const finalValue = isNegative
-                          ? `(${formatted})`
-                          : formatted;
-
-                        // Update the value in the parent component
-                        handleChange(idx, finalValue, "sectionFive");
-
-                        // Optional: Restore caret position after formatting
-                        setTimeout(() => {
-                          const newLength = finalValue.length;
-                          const offset = newLength - inputValue.length;
-                          const newPos = caretPos + offset;
-                          input.setSelectionRange(newPos, newPos);
-                        }, 0);
-                      }}
-                    />
-                  </td>
-
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full bg-gray-100 text-black p-1"
-                      value={sectionFiveItemsDate2En[idx]}
-                      onKeyDown={(e) => {
-                        const input = e.currentTarget;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        // Only handle Backspace when caret is at the end and value ends with ')'
-                        if (
-                          e.key === "Backspace" &&
-                          caretPos === input.value.length &&
-                          input.value.endsWith(")")
-                        ) {
-                          e.preventDefault();
-                          const newVal = input.value.slice(0, -1); // remove last ')'
-                          handleChange(idx, newVal, "sectionFive", "date2");
-                        }
-                      }}
-                      onChange={(e) => {
-                        const input = e.target;
-                        const inputValue = input.value;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        // Special case: user is typing just "-"
-                        if (inputValue === "-") {
-                          handleChange(idx, "-", "sectionFive", "date2");
-                          return;
-                        }
-
-                        // Remove formatting (commas, parentheses, spaces)
-                        let rawValue = inputValue.replace(/[(),\s]/g, "");
-
-                        // Check if negative number (starts with "-" or "(")
-                        const isNegative =
-                          inputValue.startsWith("-") ||
-                          inputValue.startsWith("(");
-
-                        // Strip the minus sign for digit-only processing
-                        rawValue = rawValue.replace(/^-/, "");
-
-                        // Only allow digits
-                        if (!/^\d*$/.test(rawValue)) return;
-
-                        // Remove leading zeros
-                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
-
-                        // Special case: Input is zero → treat as "-"
-                        if (rawValue === "0") {
-                          handleChange(idx, "-", "sectionFive", "date2");
-                          return;
-                        }
-
-                        // Handle case where the value is empty after backspace (clear all)
-                        if (rawValue === "") {
-                          handleChange(idx, "", "sectionFive", "date2");
-                          return;
-                        }
-
-                        // Format the number with commas
-                        const formatted = new Intl.NumberFormat("en-US").format(
-                          Number(rawValue)
-                        );
-
-                        // Final value with parentheses for negative numbers
-                        const finalValue = isNegative
-                          ? `(${formatted})`
-                          : formatted;
-
-                        // Update the value in the parent component
-                        handleChange(idx, finalValue, "sectionFive", "date2");
-
-                        // Optional: Restore caret position after formatting
-                        setTimeout(() => {
-                          const newLength = finalValue.length;
-                          const offset = newLength - inputValue.length;
-                          const newPos = caretPos + offset;
-                          input.setSelectionRange(newPos, newPos);
-                        }, 0);
-                      }}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-
-            <tr className="bg-gray-200 font-semibold">
-              <td className=" w-full">
-                {" "}
-                <input
-                  placeholder=""
-                  value={sectionFiveTotalLabel}
-                  onChange={(e) => setSectionFiveTotalLabel(e.target.value)}
-                  className=" text-start p-0.5 w-full bg-gray-200 fext-row"
-                />
-              </td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">
-                {formatWithParentheses(TotalsectionFiveItemsEn)}
-              </td>
-              <td className="border border-gray-300">
-                {formatWithParentheses(TotalsectionFiveItemsDate2En)}
-              </td>
-            </tr>
-
-
-
-           
-
-
-          
-
-            {sectionSixLabelsEn.map((val, idx) => {
-              const isRowEmpty = !val && !sectionSixItemsDate2En[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
-              if (TakingShort && isRowEmpty) return null;
-
-              return (
-                <tr key={`section-six-${idx}`} className="bg-gray-100">
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full h-7 bg-gray-100 text-black p-1"
-                      value={sectionSixLabelsEn[idx]}
-                      placeholder={`${idx + 1}`}
-                      onChange={(e) =>
-                        handleChange(
-                          idx,
-                          e.target.value,
-                          "sectionSixLabel",
-                          "label"
-                        )
-                      }
-                    />
-                  </td>
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full bg-gray-100 text-black p-1"
-                      value={sectionSixNotesEn[idx]}
-                      onChange={(e) =>
-                        handleChange(
-                          idx,
-                          e.target.value,
-                          "sectionSixNote",
-                          "note"
-                        )
-                      }
-                    />
-                  </td>
-
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full bg-gray-100 text-black p-1"
-                      placeholder=""
-                      value={sectionSixItemsEn[idx]}
-                      onKeyDown={(e) => {
-                        const input = e.currentTarget;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        // Only handle Backspace when caret is at the end and value ends with ')'
-                        if (
-                          e.key === "Backspace" &&
-                          caretPos === input.value.length &&
-                          input.value.endsWith(")")
-                        ) {
-                          e.preventDefault();
-                          const newVal = input.value.slice(0, -1); // remove last ')'
-                          handleChange(idx, newVal, "sectionSix");
-                        }
-                      }}
-                      onChange={(e) => {
-                        const input = e.target;
-                        const inputValue = input.value;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        // Special case: user is typing just "-"
-                        if (inputValue === "-") {
-                          handleChange(idx, "-", "sectionSix");
-                          return;
-                        }
-
-                        // Remove formatting (commas, parentheses, spaces)
-                        let rawValue = inputValue.replace(/[(),\s]/g, "");
-
-                        // Check if negative number (starts with "-" or "(")
-                        const isNegative =
-                          inputValue.startsWith("-") ||
-                          inputValue.startsWith("(");
-
-                        // Strip the minus sign for digit-only processing
-                        rawValue = rawValue.replace(/^-/, "");
-
-                        // Only allow digits
-                        if (!/^\d*$/.test(rawValue)) return;
-
-                        // Remove leading zeros
-                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
-
-                        // Special case: Input is zero → treat as "-"
-                        if (rawValue === "0") {
-                          handleChange(idx, "-", "sectionSix");
-                          return;
-                        }
-
-                        // Handle case where the value is empty after backspace (clear all)
-                        if (rawValue === "") {
-                          handleChange(idx, "", "sectionSix");
-                          return;
-                        }
-
-                        // Format the number with commas
-                        const formatted = new Intl.NumberFormat("en-US").format(
-                          Number(rawValue)
-                        );
-
-                        // Final value with parentheses for negative numbers
-                        const finalValue = isNegative
-                          ? `(${formatted})`
-                          : formatted;
-
-                        // Update the value in the parent component
-                        handleChange(idx, finalValue, "sectionSix");
-
-                        // Optional: Restore caret position after formatting
-                        setTimeout(() => {
-                          const newLength = finalValue.length;
-                          const offset = newLength - inputValue.length;
-                          const newPos = caretPos + offset;
-                          input.setSelectionRange(newPos, newPos);
-                        }, 0);
-                      }}
-                    />
-                  </td>
-
-                  <td className="border border-gray-300">
-                    <input
-                      className="w-full bg-gray-100 text-black p-1"
-                      value={sectionSixItemsDate2En[idx]}
-                      onKeyDown={(e) => {
-                        const input = e.currentTarget;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        // Only handle Backspace when caret is at the end and value ends with ')'
-                        if (
-                          e.key === "Backspace" &&
-                          caretPos === input.value.length &&
-                          input.value.endsWith(")")
-                        ) {
-                          e.preventDefault();
-                          const newVal = input.value.slice(0, -1); // remove last ')'
-                          handleChange(idx, newVal, "sectionSix", "date2");
-                        }
-                      }}
-                      onChange={(e) => {
-                        const input = e.target;
-                        const inputValue = input.value;
-                        const caretPos = input.selectionStart ?? 0;
-
-                        // Special case: user is typing just "-"
-                        if (inputValue === "-") {
-                          handleChange(idx, "-", "sectionSix", "date2");
-                          return;
-                        }
-
-                        // Remove formatting (commas, parentheses, spaces)
-                        let rawValue = inputValue.replace(/[(),\s]/g, "");
-
-                        // Check if negative number (starts with "-" or "(")
-                        const isNegative =
-                          inputValue.startsWith("-") ||
-                          inputValue.startsWith("(");
-
-                        // Strip the minus sign for digit-only processing
-                        rawValue = rawValue.replace(/^-/, "");
-
-                        // Only allow digits
-                        if (!/^\d*$/.test(rawValue)) return;
-
-                        // Remove leading zeros
-                        rawValue = rawValue.replace(/^0+(?=\d)/, "");
-
-                        // Special case: Input is zero → treat as "-"
-                        if (rawValue === "0") {
-                          handleChange(idx, "-", "sectionSix", "date2");
-                          return;
-                        }
-
-                        // Handle case where the value is empty after backspace (clear all)
-                        if (rawValue === "") {
-                          handleChange(idx, "", "sectionSix", "date2");
-                          return;
-                        }
-
-                        // Format the number with commas
-                        const formatted = new Intl.NumberFormat("en-US").format(
-                          Number(rawValue)
-                        );
-
-                        // Final value with parentheses for negative numbers
-                        const finalValue = isNegative
-                          ? `(${formatted})`
-                          : formatted;
-
-                        // Update the value in the parent component
-                        handleChange(idx, finalValue, "sectionSix", "date2");
-
-                        // Optional: Restore caret position after formatting
-                        setTimeout(() => {
-                          const newLength = finalValue.length;
-                          const offset = newLength - inputValue.length;
-                          const newPos = caretPos + offset;
-                          input.setSelectionRange(newPos, newPos);
-                        }, 0);
-                      }}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-
-            <tr className="bg-gray-200 font-semibold">
-              <td className="">
-                {" "}
-                <input
-                  placeholder=""
-                  value={sectionSixTotalLabel}
-                  onChange={(e) => setSectionSixTotalLabel(e.target.value)}
-                  className=" text-start p-0.5   bg-gray-200 fext-row"
-                />
-              </td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300">
-                {formatWithParentheses(TotalsectionSixItemsEn)}
-              </td>
-              <td className="border border-gray-300">
-                {formatWithParentheses(TotalsectionSixItemsDate2En)}
-              </td>
-            </tr>
- 
-  </div>
-
-
-
-
-
-
           </tbody>
 
-  <thead>
+        <thead>
             <tr className="bg-gray-100 ">
               <th className="border border-gray-100 w-96"></th>
               <th className="border border-gray-100 w-16">Notes</th>
@@ -3569,7 +3087,7 @@ const handleChangeSectionLast2 = (
                 />
               </td>
               <td className=" "></td>
-              <td className="p-2  ">
+              <td className="p-1  ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
                 )}
@@ -3581,7 +3099,7 @@ const handleChangeSectionLast2 = (
               </td>
             </tr>
 
-        <tr className="bg-gray-200 font-semibold">
+        <tr className="bg-gray-300 font-semibold">
               <td className=" p-1">
                 <input
                   value={sectionSevenLastLabel}
@@ -3590,7 +3108,7 @@ const handleChangeSectionLast2 = (
                       e.target.value
                     )
                   }
-                  className="w-full  bg-gray-200 text-black  "
+                  className="w-full  bg-gray-300 text-black  "
                 />
               </td>
               <td className=" "></td>
@@ -3602,9 +3120,9 @@ const handleChangeSectionLast2 = (
               </td>
 
             </tr>
-               <tr className="bg-gray-200 font-semibold  text-[9px] ">
+               <tr className="bg-gray-200 font-semibold  ">
               <td className="">
-                <input
+                <textarea
                   value={sectionSevenSubheading}
                   onChange={(e) =>
                     setSectionSevenSubheadingLabel(
@@ -3618,6 +3136,14 @@ const handleChangeSectionLast2 = (
               <td className="   "></td>
               <td className=""></td>
             </tr>
+
+
+
+
+
+
+
+
   
             {sectionLastLabelsEn.map((val, idx) => {
   const isRowEmpty = !val && !sectionLastItemsDate2En[idx];
@@ -3772,8 +3298,24 @@ const handleChangeSectionLast2 = (
 })}
 
 
-     <tr className="bg-gray-100 font-semibold">
-              <td className="bg-white"></td>
+
+
+
+
+
+
+
+
+            <tr className="bg-gray-200 font-semibold">
+              <td className="bg-white"> <textarea
+                  value={sectionLastTotalLabelEn}
+                  onChange={(e) =>
+                    setSectionLastTotalLabelEn(
+                      e.target.value
+                    )
+                  }
+                  className="w-full     bg-gray-200 text-black px-1 "
+                /></td>
               <td></td>
               <td className="p-2">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn)}
@@ -3788,9 +3330,9 @@ const handleChangeSectionLast2 = (
 
 
             
-               <tr className="bg-gray-200 font-semibold  text-[9px] ">
+               <tr className="bg-gray-200 font-semibold  ">
               <td className="">
-                <input
+                <textarea
                   value={sectionSevenSubheading2}
                   onChange={(e) =>
                     setSectionSevenSubheadingLabel2(
@@ -3964,8 +3506,16 @@ const handleChangeSectionLast2 = (
 
 
 
-<tr className="bg-gray-100 font-semibold">
-              <td className="bg-white"></td>
+<tr className="bg-gray-200 font-semibold">
+              <td className="bg-white"><textarea
+                  value={sectionLastTotalLabelEn2}
+                  onChange={(e) =>
+                    setSectionToatalLastLabelEn2(
+                      e.target.value
+                    )
+                  }
+                  className="w-full     bg-gray-200 text-black px-1 "
+                /></td>
               <td></td>
               <td className="p-2">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn2)}
@@ -3974,6 +3524,30 @@ const handleChangeSectionLast2 = (
                 {formatWithParentheses(TotalSectionLastItemsDate2En2)}
               </td>
             </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <tr className="bg-gray-300 font-semibold">
               <td className="">
                 <input
@@ -3998,7 +3572,7 @@ const handleChangeSectionLast2 = (
                 )}
               </td>
             </tr>
-      <tr className="bg-gray-400 font-semibold">
+      <tr className="bg-gray-300 font-semibold">
               <td className="">
                 <input
                   value={SectionSevenLastLabel2}
@@ -4007,7 +3581,7 @@ const handleChangeSectionLast2 = (
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-400 text-black px-1 "
+                  className="w-full     bg-gray-300 text-black px-1 "
                 />
               </td>
               <td className=" "></td>
@@ -4026,10 +3600,550 @@ const handleChangeSectionLast2 = (
 
 
 
+<br />
+<br />
 
 
 
 
+
+<tr className="bg-gray-200 font-semibold">
+  <td className="">
+    <input
+      value={sectionFourAttributeTable2}
+      onChange={(e) => setSectionFourAttributeLabelTable2(e.target.value)}
+      className="w-full bg-gray-200 text-black p-1"
+    />
+  </td>
+  <td className=" "></td>
+  <td className=" "></td>
+  <td className=""></td>
+</tr>
+
+{sectionFourAttributeLabelsEnTable2.map((val, idx) => {
+  const isRowEmpty = !val && !sectionFourAttributeItemsDate2EnTable2[idx];
+  if (TakingShort && isRowEmpty) return null;
+
+  return (
+    <tr key={`section-four-table2-${idx}`} className="bg-gray-100">
+      {/* Label Input */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full h-7 bg-gray-100 text-black p-1"
+          value={sectionFourAttributeLabelsEnTable2[idx]}
+          placeholder={`${idx + 1}`}
+          onChange={(e) =>
+            handleChangeAttributeTable2(
+              idx,
+              e.target.value,
+              "sectionFourAttribute",
+              "label"
+            )
+          }
+        />
+      </td>
+
+      <td className="border border-gray-300">
+        <input className="w-full bg-gray-100 text-black p-1" />
+      </td>
+
+      {/* Item Input */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full bg-gray-100 text-black p-1"
+          placeholder=""
+          value={sectionFourAttributeItemsEnTable2[idx]}
+          onKeyDown={(e) => {
+            const input = e.currentTarget;
+            const caretPos = input.selectionStart ?? 0;
+            if (
+              e.key === "Backspace" &&
+              caretPos === input.value.length &&
+              input.value.endsWith(")")
+            ) {
+              e.preventDefault();
+              const newVal = input.value.slice(0, -1);
+              handleChangeAttributeTable2(
+                idx,
+                newVal,
+                "sectionFourAttribute",
+                "item"
+              );
+            }
+          }}
+          onChange={(e) => {
+            const input = e.target;
+            const inputValue = input.value;
+            const caretPos = input.selectionStart ?? 0;
+
+            if (inputValue === "-") {
+              handleChangeAttributeTable2(idx, "-", "sectionFourAttribute", "item");
+              return;
+            }
+
+            let rawValue = inputValue.replace(/[(),\s]/g, "");
+            const isNegative =
+              inputValue.startsWith("-") || inputValue.startsWith("(");
+            rawValue = rawValue.replace(/^-/, "");
+
+            if (!/^\d*$/.test(rawValue)) return;
+            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+            if (rawValue === "0") {
+              handleChangeAttributeTable2(idx, "-", "sectionFourAttribute", "item");
+              return;
+            }
+
+            if (rawValue === "") {
+              handleChangeAttributeTable2(idx, "", "sectionFourAttribute", "item");
+              return;
+            }
+
+            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
+            const finalValue = isNegative ? `(${formatted})` : formatted;
+
+            handleChangeAttributeTable2(idx, finalValue, "sectionFourAttribute", "item");
+
+            setTimeout(() => {
+              const newLength = finalValue.length;
+              const offset = newLength - inputValue.length;
+              const newPos = caretPos + offset;
+              input.setSelectionRange(newPos, newPos);
+            }, 0);
+          }}
+        />
+      </td>
+
+      {/* Date2 Input */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full bg-gray-100 text-black p-1"
+          value={sectionFourAttributeItemsDate2EnTable2[idx]}
+          onKeyDown={(e) => {
+            const input = e.currentTarget;
+            const caretPos = input.selectionStart ?? 0;
+            if (
+              e.key === "Backspace" &&
+              caretPos === input.value.length &&
+              input.value.endsWith(")")
+            ) {
+              e.preventDefault();
+              const newVal = input.value.slice(0, -1);
+              handleChangeAttributeTable2(
+                idx,
+                newVal,
+                "sectionFourAttribute",
+                "date2"
+              );
+            }
+          }}
+          onChange={(e) => {
+            const input = e.target;
+            const inputValue = input.value;
+            const caretPos = input.selectionStart ?? 0;
+
+            if (inputValue === "-") {
+              handleChangeAttributeTable2(idx, "-", "sectionFourAttribute", "date2");
+              return;
+            }
+
+            let rawValue = inputValue.replace(/[(),\s]/g, "");
+            const isNegative =
+              inputValue.startsWith("-") || inputValue.startsWith("(");
+            rawValue = rawValue.replace(/^-/, "");
+
+            if (!/^\d*$/.test(rawValue)) return;
+            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+            if (rawValue === "0") {
+              handleChangeAttributeTable2(idx, "-", "sectionFourAttribute", "date2");
+              return;
+            }
+
+            if (rawValue === "") {
+              handleChangeAttributeTable2(idx, "", "sectionFourAttribute", "date2");
+              return;
+            }
+
+            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
+            const finalValue = isNegative ? `(${formatted})` : formatted;
+
+            handleChangeAttributeTable2(idx, finalValue, "sectionFourAttribute", "date2");
+
+            setTimeout(() => {
+              const newLength = finalValue.length;
+              const offset = newLength - inputValue.length;
+              const newPos = caretPos + offset;
+              input.setSelectionRange(newPos, newPos);
+            }, 0);
+          }}
+        />
+      </td>
+    </tr>
+  );
+})}
+
+<tr className="bg-gray-100 font-semibold">
+  <td className="bg-white"></td>
+  <td className=""></td>
+  <td className="p-2">
+    {formatWithParentheses(TotalsectionFourAttributeItemsEnTable2)}
+  </td>
+  <td className="">
+    {formatWithParentheses(TotalsectionFourAttributeItemsDate2EnTable2)}
+  </td>
+</tr>
+
+
+
+    {/* Main label row */}
+<tr className="bg-gray-200 font-semibold">
+  <td className="">
+    <input
+      value={sectionFourAttribute2Table2}
+      onChange={(e) => setSectionFourAttribute2LabelTable2(e.target.value)}
+      className="w-full bg-gray-200 text-black p-1"
+    />
+  </td>
+  <td className=""></td>
+  <td className=""></td>
+  <td className=""></td>
+</tr>
+
+{/* Dynamic input rows */}
+{sectionFourAttribute2LabelsEnTable2.map((val, idx) => {
+  const isRowEmpty =
+    !val && !sectionFourAttribute2ItemsDate2EnTable2[idx];
+  if (TakingShort && isRowEmpty) return null;
+
+  return (
+    <tr key={`section-four-attribute2-table2-${idx}`} className="bg-gray-100">
+      {/* Label Input */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full h-7 bg-gray-100 text-black p-1"
+          value={sectionFourAttribute2LabelsEnTable2[idx]}
+          placeholder={`${idx + 1}`}
+          onChange={(e) =>
+            handleChangeAttribute2Table2(idx, e.target.value, "label")
+          }
+        />
+      </td>
+
+      {/* Spacer cell */}
+      <td className="border border-gray-300"></td>
+
+      {/* Item Input */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full bg-gray-100 text-black p-1"
+          value={sectionFourAttribute2ItemsEnTable2[idx]}
+          onKeyDown={(e) => {
+            const input = e.currentTarget;
+            const caretPos = input.selectionStart ?? 0;
+            if (
+              e.key === "Backspace" &&
+              caretPos === input.value.length &&
+              input.value.endsWith(")")
+            ) {
+              e.preventDefault();
+              const newVal = input.value.slice(0, -1);
+              handleChangeAttribute2Table2(idx, newVal, "item");
+            }
+          }}
+          onChange={(e) => {
+            const input = e.target;
+            const inputValue = input.value;
+            const caretPos = input.selectionStart ?? 0;
+
+            if (inputValue === "-") {
+              handleChangeAttribute2Table2(idx, "-", "item");
+              return;
+            }
+
+            let rawValue = inputValue.replace(/[(),\s]/g, "");
+            const isNegative =
+              inputValue.startsWith("-") || inputValue.startsWith("(");
+            rawValue = rawValue.replace(/^-/, "");
+
+            if (!/^\d*$/.test(rawValue)) return;
+            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+            if (rawValue === "0") {
+              handleChangeAttribute2Table2(idx, "-", "item");
+              return;
+            }
+
+            if (rawValue === "") {
+              handleChangeAttribute2Table2(idx, "", "item");
+              return;
+            }
+
+            const formatted = new Intl.NumberFormat("en-US").format(
+              Number(rawValue)
+            );
+            const finalValue = isNegative ? `(${formatted})` : formatted;
+
+            handleChangeAttribute2Table2(idx, finalValue, "item");
+
+            setTimeout(() => {
+              const newLength = finalValue.length;
+              const offset = newLength - inputValue.length;
+              const newPos = caretPos + offset;
+              input.setSelectionRange(newPos, newPos);
+            }, 0);
+          }}
+        />
+      </td>
+
+      {/* Date2 Input */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full bg-gray-100 text-black p-1"
+          value={sectionFourAttribute2ItemsDate2EnTable2[idx]}
+          onKeyDown={(e) => {
+            const input = e.currentTarget;
+            const caretPos = input.selectionStart ?? 0;
+            if (
+              e.key === "Backspace" &&
+              caretPos === input.value.length &&
+              input.value.endsWith(")")
+            ) {
+              e.preventDefault();
+              const newVal = input.value.slice(0, -1);
+              handleChangeAttribute2Table2(idx, newVal, "date2");
+            }
+          }}
+          onChange={(e) => {
+            const input = e.target;
+            const inputValue = input.value;
+            const caretPos = input.selectionStart ?? 0;
+
+            if (inputValue === "-") {
+              handleChangeAttribute2Table2(idx, "-", "date2");
+              return;
+            }
+
+            let rawValue = inputValue.replace(/[(),\s]/g, "");
+            const isNegative =
+              inputValue.startsWith("-") || inputValue.startsWith("(");
+            rawValue = rawValue.replace(/^-/, "");
+
+            if (!/^\d*$/.test(rawValue)) return;
+            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+            if (rawValue === "0") {
+              handleChangeAttribute2Table2(idx, "-", "date2");
+              return;
+            }
+
+            if (rawValue === "") {
+              handleChangeAttribute2Table2(idx, "", "date2");
+              return;
+            }
+
+            const formatted = new Intl.NumberFormat("en-US").format(
+              Number(rawValue)
+            );
+            const finalValue = isNegative ? `(${formatted})` : formatted;
+
+            handleChangeAttribute2Table2(idx, finalValue, "date2");
+
+            setTimeout(() => {
+              const newLength = finalValue.length;
+              const offset = newLength - inputValue.length;
+              const newPos = caretPos + offset;
+              input.setSelectionRange(newPos, newPos);
+            }, 0);
+          }}
+        />
+      </td>
+    </tr>
+  );
+})}
+
+{/* Total Row */}
+<tr className="bg-gray-100 font-semibold">
+  <td className="bg-white"></td>
+  <td></td>
+  <td className="p-2">
+    {formatWithParentheses(TotalsectionFourAttribute2ItemsEnTable2)}
+  </td>
+  <td>
+    {formatWithParentheses(TotalsectionFourAttribute2ItemsDate2EnTable2)}
+  </td>
+</tr>
+
+
+<tr className="bg-gray-200 font-semibold">
+  <td>
+    <textarea
+      value={sectionFourOtherComprehensiveIncomeTable2}
+      onChange={(e) =>
+        setSectionFourOtherComprehensiveIncomeLabelTable2(e.target.value)
+      }
+      className="w-full bg-gray-200 text-black px-1"
+    />
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+
+{sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2.map((val, idx) => {
+  const isRowEmpty =
+    !val && !sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2[idx];
+  if (TakingShort && isRowEmpty) return null;
+
+  return (
+    <tr key={`section-four-other-table2-${idx}`} className="bg-gray-100">
+      {/* Label */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full h-7 bg-gray-100 text-black p-1"
+          value={val}
+          placeholder={`${idx + 1}`}
+          onChange={(e) =>
+            handleChangeOtherComprehensiveIncomeTable2(idx, e.target.value, "label")
+          }
+        />
+      </td>
+
+      {/* Note */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full bg-gray-100 text-black p-1"
+          value={sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2[idx]}
+          onChange={(e) =>
+            handleChangeOtherComprehensiveIncomeTable2(idx, e.target.value, "note")
+          }
+        />
+      </td>
+
+      {/* Item */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full bg-gray-100 text-black p-1"
+          value={sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2[idx]}
+          onKeyDown={(e) => {
+            const input = e.currentTarget;
+            const caretPos = input.selectionStart ?? 0;
+            if (
+              e.key === "Backspace" &&
+              caretPos === input.value.length &&
+              input.value.endsWith(")")
+            ) {
+              e.preventDefault();
+              const newVal = input.value.slice(0, -1);
+              handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "item");
+            }
+          }}
+          onChange={(e) => {
+            const input = e.target;
+            const inputValue = input.value;
+            const caretPos = input.selectionStart ?? 0;
+
+            if (inputValue === "-") {
+              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "item");
+              return;
+            }
+
+            let rawValue = inputValue.replace(/[(),\s]/g, "");
+            const isNegative =
+              inputValue.startsWith("-") || inputValue.startsWith("(");
+            rawValue = rawValue.replace(/^-/, "");
+
+            if (!/^\d*$/.test(rawValue)) return;
+            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+            if (rawValue === "0") {
+              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "item");
+              return;
+            }
+
+            if (rawValue === "") {
+              handleChangeOtherComprehensiveIncomeTable2(idx, "", "item");
+              return;
+            }
+
+            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
+            const finalValue = isNegative ? `(${formatted})` : formatted;
+
+            handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "item");
+
+            setTimeout(() => {
+              const newLength = finalValue.length;
+              const offset = newLength - inputValue.length;
+              const newPos = caretPos + offset;
+              input.setSelectionRange(newPos, newPos);
+            }, 0);
+          }}
+        />
+      </td>
+
+      {/* Date2 */}
+      <td className="border border-gray-300">
+        <input
+          className="w-full bg-gray-100 text-black p-1"
+          value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2[idx]}
+          onKeyDown={(e) => {
+            const input = e.currentTarget;
+            const caretPos = input.selectionStart ?? 0;
+            if (
+              e.key === "Backspace" &&
+              caretPos === input.value.length &&
+              input.value.endsWith(")")
+            ) {
+              e.preventDefault();
+              const newVal = input.value.slice(0, -1);
+              handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "date2");
+            }
+          }}
+          onChange={(e) => {
+            const input = e.target;
+            const inputValue = input.value;
+            const caretPos = input.selectionStart ?? 0;
+
+            if (inputValue === "-") {
+              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "date2");
+              return;
+            }
+
+            let rawValue = inputValue.replace(/[(),\s]/g, "");
+            const isNegative =
+              inputValue.startsWith("-") || inputValue.startsWith("(");
+            rawValue = rawValue.replace(/^-/, "");
+
+            if (!/^\d*$/.test(rawValue)) return;
+            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+
+            if (rawValue === "0") {
+              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "date2");
+              return;
+            }
+
+            if (rawValue === "") {
+              handleChangeOtherComprehensiveIncomeTable2(idx, "", "date2");
+              return;
+            }
+
+            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
+            const finalValue = isNegative ? `(${formatted})` : formatted;
+
+            handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "date2");
+
+            setTimeout(() => {
+              const newLength = finalValue.length;
+              const offset = newLength - inputValue.length;
+              const newPos = caretPos + offset;
+              input.setSelectionRange(newPos, newPos);
+            }, 0);
+          }}
+        />
+      </td>
+    </tr>
+  );
+})}
 
 
           </tbody>

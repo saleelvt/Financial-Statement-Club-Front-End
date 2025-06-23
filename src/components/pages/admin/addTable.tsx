@@ -92,11 +92,9 @@ const AddNewTable = React.memo(() => {
 
     useEffect(()=>{
       console.log("the English active botton oned : ",updateActiveEn);
-      
     },[updateActiveEn])
     useEffect(()=>{
       console.log("the ARabic  active bottonAr oned : ",updateActiveAr);
-      
     },[updateActiveAr])
 
 
@@ -333,14 +331,14 @@ const AddNewTable = React.memo(() => {
 
     const dataArray = Array.from(yearsSet);
     let largestYear = dataArray[0];
-    console.log("kindam data of hte dta ", largestYear);
+ 
 
     for (const x of dataArray) {
       if (x > largestYear) {
         largestYear = x;
       }
     }
-    console.log("kindam data of hte dta ", largestYear);
+ 
 
     setSelectedYear(largestYear);
     setYears(dataArray);
@@ -1464,7 +1462,7 @@ const handleUpdateTable = async (wlanguage: string | null) => {
                 <option key={item?.quarter} value={item?.quarter}>
                   {item?.quarter}
                 </option>
-              ))}
+              ))} 
             </select>
           </div>
         )}

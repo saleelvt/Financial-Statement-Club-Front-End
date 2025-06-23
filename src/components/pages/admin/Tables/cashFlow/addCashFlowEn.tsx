@@ -10,13 +10,12 @@ const CashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
   ({ TakingShort }) => {
     // Updated state declarations with empty strings as initial values
     const dispatch = useDispatch<AppDispatch>();
-
     // Helper function to safely parse numeric values from strings
     const parseNumericValue = (value: string): number => {
       if (!value || value.trim() === "-" || value.trim() === "") return 0;
 
       const isNegative =
-        value.trim().startsWith("(") && value.trim().endsWith(")");
+ value.trim().startsWith("(") && value.trim().endsWith(")");
       const cleaned = value.replace(/[(),]/g, ""); // Remove (, ), and ,
       const numValue = parseFloat(cleaned);
 

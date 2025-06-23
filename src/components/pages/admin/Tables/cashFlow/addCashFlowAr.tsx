@@ -931,6 +931,40 @@ useEffect(() => {
                setSectionFourAttribute2ItemsDate2En(cashFlowDataEn?.sectionAttributeTwo?.sectionFourAttribute2ItemsDate2En)
 
             }
+            if(cashFlowDataEn?.sectionFourSub){
+              setFlowSectionFourSubEn(cashFlowDataEn?.sectionFourSub.sectionFourSubItemsEn)
+              setFlowSectionFourSubDate2En(cashFlowDataEn?.sectionFourSub.sectionFourSubItemsDate2En)
+            }
+            if(cashFlowDataEn?.Table2){
+              setDateTwo1Ar(cashFlowDataEn?.Table2.dateTwo1En)
+              setDateTwo2Ar(cashFlowDataEn?.Table2.dateTwo2En)
+            }
+    
+            if(cashFlowDataEn?.Table2?.sectionOneTable2){
+              setSectionLastItemsEn(cashFlowDataEn?.Table2.sectionOneTable2.sectionLastItemsEn)
+              setSectionLastItemsDate2En(cashFlowDataEn?.Table2.sectionOneTable2.sectionLastItemsDate2En)
+
+
+            }
+            if(cashFlowDataEn?.Table2?.sectionTwoTable2){
+              setSectionLastItemsEn2(cashFlowDataEn?.Table2.sectionTwoTable2.sectionLastItemsEn2)
+              setSectionLastItemsDate2En2(cashFlowDataEn?.Table2.sectionTwoTable2.sectionLastItemsDate2En2)
+            }
+            if(cashFlowDataEn?.Table2?.sectionAttributeOneTable2){
+              setSectionFourAttributeItemsEnTable2(cashFlowDataEn?.Table2.sectionAttributeOneTable2.sectionFourAttributeItemsEnTable2)
+              setSectionFourAttributeItemsDate2EnTable2(cashFlowDataEn?.Table2.sectionAttributeOneTable2.sectionFourAttributeItemsDate2EnTable2)
+            }
+            if(cashFlowDataEn?.Table2?.sectionAttributeTwoTable2){
+              setSectionFourAttribute2ItemsEnTable2(cashFlowDataEn?.Table2.sectionAttributeTwoTable2.sectionFourAttribute2ItemsEnTable2)
+              setSectionFourAttribute2ItemsDate2EnTable2(cashFlowDataEn?.Table2.sectionAttributeTwoTable2.sectionFourAttribute2ItemsDate2EnTable2)
+            }
+            if(cashFlowDataEn?.Table2?.sectionOtherComprehensiveIncomeTable2){
+              setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2(cashFlowDataEn?.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2)
+              setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2(cashFlowDataEn?.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2)
+            }
+
+          
+
             
         }
         

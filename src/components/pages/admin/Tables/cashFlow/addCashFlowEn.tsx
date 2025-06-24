@@ -2711,195 +2711,227 @@ const handleChangeSectionLast2 = (
                       />
                     </td>
 
-                    {/* Item */}
-                    <td className="border border-gray-300">
-                      <input
-                        className="w-full bg-gray-100 text-black p-1"
-                        value={
-                          sectionFourOtherComprehensiveIncomeSubheadingItemsEn[
-                            idx
-                          ]
-                        }
-                        onKeyDown={(e) => {
-                          const input = e.currentTarget;
-                          const caretPos = input.selectionStart ?? 0;
-                          if (
-                            e.key === "Backspace" &&
-                            caretPos === input.value.length &&
-                            input.value.endsWith(")")
-                          ) {
-                            e.preventDefault();
-                            const newVal = input.value.slice(0, -1);
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              newVal,
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "item"
-                            );
-                          }
-                        }}
-                        onChange={(e) => {
-                          const input = e.target;
-                          const inputValue = input.value;
-                          const caretPos = input.selectionStart ?? 0;
 
-                          if (inputValue === "-") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "-",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "item"
-                            );
-                            return;
-                          }
 
-                          let rawValue = inputValue.replace(/[(),\s]/g, "");
-                          const isNegative =
-                            inputValue.startsWith("-") ||
-                            inputValue.startsWith("(");
-                          rawValue = rawValue.replace(/^-/, "");
 
-                          if (!/^\d*$/.test(rawValue)) return;
-                          rawValue = rawValue.replace(/^0+(?=\d)/, "");
 
-                          if (rawValue === "0") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "-",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "item"
-                            );
-                            return;
-                          }
 
-                          if (rawValue === "") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "item"
-                            );
-                            return;
-                          }
 
-                          const formatted = new Intl.NumberFormat(
-                            "en-US"
-                          ).format(Number(rawValue));
-                          const finalValue = isNegative
-                            ? `(${formatted})`
-                            : formatted;
 
-                          handleChangeOtherComprehensiveIncome(
-                            idx,
-                            finalValue,
-                            "sectionFourOtherComprehensiveIncomeSubheading",
-                            "item"
-                          );
 
-                          setTimeout(() => {
-                            const newLength = finalValue.length;
-                            const offset = newLength - inputValue.length;
-                            const newPos = caretPos + offset;
-                            input.setSelectionRange(newPos, newPos);
-                          }, 0);
-                        }}
-                      />
-                    </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 <td className="border border-gray-300">
+  <input
+    className="w-full bg-gray-100 text-black p-1"
+    value={sectionFourOtherComprehensiveIncomeSubheadingItemsEn[idx]}
+    onKeyDown={(e) => {
+      const input = e.currentTarget;
+      const caretPos = input.selectionStart ?? 0;
+      if (
+        e.key === "Backspace" &&
+        caretPos === input.value.length &&
+        input.value.endsWith(")")
+      ) {
+        e.preventDefault();
+        const newVal = input.value.slice(0, -1);
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          newVal,
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "item"
+        );
+      }
+    }}
+    onChange={(e) => {
+      const inputValue = e.target.value;
+      const caretPos = e.target.selectionStart ?? 0;
+
+      // Allow user to type a single minus sign or dot
+      if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          inputValue,
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "item"
+        );
+        return;
+      }
+
+      const isNegative =
+        inputValue.startsWith("-") || inputValue.startsWith("(");
+
+      // Remove formatting symbols but keep the decimal point
+      const  rawValue = inputValue
+        .replace(/[(),\s]/g, "") // remove brackets and spaces
+        .replace(/^-/, ""); // remove minus sign only for validation
+
+      // Validate: only numbers and at most one dot allowed
+      if (!/^\d*\.?\d*$/.test(rawValue)) return;
+
+      if (rawValue === "") {
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          "",
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "item"
+        );
+        return;
+      }
+
+      const finalValue = isNegative
+        ? `(${rawValue})`
+        : rawValue;
+
+      handleChangeOtherComprehensiveIncome(
+        idx,
+        finalValue,
+        "sectionFourOtherComprehensiveIncomeSubheading",
+        "item"
+      );
+
+      setTimeout(() => {
+        const newLength = finalValue.length;
+        const offset = newLength - inputValue.length;
+        const newPos = caretPos + offset;
+        e.target.setSelectionRange(newPos, newPos);
+      }, 0);
+    }}
+  />
+</td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     {/* Date2 */}
-                    <td className="border border-gray-300">
-                      <input
-                        className="w-full bg-gray-100 text-black p-1"
-                        value={
-                          sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[
-                            idx
-                          ]
-                        }
-                        onKeyDown={(e) => {
-                          const input = e.currentTarget;
-                          const caretPos = input.selectionStart ?? 0;
-                          if (
-                            e.key === "Backspace" &&
-                            caretPos === input.value.length &&
-                            input.value.endsWith(")")
-                          ) {
-                            e.preventDefault();
-                            const newVal = input.value.slice(0, -1);
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              newVal,
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "date2"
-                            );
-                          }
-                        }}
-                        onChange={(e) => {
-                          const input = e.target;
-                          const inputValue = input.value;
-                          const caretPos = input.selectionStart ?? 0;
+                  <td className="border border-gray-300">
+  <input
+    className="w-full bg-gray-100 text-black p-1"
+    value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[idx]}
+    onKeyDown={(e) => {
+      const input = e.currentTarget;
+      const caretPos = input.selectionStart ?? 0;
+      if (
+        e.key === "Backspace" &&
+        caretPos === input.value.length &&
+        input.value.endsWith(")")
+      ) {
+        e.preventDefault();
+        const newVal = input.value.slice(0, -1);
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          newVal,
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "date2"
+        );
+      }
+    }}
+    onChange={(e) => {
+      const input = e.target;
+      const inputValue = input.value;
+      const caretPos = input.selectionStart ?? 0;
 
-                          if (inputValue === "-") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "-",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "date2"
-                            );
-                            return;
-                          }
+      // Allow temporary input states
+      if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          inputValue,
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "date2"
+        );
+        return;
+      }
 
-                          let rawValue = inputValue.replace(/[(),\s]/g, "");
-                          const isNegative =
-                            inputValue.startsWith("-") ||
-                            inputValue.startsWith("(");
-                          rawValue = rawValue.replace(/^-/, "");
+      const isNegative =
+        inputValue.startsWith("-") || inputValue.startsWith("(");
 
-                          if (!/^\d*$/.test(rawValue)) return;
-                          rawValue = rawValue.replace(/^0+(?=\d)/, "");
+      // Clean value for validation, but keep the dot
+      const  rawValue = inputValue
+        .replace(/[(),\s]/g, "") // remove brackets and spaces
+        .replace(/^-/, ""); // remove minus for validation
 
-                          if (rawValue === "0") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "-",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "date2"
-                            );
-                            return;
-                          }
+      // Only allow digits and one optional dot
+      if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
-                          if (rawValue === "") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "date2"
-                            );
-                            return;
-                          }
+      if (rawValue === "") {
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          "",
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "date2"
+        );
+        return;
+      }
 
-                          const formatted = new Intl.NumberFormat(
-                            "en-US"
-                          ).format(Number(rawValue));
-                          const finalValue = isNegative
-                            ? `(${formatted})`
-                            : formatted;
+      const finalValue = isNegative ? `(${rawValue})` : rawValue;
 
-                          handleChangeOtherComprehensiveIncome(
-                            idx,
-                            finalValue,
-                            "sectionFourOtherComprehensiveIncomeSubheading",
-                            "date2"
-                          );
+      handleChangeOtherComprehensiveIncome(
+        idx,
+        finalValue,
+        "sectionFourOtherComprehensiveIncomeSubheading",
+        "date2"
+      );
 
-                          setTimeout(() => {
-                            const newLength = finalValue.length;
-                            const offset = newLength - inputValue.length;
-                            const newPos = caretPos + offset;
-                            input.setSelectionRange(newPos, newPos);
-                          }, 0);
-                        }}
-                      />
-                    </td>
+      setTimeout(() => {
+        const newLength = finalValue.length;
+        const offset = newLength - inputValue.length;
+        const newPos = caretPos + offset;
+        input.setSelectionRange(newPos, newPos);
+      }, 0);
+    }}
+  />
+</td>
+
                   </tr>
                 );
               }
@@ -2909,37 +2941,6 @@ const handleChangeSectionLast2 = (
 
             <br />
             <br />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4017,126 +4018,124 @@ const handleChangeSectionLast2 = (
       </td>
 
       {/* Item */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full bg-gray-100 text-black p-1"
-          value={sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2[idx]}
-          onKeyDown={(e) => {
-            const input = e.currentTarget;
-            const caretPos = input.selectionStart ?? 0;
-            if (
-              e.key === "Backspace" &&
-              caretPos === input.value.length &&
-              input.value.endsWith(")")
-            ) {
-              e.preventDefault();
-              const newVal = input.value.slice(0, -1);
-              handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "item");
-            }
-          }}
-          onChange={(e) => {
-            const input = e.target;
-            const inputValue = input.value;
-            const caretPos = input.selectionStart ?? 0;
+  <td className="border border-gray-300">
+  <input
+    className="w-full bg-gray-100 text-black p-1"
+    value={sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2[idx]}
+    onKeyDown={(e) => {
+      const input = e.currentTarget;
+      const caretPos = input.selectionStart ?? 0;
+      if (
+        e.key === "Backspace" &&
+        caretPos === input.value.length &&
+        input.value.endsWith(")")
+      ) {
+        e.preventDefault();
+        const newVal = input.value.slice(0, -1);
+        handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "item");
+      }
+    }}
+    onChange={(e) => {
+      const input = e.target;
+      const inputValue = input.value;
+      const caretPos = input.selectionStart ?? 0;
 
-            if (inputValue === "-") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "item");
-              return;
-            }
+      // Allow intermediate input like "-", ".", "-."
+      if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
+        handleChangeOtherComprehensiveIncomeTable2(idx, inputValue, "item");
+        return;
+      }
 
-            let rawValue = inputValue.replace(/[(),\s]/g, "");
-            const isNegative =
-              inputValue.startsWith("-") || inputValue.startsWith("(");
-            rawValue = rawValue.replace(/^-/, "");
+      const isNegative =
+        inputValue.startsWith("-") || inputValue.startsWith("(");
 
-            if (!/^\d*$/.test(rawValue)) return;
-            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+      // Strip brackets and whitespace, retain dot
+      const  rawValue = inputValue
+        .replace(/[(),\s]/g, "")
+        .replace(/^-/, "");
 
-            if (rawValue === "0") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "item");
-              return;
-            }
+      // Validate: allow only digits and at most one dot
+      if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
-            if (rawValue === "") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "", "item");
-              return;
-            }
+      if (rawValue === "") {
+        handleChangeOtherComprehensiveIncomeTable2(idx, "", "item");
+        return;
+      }
 
-            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
-            const finalValue = isNegative ? `(${formatted})` : formatted;
+      const finalValue = isNegative ? `(${rawValue})` : rawValue;
 
-            handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "item");
+      handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "item");
 
-            setTimeout(() => {
-              const newLength = finalValue.length;
-              const offset = newLength - inputValue.length;
-              const newPos = caretPos + offset;
-              input.setSelectionRange(newPos, newPos);
-            }, 0);
-          }}
-        />
-      </td>
+      setTimeout(() => {
+        const newLength = finalValue.length;
+        const offset = newLength - inputValue.length;
+        const newPos = caretPos + offset;
+        input.setSelectionRange(newPos, newPos);
+      }, 0);
+    }}
+  />
+</td>
+
 
       {/* Date2 */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full bg-gray-100 text-black p-1"
-          value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2[idx]}
-          onKeyDown={(e) => {
-            const input = e.currentTarget;
-            const caretPos = input.selectionStart ?? 0;
-            if (
-              e.key === "Backspace" &&
-              caretPos === input.value.length &&
-              input.value.endsWith(")")
-            ) {
-              e.preventDefault();
-              const newVal = input.value.slice(0, -1);
-              handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "date2");
-            }
-          }}
-          onChange={(e) => {
-            const input = e.target;
-            const inputValue = input.value;
-            const caretPos = input.selectionStart ?? 0;
+    <td className="border border-gray-300">
+  <input
+    className="w-full bg-gray-100 text-black p-1"
+    value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2[idx]}
+    onKeyDown={(e) => {
+      const input = e.currentTarget;
+      const caretPos = input.selectionStart ?? 0;
+      if (
+        e.key === "Backspace" &&
+        caretPos === input.value.length &&
+        input.value.endsWith(")")
+      ) {
+        e.preventDefault();
+        const newVal = input.value.slice(0, -1);
+        handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "date2");
+      }
+    }}
+    onChange={(e) => {
+      const input = e.target;
+      const inputValue = input.value;
+      const caretPos = input.selectionStart ?? 0;
 
-            if (inputValue === "-") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "date2");
-              return;
-            }
+      // Allow typing "-", ".", or "-." without blocking
+      if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
+        handleChangeOtherComprehensiveIncomeTable2(idx, inputValue, "date2");
+        return;
+      }
 
-            let rawValue = inputValue.replace(/[(),\s]/g, "");
-            const isNegative =
-              inputValue.startsWith("-") || inputValue.startsWith("(");
-            rawValue = rawValue.replace(/^-/, "");
+      const isNegative =
+        inputValue.startsWith("-") || inputValue.startsWith("(");
 
-            if (!/^\d*$/.test(rawValue)) return;
-            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+      // Clean brackets, commas, spaces; preserve dot
+      const  rawValue = inputValue
+        .replace(/[(),\s]/g, "")
+        .replace(/^-/, "");
 
-            if (rawValue === "0") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "date2");
-              return;
-            }
+      // Only digits and optionally one dot
+      if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
-            if (rawValue === "") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "", "date2");
-              return;
-            }
+      if (rawValue === "") {
+        handleChangeOtherComprehensiveIncomeTable2(idx, "", "date2");
+        return;
+      }
 
-            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
-            const finalValue = isNegative ? `(${formatted})` : formatted;
+      const finalValue = isNegative ? `(${rawValue})` : rawValue;
 
-            handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "date2");
+      handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "date2");
 
-            setTimeout(() => {
-              const newLength = finalValue.length;
-              const offset = newLength - inputValue.length;
-              const newPos = caretPos + offset;
-              input.setSelectionRange(newPos, newPos);
-            }, 0);
-          }}
-        />
-      </td>
+      setTimeout(() => {
+        const newLength = finalValue.length;
+        const offset = newLength - inputValue.length;
+        const newPos = caretPos + offset;
+        input.setSelectionRange(newPos, newPos);
+      }, 0);
+    }}
+  />
+</td>
+
     </tr>
   );
 })}

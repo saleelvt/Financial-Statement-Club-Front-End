@@ -98,11 +98,10 @@ useEffect(() => {
     const [sectionFourSubItemsEn, setFlowSectionFourSubEn] = useState<string[]>(  Array(3).fill("")    );
     const [sectionFourSubItemsDate2En, setFlowSectionFourSubDate2En] = useState<   string[]   >(Array(3).fill(""));
     const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("Fifth Total (Loss for the year)");
-    const TotalsectionFourSubItemsEn =   TotalsectionThreeItemsEn + sumStringValues(sectionFourSubItemsEn);
-    const TotalsectionFourSubItemsDate2En =  TotalsectionThreeItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
-
-
-
+  const TotalsectionFourSubItemsEn = TotalsectionFourItemsEn+  sumStringValues(sectionFourSubItemsEn);
+       const TotalsectionFourSubItemsDate2En = TotalsectionFourItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
+   
+   
 
 
     const [sectionFourAttribute, setSectionFourAttributeLabel] = useState("Net income from continuing operations Attributable to:1");
@@ -2408,8 +2407,8 @@ const handleChangeSectionLast2 = (
               );
             })}
 
-            <tr className="bg-gray-100 font-semibold  ">
-              <td className="bg-white"></td>
+            <tr className="bg-gray-200 font-semibold  ">
+              <td className=""></td>
               <td className=" "></td>
               <td className="p-2  ">
                 {formatWithParentheses(TotalsectionFourAttributeItemsEn)}
@@ -2623,10 +2622,10 @@ const handleChangeSectionLast2 = (
                 </tr>
               );
             })}
-
+ 
             {/* Total Row */}
-            <tr className="bg-gray-100 font-semibold">
-              <td className="bg-white"></td>
+            <tr className="bg-gray-200 font-semibold">
+              <td className=""></td>
               <td></td>
               <td className="p-2">
                 {formatWithParentheses(TotalsectionFourAttribute2ItemsEn)}
@@ -3776,8 +3775,8 @@ const handleChangeSectionLast2 = (
   );
 })}
 
-<tr className="bg-gray-100 font-semibold">
-  <td className="bg-white"></td>
+<tr className="bg-gray-200 font-semibold">
+  <td className=""></td>
   <td className=""></td>
   <td className="p-2">
     {formatWithParentheses(TotalsectionFourAttributeItemsEnTable2)}
@@ -3956,8 +3955,8 @@ const handleChangeSectionLast2 = (
 })}
 
 {/* Total Row */}
-<tr className="bg-gray-100 font-semibold">
-  <td className="bg-white"></td>
+<tr className="bg-gray-200 font-semibold">
+  <td className=""></td>
   <td></td>
   <td className="p-2">
     {formatWithParentheses(TotalsectionFourAttribute2ItemsEnTable2)}

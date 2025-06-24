@@ -2566,8 +2566,8 @@ useEffect(() => {
               );
             })}
 
-            <tr className="bg-gray-100 font-semibold  ">
-              <td className="bg-white"></td>
+            <tr className="bg-gray-200 font-semibold  ">
+              <td className=""></td>
               <td className=" "></td>
               <td className="p-2  ">
                 {formatWithParentheses(TotalsectionFourAttributeItemsEn)}
@@ -2781,10 +2781,10 @@ useEffect(() => {
                 </tr>
               );
             })}
-
+ 
             {/* Total Row */}
-            <tr className="bg-gray-100 font-semibold">
-              <td className="bg-white"></td>
+            <tr className="bg-gray-200 font-semibold">
+              <td className=""></td>
               <td></td>
               <td className="p-2">
                 {formatWithParentheses(TotalsectionFourAttribute2ItemsEn)}
@@ -3966,7 +3966,7 @@ useEffect(() => {
             handleChangeAttributeTable2(idx, finalValue, "sectionFourAttribute", "date2");
 
             setTimeout(() => {
-              const newLength = finalValue.length;
+              const newLength = finalValue.length; 
               const offset = newLength - inputValue.length;
               const newPos = caretPos + offset;
               input.setSelectionRange(newPos, newPos);
@@ -3978,8 +3978,8 @@ useEffect(() => {
   );
 })}
 
-<tr className="bg-gray-100 font-semibold">
-  <td className="bg-white"></td>
+<tr className="bg-gray-200 font-semibold">
+  <td className=""></td>
   <td className=""></td>
   <td className="p-2">
     {formatWithParentheses(TotalsectionFourAttributeItemsEnTable2)}
@@ -4158,8 +4158,8 @@ useEffect(() => {
 })}
 
 {/* Total Row */}
-<tr className="bg-gray-100 font-semibold">
-  <td className="bg-white"></td>
+<tr className="bg-gray-200 font-semibold">
+  <td className=""></td>
   <td></td>
   <td className="p-2">
     {formatWithParentheses(TotalsectionFourAttribute2ItemsEnTable2)}

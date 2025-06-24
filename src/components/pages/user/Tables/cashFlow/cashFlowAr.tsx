@@ -14,7 +14,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
 
       setTable(Tabledata);
     }, [Tabledata]);
-
+ 
     const formatValue = (v: string | number) => {
       const num = Number(String(v).replace(/[(),\s]/g, ""));
       if (isNaN(num)) return "-";
@@ -332,12 +332,12 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                     </tr>
                   )}
 
-                {table.sectionFourSub.sectionFourSubFirstLabelEn &&
-                  table.sectionFourSub.sectionFourSubFirstLabelEn.trim() !==
+                {table.sectionFourSub?.sectionFourSubFirstLabelEn &&
+                  table.sectionFourSub?.sectionFourSubFirstLabelEn?.trim() !==
                     "" && (
                     <tr className="bg-gray-200 px-1   font-semibold">
                       <td className="">
-                        {table.sectionFourSub.sectionFourSubFirstLabelEn}
+                        {table.sectionFourSub?.sectionFourSubFirstLabelEn}
                       </td>
                       <td className="  "></td>
                       <td className="  px-1 text-right  "></td>

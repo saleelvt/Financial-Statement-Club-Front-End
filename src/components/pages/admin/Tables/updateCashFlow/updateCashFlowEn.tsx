@@ -47,151 +47,147 @@ const CashFlowUpdateFormEn: React.FC<TableFormProps> = React.memo(
     const [date2, setDate2] = useState("(Audited)");
 
 
-      const [data1En, setDate1En] = useState<Date | null>(null);
-    const [data2En, setDate2En] = useState<Date | null>(null);
-   // section One
-       const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState(     "Continuing operation:"   );
-       const [sectionOneLabelsEn, setSectionOneLabelsEn] = useState<string[]>(      Array(5).fill("")   );
-       const [sectionOneNotesEn, setFlowSectionOneNotesEn] = useState<string[]>(     Array(5).fill("")   );
-       const [sectionOneItemsEn, setFlowSectionOneEn] = useState<string[]>(     Array(5).fill("")   );
-       const [sectionOneItemsDate2En, setFlowSectionOneDate2En] = useState<    string[]   >(Array(5).fill(""));
-       const [sectionOneTotalLabel, setSectionOneTotalLabel] = useState("First Total (Gross income)");
-       const TotalsectionOneItemsEn = sumStringValues(sectionOneItemsEn);
-       const TotalsectionOneItemsDate2En = sumStringValues(sectionOneItemsDate2En);
-   
-       // section Two
-       const [sectionTwoLabelsEn, setSectionTwoLabelsEn] = useState<string[]>(     Array(12).fill("")  );
-       const [sectionTwoNotesEn, setFlowSectionTwoNotesEn] = useState<string[]>(     Array(12).fill("")   );
-       const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(     Array(12).fill("")   );
-       const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(12).fill(""));
-       const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("Second Total (Operating loss)");
-       const TotalsectionTwoItemsEn =    TotalsectionOneItemsEn + sumStringValues(sectionTwoItemsEn);
-       const TotalsectionTwoItemsDate2En =   TotalsectionOneItemsDate2En + sumStringValues(sectionTwoItemsDate2En);
-   
-       // section Three
-       const [sectionThreeLabelsEn, setSectionThreeLabelsEn] = useState<string[]>(    Array(7).fill("")  );
-      const [sectionThreeNotesEn, setFlowSectionThreeNotesEn] = useState<    string[]   >(Array(7).fill(""));
-       const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(7).fill("")   );
-       const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(7).fill(""));
-       const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("Third Total (Income (loss) before zakat and foreign Income)");
-       const TotalsectionThreeItemsEn =      TotalsectionTwoItemsEn + sumStringValues(sectionThreeItemsEn);
-       const TotalsectionThreeItemsDate2En =      TotalsectionTwoItemsDate2En + sumStringValues(sectionThreeItemsDate2En);
-   
-   
-       // sectoin Four
-       const [sectionFourLabelsEn, setSectionFourLabelsEn] = useState<string[]>(     Array(5).fill("")    );
-       const [sectionFourNotesEn, setFlowSectionFourNotesEn] = useState<string[]>(      Array(5).fill("")   );
-       const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(      Array(5).fill("")    );
-       const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<      string[]    >(Array(5).fill(""));
-       const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("Four Total (Loss for the year from continuing operations)");
-       const TotalsectionFourItemsEn =      TotalsectionThreeItemsEn + sumStringValues(sectionFourItemsEn);
-       const TotalsectionFourItemsDate2En =     TotalsectionThreeItemsDate2En + sumStringValues(sectionFourItemsDate2En);
-   
-       const [sectionFourSubFirstLabelEn, setSectionFourSubFirstLabelEn] =  useState("Discontinued operation:");
-       const [sectionFourSubLabelsEn, setSectionFourSubLabelsEn] = useState< string[] >(Array(3).fill(""));
-       const [sectionFourSubNotesEn, setFlowSectionFourSubNotesEn] = useState< string[] >(Array(3).fill(""));
-       const [sectionFourSubItemsEn, setFlowSectionFourSubEn] = useState<string[]>(  Array(3).fill("")    );
-       const [sectionFourSubItemsDate2En, setFlowSectionFourSubDate2En] = useState<   string[]   >(Array(3).fill(""));
-       const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("Fifth Total (Loss for the year)");
-       const TotalsectionFourSubItemsEn =   TotalsectionThreeItemsEn + sumStringValues(sectionFourSubItemsEn);
-       const TotalsectionFourSubItemsDate2En =  TotalsectionThreeItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
-   
-   
-   
-   
-   
-       const [sectionFourAttribute, setSectionFourAttributeLabel] = useState("Net income from continuing operations Attributable to:1");
-       const [sectionFourAttributeLabelsEn, setSectionFourAttributeLabelsEn] =    useState<string[]>(Array(2).fill(""));
-       const [sectionFourAttributeItemsEn, setSectionFourAttributeItemsEn] =   useState<string[]>(Array(2).fill(""));
-       const [sectionFourAttributeItemsDate2En,   setSectionFourAttributeItemsDate2En,  ] = useState<string[]>(Array(2).fill(""));
-       const TotalsectionFourAttributeItemsEn = sumStringValues(  sectionFourAttributeItemsEn  );
-       const TotalsectionFourAttributeItemsDate2En = sumStringValues(  sectionFourAttributeItemsDate2En );
-   
-   
-       const [sectionFourAttribute2, setSectionFourAttribute2Label] = useState("Net (Loss) income Attributable to:2");
-       const [sectionFourAttribute2LabelsEn, setSectionFourAttribute2LabelsEn] =  useState<string[]>(Array(2).fill(""));
-       const [sectionFourAttribute2ItemsEn, setSectionFourAttribute2ItemsEn] = useState<string[]>(Array(2).fill(""));
-       const [sectionFourAttribute2ItemsDate2En,     setSectionFourAttribute2ItemsDate2En] = useState<string[]>(Array(2).fill(""));
-       const TotalsectionFourAttribute2ItemsEn = sumStringValues( sectionFourAttribute2ItemsEn);
-       const TotalsectionFourAttribute2ItemsDate2En = sumStringValues( sectionFourAttribute2ItemsDate2En);
-       
-       const [ sectionFourOtherComprehensiveIncome,    setSectionFourOtherComprehensiveIncomeLabel,  ] = useState("Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
-       const [ sectionFourOtherComprehensiveIncomeSubheadingLabelsEn,   setSectionFourOtherComprehensiveIncomeSubheadingLabelsEn,  ] = useState<string[]>(Array(2).fill(""));
-       const [  sectionFourOtherComprehensiveIncomeSubheadingNotesEn,   setSectionFourOtherComprehensiveIncomeSubheadingNotesEn,   ] = useState<string[]>(Array(2).fill(""));
-       const [  sectionFourOtherComprehensiveIncomeSubheadingItemsEn,     setSectionFourOtherComprehensiveIncomeSubheadingItemsEn,   ] = useState<string[]>(Array(2).fill(""));
-       const [ sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,    setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,   ] = useState<string[]>(Array(2).fill(""));
-   
-   
-   
-   
-   
-   
-       // table two Seciton 
-   
-   
-         const [dataTwo1En, setDateTwo1En] = useState<Date | null>(null);
-         const [dataTwo2En, setDateTwo2En] = useState<Date | null>(null);
-   
-         const [sectionLastLabel, setSectionLastLabel] =  useState("Fifth Total (Loss for the year)2");
-         const [sectionSevenLastLabel, setSectionSevenLastLabel] =  useState("Other comprehensive income");
-         const [ sectionSevenSubheading,   setSectionSevenSubheadingLabel ] = useState("Other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years:");
-         const [ sectionLastLabelsEn,  setSectionLastLabelsEn,  ] = useState<string[]>(Array(8).fill(""));
-         const [ sectionLastNotesEn, setSectionLastNotesEn,   ] = useState<string[]>(Array(8).fill(""));
-         const [ sectionLastItemsEn,    setSectionLastItemsEn,   ] = useState<string[]>(Array(8).fill(""));
-         const [ sectionLastItemsDate2En,   setSectionLastItemsDate2En,   ] = useState<string[]>(Array(8).fill(""));
-         const [ sectionLastTotalLabelEn,  setSectionLastTotalLabelEn,  ] = useState("Total other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years");
-         const TotalSectionLastLabelItemsEn =      sumStringValues(sectionLastItemsEn);
-         const TotalSectionLastItemsDate2En =  sumStringValues(sectionLastItemsDate2En);
-   
-   
-   
-   
-          const [ sectionSevenSubheading2,   setSectionSevenSubheadingLabel2 ] = useState("Other comprehensive income (loss) not reclassified to profit or loss in subsequent years:1");
-          const [ sectionLastLabelsEn2,  setSectionLastLabelsEn2 ] = useState<string[]>(Array(8).fill(""));
-          const [ sectionLastNotesEn2, setSectionLastNotesEn2 ] = useState<string[]>(Array(8).fill(""));
-          const [ sectionLastItemsEn2,    setSectionLastItemsEn2] = useState<string[]>(Array(8).fill(""));
-          const [ sectionLastItemsDate2En2,   setSectionLastItemsDate2En2 ] = useState<string[]>(Array(8).fill(""));
-   
+     const [data1En, setDate1En] = useState<Date | null>(null);
+        const [data2En, setDate2En] = useState<Date | null>(null);
+      
+        // section One
+        const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState(     "Continuing operation:"   );
+        const [sectionOneLabelsEn, setSectionOneLabelsEn] = useState<string[]>(      Array(5).fill("")   );
+        const [sectionOneNotesEn, setFlowSectionOneNotesEn] = useState<string[]>(     Array(5).fill("")   );
+        const [sectionOneItemsEn, setFlowSectionOneEn] = useState<string[]>(     Array(5).fill("")   );
+        const [sectionOneItemsDate2En, setFlowSectionOneDate2En] = useState<    string[]   >(Array(5).fill(""));
+        const [sectionOneTotalLabel, setSectionOneTotalLabel] = useState("First Total (Gross income)");
+        const TotalsectionOneItemsEn = sumStringValues(sectionOneItemsEn);
+        const TotalsectionOneItemsDate2En = sumStringValues(sectionOneItemsDate2En);
     
-          const [ sectionLastTotalLabelEn2,  setSectionToatalLastLabelEn2 ] = useState("Total other comprehensive income (loss) not reclassified to profit or loss in subsequent years:2");
-          const TotalSectionLastLabelItemsEn2 =      sumStringValues(sectionLastItemsEn2);
-          const TotalSectionLastItemsDate2En2 =  sumStringValues(sectionLastItemsDate2En2);
-   
-          const [SectionSevenSecondLastLabel2,   setSectionSevenSecondLastLabel2 ] = useState("Total other comprehensive income");
-          const TotalsectionSevenSecondLastItemEn = TotalSectionLastLabelItemsEn+TotalSectionLastLabelItemsEn2
-          const TotalsectionSevenSecondLastItemsDate2En = TotalSectionLastItemsDate2En+TotalSectionLastItemsDate2En2
-          const [ SectionSevenLastLabel2,   setSectionSevenLastLabel2 ] = useState("Total comprehensive (loss) income for the year ");
-          const TotalsectionSevenLastItemEn =     TotalsectionSevenSecondLastItemEn
-          const TotalsectionSevenLastItemsDate2En = TotalsectionSevenSecondLastItemsDate2En
-   
-          
-       
-         // Table 2 States
-         const [sectionFourAttributeTable2, setSectionFourAttributeLabelTable2] = useState("Net income from continuing operations Attributable to:");
-         const [sectionFourAttributeLabelsEnTable2, setSectionFourAttributeLabelsEnTable2] = useState<string[]>(Array(2).fill(""));
-         const [sectionFourAttributeItemsEnTable2, setSectionFourAttributeItemsEnTable2] = useState<string[]>(Array(2).fill(""));
-         const [sectionFourAttributeItemsDate2EnTable2, setSectionFourAttributeItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
-         const TotalsectionFourAttributeItemsEnTable2 = sumStringValues(sectionFourAttributeItemsEnTable2);
-         const TotalsectionFourAttributeItemsDate2EnTable2 = sumStringValues(sectionFourAttributeItemsDate2EnTable2);
+        // section Two
+        const [sectionTwoLabelsEn, setSectionTwoLabelsEn] = useState<string[]>(     Array(12).fill("")  );
+        const [sectionTwoNotesEn, setFlowSectionTwoNotesEn] = useState<string[]>(     Array(12).fill("")   );
+        const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(     Array(12).fill("")   );
+        const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(12).fill(""));
+        const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("Second Total (Operating loss)");
+        const TotalsectionTwoItemsEn =    TotalsectionOneItemsEn + sumStringValues(sectionTwoItemsEn);
+        const TotalsectionTwoItemsDate2En =   TotalsectionOneItemsDate2En + sumStringValues(sectionTwoItemsDate2En);
     
-         const [sectionFourAttribute2Table2, setSectionFourAttribute2LabelTable2] = useState("Net (Loss) income Attributable to:");
-         const [sectionFourAttribute2LabelsEnTable2, setSectionFourAttribute2LabelsEnTable2] = useState<string[]>(Array(2).fill(""));
-         const [sectionFourAttribute2ItemsEnTable2, setSectionFourAttribute2ItemsEnTable2] = useState<string[]>(Array(2).fill(""));
-         const [sectionFourAttribute2ItemsDate2EnTable2, setSectionFourAttribute2ItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
-         const TotalsectionFourAttribute2ItemsEnTable2 = sumStringValues(sectionFourAttribute2ItemsEnTable2);
-         const TotalsectionFourAttribute2ItemsDate2EnTable2 = sumStringValues(sectionFourAttribute2ItemsDate2EnTable2);
-   
-   
-         const [sectionFourOtherComprehensiveIncomeTable2, setSectionFourOtherComprehensiveIncomeLabelTable2] = useState("Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
-         const [sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2] = useState<string[]>(Array(2).fill(""));
-         const [sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2] = useState<string[]>(Array(2).fill(""));
-         const [sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2] = useState<string[]>(Array(2).fill(""));
-         const [sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2, setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
-   
-
-
-
-
+        // section Three
+        const [sectionThreeLabelsEn, setSectionThreeLabelsEn] = useState<string[]>(    Array(7).fill("")  );
+       const [sectionThreeNotesEn, setFlowSectionThreeNotesEn] = useState<    string[]   >(Array(7).fill(""));
+        const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(7).fill("")   );
+        const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(7).fill(""));
+        const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("Third Total (Income (loss) before zakat and foreign Income)");
+        const TotalsectionThreeItemsEn =      TotalsectionTwoItemsEn + sumStringValues(sectionThreeItemsEn);
+        const TotalsectionThreeItemsDate2En =      TotalsectionTwoItemsDate2En + sumStringValues(sectionThreeItemsDate2En);
+    
+    
+        // sectoin Four
+        const [sectionFourLabelsEn, setSectionFourLabelsEn] = useState<string[]>(     Array(5).fill("")    );
+        const [sectionFourNotesEn, setFlowSectionFourNotesEn] = useState<string[]>(      Array(5).fill("")   );
+        const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(      Array(5).fill("")    );
+        const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<      string[]    >(Array(5).fill(""));
+        const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("Four Total (Loss for the year from continuing operations)");
+        const TotalsectionFourItemsEn =      TotalsectionThreeItemsEn + sumStringValues(sectionFourItemsEn);
+        const TotalsectionFourItemsDate2En =     TotalsectionThreeItemsDate2En + sumStringValues(sectionFourItemsDate2En);
+    
+        const [sectionFourSubFirstLabelEn, setSectionFourSubFirstLabelEn] =  useState("Discontinued operation:");
+        const [sectionFourSubLabelsEn, setSectionFourSubLabelsEn] = useState< string[] >(Array(3).fill(""));
+        const [sectionFourSubNotesEn, setFlowSectionFourSubNotesEn] = useState< string[] >(Array(3).fill(""));
+        const [sectionFourSubItemsEn, setFlowSectionFourSubEn] = useState<string[]>(  Array(3).fill("")    );
+        const [sectionFourSubItemsDate2En, setFlowSectionFourSubDate2En] = useState<   string[]   >(Array(3).fill(""));
+        const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("Fifth Total (Loss for the year)");
+      const TotalsectionFourSubItemsEn = TotalsectionFourItemsEn+  sumStringValues(sectionFourSubItemsEn);
+           const TotalsectionFourSubItemsDate2En = TotalsectionFourItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
+       
+       
+    
+    
+        const [sectionFourAttribute, setSectionFourAttributeLabel] = useState("Net income from continuing operations Attributable to:1");
+        const [sectionFourAttributeLabelsEn, setSectionFourAttributeLabelsEn] =    useState<string[]>(Array(2).fill(""));
+        const [sectionFourAttributeItemsEn, setSectionFourAttributeItemsEn] =   useState<string[]>(Array(2).fill(""));
+        const [sectionFourAttributeItemsDate2En,   setSectionFourAttributeItemsDate2En,  ] = useState<string[]>(Array(2).fill(""));
+        const TotalsectionFourAttributeItemsEn = sumStringValues(  sectionFourAttributeItemsEn  );
+        const TotalsectionFourAttributeItemsDate2En = sumStringValues(  sectionFourAttributeItemsDate2En );
+    
+    
+        const [sectionFourAttribute2, setSectionFourAttribute2Label] = useState("Net (Loss) income Attributable to:2");
+        const [sectionFourAttribute2LabelsEn, setSectionFourAttribute2LabelsEn] =  useState<string[]>(Array(2).fill(""));
+        const [sectionFourAttribute2ItemsEn, setSectionFourAttribute2ItemsEn] = useState<string[]>(Array(2).fill(""));
+        const [sectionFourAttribute2ItemsDate2En,     setSectionFourAttribute2ItemsDate2En] = useState<string[]>(Array(2).fill(""));
+        const TotalsectionFourAttribute2ItemsEn = sumStringValues( sectionFourAttribute2ItemsEn);
+        const TotalsectionFourAttribute2ItemsDate2En = sumStringValues( sectionFourAttribute2ItemsDate2En);
+        
+        const [ sectionFourOtherComprehensiveIncome,    setSectionFourOtherComprehensiveIncomeLabel,  ] = useState("Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
+        const [ sectionFourOtherComprehensiveIncomeSubheadingLabelsEn,   setSectionFourOtherComprehensiveIncomeSubheadingLabelsEn,  ] = useState<string[]>(Array(2).fill(""));
+        const [  sectionFourOtherComprehensiveIncomeSubheadingNotesEn,   setSectionFourOtherComprehensiveIncomeSubheadingNotesEn,   ] = useState<string[]>(Array(2).fill(""));
+        const [  sectionFourOtherComprehensiveIncomeSubheadingItemsEn,     setSectionFourOtherComprehensiveIncomeSubheadingItemsEn,   ] = useState<string[]>(Array(2).fill(""));
+        const [ sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,    setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2En,   ] = useState<string[]>(Array(2).fill(""));
+    
+    
+    
+    
+        // table two Seciton 
+    
+    
+          const [dataTwo1En, setDateTwo1En] = useState<Date | null>(null);
+          const [dataTwo2En, setDateTwo2En] = useState<Date | null>(null);
+    
+          const [sectionLastLabel, setSectionLastLabel] =  useState("Fifth Total (Loss for the year)2");
+          const [sectionSevenLastLabel, setSectionSevenLastLabel] =  useState("Other comprehensive income");
+          const [ sectionSevenSubheading,   setSectionSevenSubheadingLabel ] = useState("Other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years:");
+          const [ sectionLastLabelsEn,  setSectionLastLabelsEn,  ] = useState<string[]>(Array(8).fill(""));
+          const [ sectionLastNotesEn, setSectionLastNotesEn,   ] = useState<string[]>(Array(8).fill(""));
+          const [ sectionLastItemsEn,    setSectionLastItemsEn,   ] = useState<string[]>(Array(8).fill(""));
+          const [ sectionLastItemsDate2En,   setSectionLastItemsDate2En,   ] = useState<string[]>(Array(8).fill(""));
+          const [ sectionLastTotalLabelEn,  setSectionLastTotalLabelEn,  ] = useState("Total other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years");
+          const TotalSectionLastLabelItemsEn =      sumStringValues(sectionLastItemsEn);
+          const TotalSectionLastItemsDate2En =  sumStringValues(sectionLastItemsDate2En);
+    
+    
+     
+    
+           const [ sectionSevenSubheading2,   setSectionSevenSubheadingLabel2 ] = useState("Other comprehensive income (loss) not reclassified to profit or loss in subsequent years:1");
+           const [ sectionLastLabelsEn2,  setSectionLastLabelsEn2 ] = useState<string[]>(Array(8).fill(""));
+           const [ sectionLastNotesEn2, setSectionLastNotesEn2 ] = useState<string[]>(Array(8).fill(""));
+           const [ sectionLastItemsEn2,    setSectionLastItemsEn2] = useState<string[]>(Array(8).fill(""));
+           const [ sectionLastItemsDate2En2,   setSectionLastItemsDate2En2 ] = useState<string[]>(Array(8).fill(""));
+    
+     
+           const [ sectionLastTotalLabelEn2,  setSectionToatalLastLabelEn2 ] = useState("Total other comprehensive income (loss) not reclassified to profit or loss in subsequent years:2");
+           const TotalSectionLastLabelItemsEn2 =      sumStringValues(sectionLastItemsEn2);
+           const TotalSectionLastItemsDate2En2 =  sumStringValues(sectionLastItemsDate2En2);
+    
+           const [SectionSevenSecondLastLabel2,   setSectionSevenSecondLastLabel2 ] = useState("Total other comprehensive income");
+           const TotalsectionSevenSecondLastItemEn = TotalSectionLastLabelItemsEn+TotalSectionLastLabelItemsEn2
+           const TotalsectionSevenSecondLastItemsDate2En = TotalSectionLastItemsDate2En+TotalSectionLastItemsDate2En2
+           const [ SectionSevenLastLabel2,   setSectionSevenLastLabel2 ] = useState("Total comprehensive (loss) income for the year ");
+           const TotalsectionSevenLastItemEn =   TotalsectionFourSubItemsEn+  TotalsectionSevenSecondLastItemEn
+           const TotalsectionSevenLastItemsDate2En = TotalsectionFourSubItemsDate2En+ TotalsectionSevenSecondLastItemsDate2En
+    
+           
+        
+          // Table 2 States
+          const [sectionFourAttributeTable2, setSectionFourAttributeLabelTable2] = useState("Net income from continuing operations Attributable to:");
+          const [sectionFourAttributeLabelsEnTable2, setSectionFourAttributeLabelsEnTable2] = useState<string[]>(Array(2).fill(""));
+          const [sectionFourAttributeItemsEnTable2, setSectionFourAttributeItemsEnTable2] = useState<string[]>(Array(2).fill(""));
+          const [sectionFourAttributeItemsDate2EnTable2, setSectionFourAttributeItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
+          const TotalsectionFourAttributeItemsEnTable2 = sumStringValues(sectionFourAttributeItemsEnTable2);
+          const TotalsectionFourAttributeItemsDate2EnTable2 = sumStringValues(sectionFourAttributeItemsDate2EnTable2);
+     
+          const [sectionFourAttribute2Table2, setSectionFourAttribute2LabelTable2] = useState("Net (Loss) income Attributable to:");
+          const [sectionFourAttribute2LabelsEnTable2, setSectionFourAttribute2LabelsEnTable2] = useState<string[]>(Array(2).fill(""));
+          const [sectionFourAttribute2ItemsEnTable2, setSectionFourAttribute2ItemsEnTable2] = useState<string[]>(Array(2).fill(""));
+          const [sectionFourAttribute2ItemsDate2EnTable2, setSectionFourAttribute2ItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
+          const TotalsectionFourAttribute2ItemsEnTable2 = sumStringValues(sectionFourAttribute2ItemsEnTable2);
+          const TotalsectionFourAttribute2ItemsDate2EnTable2 = sumStringValues(sectionFourAttribute2ItemsDate2EnTable2);
+    
+    
+          const [sectionFourOtherComprehensiveIncomeTable2, setSectionFourOtherComprehensiveIncomeLabelTable2] = useState("Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
+          const [sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2] = useState<string[]>(Array(2).fill(""));
+          const [sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2] = useState<string[]>(Array(2).fill(""));
+          const [sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2, setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2] = useState<string[]>(Array(2).fill(""));
+          const [sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2, setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2] = useState<string[]>(Array(2).fill(""));
+    
+    
+    
 
 
 
@@ -2749,7 +2745,7 @@ const handleChangeSectionLast2 = (
                         const formatted = new Intl.NumberFormat("en-US").format(
                           Number(rawValue)
                         );
-                        const finalValue = isNegative
+                        const finalValue = isNegative 
                           ? `(${formatted})`
                           : formatted;
 

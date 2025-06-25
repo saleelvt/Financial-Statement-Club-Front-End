@@ -28,6 +28,7 @@ export const configWithToken = () => {
     };
   };
 
+
 export const configWithTokenMultiPart = () => {
     let token = localStorage.getItem("accessTokenFins");
     token = token ? token.replace(/^"|"$/g, "").trim() : null; 

@@ -1651,7 +1651,7 @@ const handleChangeSectionLast2 = (
                       }}
                     />
                   </td>
-                </tr>
+                </tr> 
               );
             })}
             <tr className="bg-gray-200 font-semibold">
@@ -1680,7 +1680,7 @@ const handleChangeSectionLast2 = (
               return (
                 <tr key={`section-four-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
-                    <input
+                    <input  
                       className="w-full h-7 bg-gray-100 text-black p-1"
                       value={sectionFourLabelsEn[idx]}
                       placeholder={`${idx + 1}`}
@@ -2156,7 +2156,7 @@ const handleChangeSectionLast2 = (
                 />
               </td>
               <td className=" "></td>
-              <td className="p-2  ">
+              <td className="p-1  ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
                 )}
@@ -2412,7 +2412,7 @@ const handleChangeSectionLast2 = (
             <tr className="bg-gray-200 font-semibold  ">
               <td className=""></td>
               <td className=" "></td>
-              <td className="p-2  ">
+              <td className="p-1   ">
                 {formatWithParentheses(TotalsectionFourAttributeItemsEn)}
               </td>
               <td className="">
@@ -2629,7 +2629,7 @@ const handleChangeSectionLast2 = (
             <tr className="bg-gray-200 font-semibold">
               <td className=""></td>
               <td></td>
-              <td className="p-2">
+              <td className="p-1">
                 {formatWithParentheses(TotalsectionFourAttribute2ItemsEn)}
               </td>
               <td>
@@ -3040,7 +3040,7 @@ const handleChangeSectionLast2 = (
 
           <tbody>
 
-        <tr className="bg-gray-300 font-semibold">
+        <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
                   value={sectionLastLabel}
@@ -3049,7 +3049,7 @@ const handleChangeSectionLast2 = (
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-300 text-black px-1 "
+                  className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
               <td className=" "></td>
@@ -3065,16 +3065,16 @@ const handleChangeSectionLast2 = (
               </td>
             </tr>
 
-        <tr className="bg-gray-300 font-semibold">
+        <tr className="bg-gray-200 font-semibold">
               <td className=" p-1">
                 <input
                   value={sectionSevenLastLabel}
                   onChange={(e) =>
                     setSectionSevenLastLabel(
                       e.target.value
-                    )
+                    ) 
                   }
-                  className="w-full  bg-gray-300 text-black  "
+                  className="w-full  bg-gray-200 text-black  "
                 />
               </td>
               <td className=" "></td>
@@ -3283,7 +3283,7 @@ const handleChangeSectionLast2 = (
 
 
            <tr className="bg-gray-200 font-semibold">
-  <td className="bg-white">
+  <td className="">
     <textarea
       value={sectionLastTotalLabelEn}
       onChange={(e) => {
@@ -3504,7 +3504,7 @@ const handleChangeSectionLast2 = (
 
 
 <tr className="bg-gray-200 font-semibold">
-<td className="bg-white">
+<td className="">
   <textarea
     value={sectionLastTotalLabelEn2}
     onChange={(e) => {
@@ -3549,7 +3549,7 @@ const handleChangeSectionLast2 = (
 
 
 
-      <tr className="bg-gray-300 font-semibold">
+      <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
                   value={SectionSevenSecondLastLabel2}
@@ -3558,7 +3558,7 @@ const handleChangeSectionLast2 = (
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-300 text-black px-1 "
+                  className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
               <td className=" "></td>
@@ -3570,10 +3570,10 @@ const handleChangeSectionLast2 = (
               <td className="">
                 {formatWithParentheses(
                   TotalsectionSevenSecondLastItemsDate2En
-                )}
+                )} 
               </td>
             </tr>
-      <tr className="bg-gray-300 font-semibold">
+      <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
                   value={SectionSevenLastLabel2}
@@ -3582,7 +3582,7 @@ const handleChangeSectionLast2 = (
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-300 text-black px-1 "
+                  className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
               <td className=" "></td>
@@ -3787,7 +3787,7 @@ const handleChangeSectionLast2 = (
 <tr className="bg-gray-200 font-semibold">
   <td className=""></td>
   <td className=""></td>
-  <td className="p-2">
+  <td className="p-1">
     {formatWithParentheses(TotalsectionFourAttributeItemsEnTable2)}
   </td>
   <td className="">
@@ -3795,7 +3795,7 @@ const handleChangeSectionLast2 = (
   </td>
 </tr>
 
-
+<br />
 
     {/* Main label row */}
 <tr className="bg-gray-200 font-semibold">
@@ -3967,7 +3967,7 @@ const handleChangeSectionLast2 = (
 <tr className="bg-gray-200 font-semibold">
   <td className=""></td>
   <td></td>
-  <td className="p-2">
+  <td className="p-1">
     {formatWithParentheses(TotalsectionFourAttribute2ItemsEnTable2)}
   </td>
   <td>
@@ -3975,7 +3975,7 @@ const handleChangeSectionLast2 = (
   </td>
 </tr>
 
-
+<br />
 <tr className="bg-gray-200 font-semibold">
  <td>
   <textarea
@@ -3994,6 +3994,7 @@ const handleChangeSectionLast2 = (
   <td></td>
   <td></td>
 </tr>
+
 
 {sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2.map((val, idx) => {
   const isRowEmpty =

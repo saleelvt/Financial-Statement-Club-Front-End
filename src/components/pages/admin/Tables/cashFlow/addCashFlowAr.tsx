@@ -2281,7 +2281,7 @@ useEffect(() => {
                 />
               </td>
               <td className=" "></td>
-              <td className="p-2  ">
+              <td className="p-1   ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
                 )}
@@ -2569,7 +2569,7 @@ useEffect(() => {
             <tr className="bg-gray-200 font-semibold  ">
               <td className=""></td>
               <td className=" "></td>
-              <td className="p-2  ">
+              <td className="p-1   ">
                 {formatWithParentheses(TotalsectionFourAttributeItemsEn)}
               </td>
               <td className="">
@@ -2786,7 +2786,7 @@ useEffect(() => {
             <tr className="bg-gray-200 font-semibold">
               <td className=""></td>
               <td></td>
-              <td className="p-2">
+              <td className="p-1">
                 {formatWithParentheses(TotalsectionFourAttribute2ItemsEn)}
               </td>
               <td>
@@ -3228,7 +3228,7 @@ useEffect(() => {
 
   <tbody>
 
-        <tr className="bg-gray-300 font-semibold">
+        <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
                   value={sectionLastLabel}
@@ -3237,7 +3237,7 @@ useEffect(() => {
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-300 text-black px-1 "
+                  className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
               <td className=" "></td>
@@ -3255,8 +3255,8 @@ useEffect(() => {
 
 
 
-
-        <tr className="bg-gray-300 font-semibold">
+ 
+        <tr className="bg-gray-200 font-semibold">
               <td className=" p-1">
                 <input
                   value={sectionSevenLastLabel}
@@ -3265,7 +3265,7 @@ useEffect(() => {
                       e.target.value
                     )
                   }
-                  className="w-full  bg-gray-300 text-black  "
+                  className="w-full  bg-gray-200 text-black  "
                 />
               </td>
               <td className=" "></td>
@@ -3681,7 +3681,7 @@ useEffect(() => {
 
 
 <tr className="bg-gray-200 font-semibold">
-<td className="bg-white">
+<td className="">
   <textarea
     value={sectionLastTotalLabelEn2}
     onChange={(e) => {
@@ -3705,27 +3705,7 @@ useEffect(() => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <tr className="bg-gray-300 font-semibold">
+      <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
                   value={SectionSevenSecondLastLabel2}
@@ -3734,7 +3714,7 @@ useEffect(() => {
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-300 text-black px-1 "
+                  className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
               <td className=" "></td>
@@ -3749,16 +3729,16 @@ useEffect(() => {
                 )}
               </td>
             </tr>
-      <tr className="bg-gray-300 font-semibold">
+      <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
                   value={SectionSevenLastLabel2}
-                  onChange={(e) =>
+                  onChange={(e) => 
                     setSectionSevenLastLabel2(
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-300 text-black px-1 "
+                  className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
               <td className=" "></td>
@@ -3960,10 +3940,11 @@ useEffect(() => {
   );
 })}
 
+
 <tr className="bg-gray-200 font-semibold">
   <td className=""></td>
   <td className=""></td>
-  <td className="p-2">
+  <td className="p-1">
     {formatWithParentheses(TotalsectionFourAttributeItemsEnTable2)}
   </td>
   <td className="">
@@ -3971,7 +3952,7 @@ useEffect(() => {
   </td>
 </tr>
 
-
+<br />
 
     {/* Main label row */}
 <tr className="bg-gray-200 font-semibold">
@@ -4139,11 +4120,12 @@ useEffect(() => {
   );
 })}
 
+
 {/* Total Row */}
 <tr className="bg-gray-200 font-semibold">
   <td className=""></td>
   <td></td>
-  <td className="p-2">
+  <td className="p-1">
     {formatWithParentheses(TotalsectionFourAttribute2ItemsEnTable2)}
   </td>
   <td>
@@ -4151,7 +4133,7 @@ useEffect(() => {
   </td>
 </tr>
 
-
+<br />
 <tr className="bg-gray-200 font-semibold">
 <td>
   <textarea

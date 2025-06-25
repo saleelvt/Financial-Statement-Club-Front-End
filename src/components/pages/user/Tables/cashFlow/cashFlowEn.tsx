@@ -258,9 +258,9 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
 
                 {table.sectionThree.sectionThreeTotalLabel &&
                   table.sectionThree.sectionThreeTotalLabel.trim() !== "" && (
-                    <tr className="bg-gray-300 border-gray-300 font-bold">
+                    <tr className="bg-gray-200 border-gray-300 font-bold">
                       <td className=" p-1">
-                        {table.sectionThree.sectionThreeTotalLabel} saleel
+                        {table.sectionThree.sectionThreeTotalLabel} 
                       </td>
                       <td className="border border-gray-300"></td>
                       <td className="border  px-1   text-right border-gray-300">
@@ -457,10 +457,10 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                 {(table.sectionAttributeOne.TotalsectionFourAttributeItemsEn ||
                   table.sectionAttributeOne
                     .TotalsectionFourAttributeItemsDate2En) && (
-                  <tr className="bg-gray-200 font-semibold">
+                  <tr className="bg-gray-200 text-right font-semibold">
                     <td className=""></td>
                     <td className=""></td>
-                    <td className="p-2">
+                    <td className="p-1">
                       {table.sectionAttributeOne
                         .TotalsectionFourAttributeItemsEn
                         ? formatValue(
@@ -535,10 +535,10 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                 {(table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsEn ||
                   table.sectionAttributeTwo
                     .TotalsectionFourAttribute2ItemsDate2En) && (
-                  <tr className="bg-gray-200 font-semibold">
+                  <tr className="bg-gray-200 text-right font-semibold">
                     <td className=""></td>
                     <td className=""></td>
-                    <td className="p-2">
+                    <td className="p-1">
                       {table.sectionAttributeTwo
                         .TotalsectionFourAttribute2ItemsEn
                         ? formatValue(
@@ -755,7 +755,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
   {table.Table2.sectionOneTable2?.sectionLastLabel &&
                   table.Table2.sectionOneTable2?.sectionLastLabel.trim() !==
                     "" && (
-                    <tr className="bg-gray-300 px-1   font-semibold">
+                    <tr className="bg-gray-200 px-1   font-semibold">
                       <td className="">
                         {table.Table2.sectionOneTable2?.sectionLastLabel}
                       </td>
@@ -778,7 +778,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
 
                 {table.Table2.sectionOneTable2?.sectionSevenLastLabel&&
                  table.Table2.sectionOneTable2?.sectionSevenLastLabel.trim() !== "" && (
-                    <tr className="bg-gray-300 px-1   font-semibold">
+                    <tr className="bg-gray-200 px-1   font-semibold">
                       <td className="">
                         {table.Table2.sectionOneTable2?.sectionSevenLastLabel}
                       </td>
@@ -965,7 +965,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                     </tr>
                   )}
  {table.Table2.sectionTwoTable2.totalOtherComp.SectionSevenSecondLastLabel2&&  table.Table2.sectionTwoTable2.totalOtherComp.SectionSevenSecondLastLabel2.trim() !== "" && (
-                    <tr className="bg-gray-200 px-1   font-semibold">
+                    <tr className="bg-gray-200 px-1    font-semibold">
                       <td className="">
                         {table.Table2.sectionTwoTable2.totalOtherComp.SectionSevenSecondLastLabel2}
                       </td>
@@ -1004,8 +1004,8 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                 {table.Table2.sectionAttributeOneTable2.sectionFourAttributeTable2 &&
                  table.Table2.sectionAttributeOneTable2.sectionFourAttributeTable2.trim() !==
                     "" && (
-                    <tr className="bg-gray-200 font-semibold">
-                      <td className="p-1">
+                    <tr className="bg-gray-200  font-semibold">
+                      <td className="p-1 ">
                         {table.Table2.sectionAttributeOneTable2.sectionFourAttributeTable2}
                       </td>
                       <td className=" border-gray-300"></td>
@@ -1047,10 +1047,10 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
 
 
                 {(table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsEnTable2 || table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsDate2EnTable2) && (
-                  <tr className="bg-gray-200 font-semibold">
+                  <tr className="bg-gray-200 text-right font-semibold">
                     <td className=""></td>
                     <td className=""></td>
-                    <td className="p-2">
+                    <td className="p-1">
                       {table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsEnTable2
                         ? formatValue(   table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsEnTable2)
                         : "-"}
@@ -1119,10 +1119,10 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
 
 
                 {(table?.Table2?.sectionAttributeTwoTable2?.TotalsectionFourAttribute2ItemsEnTable2 || table.Table2?.sectionAttribute2TwoTable2?.TotalsectionFourAttribute2ItemsDate2EnTable2) && (
-                  <tr className="bg-gray-200 font-semibold">
+                  <tr className="bg-gray-200 text-right font-semibold">
                     <td className=""></td>
                     <td className=""></td>
-                    <td className="p-2">
+                    <td className="p-1">
                       {table.Table2.sectionAttributeTwoTable2.TotalsectionFourAttribute2ItemsEnTable2
                         ? formatValue(   table.Table2.sectionAttributeTwoTable2.TotalsectionFourAttribute2ItemsEnTable2)
                         : "-"}

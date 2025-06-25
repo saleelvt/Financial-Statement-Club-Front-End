@@ -460,8 +460,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                 {(table.sectionAttributeOne.TotalsectionFourAttributeItemsEn ||
                   table.sectionAttributeOne
                     .TotalsectionFourAttributeItemsDate2En) && (
-                  <tr className="bg-gray-100 font-semibold">
-                    <td className="bg-white"></td>
+                  <tr className="bg-gray-200 font-semibold">
+                    <td className=""></td>
                     <td className=""></td>
                     <td className="p-2">
                       {table.sectionAttributeOne
@@ -538,8 +538,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                 {(table.sectionAttributeTwo.TotalsectionFourAttribute2ItemsEn ||
                   table.sectionAttributeTwo
                     .TotalsectionFourAttribute2ItemsDate2En) && (
-                  <tr className="bg-gray-100 font-semibold">
-                    <td className="bg-white"></td>
+                  <tr className="bg-gray-200 font-semibold">
+                    <td className=""></td>
                     <td className=""></td>
                     <td className="p-2">
                       {table.sectionAttributeTwo
@@ -1045,8 +1045,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
 
 
                 {(table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsEnTable2 || table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsDate2EnTable2) && (
-                  <tr className="bg-gray-100 font-semibold">
-                    <td className="bg-white"></td>
+                  <tr className="bg-gray-200 font-semibold">
+                    <td className=""></td>
                     <td className=""></td>
                     <td className="p-2">
                       {table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsEnTable2
@@ -1118,8 +1118,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
 
 
                 {(table.Table2.sectionAttributeTwoTable2.TotalsectionFourAttribute2ItemsEnTable2 || table.Table2.sectionAttribute2TwoTable2.TotalsectionFourAttribute2ItemsDate2EnTable2) && (
-                  <tr className="bg-gray-100 font-semibold">
-                    <td className="bg-white"></td>
+                  <tr className="bg-gray-200 font-semibold">
+                    <td className=""></td>
                     <td className=""></td>
                     <td className="p-2">
                       {table.Table2.sectionAttributeTwoTable2.TotalsectionFourAttribute2ItemsEnTable2

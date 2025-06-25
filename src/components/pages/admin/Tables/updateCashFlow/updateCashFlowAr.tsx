@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-multi-date-picker";
 import gregorian_ar from "react-date-object/locales/gregorian_ar";
 import arabic from "react-date-object/calendars/gregorian";
@@ -35,6 +35,29 @@ const CashFlowUpdateFormAr: React.FC<TableFormArProps> = React.memo(
       const formatted = new Intl.NumberFormat("en-US").format(Math.abs(value));
       return value < 0 ? `(${formatted})` : formatted;
     };
+
+
+const autoResizeTextarea = (el: any | null) => {
+  if (el) {
+    el.style.height = 'auto'; // Reset height
+    el.style.height = el.scrollHeight + 'px'; // Set new height
+  }
+};
+
+const textareaRef = useRef<any | null>(null);
+
+
+useEffect(() => {
+  autoResizeTextarea(textareaRef.current);
+},);
+
+
+
+
+
+
+
+
 
     const [date1Rl, setDate1Rl] = useState("'000");
     const [date2Rl, setDate2Rl] = useState("'000");
@@ -2892,15 +2915,18 @@ useEffect(() => {
 
 
             <tr className="bg-gray-200 font-semibold  ">
-              <td className="">
-                <textarea 
-                  value={sectionFourOtherComprehensiveIncome}
-                  onChange={(e) =>
-                    setSectionFourOtherComprehensiveIncomeLabel(e.target.value)
-                  }
-                  className="w-full   bg-gray-200 text-black px-1"
-                />
-              </td>
+               <td className="">
+ <textarea 
+    value={sectionFourOtherComprehensiveIncome}
+    onChange={(e) => {
+      setSectionFourOtherComprehensiveIncomeLabel(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
               <td className=" "></td>
               <td className="   "></td>
               <td className=""></td>
@@ -2953,195 +2979,188 @@ useEffect(() => {
                       />
                     </td>
 
+
+
+
+
+
+
+
+
+
+                 
                     {/* Item */}
-                    <td className="border border-gray-300">
-                      <input
-                        className="w-full bg-gray-100 text-black p-1"
-                        value={
-                          sectionFourOtherComprehensiveIncomeSubheadingItemsEn[
-                            idx
-                          ]
-                        }
-                        onKeyDown={(e) => {
-                          const input = e.currentTarget;
-                          const caretPos = input.selectionStart ?? 0;
-                          if (
-                            e.key === "Backspace" &&
-                            caretPos === input.value.length &&
-                            input.value.endsWith(")")
-                          ) {
-                            e.preventDefault();
-                            const newVal = input.value.slice(0, -1);
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              newVal,
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "item"
-                            );
-                          }
-                        }}
-                        onChange={(e) => {
-                          const input = e.target;
-                          const inputValue = input.value;
-                          const caretPos = input.selectionStart ?? 0;
+                <td className="border border-gray-300">
+  <input
+    className="w-full bg-gray-100 text-black p-1"
+    value={sectionFourOtherComprehensiveIncomeSubheadingItemsEn[idx]}
+    onKeyDown={(e) => {
+      const input = e.currentTarget;
+      const caretPos = input.selectionStart ?? 0;
+      if (
+        e.key === "Backspace" &&
+        caretPos === input.value.length &&
+        input.value.endsWith(")")
+      ) {
+        e.preventDefault();
+        const newVal = input.value.slice(0, -1);
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          newVal,
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "item"
+        );
+      }
+    }}
+    onChange={(e) => {
+      const input = e.target;
+      const inputValue = input.value;
+      const caretPos = input.selectionStart ?? 0;
 
-                          if (inputValue === "-") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "-",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "item"
-                            );
-                            return;
-                          }
+      if (
+        inputValue === "-" ||
+        inputValue === "." ||
+        inputValue === "-."
+      ) {
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          inputValue,
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "item"
+        );
+        return;
+      }
 
-                          let rawValue = inputValue.replace(/[(),\s]/g, "");
-                          const isNegative =
-                            inputValue.startsWith("-") ||
-                            inputValue.startsWith("(");
-                          rawValue = rawValue.replace(/^-/, "");
+      const isNegative =
+        inputValue.startsWith("-") || inputValue.startsWith("(");
 
-                          if (!/^\d*$/.test(rawValue)) return;
-                          rawValue = rawValue.replace(/^0+(?=\d)/, "");
+      const  rawValue = inputValue
+        .replace(/[(),\s]/g, "")
+        .replace(/^-/, "");
 
-                          if (rawValue === "0") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "-",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "item"
-                            );
-                            return;
-                          }
+      if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
-                          if (rawValue === "") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "item"
-                            );
-                            return;
-                          }
+      if (rawValue === "") {
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          "",
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "item"
+        );
+        return;
+      }
 
-                          const formatted = new Intl.NumberFormat(
-                            "en-US"
-                          ).format(Number(rawValue));
-                          const finalValue = isNegative
-                            ? `(${formatted})`
-                            : formatted;
+      const formatted = new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 20,
+      }).format(Number(rawValue));
 
-                          handleChangeOtherComprehensiveIncome(
-                            idx,
-                            finalValue,
-                            "sectionFourOtherComprehensiveIncomeSubheading",
-                            "item"
-                          );
+      const finalValue = isNegative ? `(${formatted})` : formatted;
 
-                          setTimeout(() => {
-                            const newLength = finalValue.length;
-                            const offset = newLength - inputValue.length;
-                            const newPos = caretPos + offset;
-                            input.setSelectionRange(newPos, newPos);
-                          }, 0);
-                        }}
-                      />
-                    </td>
+      handleChangeOtherComprehensiveIncome(
+        idx,
+        finalValue,
+        "sectionFourOtherComprehensiveIncomeSubheading",
+        "item"
+      );
+
+      setTimeout(() => {
+        const newLength = finalValue.length;
+        const offset = newLength - inputValue.length;
+        const newPos = caretPos + offset;
+        input.setSelectionRange(newPos, newPos);
+      }, 0);
+    }}
+  />
+</td>
+
+
 
                     {/* Date2 */}
-                    <td className="border border-gray-300">
-                      <input
-                        className="w-full bg-gray-100 text-black p-1"
-                        value={
-                          sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[
-                            idx
-                          ]
-                        }
-                        onKeyDown={(e) => {
-                          const input = e.currentTarget;
-                          const caretPos = input.selectionStart ?? 0;
-                          if (
-                            e.key === "Backspace" &&
-                            caretPos === input.value.length &&
-                            input.value.endsWith(")")
-                          ) {
-                            e.preventDefault();
-                            const newVal = input.value.slice(0, -1);
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              newVal,
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "date2"
-                            );
-                          }
-                        }}
-                        onChange={(e) => {
-                          const input = e.target;
-                          const inputValue = input.value;
-                          const caretPos = input.selectionStart ?? 0;
+                  <td className="border border-gray-300">
+  <input
+    className="w-full bg-gray-100 text-black p-1"
+    value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[idx]}
+    onKeyDown={(e) => {
+      const input = e.currentTarget;
+      const caretPos = input.selectionStart ?? 0;
+      if (
+        e.key === "Backspace" &&
+        caretPos === input.value.length &&
+        input.value.endsWith(")")
+      ) {
+        e.preventDefault();
+        const newVal = input.value.slice(0, -1);
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          newVal,
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "date2"
+        );
+      }
+    }}
+    onChange={(e) => {
+      const input = e.target;
+      const inputValue = input.value;
+      const caretPos = input.selectionStart ?? 0;
 
-                          if (inputValue === "-") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "-",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "date2"
-                            );
-                            return;
-                          }
+      if (
+        inputValue === "-" ||
+        inputValue === "." ||
+        inputValue === "-."
+      ) {
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          inputValue,
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "date2"
+        );
+        return;
+      }
 
-                          let rawValue = inputValue.replace(/[(),\s]/g, "");
-                          const isNegative =
-                            inputValue.startsWith("-") ||
-                            inputValue.startsWith("(");
-                          rawValue = rawValue.replace(/^-/, "");
+      const isNegative =
+        inputValue.startsWith("-") || inputValue.startsWith("(");
 
-                          if (!/^\d*$/.test(rawValue)) return;
-                          rawValue = rawValue.replace(/^0+(?=\d)/, "");
+      const  rawValue = inputValue
+        .replace(/[(),\s]/g, "")
+        .replace(/^-/, "");
 
-                          if (rawValue === "0") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "-",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "date2"
-                            );
-                            return;
-                          }
+      if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
-                          if (rawValue === "") {
-                            handleChangeOtherComprehensiveIncome(
-                              idx,
-                              "",
-                              "sectionFourOtherComprehensiveIncomeSubheading",
-                              "date2"
-                            );
-                            return;
-                          }
+      if (rawValue === "") {
+        handleChangeOtherComprehensiveIncome(
+          idx,
+          "",
+          "sectionFourOtherComprehensiveIncomeSubheading",
+          "date2"
+        );
+        return;
+      }
 
-                          const formatted = new Intl.NumberFormat(
-                            "en-US"
-                          ).format(Number(rawValue));
-                          const finalValue = isNegative
-                            ? `(${formatted})`
-                            : formatted;
+      const formatted = new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 20,
+      }).format(Number(rawValue));
 
-                          handleChangeOtherComprehensiveIncome(
-                            idx,
-                            finalValue,
-                            "sectionFourOtherComprehensiveIncomeSubheading",
-                            "date2"
-                          );
+      const finalValue = isNegative ? `(${formatted})` : formatted;
 
-                          setTimeout(() => {
-                            const newLength = finalValue.length;
-                            const offset = newLength - inputValue.length;
-                            const newPos = caretPos + offset;
-                            input.setSelectionRange(newPos, newPos);
-                          }, 0);
-                        }}
-                      />
-                    </td>
+      handleChangeOtherComprehensiveIncome(
+        idx,
+        finalValue,
+        "sectionFourOtherComprehensiveIncomeSubheading",
+        "date2"
+      );
+
+      setTimeout(() => {
+        const newLength = finalValue.length;
+        const offset = newLength - inputValue.length;
+        const newPos = caretPos + offset;
+        input.setSelectionRange(newPos, newPos);
+      }, 0);
+    }}
+  />
+</td>
+
                   </tr>
                 );
               }
@@ -3375,17 +3394,18 @@ useEffect(() => {
 
             </tr>
                <tr className="bg-gray-200 font-semibold  ">
-              <td className="">
-                <textarea
-                  value={sectionSevenSubheading}
-                  onChange={(e) =>
-                    setSectionSevenSubheadingLabel(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                />
-              </td>
+               <td className="">
+  <textarea
+    value={sectionSevenSubheading}
+    onChange={(e) => {
+      setSectionSevenSubheadingLabel(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
               <td className=" "></td>
               <td className="   "></td>
               <td className=""></td>
@@ -3559,15 +3579,18 @@ useEffect(() => {
 
 
             <tr className="bg-gray-200 font-semibold">
-              <td className="bg-white"> <textarea
-                  value={sectionLastTotalLabelEn}
-                  onChange={(e) =>
-                    setSectionLastTotalLabelEn(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                /></td>
+             <td className="">
+  <textarea
+    value={sectionLastTotalLabelEn}
+    onChange={(e) => {
+      setSectionLastTotalLabelEn(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
               <td></td>
               <td className="p-2">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn)}
@@ -3583,17 +3606,18 @@ useEffect(() => {
 
             
                <tr className="bg-gray-200 font-semibold  ">
-              <td className="">
-                <textarea
-                  value={sectionSevenSubheading2}
-                  onChange={(e) =>
-                    setSectionSevenSubheadingLabel2(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                />
-              </td>
+               <td className="">
+  <textarea
+    value={sectionSevenSubheading2}
+    onChange={(e) => {
+      setSectionSevenSubheadingLabel2(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
               <td className=" "></td>
               <td className="   "></td>
               <td className=""></td>
@@ -3757,15 +3781,18 @@ useEffect(() => {
 
 
 <tr className="bg-gray-200 font-semibold">
-              <td className="bg-white"><textarea
-                  value={sectionLastTotalLabelEn2}
-                  onChange={(e) =>
-                    setSectionToatalLastLabelEn2(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
-                /></td>
+            <td className="bg-white">
+  <textarea
+    value={sectionLastTotalLabelEn2}
+    onChange={(e) => {
+      setSectionToatalLastLabelEn2(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
               <td></td>
               <td className="p-2">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn2)}
@@ -4221,14 +4248,17 @@ useEffect(() => {
 
 <tr className="bg-gray-200 font-semibold">
   <td>
-    <textarea
-      value={sectionFourOtherComprehensiveIncomeTable2}
-      onChange={(e) =>
-        setSectionFourOtherComprehensiveIncomeLabelTable2(e.target.value)
-      }
-      className="w-full bg-gray-200 text-black px-1"
-    />
-  </td>
+  <textarea
+    value={sectionFourOtherComprehensiveIncomeTable2}
+    onChange={(e) => {
+      setSectionFourOtherComprehensiveIncomeLabelTable2(e.target.value);
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+    rows={1}
+  />
+</td>
   <td></td>
   <td></td>
   <td></td>
@@ -4261,127 +4291,127 @@ useEffect(() => {
         />
       </td>
 
+
+
+
       {/* Item */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full bg-gray-100 text-black p-1"
-          value={sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2[idx]}
-          onKeyDown={(e) => {
-            const input = e.currentTarget;
-            const caretPos = input.selectionStart ?? 0;
-            if (
-              e.key === "Backspace" &&
-              caretPos === input.value.length &&
-              input.value.endsWith(")")
-            ) {
-              e.preventDefault();
-              const newVal = input.value.slice(0, -1);
-              handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "item");
-            }
-          }}
-          onChange={(e) => {
-            const input = e.target;
-            const inputValue = input.value;
-            const caretPos = input.selectionStart ?? 0;
+     
+    <td className="border border-gray-300">
+  <input
+    className="w-full bg-gray-100 text-black p-1"
+    value={sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2[idx]}
+    onKeyDown={(e) => {
+      const input = e.currentTarget;
+      const caretPos = input.selectionStart ?? 0;
+      if (
+        e.key === "Backspace" &&
+        caretPos === input.value.length &&
+        input.value.endsWith(")")
+      ) {
+        e.preventDefault();
+        const newVal = input.value.slice(0, -1);
+        handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "item");
+      }
+    }}
+    onChange={(e) => {
+      const input = e.target;
+      const inputValue = input.value;
+      const caretPos = input.selectionStart ?? 0;
 
-            if (inputValue === "-") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "item");
-              return;
-            }
+      // Allow intermediate states like "-", ".", "-."
+      if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
+        handleChangeOtherComprehensiveIncomeTable2(idx, inputValue, "item");
+        return;
+      }
 
-            let rawValue = inputValue.replace(/[(),\s]/g, "");
-            const isNegative =
-              inputValue.startsWith("-") || inputValue.startsWith("(");
-            rawValue = rawValue.replace(/^-/, "");
+      const isNegative =
+        inputValue.startsWith("-") || inputValue.startsWith("(");
 
-            if (!/^\d*$/.test(rawValue)) return;
-            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+      const  rawValue = inputValue
+        .replace(/[(),\s]/g, "") // remove formatting/brackets
+        .replace(/^-/, "");      // remove leading dash for parsing
 
-            if (rawValue === "0") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "item");
-              return;
-            }
+      // Allow digits with optional one dot (decimal)
+      if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
-            if (rawValue === "") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "", "item");
-              return;
-            }
+      if (rawValue === "") {
+        handleChangeOtherComprehensiveIncomeTable2(idx, "", "item");
+        return;
+      }
 
-            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
-            const finalValue = isNegative ? `(${formatted})` : formatted;
+      const finalValue = isNegative ? `(${rawValue})` : rawValue;
 
-            handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "item");
+      handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "item");
 
-            setTimeout(() => {
-              const newLength = finalValue.length;
-              const offset = newLength - inputValue.length;
-              const newPos = caretPos + offset;
-              input.setSelectionRange(newPos, newPos);
-            }, 0);
-          }}
-        />
-      </td>
+      setTimeout(() => {
+        const newLength = finalValue.length;
+        const offset = newLength - inputValue.length;
+        const newPos = caretPos + offset;
+        input.setSelectionRange(newPos, newPos);
+      }, 0);
+    }}
+  />
+</td>
+
 
       {/* Date2 */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full bg-gray-100 text-black p-1"
-          value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2[idx]}
-          onKeyDown={(e) => {
-            const input = e.currentTarget;
-            const caretPos = input.selectionStart ?? 0;
-            if (
-              e.key === "Backspace" &&
-              caretPos === input.value.length &&
-              input.value.endsWith(")")
-            ) {
-              e.preventDefault();
-              const newVal = input.value.slice(0, -1);
-              handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "date2");
-            }
-          }}
-          onChange={(e) => {
-            const input = e.target;
-            const inputValue = input.value;
-            const caretPos = input.selectionStart ?? 0;
+     <td className="border border-gray-300">
+  <input
+    className="w-full bg-gray-100 text-black p-1"
+    value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2[idx]}
+    onKeyDown={(e) => {
+      const input = e.currentTarget;
+      const caretPos = input.selectionStart ?? 0;
+      if (
+        e.key === "Backspace" &&
+        caretPos === input.value.length &&
+        input.value.endsWith(")")
+      ) {
+        e.preventDefault();
+        const newVal = input.value.slice(0, -1);
+        handleChangeOtherComprehensiveIncomeTable2(idx, newVal, "date2");
+      }
+    }}
+    onChange={(e) => {
+      const input = e.target;
+      const inputValue = input.value;
+      const caretPos = input.selectionStart ?? 0;
 
-            if (inputValue === "-") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "date2");
-              return;
-            }
+      // Allow intermediate values like "-", ".", "-."
+      if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
+        handleChangeOtherComprehensiveIncomeTable2(idx, inputValue, "date2");
+        return;
+      }
 
-            let rawValue = inputValue.replace(/[(),\s]/g, "");
-            const isNegative =
-              inputValue.startsWith("-") || inputValue.startsWith("(");
-            rawValue = rawValue.replace(/^-/, "");
+      const isNegative =
+        inputValue.startsWith("-") || inputValue.startsWith("(");
 
-            if (!/^\d*$/.test(rawValue)) return;
-            rawValue = rawValue.replace(/^0+(?=\d)/, "");
+      const  rawValue = inputValue
+        .replace(/[(),\s]/g, "") // remove brackets/spaces
+        .replace(/^-/, "");      // remove starting dash for parse
 
-            if (rawValue === "0") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "-", "date2");
-              return;
-            }
+      // Allow digits with at most one dot
+      if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
-            if (rawValue === "") {
-              handleChangeOtherComprehensiveIncomeTable2(idx, "", "date2");
-              return;
-            }
+      if (rawValue === "") {
+        handleChangeOtherComprehensiveIncomeTable2(idx, "", "date2");
+        return;
+      }
 
-            const formatted = new Intl.NumberFormat("en-US").format(Number(rawValue));
-            const finalValue = isNegative ? `(${formatted})` : formatted;
+      const finalValue = isNegative ? `(${rawValue})` : rawValue;
 
-            handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "date2");
+      handleChangeOtherComprehensiveIncomeTable2(idx, finalValue, "date2");
 
-            setTimeout(() => {
-              const newLength = finalValue.length;
-              const offset = newLength - inputValue.length;
-              const newPos = caretPos + offset;
-              input.setSelectionRange(newPos, newPos);
-            }, 0);
-          }}
-        />
-      </td>
+      setTimeout(() => {
+        const newLength = finalValue.length;
+        const offset = newLength - inputValue.length;
+        const newPos = caretPos + offset;
+        input.setSelectionRange(newPos, newPos);
+      }, 0);
+    }}
+  />
+</td>
+
     </tr>
   );
 })}

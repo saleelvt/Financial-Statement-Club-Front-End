@@ -29,6 +29,11 @@ const CashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingSh
       return value < 0 ? `(${formatted})` : formatted;
     };
 
+
+
+
+
+
     const autoResizeTextarea = (el: any | null) => {
   if (el) {
     el.style.height = 'auto'; // Reset height
@@ -43,11 +48,8 @@ useEffect(() => {
   autoResizeTextarea(textareaRef.current);
 },);
 
-
-
     const [date1Rl, setDate1Rl] = useState("'000");
     const [date2Rl, setDate2Rl] = useState("'000");
-
     const [date1, setDate1] = useState("(Unaudited)");
     const [date2, setDate2] = useState("(Audited)");
 
@@ -2931,32 +2933,19 @@ const handleChangeSectionLast2 = (
     }}
   />
 </td>
-
-                  </tr>
+ </tr>
                 );
               }
             )}
 
-          
-
-            <br />
-            <br />
 
 
 
 
           
 
-
-
-
-
-<br />
-
-
-
-
-
+            <br />
+            <br />
 
 
 
@@ -3134,16 +3123,20 @@ const handleChangeSectionLast2 = (
 
   return (
     <tr key={`section-last-${idx}`} className="bg-gray-100">
-      <td className="border border-gray-300">
-        <input
-          className="w-full h-7 bg-gray-100 text-black p-1"
-          value={sectionLastLabelsEn[idx]}
-          placeholder={`${idx + 1}`}
-          onChange={(e) =>
-            handleChangeSectionLast(idx, e.target.value, "sectionLast", "label")
-          }
-        />
-      </td>
+    <td className="border border-gray-300">
+  <textarea
+    className="w-full bg-gray-100 text-black p-1 resize-none overflow-hidden"
+    rows={1}
+    value={sectionLastLabelsEn[idx]}
+    placeholder={`${idx + 1}`}
+    onChange={(e) => {
+      handleChangeSectionLast(idx, e.target.value, "sectionLast", "label");
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+  />
+</td>
+
 
       <td className="border border-gray-300">
         <input
@@ -3346,16 +3339,31 @@ const handleChangeSectionLast2 = (
   return (
     <tr key={`section-last2-${idx}`} className="bg-gray-100">
       {/* Label */}
-      <td className="border border-gray-300">
-        <input
-          className="w-full h-7 bg-gray-100 text-black p-1"
-          value={sectionLastLabelsEn2[idx]}
-          placeholder={`${idx + 1}`}
-          onChange={(e) =>
-            handleChangeSectionLast2(idx, e.target.value, "sectionLast2", "label")
-          }
-        />
-      </td>
+
+
+
+
+   <td className="border border-gray-300">
+  <textarea
+    className="w-full bg-gray-100 text-black p-1 resize-none overflow-hidden"
+    rows={1}
+    value={sectionLastLabelsEn2[idx]}
+    placeholder={`${idx + 1}`}
+    onChange={(e) => {
+      handleChangeSectionLast2(idx, e.target.value, "sectionLast2", "label");
+      autoResizeTextarea(e.target);
+    }}
+    onInput={(e) => autoResizeTextarea(e.target)}
+  />
+</td>
+
+
+
+
+
+
+
+
 
       {/* Note */}
       <td className="border border-gray-300">
@@ -4016,6 +4024,8 @@ const handleChangeSectionLast2 = (
           }
         />
       </td>
+
+
 
       {/* Item */}
   <td className="border border-gray-300">

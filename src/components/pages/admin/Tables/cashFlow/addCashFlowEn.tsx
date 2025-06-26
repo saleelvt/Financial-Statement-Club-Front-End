@@ -1898,7 +1898,7 @@ const handleChangeSectionLast2 = (
               </td>
             </tr>
             <br />
-            <br />
+        
             <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
@@ -2712,29 +2712,6 @@ const handleChangeSectionLast2 = (
                         }
                       />
                     </td>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

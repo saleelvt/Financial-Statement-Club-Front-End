@@ -2022,7 +2022,7 @@ useEffect(() => {
                 {formatWithParentheses(TotalsectionFourItemsDate2En)}
               </td>
             </tr>
-            <br />
+          
             <br />
             <tr className="bg-gray-200 font-semibold">
               <td className="">

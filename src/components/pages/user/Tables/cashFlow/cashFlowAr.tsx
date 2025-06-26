@@ -331,7 +331,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                       </td>
                     </tr>
                   )}
-
+ 
                 {table.sectionFourSub?.sectionFourSubFirstLabelEn &&
                   table.sectionFourSub?.sectionFourSubFirstLabelEn?.trim() !==
                     "" && (
@@ -1049,7 +1049,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                   <tr className="bg-gray-200 font-semibold">
                     <td className=""></td>
                     <td className=""></td>
-                    <td className="p-2">
+                    <td className="p-1">
                       {table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsEnTable2
                         ? formatValue(   table.Table2.sectionAttributeOneTable2.TotalsectionFourAttributeItemsEnTable2)
                         : "-"}
@@ -1118,11 +1118,14 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                 )}
 
 
-                {(table.Table2.sectionAttributeTwoTable2.TotalsectionFourAttribute2ItemsEnTable2 || table.Table2.sectionAttribute2TwoTable2.TotalsectionFourAttribute2ItemsDate2EnTable2) && (
+
+
+
+                {(table?.Table2?.sectionAttributeTwoTable2?.TotalsectionFourAttribute2ItemsEnTable2 || table.Table2?.sectionAttribute2TwoTable2?.TotalsectionFourAttribute2ItemsDate2EnTable2) && (
                   <tr className="bg-gray-200 font-semibold">
                     <td className=""></td>
                     <td className=""></td>
-                    <td className="p-2">
+                    <td className="p-1">
                       {table.Table2.sectionAttributeTwoTable2.TotalsectionFourAttribute2ItemsEnTable2
                         ? formatValue(   table.Table2.sectionAttributeTwoTable2.TotalsectionFourAttribute2ItemsEnTable2)
                         : "-"}

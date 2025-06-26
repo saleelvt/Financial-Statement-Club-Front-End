@@ -11,7 +11,7 @@ type TableFormProps = {
 
 
 
-
+ 
 const CashFlowUpdateFormEn: React.FC<TableFormProps> = React.memo(
   ({ TableDataEn }) => {
     // Updated state declarations with empty strings as initial values
@@ -69,12 +69,12 @@ const CashFlowUpdateFormEn: React.FC<TableFormProps> = React.memo(
         const [data2En, setDate2En] = useState<Date | null>(null);
       
         // section One
-        const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState(     "Continuing operation:"   );
+        const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState(     ""   );
         const [sectionOneLabelsEn, setSectionOneLabelsEn] = useState<string[]>(      Array(5).fill("")   );
         const [sectionOneNotesEn, setFlowSectionOneNotesEn] = useState<string[]>(     Array(5).fill("")   );
         const [sectionOneItemsEn, setFlowSectionOneEn] = useState<string[]>(     Array(5).fill("")   );
         const [sectionOneItemsDate2En, setFlowSectionOneDate2En] = useState<    string[]   >(Array(5).fill(""));
-        const [sectionOneTotalLabel, setSectionOneTotalLabel] = useState("First Total (Gross income)");
+        const [sectionOneTotalLabel, setSectionOneTotalLabel] = useState("");
         const TotalsectionOneItemsEn = sumStringValues(sectionOneItemsEn);
         const TotalsectionOneItemsDate2En = sumStringValues(sectionOneItemsDate2En);
     
@@ -83,7 +83,7 @@ const CashFlowUpdateFormEn: React.FC<TableFormProps> = React.memo(
         const [sectionTwoNotesEn, setFlowSectionTwoNotesEn] = useState<string[]>(     Array(12).fill("")   );
         const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(     Array(12).fill("")   );
         const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(12).fill(""));
-        const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("Second Total (Operating loss)");
+        const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("");
         const TotalsectionTwoItemsEn =    TotalsectionOneItemsEn + sumStringValues(sectionTwoItemsEn);
         const TotalsectionTwoItemsDate2En =   TotalsectionOneItemsDate2En + sumStringValues(sectionTwoItemsDate2En);
     
@@ -92,7 +92,7 @@ const CashFlowUpdateFormEn: React.FC<TableFormProps> = React.memo(
        const [sectionThreeNotesEn, setFlowSectionThreeNotesEn] = useState<    string[]   >(Array(7).fill(""));
         const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(7).fill("")   );
         const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(7).fill(""));
-        const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("Third Total (Income (loss) before zakat and foreign Income)");
+        const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("");
         const TotalsectionThreeItemsEn =      TotalsectionTwoItemsEn + sumStringValues(sectionThreeItemsEn);
         const TotalsectionThreeItemsDate2En =      TotalsectionTwoItemsDate2En + sumStringValues(sectionThreeItemsDate2En);
     
@@ -102,23 +102,23 @@ const CashFlowUpdateFormEn: React.FC<TableFormProps> = React.memo(
         const [sectionFourNotesEn, setFlowSectionFourNotesEn] = useState<string[]>(      Array(5).fill("")   );
         const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(      Array(5).fill("")    );
         const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<      string[]    >(Array(5).fill(""));
-        const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("Four Total (Loss for the year from continuing operations)");
+        const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("");
         const TotalsectionFourItemsEn =      TotalsectionThreeItemsEn + sumStringValues(sectionFourItemsEn);
         const TotalsectionFourItemsDate2En =     TotalsectionThreeItemsDate2En + sumStringValues(sectionFourItemsDate2En);
     
-        const [sectionFourSubFirstLabelEn, setSectionFourSubFirstLabelEn] =  useState("Discontinued operation:");
+        const [sectionFourSubFirstLabelEn, setSectionFourSubFirstLabelEn] =  useState("");
         const [sectionFourSubLabelsEn, setSectionFourSubLabelsEn] = useState< string[] >(Array(3).fill(""));
         const [sectionFourSubNotesEn, setFlowSectionFourSubNotesEn] = useState< string[] >(Array(3).fill(""));
         const [sectionFourSubItemsEn, setFlowSectionFourSubEn] = useState<string[]>(  Array(3).fill("")    );
         const [sectionFourSubItemsDate2En, setFlowSectionFourSubDate2En] = useState<   string[]   >(Array(3).fill(""));
-        const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("Fifth Total (Loss for the year)");
+        const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("");
       const TotalsectionFourSubItemsEn = TotalsectionFourItemsEn+  sumStringValues(sectionFourSubItemsEn);
            const TotalsectionFourSubItemsDate2En = TotalsectionFourItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
        
        
     
     
-        const [sectionFourAttribute, setSectionFourAttributeLabel] = useState("Net income from continuing operations Attributable to:1");
+        const [sectionFourAttribute, setSectionFourAttributeLabel] = useState("");
         const [sectionFourAttributeLabelsEn, setSectionFourAttributeLabelsEn] =    useState<string[]>(Array(2).fill(""));
         const [sectionFourAttributeItemsEn, setSectionFourAttributeItemsEn] =   useState<string[]>(Array(2).fill(""));
         const [sectionFourAttributeItemsDate2En,   setSectionFourAttributeItemsDate2En,  ] = useState<string[]>(Array(2).fill(""));
@@ -126,7 +126,7 @@ const CashFlowUpdateFormEn: React.FC<TableFormProps> = React.memo(
         const TotalsectionFourAttributeItemsDate2En = sumStringValues(  sectionFourAttributeItemsDate2En );
     
     
-        const [sectionFourAttribute2, setSectionFourAttribute2Label] = useState("Net (Loss) income Attributable to:2");
+        const [sectionFourAttribute2, setSectionFourAttribute2Label] = useState("");
         const [sectionFourAttribute2LabelsEn, setSectionFourAttribute2LabelsEn] =  useState<string[]>(Array(2).fill(""));
         const [sectionFourAttribute2ItemsEn, setSectionFourAttribute2ItemsEn] = useState<string[]>(Array(2).fill(""));
         const [sectionFourAttribute2ItemsDate2En,     setSectionFourAttribute2ItemsDate2En] = useState<string[]>(Array(2).fill(""));

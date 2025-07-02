@@ -6,21 +6,22 @@ import {  RootState } from './reduxKit/store';
 import { Toaster } from 'react-hot-toast';
 
 const Loading = lazy(() => import("./components/pages/Loading"));
-const CheckDocumentDetails = lazy(() => import("./components/pages/admin/checkDocumentDetails"));
+const CheckDocumentDetails = lazy(() => import("./components/pages/admin/Document/checkDocumentDetails"));
 const UserCompanyDetails = lazy(() => import("./components/pages/user/userCheckDetails"));
-const UpdateDocumentAr = lazy(() => import("./components/pages/admin/updateDocumentAr"));
+const UpdateDocumentAr = lazy(() => import("./components/pages/admin/Document/updateDocumentAr"));
 const UserHomePage = lazy(() => import("./components/pages/user/userHome"));
-const DocumentList = lazy(() => import("./components/pages/admin/documentList"));
+const DocumentList = lazy(() => import("./components/pages/admin/Document/documentList"));
 const AdminLogin = lazy(() => import("./components/forms/admin/login"));
 const AdminHomePage = lazy(() => import("./components/pages/admin/adminDashBoard"));
 const EmailVerification = lazy(() => import("./components/forms/admin/otpVerifiy"));
 // import { UserCompanyDetailsNew } from './components/pages/user/old';
 const AddNewTable=lazy(() => import("./components/pages/admin/addTable"));
-const AddDocumentArabic = lazy(() => import("./components/pages/admin/addDocumentAr"));
-const UpdateDocument = lazy(() => import("./components/pages/admin/updateDocument"));
+const AddDocumentArabic = lazy(() => import("./components/pages/admin/Document/addDocumentAr"));
+const UpdateDocument = lazy(() => import("./components/pages/admin/Document/updateDocument"));
 const AdminProfilePage = lazy(() => import("./components/pages/admin/adminProfile"));
 
 
+ 
 
 export const App: React.FC = React.memo(() => {
   const {isLogged,role,}=useSelector((state:RootState)=>state.auth)
@@ -35,6 +36,7 @@ export const App: React.FC = React.memo(() => {
           <Route path="/" element={ <UserHomePage/>} />
   
           <Route path="/verify" element={ <EmailVerification/>} />
+       
           <Route path="/companyDetails" element={ <UserCompanyDetails /> } />
           <Route path="/login" element={isLogged && role === 'admin' ? <Navigate to="/home" /> : <AdminLogin />} />
           <Route path="/home" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />

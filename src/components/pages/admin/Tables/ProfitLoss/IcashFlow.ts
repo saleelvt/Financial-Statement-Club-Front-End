@@ -1,4 +1,4 @@
-export interface ICashFlowDataEnglish {
+export interface IProfitLossDataEnglish {
   date1: string;
   date2: string;
 

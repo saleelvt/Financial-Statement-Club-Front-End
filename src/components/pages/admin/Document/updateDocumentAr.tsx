@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../reduxKit/store";
-import { UpdateDocumentArabic } from "../../../reduxKit/actions/admin/updateArabicDocument";
+import { AppDispatch } from "../../../../reduxKit/store";
+import { UpdateDocumentArabic } from "../../../../reduxKit/actions/admin/updateArabicDocument";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import SubUpdateDocumentEn from "./subUpdateDocs/updateEn";
+import SubUpdateDocumentEn from "../subUpdateDocs/updateEn";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   DocumentSliceEn,
   FieldKey,
-} from "../../../interfaces/admin/addDoument";
-import { FormField } from "../../../interfaces/admin/addDoument";
-import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
-import { commonRequest } from "../../../config/api";
-import { config } from "../../../config/constants";
+} from "../../../../interfaces/admin/addDoument";
+import { FormField } from "../../../../interfaces/admin/addDoument";
+import { DocumentSliceAr } from "../../../../interfaces/admin/addDoument";
+import { commonRequest } from "../../../../config/api";
+import { config } from "../../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
-import ValidationModal from "../validationModal";
+import ValidationModal from "../modals/validationModal";
 
 const UpdateDocumentAr: React.FC = React.memo(() => {
   const navigate = useNavigate();

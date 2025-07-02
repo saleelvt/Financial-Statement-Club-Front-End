@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 
-import { SetProfitLossDataArabicAction } from "../../actions/Tables/profitLossAr";
+import { SetProfitLossDataEnglishAction } from "../../actions/Tables/profitLossEn";
 
 
- export interface  AddTableArState{
+
+ export interface  AddTableEnState{
     error: string | null;
     loading: boolean;
-    cashFlowDataAr:any
+    ProfitLossDataEn:any
 
 }
 
-const initialState: AddTableArState={
+const initialState: AddTableEnState={
     error: null,
     loading: false,
-    cashFlowDataAr:null,
+    ProfitLossDataEn:null,
 }
 
- export const setProfitLossArDataSlice = createSlice({
+ export const setProfitLossEnDataSlice = createSlice({
     name: "admin",
     initialState,
     reducers: {
@@ -27,16 +28,16 @@ const initialState: AddTableArState={
     },
     extraReducers: (builder) => {
       builder  
-      .addCase(SetProfitLossDataArabicAction.pending, (state) => {
+      .addCase(SetProfitLossDataEnglishAction.pending, (state) => {
           state.loading = true;
           state.error = null;
         })
-        .addCase(SetProfitLossDataArabicAction.fulfilled, (state, { payload }) => {
+        .addCase(SetProfitLossDataEnglishAction.fulfilled, (state, { payload }) => {
           state.loading = false;
           state.error = null;
-          state.cashFlowDataAr=payload
+          state.ProfitLossDataEn=payload
         }) 
-        .addCase(SetProfitLossDataArabicAction.rejected, (state, { payload }) => {
+        .addCase(SetProfitLossDataEnglishAction.rejected, (state, { payload }) => {
           state.loading = false;
           state.error = payload as string;
         })
@@ -46,5 +47,5 @@ const initialState: AddTableArState={
   
   
   
-  export const {updateError}= setProfitLossArDataSlice.actions
-  export default setProfitLossArDataSlice
+  export const {updateError}= setProfitLossEnDataSlice.actions
+  export default setProfitLossEnDataSlice

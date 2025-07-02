@@ -2,19 +2,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, lazy } from "react";
 import { useNavigate } from "react-router-dom";
-import { commonRequest } from "../../../config/api";
-import { configWithToken } from "../../../config/constants";
+import { commonRequest } from "../../../../config/api";
+import { configWithToken } from "../../../../config/constants";
 import { TbListDetails } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../reduxKit/store";
-const Loading = lazy(() => import("../Loading"));
-import { Error } from "../Error";
+import { AppDispatch, RootState } from "../../../../reduxKit/store";
+const Loading = lazy(() => import("../../Loading"));
+import { Error } from "../../Error";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { GrLanguage } from "react-icons/gr";
 import {
  DocumentSliceAdminAr,DocumentSliceAdminEn
-} from "../../../interfaces/admin/addDoument";
-import { AdminLanguageChange } from "../../../reduxKit/actions/admin/adminLanguage";
+} from "../../../../interfaces/admin/addDoument";
+import { AdminLanguageChange } from "../../../../reduxKit/actions/admin/adminLanguage";
 
 const DocumentList: React.FC = React.memo(() => {
 

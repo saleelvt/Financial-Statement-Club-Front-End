@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../reduxKit/store";
-import { SetCashFlowDataEnglishAction } from "../../../../../reduxKit/actions/Tables/cashFlowEn";
+import { SetCashFlowDataEnglishAction } from "../../../../../reduxKit/actions/Tables/profitLossEn";
 
 type BalaceSheetFormArProps = { TakingShort: boolean };
-const CashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingShort }) => {
+const ProfitLossFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingShort }) => {
     // Updated state declarations with empty strings as initial values
     const dispatch = useDispatch<AppDispatch>();
     // Helper function to safely parse numeric values from strings
@@ -486,8 +486,6 @@ const handleChangeSectionLast2 = (
     }
   }
 };
-
-
 
 
     const handleChangeOtherComprehensiveIncome = (
@@ -4137,4 +4135,4 @@ const handleChangeSectionLast2 = (
   }
 )
 
-export default CashFlowFormEn;
+export default ProfitLossFormEn;

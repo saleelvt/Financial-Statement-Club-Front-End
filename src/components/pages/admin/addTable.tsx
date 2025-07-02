@@ -19,16 +19,16 @@ import BalanceSheetFormUserArabic from "../user/Tables/balanceSheetAr";
 import BalaceSheetUpdateFormArabic from "../admin/Tables/BalanceSheetUpdate/balanceSheetUpdateAr";
 import BalaceSheetUpdateFormEnglish from "../admin/Tables/BalanceSheetUpdate/balanceSheetUpdateEn";
 
-import CashFlowFormEn from "./Tables/cashFlow/addCashFlowEn";
-import CashFlowFormAr from "./Tables/cashFlow/addCashFlowAr";
+import CashFlowFormEn from "./Tables/ProfitLoss/addProfitLossEn";
+import CashFlowFormAr from "./Tables/ProfitLoss/addProfitLossAr";
 import CashFlowUserArabic from "../user/Tables/cashFlow/cashFlowAr";
 import CashFlowUserEnglish from "../user/Tables/cashFlow/cashFlowEn";
-import CashFlowUpdateFormAr from "./Tables/updateCashFlow/updateCashFlowAr";
-import CashFlowUpdateFormEn from "./Tables/updateCashFlow/updateCashFlowEn";
+import CashFlowUpdateFormAr from "./Tables/updateProfitLoss/updateProfitLossAr";
+import CashFlowUpdateFormEn from "./Tables/updateProfitLoss/updateProfitLossEn";
 
-import { ConfirmationModalTable } from "./Tables/ConfirmationModalTable";
-import { ConfirmationUpdateModalTable } from "./Tables/updateConfirmationModalTable";
-import ValidationModal from "../validationModal";
+import { ConfirmationModalTable } from "./modals/ConfirmationModalTable";
+import { ConfirmationUpdateModalTable } from "./modals/updateConfirmationModalTable";
+import ValidationModal from "./modals/validationModal";
 // import { DocumentSliceAr, DocumentSliceEn } from "../../../interfaces/admin/addDoument";
 
 const AddNewTable = React.memo(() => {
@@ -80,12 +80,8 @@ const AddNewTable = React.memo(() => {
 
   const { data } = useSelector((state: RootState) => state.table);
   const { dataAr } = useSelector((state: RootState) => state.tableAr);
-  const { cashFlowDataEn } = useSelector(
-    (state: RootState) => state.cashFlowEn
-  );
-  const { cashFlowDataAr } = useSelector(
-    (state: RootState) => state.cashFlowAr
-  );
+  const { cashFlowDataEn } = useSelector( (state: RootState) => state.cashFlowEn);
+  const { cashFlowDataAr } = useSelector(  (state: RootState) => state.cashFlowAr );
   const dropdownRef = useRef<HTMLDivElement>(null);
 
 
@@ -442,6 +438,11 @@ const AddNewTable = React.memo(() => {
       setModalOpen(false);
     }
   };
+
+
+
+
+
 const handleUpdateTable = async (wlanguage: string | null) => {
   if (
     !wlanguage ||
@@ -458,7 +459,6 @@ const handleUpdateTable = async (wlanguage: string | null) => {
   }
   setUpdateModalOpen(false);
   try {
-    console.log("appidate language : is : 9893: ", wlanguage);
     
     if (wlanguage === "English" && (tableEn || tableCashFlowEn)) {
       setUpdateEn(true);
@@ -909,7 +909,7 @@ const handleUpdateTable = async (wlanguage: string | null) => {
 
 
   
-  const renderTableContentCashflow = () => {
+  const renderTableContentProfitLoss = () => {
     // Case 1: Both English and Arabic tables exist
     if (tableCashFlowEn && tableCashFlowAr) {
       return (
@@ -965,7 +965,7 @@ const handleUpdateTable = async (wlanguage: string | null) => {
                     </button>
                     <button
                       className="bg-slate-300 rounded text-black py-1 px-5 font-semibold mx-2 font-serif text-sm"
-                      onClick={() => {
+                      onClick={() => { 
                         setLanguage("English");
                         setModalOpen(true);
                       }}
@@ -1344,13 +1344,6 @@ const handleUpdateTable = async (wlanguage: string | null) => {
         </h1>
 
         <div className="flex gap-3 items-center ">
-          {/* <button
-            onClick={toggleLanguage}
-            className=" hover:scale-105   transition-transform duration-300 ease-in-out  items-center text-2xl hover:   bg-opacity-80"
-          >
-            <GrLanguage className=" text-gray-700" />
-          </button> */}
-          {/* </button> */}
           <h4 className="text-2xl md:text-2xl font-bold text-gray-700">
             {language === "Arabic"
               ? "تقرير القوائم المالية"
@@ -1508,9 +1501,9 @@ const handleUpdateTable = async (wlanguage: string | null) => {
         if (selectedTableType === "BalanceSheet") {
           return renderTableContent();
         } else if (selectedTableType === "CashFlow") {
-          return renderTableContentCashflow();
+          return renderTableContentProfitLoss();
         }
-        return renderTableContentCashflow();
+        return renderTableContentProfitLoss();
       })()}
     </div>
   );

@@ -8,16 +8,16 @@ import type { DateObject } from "react-multi-date-picker";
 import { useDispatch, useSelector  } from "react-redux";
 import { AppDispatch, RootState  } from "../../../../../reduxKit/store";
 
-import { SetCashFlowDataArabicAction } from "../../../../../reduxKit/actions/Tables/cashFlowAr";
+import { SetCashFlowDataArabicAction } from "../../../../../reduxKit/actions/Tables/profitLossAr";
 type BalaceSheetFormArProps = {
   TakingShort: boolean;
 };
 
-const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
+const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
   ({ TakingShort }) => {
     const dispatch = useDispatch<AppDispatch>();
     const parseNumericValue = (value: string): number => {
-      if (!value || value.trim() === "-" || value.trim() === "") return 0;
+      if (!value || value.trim() === "-" || value.trim() === "") return 0; 
 
       const isNegative =
         value.trim().startsWith("(") && value.trim().endsWith(")");
@@ -41,7 +41,7 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
 
     const [data1Ar, setDate1Ar] = useState<Date | null | any>(null);
     const [data2Ar, setDate2Ar] = useState<Date | null | any>(null);
-   
+    
 
     const [date1, setDate1] = useState("(غير مراجعة)");
     const [date2, setDate2] = useState("(مراجعة)");
@@ -4333,4 +4333,4 @@ useEffect(() => {
   }
 );
 
-export default CashFlowFormAr;
+export default ProfitLossFormAr;

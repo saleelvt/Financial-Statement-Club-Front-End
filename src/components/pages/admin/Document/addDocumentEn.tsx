@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../../reduxKit/store";
+import { AppDispatch, RootState } from "../../../../reduxKit/store";
 import axios from "axios";
-import { URL } from "../../../config/constants";
+import { URL } from "../../../../config/constants";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import ValidationModal from "../validationModal";
+import ValidationModal from "../modals/validationModal";
 
 export type FieldKey = "Q1" | "Q2" | "Q3" | "Q4" | "S1" | "Board" | "Year";
 export const axiosIn = axios.create({
@@ -20,10 +20,10 @@ interface DocumentPayload {
 }
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FormField } from "../../../interfaces/admin/addDoument";
-import { DocumentSliceEn } from "../../../interfaces/admin/addDoument";
-import { commonRequest } from "../../../config/api";
-import { config } from "../../../config/constants";
+import { FormField } from "../../../../interfaces/admin/addDoument";
+import { DocumentSliceEn } from "../../../../interfaces/admin/addDoument";
+import { commonRequest } from "../../../../config/api";
+import { config } from "../../../../config/constants";
 
 interface AddDocumentEnglishProps {
   formDataEn: Record<FieldKey, FormField>;

@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from "../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import ValidationModal from "../../pages/validationModal";
+import ValidationModal from "../../pages/admin/modals/validationModal";
 
 
  const AdminLogin = React.memo(() => {

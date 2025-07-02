@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../../reduxKit/store";
+import { AppDispatch, RootState } from "../../../../reduxKit/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FieldKey } from "../../../interfaces/admin/addDoument";
-import { FormField } from "../../../interfaces/admin/addDoument";
+import { FieldKey } from "../../../../interfaces/admin/addDoument";
+import { FormField } from "../../../../interfaces/admin/addDoument";
 // import { addDocumentArabic } from "../../../reduxKit/actions/admin/addDocumentArabicAction";
-import { DocumentSliceAr } from "../../../interfaces/admin/addDoument";
-import { commonRequest } from "../../../config/api";
-import { config, URL } from "../../../config/constants";
+import { DocumentSliceAr } from "../../../../interfaces/admin/addDoument";
+import { commonRequest } from "../../../../config/api";
+import { config, URL } from "../../../../config/constants";
 import { FaArrowCircleRight } from "react-icons/fa";
-import ValidationModal from "../validationModal";
+import ValidationModal from "../modals/validationModal";
 import { AddDocument } from "./addDocumentEn";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 

@@ -14,7 +14,7 @@ import { DocumentSliceEn } from "../../../../interfaces/admin/addDoument";
 import { commonRequest } from "../../../../config/api";
 import { config } from "../../../../config/constants";
 
-import ValidationModal from "../../validationModal";
+import ValidationModal from "../modals/validationModal";
 
 
 interface UpdateDocumentEnProps {

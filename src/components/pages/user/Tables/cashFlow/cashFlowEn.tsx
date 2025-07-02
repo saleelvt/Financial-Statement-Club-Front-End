@@ -1134,11 +1134,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                     </td>
                   </tr>
                 )}
- 
-
-
                 <br />
-
                 {table.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeTable2 &&
                  table.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeTable2.trim() !==
                     "" && (

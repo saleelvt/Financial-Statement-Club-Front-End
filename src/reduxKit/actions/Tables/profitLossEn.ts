@@ -11,8 +11,8 @@ export const axiosIn = axios.create({
   });
 
 
-export const SetCashFlowDataArabicAction = createAsyncThunk(
-    "admin/AddCashFlowDataArabicAction",
+export const SetProfitLossDataEnglishAction = createAsyncThunk(
+    "admin/AddProfitLossEnglishAction",
     async (data:any, { rejectWithValue }) => {
       try { 
          return data
@@ -27,3 +27,6 @@ export const SetCashFlowDataArabicAction = createAsyncThunk(
     }
   );
 
+
+  
+  

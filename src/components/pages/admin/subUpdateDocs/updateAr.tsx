@@ -10,7 +10,7 @@ import { FieldKey } from "../../../../interfaces/admin/addDoument";
 import { FormField } from "../../../../interfaces/admin/addDoument";
 import { DocumentSliceAr } from "../../../../interfaces/admin/addDoument";
 
-import ValidationModal from "../../validationModal";
+import ValidationModal from "../modals/validationModal";
 import { config } from "../../../../config/constants";
 import { commonRequest } from "../../../../config/api";
 interface UpdateDocumentArProps {

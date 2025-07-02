@@ -9,10 +9,12 @@ import setBalanceSheetDataSlice from "./reducers/Tables/balanceSheet";
 import setBalanceSheetDataArSlice from "./reducers/Tables/balanceSheetAr";
 import setCashFlowEnDataSlice from "./reducers/Tables/cashFlowEn";
 import setCashFlowArDataSlice from "./reducers/Tables/cashFlowAr";
+import setProfitLossArDataSlice from "./reducers/Tables/cashFlowAr";
+import setProfitLossEnDataSlice from "./reducers/Tables/profitLossEn";
 
 export const store = configureStore({
   reducer: {
-    auth: authSlice.reducer,
+    auth: authSlice.reducer,  
     adminEn: AddDocumentSlice.reducer,
     adminAr: AddArabicDocumentSlice.reducer,
     userLanguage: userLanguageSlice.reducer,
@@ -21,6 +23,8 @@ export const store = configureStore({
     tableAr:setBalanceSheetDataArSlice.reducer,
     cashFlowEn:setCashFlowEnDataSlice.reducer,
     cashFlowAr:setCashFlowArDataSlice.reducer,
+    profitLossEn:setProfitLossEnDataSlice.reducer,
+    profitLossAr:setProfitLossArDataSlice.reducer,
   },
 });
 

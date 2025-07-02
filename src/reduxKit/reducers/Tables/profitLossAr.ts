@@ -7,14 +7,14 @@ import { SetProfitLossDataArabicAction } from "../../actions/Tables/profitLossAr
  export interface  AddTableArState{
     error: string | null;
     loading: boolean;
-    cashFlowDataAr:any
+    ProfitLossDataAr:any
 
 }
 
 const initialState: AddTableArState={
     error: null,
     loading: false,
-    cashFlowDataAr:null,
+    ProfitLossDataAr:null,
 }
 
  export const setProfitLossArDataSlice = createSlice({
@@ -34,7 +34,7 @@ const initialState: AddTableArState={
         .addCase(SetProfitLossDataArabicAction.fulfilled, (state, { payload }) => {
           state.loading = false;
           state.error = null;
-          state.cashFlowDataAr=payload
+          state.ProfitLossDataAr=payload
         }) 
         .addCase(SetProfitLossDataArabicAction.rejected, (state, { payload }) => {
           state.loading = false;

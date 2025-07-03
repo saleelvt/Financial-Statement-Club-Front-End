@@ -16,7 +16,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
     console.log("The table data from props:", Tabledata);
 
     const formatValue = (v: string | number) => {
-      const num = Number(String(v).replace(/[(),\s]/g, ""));
+      const num = Number(String(v).replace(/[(),\s]/g, "")); 
       if (isNaN(num)) return "-";
       if (num === 0) return "-";
       if (v.toString().startsWith("-") || v.toString().startsWith("(")) {

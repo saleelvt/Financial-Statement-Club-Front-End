@@ -86,7 +86,6 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
     const [equitySubItemsDate2Ar, setEquitySubItemsDate2] = useState<string[]>(
       Array(3).fill("")
     );
-
     const [nonCurrentLiabilitiesAr, setNonCurrentLiabilities] = useState<
       string[]
     >(Array(12).fill(""));
@@ -793,7 +792,7 @@ const BalaceSheetUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo(
 
     //       setNonCurrentAssetsDate2(
     //         data.assets.nonCurrent.itemsDate2 || Array(12).fill("")
-    //       );
+    //       ); 
     //       setNonCurrentSubAssetsDate2(
     //         data.assets.nonCurrent.subItemsDate2 || Array(3).fill("")
     //       );

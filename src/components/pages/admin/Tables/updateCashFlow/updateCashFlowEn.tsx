@@ -2,20 +2,14 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../../../../reduxKit/store";
-import { SetCashFlowDataArabicAction } from "../../../../../reduxKit/actions/Tables/cashFlowAr";
-import gregorian_ar from "react-date-object/locales/gregorian_ar";
-import arabic from "react-date-object/calendars/gregorian";
-import type { DateObject } from "react-multi-date-picker";
+import { AppDispatch } from "../../../../../reduxKit/store";
+import { SetCashFlowDataEnglishAction } from "../../../../../reduxKit/actions/Tables/cashFlowEn";
 
-import { useSelector } from "react-redux";
-import DatePicker from "react-multi-date-picker";
-
-type BalaceSheetFormArProps = { TakingShort: boolean };
+type BalaceSheetFormArProps = { TableDataEn:   any };
 
 
 
-const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingShort }) => {
+const CashFlowUpdateFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TableDataEn }) => {
     // Updated state declarations with empty strings as initial values
     const dispatch = useDispatch<AppDispatch>();
     // Helper function to safely parse numeric values from strings
@@ -24,8 +18,9 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingSh
 
       const isNegative =
  value.trim().startsWith("(") && value.trim().endsWith(")");
-      const cleaned = value.replace(/[(),]/g, ""); // Remove (, ), and ,
+      const cleaned = value.replace(/[(),]/g, "");
       const numValue = parseFloat(cleaned);
+
       if (isNaN(numValue)) return 0;
       return isNegative ? -numValue : numValue;
     };
@@ -37,8 +32,6 @@ const CashFlowFormAr: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingSh
       return value < 0 ? `(${formatted})` : formatted;
     };
 
-
-//  
 
 
     const autoResizeTextarea = (el: any | null) => {
@@ -57,14 +50,15 @@ useEffect(() => {
 
     const [date1Rl, setDate1Rl] = useState("'000");
     const [date2Rl, setDate2Rl] = useState("'000");
-   const [date1, setDate1] = useState("(غير مراجعة)");
-      const [date2, setDate2] = useState("(مراجعة)");
+    const [date1, setDate1] = useState("(Unaudited)");
+    const [date2, setDate2] = useState("(Audited)");
+
     const [data1En, setDate1En] = useState<Date | null>(null);
     const [data2En, setDate2En] = useState<Date | null>(null);
   
     // section One
-    const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState("الأنشطة التشلغيلية:" );
-    const [sectionOneSecondLabelEn, setSectionOneSecondLabelEn] = useState(" الدخل قبل الزكاة" );
+    const [sectionOneFirstLabelEn, setSectionOneFirstLabelEn] = useState("" );
+    const [sectionOneSecondLabelEn, setSectionOneSecondLabelEn] = useState("" );
     const [sectionOneLabelsEn, setSectionOneLabelsEn] = useState<string[]>(      Array(2).fill("") );
     const [sectionOneNotesEn, setFlowSectionOneNotesEn] = useState<string[]>(     Array(2).fill("") );
     const [sectionOneItemsEn, setFlowSectionOneEn] = useState<string[]>(Array(2).fill(""));
@@ -72,7 +66,7 @@ useEffect(() => {
  
 
     // section Two
-     const [sectionTwoFirstLabel, setSectionTwoFirstLabel] = useState("التعديلات لـ:");
+     const [sectionTwoFirstLabel, setSectionTwoFirstLabel] = useState("");
     const [sectionTwoLabelsEn, setSectionTwoLabelsEn] = useState<string[]>(   Array(23).fill("")  );
     const [sectionTwoNotesEn, setFlowSectionTwoNotesEn] = useState<string[]>(  Array(23).fill("")   );
     const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(  Array(23).fill("")   );
@@ -82,47 +76,47 @@ useEffect(() => {
     const TotalsectionTwoItemsDate2En = sumStringValues(sectionTwoItemsDate2En);
 
     // section Three
-      const [sectionThreeFirstLabel, setSectionThreeFirstLabel] = useState("تعديلات رأس المال العامل:");
+      const [sectionThreeFirstLabel, setSectionThreeFirstLabel] = useState("");
     const [sectionThreeLabelsEn, setSectionThreeLabelsEn] = useState<string[]>(Array(17).fill(""));
    const [sectionThreeNotesEn, setFlowSectionThreeNotesEn] = useState<string[] >(Array(17).fill(""));
     const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(17).fill("")   );
     const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(17).fill(""));
-    const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("النقد من العمليات");
+    const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("");
     const TotalsectionThreeItemsEn =      sumStringValues(sectionThreeItemsEn);
     const TotalsectionThreeItemsDate2En =     sumStringValues(sectionThreeItemsDate2En);
 
 
     // sectoin Four
-     const [sectionFourFirstLabel, setSectionFourFirstLabel] = useState("اخرى");
+     const [sectionFourFirstLabel, setSectionFourFirstLabel] = useState("");
     const [sectionFourLabelsEn, setSectionFourLabelsEn] = useState<string[]>( Array(17).fill(""));
     const [sectionFourNotesEn, setFlowSectionFourNotesEn] = useState<string[]>( Array(17).fill(""));
     const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(Array(17).fill("") );
     const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<string[] >(Array(17).fill(""));
-    const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("صافي النقدية من الأنشطة التشغيلية");
+    const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("");
     const TotalsectionFourItemsEn =  sumStringValues(sectionFourItemsEn);
     const TotalsectionFourItemsDate2En =  sumStringValues(sectionFourItemsDate2En);
 
     // section Five
-const [sectionFiveFirstLabel, setSectionFiveFirstLabel] = useState("الأنشطة الاستثمارية");
+const [sectionFiveFirstLabel, setSectionFiveFirstLabel] = useState("");
 const [sectionFiveLabelsEn, setSectionFiveLabelsEn] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveNotesEn, setSectionFiveNotesEn] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveItemsEn, setSectionFiveItemsEn] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveItemsDate2En, setSectionFiveItemsDate2En] = useState<string[]>(Array(15 ).fill(""));
-const [sectionFiveTotalLabel, setSectionFiveTotalLabel] = useState("صافي النقدية المستخدمة في الأنشطة الاستثمارية");
+const [sectionFiveTotalLabel, setSectionFiveTotalLabel] = useState("");
 const TotalsectionFiveItemsEn = sumStringValues(sectionFiveItemsEn);
 const TotalsectionFiveItemsDate2En = sumStringValues(sectionFiveItemsDate2En);
 
 // section Six
-const [sectionSixFirstLabel, setSectionSixFirstLabel] = useState("الأنشطة التمويلية");
+const [sectionSixFirstLabel, setSectionSixFirstLabel] = useState("");
 const [sectionSixLabelsEn, setSectionSixLabelsEn] = useState<string[]>(Array(12).fill(""));
 const [sectionSixNotesEn, setSectionSixNotesEn] = useState<string[]>(Array(12).fill(""));
 const [sectionSixItemsEn, setSectionSixItemsEn] = useState<string[]>(Array(12).fill(""));
 const [sectionSixItemsDate2En, setSectionSixItemsDate2En] = useState<string[]>(Array(12).fill(""));
-const [sectionSixTotalLabel, setSectionSixTotalLabel] = useState("صافي النقدية المستخدمة في الأنشطة التمويلية");
+const [sectionSixTotalLabel, setSectionSixTotalLabel] = useState("");
 const TotalsectionSixItemsEn = sumStringValues(sectionSixItemsEn);
 const TotalsectionSixItemsDate2En = sumStringValues(sectionSixItemsDate2En);
 
-const [sectionSixSecondTotalLabel, setSectionSixSecondTotalLabel] = useState("(النقص) الزيادة في النقدية وشبه النقدية");
+const [sectionSixSecondTotalLabel, setSectionSixSecondTotalLabel] = useState("");
 const TotalsectionSixSecondItemsEn = sumStringValues(sectionSixItemsEn);
 const TotalsectionSixSecondItemsDate2En = sumStringValues(sectionSixItemsDate2En);
 
@@ -131,7 +125,7 @@ const [sectionSevenLabelsEn, setSectionSevenLabelsEn] = useState<string[]>(Array
 const [sectionSevenNotesEn, setSectionSevenNotesEn] = useState<string[]>(Array(2).fill(""));
 const [sectionSevenItemsEn, setSectionSevenItemsEn] = useState<string[]>(Array(2).fill(""));
 const [sectionSevenItemsDate2En, setSectionSevenItemsDate2En] = useState<string[]>(Array(2).fill(""));
-const [sectionSevenTotalLabel, setSectionSevenTotalLabel] = useState("النقدية وشبه النقدية في بداية الفترة");
+const [sectionSevenTotalLabel, setSectionSevenTotalLabel] = useState("");
 const TotalsectionSevenItemsEn = sumStringValues(sectionSevenItemsEn);
 const TotalsectionSevenItemsDate2En = sumStringValues(sectionSevenItemsDate2En);
 
@@ -140,9 +134,12 @@ const [sectionEightLabelsEn, setSectionEightLabelsEn] = useState<string[]>(Array
 const [sectionEightNotesEn, setSectionEightNotesEn] = useState<string[]>(Array(8).fill(""));
 const [sectionEightItemsEn, setSectionEightItemsEn] = useState<string[]>(Array(8).fill(""));
 const [sectionEightItemsDate2En, setSectionEightItemsDate2En] = useState<string[]>(Array(8).fill(""));
-const [sectionEightLastLabel, setSectionEightLastLabel] = useState(" المعاملات غير النقدية الهامة:");
+const [sectionEightLastLabel, setSectionEightLastLabel] = useState("");
 
- 
+
+// table2 section
+    const [date1Table2, setDate1Table2] = useState<Date | null>(null);
+    const [date2Table2, setDate2Table2] = useState<Date | null>(null);
 
 // section Nine
 const [sectionNineLabelsEn, setSectionNineLabelsEn] = useState<string[]>(Array(16).fill(""));
@@ -150,7 +147,7 @@ const [sectionNineNotesEn, setSectionNineNotesEn] = useState<string[]>(Array(16)
 const [sectionNineItemsEn, setSectionNineItemsEn] = useState<string[]>(Array(16).fill(""));
 const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>(Array(16).fill(""));
 
-const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
+
 
 
 
@@ -158,108 +155,117 @@ const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
  useEffect(() => {
   const handleDispatch = async () => {
     try {
-   const formData = {
-  qdate1: data1En,
-  qdate2: data2En,
-  qsectionOne: {
-   qsectionOneFirstLabelEn: sectionOneFirstLabelEn,
-        qsectionOneSecondLabelEn: sectionOneSecondLabelEn,
-        qsectionOneLabelsEn: sectionOneLabelsEn,
-        qsectionOneNotesEn: sectionOneNotesEn,
-        qsectionOneItemsEn: sectionOneItemsEn,
-        qsectionOneItemsDate2En: sectionOneItemsDate2En,
+     const formData = {
+  // Main dates
+  date1: data1En,
+  date2: data2En,
+
+  // Section One - Operating activities
+  sectionOne: {
+    sectionOneFirstLabelEn,
+    sectionOneSecondLabelEn,
+    sectionOneLabelsEn,
+    sectionOneNotesEn,
+    sectionOneItemsEn,
+    sectionOneItemsDate2En,
   },
 
-  qsectionTwo: {
-    qsectionTwoFirstLabel: sectionTwoFirstLabel,
-        qsectionTwoLabelsEn: sectionTwoLabelsEn,
-        qsectionTwoNotesEn: sectionTwoNotesEn,
-        qsectionTwoItemsEn: sectionTwoItemsEn,
-        qsectionTwoItemsDate2En: sectionTwoItemsDate2En,
-        qsectionTwoTotalLabel: sectionTwoTotalLabel,
-        qTotalsectionTwoItemsEn: TotalsectionTwoItemsEn,
-        qTotalsectionTwoItemsDate2En: TotalsectionTwoItemsDate2En,
+  // Section Two - Adjustments for
+  sectionTwo: {
+    sectionTwoFirstLabel,
+    sectionTwoLabelsEn,
+    sectionTwoNotesEn,
+    sectionTwoItemsEn,
+    sectionTwoItemsDate2En,
+    sectionTwoTotalLabel,
+    TotalsectionTwoItemsEn,
+    TotalsectionTwoItemsDate2En,
   },
 
-  qsectionThree: {
-     qsectionThreeFirstLabel: sectionThreeFirstLabel,
-        qsectionThreeLabelsEn: sectionThreeLabelsEn,
-        qsectionThreeNotesEn: sectionThreeNotesEn,
-        qsectionThreeItemsEn: sectionThreeItemsEn,
-        qsectionThreeItemsDate2En: sectionThreeItemsDate2En,
-        qsectionThreeTotalLabel: sectionThreeTotalLabel,
-        qTotalsectionThreeItemsEn: TotalsectionThreeItemsEn,
-        qTotalsectionThreeItemsDate2En: TotalsectionThreeItemsDate2En,
+  // Section Three - Working capital adjustments
+  sectionThree: {
+    sectionThreeFirstLabel,
+    sectionThreeLabelsEn,
+    sectionThreeNotesEn,
+    sectionThreeItemsEn,
+    sectionThreeItemsDate2En,
+    sectionThreeTotalLabel,
+    TotalsectionThreeItemsEn,
+    TotalsectionThreeItemsDate2En,
   },
 
-  qsectionFour: {
-     qsectionFourFirstLabel: sectionFourFirstLabel,
-        qsectionFourLabelsEn: sectionFourLabelsEn,
-        qsectionFourNotesEn: sectionFourNotesEn,
-        qsectionFourItemsEn: sectionFourItemsEn,
-        qsectionFourItemsDate2En: sectionFourItemsDate2En,
-        qsectionFourTotalLabel: sectionFourTotalLabel,
-        qTotalsectionFourItemsEn: TotalsectionFourItemsEn,
-        qTotalsectionFourItemsDate2En: TotalsectionFourItemsDate2En,
+  // Section Four - Other changes
+  sectionFour: {
+    sectionFourFirstLabel,
+    sectionFourLabelsEn,
+    sectionFourNotesEn,
+    sectionFourItemsEn,
+    sectionFourItemsDate2En,
+    sectionFourTotalLabel,
+    TotalsectionFourItemsEn,
+    TotalsectionFourItemsDate2En,
   },
 
-  qsectionFive: {
-     qsectionFiveFirstLabel: sectionFiveFirstLabel,
-        qsectionFiveLabelsEn: sectionFiveLabelsEn,
-        qsectionFiveNotesEn: sectionFiveNotesEn,
-        qsectionFiveItemsEn: sectionFiveItemsEn,
-        qsectionFiveItemsDate2En: sectionFiveItemsDate2En,
-        qsectionFiveTotalLabel: sectionFiveTotalLabel,
-        qTotalsectionFiveItemsEn: TotalsectionFiveItemsEn,
-        qTotalsectionFiveItemsDate2En: TotalsectionFiveItemsDate2En,
+  // Section Five - Investing activities
+  sectionFive: {
+    sectionFiveFirstLabel,
+    sectionFiveLabelsEn,
+    sectionFiveNotesEn,
+    sectionFiveItemsEn,
+    sectionFiveItemsDate2En,
+    sectionFiveTotalLabel,
+    TotalsectionFiveItemsEn,
+    TotalsectionFiveItemsDate2En,
   },
 
-  qsectionSix: {
-     qsectionSixFirstLabel: sectionSixFirstLabel,
-        qsectionSixLabelsEn: sectionSixLabelsEn,
-        qsectionSixNotesEn: sectionSixNotesEn,
-        qsectionSixItemsEn: sectionSixItemsEn,
-        qsectionSixItemsDate2En: sectionSixItemsDate2En,
-        qsectionSixTotalLabel: sectionSixTotalLabel,
-        qTotalsectionSixItemsEn: TotalsectionSixItemsEn,
-        qTotalsectionSixItemsDate2En: TotalsectionSixItemsDate2En,
-        qsectionSixSecondTotalLabel: sectionSixSecondTotalLabel,
-        qTotalsectionSixSecondItemsEn: TotalsectionSixSecondItemsEn,
-        qTotalsectionSixSecondItemsDate2En: TotalsectionSixSecondItemsDate2En,
-
+  // Section Six - Financing activities
+  sectionSix: {
+    sectionSixFirstLabel,
+    sectionSixLabelsEn,
+    sectionSixNotesEn,
+    sectionSixItemsEn,
+    sectionSixItemsDate2En,
+    sectionSixTotalLabel,
+    TotalsectionSixItemsEn,
+    TotalsectionSixItemsDate2En,
+    sectionSixSecondTotalLabel,
+    TotalsectionSixSecondItemsEn,
+    TotalsectionSixSecondItemsDate2En,
   },
 
-  qsectionSeven: {
-    qsectionSevenLabelsEn: sectionSevenLabelsEn,
-        qsectionSevenNotesEn: sectionSevenNotesEn,
-        qsectionSevenItemsEn: sectionSevenItemsEn,
-        qsectionSevenItemsDate2En: sectionSevenItemsDate2En,
-        qsectionSevenTotalLabel: sectionSevenTotalLabel,
-        qTotalsectionSevenItemsEn: TotalsectionSevenItemsEn,
-        qTotalsectionSevenItemsDate2En: TotalsectionSevenItemsDate2En,
+  // Section Seven - Cash and cash equivalents
+  sectionSeven: {
+    sectionSevenLabelsEn,
+    sectionSevenNotesEn,
+    sectionSevenItemsEn,
+    sectionSevenItemsDate2En,
+    sectionSevenTotalLabel,
+    TotalsectionSevenItemsEn,
+    TotalsectionSevenItemsDate2En,
   },
 
-  qsectionEight: {
-    qsectionEightLabelsEn: sectionEightLabelsEn,
-        qsectionEightNotesEn: sectionEightNotesEn,
-        qsectionEightItemsEn: sectionEightItemsEn,
-        qsectionEightItemsDate2En: sectionEightItemsDate2En,
-        qsectionEightLastLabel: sectionEightLastLabel,
+  // Section Eight - Significant non-cash transactions
+  sectionEight: {
+    sectionEightLabelsEn,
+    sectionEightNotesEn,
+    sectionEightItemsEn,
+    sectionEightItemsDate2En,
+    sectionEightLastLabel,
   },
-  
-   qTable2: {
-    qdateTwo1En: data1En,
-    qdateTwo2En: data2En,
-    qsectionOneTable2: {
-      qsectionNineLabelsEn: sectionNineLabelsEn,
-        qsectionNineNotesEn: sectionNineNotesEn,
-        qsectionNineItemsEn: sectionNineItemsEn,
-        qsectionNineItemsDate2En: sectionNineItemsDate2En,
+
+  // Table2 - Second table with its own dates
+  Table2: {
+    dateTwo1En: date1Table2,
+    dateTwo2En: date2Table2,
+    sectionOneTable2: {
+      sectionNineLabelsEn,
+      sectionNineNotesEn,
+      sectionNineItemsEn,
+      sectionNineItemsDate2En,
     }
-  },
- 
+  }
 };
-      await dispatch(SetCashFlowDataArabicAction(formData));
+      await dispatch(SetCashFlowDataEnglishAction(formData));
     } catch (error) {
       console.log("Dispatch Error:", error);
     }
@@ -349,6 +355,8 @@ const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
   sectionEightLastLabel,
 
   // Table2
+  date1Table2,
+  date2Table2,
   sectionNineLabelsEn,
   sectionNineNotesEn,
   sectionNineItemsEn,
@@ -358,9 +366,39 @@ const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
 
 
 
+
+
 useEffect(()=>{
-  console.log("some data getting in the data set",cashFlowDataEn);
-},[cashFlowDataEn])
+console.log("the update cashflow data is the data : ", TableDataEn);
+},[TableDataEn])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -613,48 +651,34 @@ useEffect(()=>{
 
     return (
       <div className="flex justify-start  my-2 text-black">
-        <table dir="rtl" className="border  font-semibold border-gray-300 text-xs mb-12  w-full">
+        <table className="border  font-semibold border-gray-300 text-xs mb-12  w-full">
 
           <thead>
-            <tr className="bg-gray-100">
+            <tr className="bg-gray-100 ">
               <th className="border border-gray-100 w-96"></th>
-              <th className="border border-gray-100 w-16">إيضاحات</th>
-              <th className="border border-gray-100 p-1 w-28">
-                <div dir="rtl" className="items-center h-5">
-                  <DatePicker
-                    className="text-right"
-                    value={data1En}
-                    onChange={(date: DateObject | null) => {
-                      if (date) {
-                        const jsDate = new Date(
-                          date.year,
-                          date.month.number - 1, // ✅ Correct usage
-                          date.day
-                        );
-                        setDate1En(jsDate);
-                      } else {
-                        setDate1En(null);
-                      }
-                    }}
-                    calendar={arabic}
-                    locale={gregorian_ar}
-                    inputClass="text-center bg-gray-100 w-28"
-                    placeholder="اختر التاريخ"
-                  />
-                </div>
-
-     
+              <th className="border border-gray-100 w-16">Notes</th>
+              <th className="border  border-gray-100 p-1 w-28   ">
+                <input
+                  type="date"
+                  className="text-center   h-5  bg-gray-100"
+                  placeholder=""
+                  value={data1En ? data1En.toISOString().split("T")[0] : ""}
+                  onChange={(e) => {
+                    const selectedDate = e.target.value;
+                    setDate1En(selectedDate ? new Date(selectedDate) : null);
+                  }}
+                  lang="en"
+                />
 
                 <input
                   placeholder=""
                   value={date1}
                   onChange={(e) => setDate1(e.target.value)}
                   className="w-full text-center bg-gray-100 fext-row"
-                  type="text"
                 />
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
+                  className="flex items-center justify-center bg-gray-100 w-full   rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -665,48 +689,34 @@ useEffect(()=>{
                     placeholder=""
                     value={date1Rl}
                     onChange={(e) => setDate1Rl(e.target.value)}
-                    className="w-8  text-center bg-gray-100 focus:outline-none"
+                    className="w-8 selection: text-center bg-gray-100 focus:outline-none"
                     type="text"
                   />
                 </div>
               </th>
-
-              <th className="border border-gray-100  w-28 p-1 ">
-                <div dir="rtl" className="items-center bg-green">
-                  <DatePicker
-                    className="text-right"
-                    value={data2En}
-                    onChange={(date: DateObject | null) => {
-                      if (date) {
-                        const jsDate = new Date(
-                          date.year,
-                          date.month.number - 1, 
-                          date.day
-                        );
-                        setDate2En(jsDate);
-                      } else {
-                        setDate2En(null);
-                      }
-                    }}
-                    calendar={arabic}
-                    locale={gregorian_ar}
-                    inputClass="text-center bg-gray-100 w-28"
-                    placeholder="اختر التاريخ"
-                  />
-                </div>
+              <th className="border   border-gray-100 p-1 w-28 ">
+                <input
+                  value={data2En ? data2En.toISOString().split("T")[0] : ""}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setDate2En(value ? new Date(value) : null);
+                  }}
+                  placeholder=""
+                  className="text-center bg-gray-100"
+                  type="date"
+                  lang="en"
+                />
 
                 <input
                   placeholder=""
                   value={date2}
                   onChange={(e) => setDate2(e.target.value)}
-                  className="w-full text-center bg-gray-100"
-                  type="text"
+                  className="w-full text-center bg-gray-100 fext-row"
                 />
 
-                {/* Riyal symbol + input as flex */}
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100   rounded"
+                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -726,19 +736,19 @@ useEffect(()=>{
           </thead>
 
           <tbody>
-            <tr className="bg-gray-300 font-semibold"> 
+            <tr className="bg-gray-300 font-semibold">
               <td className=""> 
                 <input
                   value={sectionOneFirstLabelEn}
                   onChange={(e) => setSectionOneFirstLabelEn(e.target.value)}
-                  className="w-full  bg-gray-300 text-black p-1"
+                  className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
               <td className=""></td>
               <td className=""></td>
               <td className=""></td>
             </tr>
-            <tr className="bg-gray-200 font-semibold"> 
+            <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
                   value={sectionOneSecondLabelEn}
@@ -754,9 +764,7 @@ useEffect(()=>{
 
 
             {sectionOneLabelsEn.map((val, idx) => {
-              const isRowEmpty = !val && !sectionOneItemsDate2En[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
-              if (TakingShort && isRowEmpty) return null;
+           
 
               return (
                 <tr key={`section-one-${idx}`} className="bg-gray-100">
@@ -983,10 +991,7 @@ useEffect(()=>{
            
 
             {sectionTwoLabelsEn.map((val, idx) => {
-              const isRowEmpty = !val && !sectionTwoItemsDate2En[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
-              if (TakingShort && isRowEmpty) return null;
-
+            
               return (
                 <tr key={`section-two-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
@@ -1230,10 +1235,7 @@ useEffect(()=>{
             </tr>
 
             {sectionThreeLabelsEn.map((val, idx) => {
-              const isRowEmpty = !val && !sectionThreeItemsDate2En[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
-              if (TakingShort && isRowEmpty) return null;
-
+         
               return (
                 <tr key={`section-three-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
@@ -1468,9 +1470,7 @@ useEffect(()=>{
 
 
             {sectionFourLabelsEn.map((val, idx) => {
-              const isRowEmpty = !val && !sectionFourItemsDate2En[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
-              if (TakingShort && isRowEmpty) return null;
+       
 
               return (
                 <tr key={`section-four-${idx}`} className="bg-gray-100">
@@ -1617,6 +1617,7 @@ useEffect(()=>{
                           handleChange(idx, "-", "sectionFour", "date2");
                           return;
                         }
+
                         // Remove formatting (commas, parentheses, spaces)
                         let rawValue = inputValue.replace(/[(),\s]/g, "");
 
@@ -1715,8 +1716,6 @@ useEffect(()=>{
 
 
 {sectionFiveLabelsEn.map((val, idx) => {
-  const isRowEmpty = !val && !sectionFiveItemsDate2En[idx];
-  if (TakingShort && isRowEmpty) return null;
 
   return (
     <tr key={`section-five-${idx}`} className="bg-gray-100">
@@ -1906,9 +1905,7 @@ useEffect(()=>{
 
 
             {sectionSixLabelsEn.map((val, idx) => {
-  const isRowEmpty = !val && !sectionSixItemsDate2En[idx];
-  if (TakingShort && isRowEmpty) return null;
-
+ 
   return (
     <tr key={`section-six-${idx}`} className="bg-gray-100">
       <td className="border border-gray-300">
@@ -2102,8 +2099,7 @@ useEffect(()=>{
 
 
       {sectionSevenLabelsEn.map((val, idx) => {
-  const isRowEmpty = !val && !sectionSevenItemsDate2En[idx];
-  if (TakingShort && isRowEmpty) return null;
+
 
   return (
     <tr key={`section-seven-${idx}`} className="bg-gray-100">
@@ -2258,7 +2254,9 @@ useEffect(()=>{
       </td>
     </tr>
   );
-})} 
+})}
+
+ 
               <tr className="bg-gray-200 font-semibold"> 
               <td className=""> 
                  {" "} 
@@ -2284,8 +2282,7 @@ useEffect(()=>{
 
 
 {sectionEightLabelsEn.map((val, idx) => {
-  const isRowEmpty = !val && !sectionEightItemsDate2En[idx];
-  if (TakingShort && isRowEmpty) return null;
+
 
   return (
     <tr key={`section-eight-${idx}`} className="bg-gray-100">
@@ -2449,6 +2446,8 @@ useEffect(()=>{
 
 
 
+
+
  <tr className="bg-gray-200 font-semibold">
               <td className="">
                  {" "}
@@ -2470,46 +2469,33 @@ useEffect(()=>{
           </tbody>
 
 
-         <thead>
-            <tr className="bg-gray-100">
-              <th className="border border-gray-100 w-96"></th>
-              <th className="border border-gray-100 w-16">إيضاحات</th>
-              <th className="border border-gray-100 p-1 w-28">
-                <div dir="rtl" className="items-center h-5">
-                  <DatePicker
-                    className="text-right"
-                    value={data1En}
-                    onChange={(date: DateObject | null) => {
-                      if (date) {
-                        const jsDate = new Date(
-                          date.year,
-                          date.month.number - 1, // ✅ Correct usage
-                          date.day
-                        );
-                        setDate1En(jsDate);
-                      } else {
-                        setDate1En(null);
-                      }
-                    }}
-                    calendar={arabic}
-                    locale={gregorian_ar}
-                    inputClass="text-center bg-gray-100 w-28"
-                    placeholder="اختر التاريخ"
-                  />
-                </div>
 
-     
+        <thead>
+            <tr className="bg-gray-100 ">
+              <th className="border border-gray-100 w-96"></th>
+              <th className="border border-gray-100 w-16">Notes</th>
+              <th className="border  border-gray-100 p-1 w-28   ">
+                <input
+                  type="date"
+                  className="text-center   h-5  bg-gray-100"
+                  placeholder=""
+                  value={date1Table2 ? date1Table2.toISOString().split("T")[0] : ""}
+                  onChange={(e) => {
+                    const selectedDate = e.target.value;
+                    setDate1Table2(selectedDate ? new Date(selectedDate) : null);
+                  }}
+                  lang="en"
+                />
 
                 <input
                   placeholder=""
                   value={date1}
                   onChange={(e) => setDate1(e.target.value)}
                   className="w-full text-center bg-gray-100 fext-row"
-                  type="text"
                 />
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
+                  className="flex items-center justify-center bg-gray-100 w-full   rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -2520,48 +2506,34 @@ useEffect(()=>{
                     placeholder=""
                     value={date1Rl}
                     onChange={(e) => setDate1Rl(e.target.value)}
-                    className="w-8  text-center bg-gray-100 focus:outline-none"
+                    className="w-8 selection: text-center bg-gray-100 focus:outline-none"
                     type="text"
                   />
                 </div>
               </th>
-
-              <th className="border border-gray-100  w-28 p-1 ">
-                <div dir="rtl" className="items-center bg-green">
-                  <DatePicker
-                    className="text-right"
-                    value={data2En}
-                    onChange={(date: DateObject | null) => {
-                      if (date) {
-                        const jsDate = new Date(
-                          date.year,
-                          date.month.number - 1, // ✅ Correct usage
-                          date.day
-                        );
-                        setDate2En(jsDate);
-                      } else {
-                        setDate2En(null);
-                      }
-                    }}
-                    calendar={arabic}
-                    locale={gregorian_ar}
-                    inputClass="text-center bg-gray-100 w-28"
-                    placeholder="اختر التاريخ"
-                  />
-                </div>
-
+              <th className="border   border-gray-100 p-1 w-28 ">
                 <input
-                  placeholder="" 
-                  value={date2}
-                  onChange={(e) => setDate2(e.target.value)}
-                  className="w-full text-center bg-gray-100"
-                  type="text"
+                  value={date2Table2 ? date2Table2.toISOString().split("T")[0] : ""}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setDate2Table2(value ? new Date(value) : null);
+                  }}
+                  placeholder=""
+                  className="text-center bg-gray-100"
+                  type="date"
+                  lang="en"
                 />
 
-                {/* Riyal symbol + input as flex */}
+                <input
+                  placeholder=""
+                  value={date2}
+                  onChange={(e) => setDate2(e.target.value)}
+                  className="w-full text-center bg-gray-100 fext-row"
+                />
+
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100   rounded"
+                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -2587,8 +2559,6 @@ useEffect(()=>{
 
           </body>
 {sectionNineLabelsEn.map((val, idx) => {
-  const isRowEmpty = !val && !sectionNineItemsDate2En[idx];
-  if (TakingShort && isRowEmpty) return null;
 
   return (
     <tr key={`section-nine-${idx}`} className="bg-gray-100">
@@ -2756,4 +2726,4 @@ useEffect(()=>{
   }
 )
 
-export default CashFlowFormAr;
+export default CashFlowUpdateFormEn;

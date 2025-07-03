@@ -1189,41 +1189,10 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                   }
                 )}
 
-                
-
-
-
-
-
-
-
               </tbody>
        
 
-
-
-
-
-
-
-            </table>
-
-
-
-
-
-
-
-
-
-
-
-            
-
-
-
-
-                  
+            </table>       
 
           </div>
         ) : (

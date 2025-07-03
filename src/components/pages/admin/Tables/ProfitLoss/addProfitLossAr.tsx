@@ -8,7 +8,7 @@ import type { DateObject } from "react-multi-date-picker";
 import { useDispatch, useSelector  } from "react-redux";
 import { AppDispatch, RootState  } from "../../../../../reduxKit/store";
 
-import { SetCashFlowDataArabicAction } from "../../../../../reduxKit/actions/Tables/profitLossAr";
+import { SetProfitLossDataArabicAction } from "../../../../../reduxKit/actions/Tables/profitLossAr";
 type BalaceSheetFormArProps = {
   TakingShort: boolean;
 };
@@ -763,7 +763,7 @@ useEffect(() => {
         }
       };
 
-      await dispatch(SetCashFlowDataArabicAction(formData));
+      await dispatch(SetProfitLossDataArabicAction(formData));
     } catch (error) {
       console.log("Dispatch Error:", error);
     }
@@ -898,81 +898,81 @@ useEffect(() => {
 
 
 
-     const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
+     const {ProfitLossDataEn}=useSelector((state:RootState)=>state.profitLossEn)
 
 
 
      useEffect(()=>{
         
-        console.log("cashFlowData : ",cashFlowDataEn);
+        console.log("profit Loss data  : ",ProfitLossDataEn);
 
-        if (cashFlowDataEn) {
+        if (ProfitLossDataEn) {
 
-            setDate1Ar(cashFlowDataEn?.date1)
-            setDate2Ar(cashFlowDataEn?.date2)
-            if(cashFlowDataEn?.sectionOne){
-                setFlowSectionOneEn(cashFlowDataEn?.sectionOne?.sectionOneItemsEn)
-                setFlowSectionOneDate2En(cashFlowDataEn?.sectionOne?.sectionOneItemsDate2En)
+            setDate1Ar(ProfitLossDataEn?.date1)
+            setDate2Ar(ProfitLossDataEn?.date2)
+            if(ProfitLossDataEn?.sectionOne){
+                setFlowSectionOneEn(ProfitLossDataEn?.sectionOne?.sectionOneItemsEn)
+                setFlowSectionOneDate2En(ProfitLossDataEn?.sectionOne?.sectionOneItemsDate2En)
             }
-            if(cashFlowDataEn?.sectionTwo){
-            setFlowSectionTwoDate2En(cashFlowDataEn?.sectionTwo?.sectionTwoItemsDate2En)
-            setFlowSectionTwoEn(cashFlowDataEn?.sectionTwo?.sectionTwoItemsEn)
-                 if(cashFlowDataEn?.sectionThree){
-            setFlowSectionThreeDate2En(cashFlowDataEn?.sectionThree?.sectionThreeItemsDate2En)
-            setFlowSectionThreeEn(cashFlowDataEn?.sectionThree?.sectionThreeItemsEn)
+            if(ProfitLossDataEn?.sectionTwo){
+            setFlowSectionTwoDate2En(ProfitLossDataEn?.sectionTwo?.sectionTwoItemsDate2En)
+            setFlowSectionTwoEn(ProfitLossDataEn?.sectionTwo?.sectionTwoItemsEn)
+                 if(ProfitLossDataEn?.sectionThree){
+            setFlowSectionThreeDate2En(ProfitLossDataEn?.sectionThree?.sectionThreeItemsDate2En)
+            setFlowSectionThreeEn(ProfitLossDataEn?.sectionThree?.sectionThreeItemsEn)
             }}
 
-            if(cashFlowDataEn?.sectionFour){
-            setFlowSectionFourEn(cashFlowDataEn?.sectionFour?.sectionFourItemsEn)
-            setFlowSectionFourDate2En(cashFlowDataEn?.sectionFour?.sectionFourItemsDate2En)
+            if(ProfitLossDataEn?.sectionFour){
+            setFlowSectionFourEn(ProfitLossDataEn?.sectionFour?.sectionFourItemsEn)
+            setFlowSectionFourDate2En(ProfitLossDataEn?.sectionFour?.sectionFourItemsDate2En)
             }
        
-            if(cashFlowDataEn?.sectionAttributeOne){
-              setSectionFourAttributeItemsEn(cashFlowDataEn?.sectionAttributeOne?.sectionFourAttributeItemsEn)
-               setSectionFourAttributeItemsDate2En(cashFlowDataEn?.sectionAttributeOne?.sectionFourAttributeItemsDate2En)
+            if(ProfitLossDataEn?.sectionAttributeOne){
+              setSectionFourAttributeItemsEn(ProfitLossDataEn?.sectionAttributeOne?.sectionFourAttributeItemsEn)
+               setSectionFourAttributeItemsDate2En(ProfitLossDataEn?.sectionAttributeOne?.sectionFourAttributeItemsDate2En)
 
             }
-            if(cashFlowDataEn?.sectionOtherComprehensiveIncome){
-              setSectionFourOtherComprehensiveIncomeSubheadingItemsEn(cashFlowDataEn?.sectionOtherComprehensiveIncome?.sectionFourOtherComprehensiveIncomeSubheadingItemsEn)
-               setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2En(cashFlowDataEn?.sectionOtherComprehensiveIncome?.sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En)
+            if(ProfitLossDataEn?.sectionOtherComprehensiveIncome){
+              setSectionFourOtherComprehensiveIncomeSubheadingItemsEn(ProfitLossDataEn?.sectionOtherComprehensiveIncome?.sectionFourOtherComprehensiveIncomeSubheadingItemsEn)
+               setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2En(ProfitLossDataEn?.sectionOtherComprehensiveIncome?.sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En)
 
             }
 
-             if(cashFlowDataEn?.sectionAttributeTwo){
-              setSectionFourAttribute2ItemsEn(cashFlowDataEn?.sectionAttributeTwo?.sectionFourAttribute2ItemsEn)
-               setSectionFourAttribute2ItemsDate2En(cashFlowDataEn?.sectionAttributeTwo?.sectionFourAttribute2ItemsDate2En)
+             if(ProfitLossDataEn?.sectionAttributeTwo){
+              setSectionFourAttribute2ItemsEn(ProfitLossDataEn?.sectionAttributeTwo?.sectionFourAttribute2ItemsEn)
+               setSectionFourAttribute2ItemsDate2En(ProfitLossDataEn?.sectionAttributeTwo?.sectionFourAttribute2ItemsDate2En)
 
             }
-            if(cashFlowDataEn?.sectionFourSub){
-              setFlowSectionFourSubEn(cashFlowDataEn?.sectionFourSub.sectionFourSubItemsEn)
-              setFlowSectionFourSubDate2En(cashFlowDataEn?.sectionFourSub.sectionFourSubItemsDate2En)
+            if(ProfitLossDataEn?.sectionFourSub){
+              setFlowSectionFourSubEn(ProfitLossDataEn?.sectionFourSub.sectionFourSubItemsEn)
+              setFlowSectionFourSubDate2En(ProfitLossDataEn?.sectionFourSub.sectionFourSubItemsDate2En)
             }
-            if(cashFlowDataEn?.Table2){
-              setDateTwo1Ar(cashFlowDataEn?.Table2.dateTwo1En)
-              setDateTwo2Ar(cashFlowDataEn?.Table2.dateTwo2En)
+            if(ProfitLossDataEn?.Table2){
+              setDateTwo1Ar(ProfitLossDataEn?.Table2.dateTwo1En)
+              setDateTwo2Ar(ProfitLossDataEn?.Table2.dateTwo2En)
             }
     
-            if(cashFlowDataEn?.Table2?.sectionOneTable2){
-              setSectionLastItemsEn(cashFlowDataEn?.Table2.sectionOneTable2.sectionLastItemsEn)
-              setSectionLastItemsDate2En(cashFlowDataEn?.Table2.sectionOneTable2.sectionLastItemsDate2En)
+            if(ProfitLossDataEn?.Table2?.sectionOneTable2){
+              setSectionLastItemsEn(ProfitLossDataEn?.Table2.sectionOneTable2.sectionLastItemsEn)
+              setSectionLastItemsDate2En(ProfitLossDataEn?.Table2.sectionOneTable2.sectionLastItemsDate2En)
 
 
             }
-            if(cashFlowDataEn?.Table2?.sectionTwoTable2){
-              setSectionLastItemsEn2(cashFlowDataEn?.Table2.sectionTwoTable2.sectionLastItemsEn2)
-              setSectionLastItemsDate2En2(cashFlowDataEn?.Table2.sectionTwoTable2.sectionLastItemsDate2En2)
+            if(ProfitLossDataEn?.Table2?.sectionTwoTable2){
+              setSectionLastItemsEn2(ProfitLossDataEn?.Table2.sectionTwoTable2.sectionLastItemsEn2)
+              setSectionLastItemsDate2En2(ProfitLossDataEn?.Table2.sectionTwoTable2.sectionLastItemsDate2En2)
             }
-            if(cashFlowDataEn?.Table2?.sectionAttributeOneTable2){
-              setSectionFourAttributeItemsEnTable2(cashFlowDataEn?.Table2.sectionAttributeOneTable2.sectionFourAttributeItemsEnTable2)
-              setSectionFourAttributeItemsDate2EnTable2(cashFlowDataEn?.Table2.sectionAttributeOneTable2.sectionFourAttributeItemsDate2EnTable2)
+            if(ProfitLossDataEn?.Table2?.sectionAttributeOneTable2){
+              setSectionFourAttributeItemsEnTable2(ProfitLossDataEn?.Table2.sectionAttributeOneTable2.sectionFourAttributeItemsEnTable2)
+              setSectionFourAttributeItemsDate2EnTable2(ProfitLossDataEn?.Table2.sectionAttributeOneTable2.sectionFourAttributeItemsDate2EnTable2)
             }
-            if(cashFlowDataEn?.Table2?.sectionAttributeTwoTable2){
-              setSectionFourAttribute2ItemsEnTable2(cashFlowDataEn?.Table2.sectionAttributeTwoTable2.sectionFourAttribute2ItemsEnTable2)
-              setSectionFourAttribute2ItemsDate2EnTable2(cashFlowDataEn?.Table2.sectionAttributeTwoTable2.sectionFourAttribute2ItemsDate2EnTable2)
+            if(ProfitLossDataEn?.Table2?.sectionAttributeTwoTable2){
+              setSectionFourAttribute2ItemsEnTable2(ProfitLossDataEn?.Table2.sectionAttributeTwoTable2.sectionFourAttribute2ItemsEnTable2)
+              setSectionFourAttribute2ItemsDate2EnTable2(ProfitLossDataEn?.Table2.sectionAttributeTwoTable2.sectionFourAttribute2ItemsDate2EnTable2)
             }
-            if(cashFlowDataEn?.Table2?.sectionOtherComprehensiveIncomeTable2){
-              setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2(cashFlowDataEn?.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2)
-              setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2(cashFlowDataEn?.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2)
+            if(ProfitLossDataEn?.Table2?.sectionOtherComprehensiveIncomeTable2){
+              setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2(ProfitLossDataEn?.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2)
+              setSectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2(ProfitLossDataEn?.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2)
             }
 
           
@@ -981,11 +981,11 @@ useEffect(() => {
         }
         
 
-     },[cashFlowDataEn])
+     },[ProfitLossDataEn])
 
 
 
-
+ 
     return (
       <div className="flex justify-start   my-2 text-black">
         <table

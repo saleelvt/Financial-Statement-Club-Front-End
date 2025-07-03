@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 
-import { SetProfitLossDataArabicAction } from "../../actions/Tables/profitLossAr";
+import { SetCashFlowDataArabicAction } from "../../actions/Tables/cashFlowAr";
 
 
  export interface  AddTableArState{
@@ -17,7 +17,7 @@ const initialState: AddTableArState={
     cashFlowDataAr:null,
 }
 
- export const setProfitLossArDataSlice = createSlice({
+ export const setCashFlowArDataSlice = createSlice({ 
     name: "admin",
     initialState,
     reducers: {
@@ -27,16 +27,16 @@ const initialState: AddTableArState={
     },
     extraReducers: (builder) => {
       builder  
-      .addCase(SetProfitLossDataArabicAction.pending, (state) => {
+      .addCase(SetCashFlowDataArabicAction.pending, (state) => {
           state.loading = true;
           state.error = null;
         })
-        .addCase(SetProfitLossDataArabicAction.fulfilled, (state, { payload }) => {
+        .addCase(SetCashFlowDataArabicAction.fulfilled, (state, { payload }) => {
           state.loading = false;
           state.error = null;
           state.cashFlowDataAr=payload
         }) 
-        .addCase(SetProfitLossDataArabicAction.rejected, (state, { payload }) => {
+        .addCase(SetCashFlowDataArabicAction.rejected, (state, { payload }) => {
           state.loading = false;
           state.error = payload as string;
         })
@@ -46,5 +46,5 @@ const initialState: AddTableArState={
   
   
   
-  export const {updateError}= setProfitLossArDataSlice.actions
-  export default setProfitLossArDataSlice
+  export const {updateError}= setCashFlowArDataSlice.actions
+  export default setCashFlowArDataSlice

@@ -9,7 +9,7 @@ import setBalanceSheetDataSlice from "./reducers/Tables/balanceSheet";
 import setBalanceSheetDataArSlice from "./reducers/Tables/balanceSheetAr";
 import setCashFlowEnDataSlice from "./reducers/Tables/cashFlowEn";
 import setCashFlowArDataSlice from "./reducers/Tables/cashFlowAr";
-import setProfitLossArDataSlice from "./reducers/Tables/cashFlowAr";
+import setProfitLossArDataSlice from "./reducers/Tables/profitLossAr";
 import setProfitLossEnDataSlice from "./reducers/Tables/profitLossEn";
 
 export const store = configureStore({
@@ -26,7 +26,7 @@ export const store = configureStore({
     profitLossEn:setProfitLossEnDataSlice.reducer,
     profitLossAr:setProfitLossArDataSlice.reducer,
   },
-});
+}); 
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

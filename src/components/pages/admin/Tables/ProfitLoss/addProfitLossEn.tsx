@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../reduxKit/store";
-import { SetCashFlowDataEnglishAction } from "../../../../../reduxKit/actions/Tables/profitLossEn";
+import { SetProfitLossDataEnglishAction } from "../../../../../reduxKit/actions/Tables/profitLossEn";
 
 type BalaceSheetFormArProps = { TakingShort: boolean };
 const ProfitLossFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingShort }) => {
@@ -758,7 +758,7 @@ const handleChangeSectionLast2 = (
             }
         }
       };
-      await dispatch(SetCashFlowDataEnglishAction(formData));
+      await dispatch(SetProfitLossDataEnglishAction(formData));
     } catch (error) {
       console.log("Dispatch Error:", error);
     }

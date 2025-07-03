@@ -7,9 +7,7 @@ import { SetCashFlowDataEnglishAction } from "../../../../../reduxKit/actions/Ta
 
 type BalaceSheetFormArProps = { TakingShort: boolean };
 
-
-
-const cashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingShort }) => {
+const CashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingShort }) => {
     // Updated state declarations with empty strings as initial values
     const dispatch = useDispatch<AppDispatch>();
     // Helper function to safely parse numeric values from strings
@@ -18,9 +16,8 @@ const cashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingSh
 
       const isNegative =
  value.trim().startsWith("(") && value.trim().endsWith(")");
-      const cleaned = value.replace(/[(),]/g, ""); // Remove (, ), and ,
+      const cleaned = value.replace(/[(),]/g, "");
       const numValue = parseFloat(cleaned);
-
       if (isNaN(numValue)) return 0;
       return isNegative ? -numValue : numValue;
     };
@@ -31,9 +28,6 @@ const cashFlowFormEn: React.FC<BalaceSheetFormArProps> = React.memo( ({ TakingSh
       const formatted = new Intl.NumberFormat("en-US").format(Math.abs(value));
       return value < 0 ? `(${formatted})` : formatted;
     };
-
-
-
 
 
 
@@ -141,8 +135,6 @@ const [sectionEightLastLabel, setSectionEightLastLabel] = useState("Significant 
 
 
 // table2 section
-    const [date1Table2, setDate1Table2] = useState<Date | null>(null);
-    const [date2Table2, setDate2Table2] = useState<Date | null>(null);
 
 // section Nine
 const [sectionNineLabelsEn, setSectionNineLabelsEn] = useState<string[]>(Array(16).fill(""));
@@ -258,8 +250,8 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
 
   // Table2 - Second table with its own dates
   Table2: {
-    dateTwo1En: date1Table2,
-    dateTwo2En: date2Table2,
+    dateTwo1En: data1En,
+    dateTwo2En: data2En,
     sectionOneTable2: {
       sectionNineLabelsEn,
       sectionNineNotesEn,
@@ -357,13 +349,12 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionEightItemsDate2En,
   sectionEightLastLabel,
 
-  // Table2
-  date1Table2,
-  date2Table2,
+
   sectionNineLabelsEn,
   sectionNineNotesEn,
   sectionNineItemsEn,
-  sectionNineItemsDate2En
+  sectionNineItemsDate2En,
+  dispatch
 ]);
 
 
@@ -619,7 +610,6 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
     return (
       <div className="flex justify-start  my-2 text-black">
         <table className="border  font-semibold border-gray-300 text-xs mb-12  w-full">
-
           <thead>
             <tr className="bg-gray-100 ">
               <th className="border border-gray-100 w-96"></th>
@@ -708,10 +698,10 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
                 <input
                   value={sectionOneFirstLabelEn}
                   onChange={(e) => setSectionOneFirstLabelEn(e.target.value)}
-                  className="w-full  bg-gray-200 text-black p-1"
+                  className="w-full  bg-gray-300 text-black p-1"
                 />
               </td>
-              <td className=""></td>
+              <td className=""></td> 
               <td className=""></td>
               <td className=""></td>
             </tr>
@@ -2453,7 +2443,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
 
 
 
-        <thead>
+         <thead>
             <tr className="bg-gray-100 ">
               <th className="border border-gray-100 w-96"></th>
               <th className="border border-gray-100 w-16">Notes</th>
@@ -2462,10 +2452,10 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
                   type="date"
                   className="text-center   h-5  bg-gray-100"
                   placeholder=""
-                  value={date1Table2 ? date1Table2.toISOString().split("T")[0] : ""}
+                  value={data1En ? data1En.toISOString().split("T")[0] : ""}
                   onChange={(e) => {
                     const selectedDate = e.target.value;
-                    setDate1Table2(selectedDate ? new Date(selectedDate) : null);
+                    setDate1En(selectedDate ? new Date(selectedDate) : null);
                   }}
                   lang="en"
                 />
@@ -2496,10 +2486,10 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
               </th>
               <th className="border   border-gray-100 p-1 w-28 ">
                 <input
-                  value={date2Table2 ? date2Table2.toISOString().split("T")[0] : ""}
+                  value={data2En ? data2En.toISOString().split("T")[0] : ""}
                   onChange={(e) => {
                     const value = e.target.value;
-                    setDate2Table2(value ? new Date(value) : null);
+                    setDate2En(value ? new Date(value) : null);
                   }}
                   placeholder=""
                   className="text-center bg-gray-100"
@@ -2703,12 +2693,10 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
     </tr>
   );
 })}
-
-
         </table>
       </div>
     );
   }
 )
 
-export default cashFlowFormEn;
+export default CashFlowFormEn;

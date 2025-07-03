@@ -8,7 +8,7 @@ import type { DateObject } from "react-multi-date-picker";
 import { useDispatch  } from "react-redux";
 import { AppDispatch   } from "../../../../../reduxKit/store";
 
-import { SetCashFlowDataArabicAction } from "../../../../../reduxKit/actions/Tables/profitLossAr";
+import { SetProfitLossDataArabicAction } from "../../../../../reduxKit/actions/Tables/profitLossAr";
 type TableFormArProps = {
   TableDataAr: any;
 };
@@ -774,7 +774,7 @@ useEffect(() => {
         }
       };
 
-      await dispatch(SetCashFlowDataArabicAction(formData));
+      await dispatch(SetProfitLossDataArabicAction(formData));
     } catch (error) {
       console.log("Dispatch Error:", error);
     }
@@ -4421,7 +4421,7 @@ useEffect(() => {
 
 
 
-
+ 
 
 
 

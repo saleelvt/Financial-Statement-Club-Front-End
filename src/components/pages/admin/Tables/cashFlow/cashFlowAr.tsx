@@ -359,7 +359,50 @@ const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
 
 
 useEffect(()=>{
-  console.log("some data getting in the data set",cashFlowDataEn);
+  console.log("data for the cashFleo to appy to the arabic ",cashFlowDataEn);
+
+  if(cashFlowDataEn){
+
+    setDate1En(cashFlowDataEn.date1)
+    setDate2En(cashFlowDataEn.date2)
+   if(cashFlowDataEn?.sectionOne){
+      setFlowSectionOneEn(cashFlowDataEn?.sectionOne?.sectionOneItemsEn)
+       setFlowSectionOneDate2En(cashFlowDataEn?.sectionOne?.sectionOneItemsDate2En)
+    }
+   if(cashFlowDataEn?.sectionTwo){
+      setFlowSectionTwoEn(cashFlowDataEn?.sectionTwo?.sectionTwoItemsEn)
+       setFlowSectionTwoDate2En(cashFlowDataEn?.sectionTwo?.sectionTwoItemsDate2En)
+    }
+   if(cashFlowDataEn?.sectionThree){
+      setFlowSectionThreeEn(cashFlowDataEn?.sectionThree?.sectionThreeItemsEn)
+       setFlowSectionThreeDate2En(cashFlowDataEn?.sectionThree?.sectionThreeItemsDate2En)
+    }
+   if(cashFlowDataEn?.sectionFour){
+      setFlowSectionFourEn(cashFlowDataEn?.sectionFour?.sectionFourItemsEn)
+       setFlowSectionFourDate2En(cashFlowDataEn?.sectionFour?.sectionFourItemsDate2En)
+    }
+   if(cashFlowDataEn?.sectionFive){
+      setSectionFiveItemsEn(cashFlowDataEn?.sectionFive?.sectionFiveItemsEn)
+       setSectionFiveItemsDate2En(cashFlowDataEn?.sectionFive?.sectionFiveItemsDate2En)
+    }
+   if(cashFlowDataEn?.sectionSix){
+      setSectionSixItemsEn(cashFlowDataEn?.sectionSix?.sectionSixItemsEn)
+       setSectionSixItemsDate2En(cashFlowDataEn?.sectionSix?.sectionSixItemsDate2En)
+    }
+   if(cashFlowDataEn?.sectionSeven){
+      setSectionSevenItemsEn(cashFlowDataEn?.sectionSeven?.sectionSevenItemsEn)
+       setSectionSevenItemsDate2En(cashFlowDataEn?.sectionSeven?.sectionSevenItemsDate2En)
+    }
+   if(cashFlowDataEn?.sectionEight){
+      setSectionEightItemsEn(cashFlowDataEn?.sectionEight?.sectionEightItemsEn)
+       setSectionEightItemsDate2En(cashFlowDataEn?.sectionEight?.sectionEightItemsDate2En)
+    }
+   if(cashFlowDataEn?.Table2?.sectionOneTable2){
+      setSectionNineItemsEn(cashFlowDataEn?.Table2?.sectionOneTable2?.sectionNineItemsEn)
+       setSectionNineItemsDate2En(cashFlowDataEn?.Table2?.sectionOneTable2?.sectionNineItemsDate2En)
+    }
+  }
+
 },[cashFlowDataEn])
 
 

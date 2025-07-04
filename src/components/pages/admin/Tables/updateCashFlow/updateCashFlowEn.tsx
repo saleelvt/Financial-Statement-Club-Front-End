@@ -368,11 +368,83 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
 
 
 
-useEffect(()=>{
-console.log("the update cashflow data is the data : ", TableDataEn);
-},[TableDataEn])
+// useEffect(()=>{
+// console.log("the update cashflow data is the data : ", TableDataEn);
+
+// if(TableDataEn && Object.keys(TableDataEn).length > 0){
 
 
+
+// }
+// },[TableDataEn])
+
+
+
+
+// Complete useEffect to populate all data from MongoDB
+useEffect(() => {
+ 
+  
+ if(TableDataEn && Object.keys(TableDataEn).length > 0){
+    try {
+
+      // Set main dates
+      if (TableDataEn.date1En) {
+        setDate1En(new Date(TableDataEn.date1En));
+      }
+      if (TableDataEn.date2En) {
+        setDate2En(new Date(TableDataEn.date2En));
+      }
+      
+      // Section One
+      if (TableDataEn.sectionOne) {
+        setSectionOneFirstLabelEn(TableDataEn.sectionOne.sectionOneFirstLabelEn );
+        setSectionOneLabelsEn(TableDataEn.sectionOne.sectionOneLabelsEn || Array(5).fill(""));
+        setFlowSectionOneNotesEn(TableDataEn.sectionOne.sectionOneNotesEn || Array(5).fill(""));
+        setFlowSectionOneEn(TableDataEn.sectionOne.sectionOneItemsEn || Array(5).fill(""));
+        setFlowSectionOneDate2En(TableDataEn.sectionOne.sectionOneItemsDate2En || Array(5).fill(""));
+    
+      }
+      
+      // Section Two
+      if (TableDataEn.sectionTwo) {
+        setSectionTwoLabelsEn(TableDataEn.sectionTwo.sectionTwoLabelsEn || Array(12).fill(""));
+        setFlowSectionTwoNotesEn(TableDataEn.sectionTwo.sectionTwoNotesEn || Array(12).fill(""));
+        setFlowSectionTwoEn(TableDataEn.sectionTwo.sectionTwoItemsEn || Array(12).fill(""));
+        setFlowSectionTwoDate2En(TableDataEn.sectionTwo.sectionTwoItemsDate2En || Array(12).fill(""));
+        setSectionTwoTotalLabel(TableDataEn.sectionTwo.sectionTwoTotalLabel );
+      }
+      
+      // Section Three
+      if (TableDataEn.sectionThree) {
+        setSectionThreeLabelsEn(TableDataEn.sectionThree.sectionThreeLabelsEn || Array(7).fill(""));
+        setFlowSectionThreeNotesEn(TableDataEn.sectionThree.sectionThreeNotesEn || Array(7).fill(""));
+        setFlowSectionThreeEn(TableDataEn.sectionThree.sectionThreeItemsEn || Array(7).fill(""));
+        setFlowSectionThreeDate2En(TableDataEn.sectionThree.sectionThreeItemsDate2En || Array(7).fill(""));
+        setSectionThreeTotalLabel(TableDataEn.sectionThree.sectionThreeTotalLabel );
+      }
+      
+      // Section Four
+      if (TableDataEn.sectionFour) {
+        setSectionFourLabelsEn(TableDataEn.sectionFour.sectionFourLabelsEn || Array(5).fill(""));
+        setFlowSectionFourNotesEn(TableDataEn.sectionFour.sectionFourNotesEn || Array(5).fill(""));
+        setFlowSectionFourEn(TableDataEn.sectionFour.sectionFourItemsEn || Array(5).fill(""));
+        setFlowSectionFourDate2En(TableDataEn.sectionFour.sectionFourItemsDate2En || Array(5).fill(""));
+        setSectionFourTotalLabel(TableDataEn.sectionFour.sectionFourTotalLabel );
+      }
+
+      
+      // Table 2 sections
+      // if (TableDataEn.Table2) {     
+      // }
+      
+    } catch (error) {
+      console.error("Error loading financial data into state:", error);
+    }
+  } else {
+    console.log("TableDataEn is empty or undefined");
+  }
+}, [TableDataEn]);
 
 
 

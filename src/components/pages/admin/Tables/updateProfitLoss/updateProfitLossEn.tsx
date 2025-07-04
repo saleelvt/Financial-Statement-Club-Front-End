@@ -244,12 +244,12 @@ useEffect(() => {
       
       // Section One
       if (TableDataEn.sectionOne) {
-        setSectionOneFirstLabelEn(TableDataEn.sectionOne.sectionOneFirstLabelEn || "Continuing operation:");
+        setSectionOneFirstLabelEn(TableDataEn.sectionOne.sectionOneFirstLabelEn );
         setSectionOneLabelsEn(TableDataEn.sectionOne.sectionOneLabelsEn || Array(5).fill(""));
         setFlowSectionOneNotesEn(TableDataEn.sectionOne.sectionOneNotesEn || Array(5).fill(""));
         setFlowSectionOneEn(TableDataEn.sectionOne.sectionOneItemsEn || Array(5).fill(""));
         setFlowSectionOneDate2En(TableDataEn.sectionOne.sectionOneItemsDate2En || Array(5).fill(""));
-        setSectionOneTotalLabel(TableDataEn.sectionOne.sectionOneTotalLabel || "First Total (Gross income)");
+        setSectionOneTotalLabel(TableDataEn.sectionOne.sectionOneTotalLabel );
       }
       
       // Section Two
@@ -258,7 +258,7 @@ useEffect(() => {
         setFlowSectionTwoNotesEn(TableDataEn.sectionTwo.sectionTwoNotesEn || Array(12).fill(""));
         setFlowSectionTwoEn(TableDataEn.sectionTwo.sectionTwoItemsEn || Array(12).fill(""));
         setFlowSectionTwoDate2En(TableDataEn.sectionTwo.sectionTwoItemsDate2En || Array(12).fill(""));
-        setSectionTwoTotalLabel(TableDataEn.sectionTwo.sectionTwoTotalLabel || "Second Total (Operating loss)");
+        setSectionTwoTotalLabel(TableDataEn.sectionTwo.sectionTwoTotalLabel );
       }
       
       // Section Three
@@ -267,7 +267,7 @@ useEffect(() => {
         setFlowSectionThreeNotesEn(TableDataEn.sectionThree.sectionThreeNotesEn || Array(7).fill(""));
         setFlowSectionThreeEn(TableDataEn.sectionThree.sectionThreeItemsEn || Array(7).fill(""));
         setFlowSectionThreeDate2En(TableDataEn.sectionThree.sectionThreeItemsDate2En || Array(7).fill(""));
-        setSectionThreeTotalLabel(TableDataEn.sectionThree.sectionThreeTotalLabel || "Third Total (Income (loss) before zakat and foreign Income)");
+        setSectionThreeTotalLabel(TableDataEn.sectionThree.sectionThreeTotalLabel );
       }
       
       // Section Four
@@ -276,22 +276,22 @@ useEffect(() => {
         setFlowSectionFourNotesEn(TableDataEn.sectionFour.sectionFourNotesEn || Array(5).fill(""));
         setFlowSectionFourEn(TableDataEn.sectionFour.sectionFourItemsEn || Array(5).fill(""));
         setFlowSectionFourDate2En(TableDataEn.sectionFour.sectionFourItemsDate2En || Array(5).fill(""));
-        setSectionFourTotalLabel(TableDataEn.sectionFour.sectionFourTotalLabel || "Four Total (Loss for the year from continuing operations)");
+        setSectionFourTotalLabel(TableDataEn.sectionFour.sectionFourTotalLabel );
       }
       
       // Section Four Sub (Discontinued operations)
       if (TableDataEn.sectionFourSub) {
-        setSectionFourSubFirstLabelEn(TableDataEn.sectionFourSub.sectionFourSubFirstLabelEn || "Discontinued operation:");
+        setSectionFourSubFirstLabelEn(TableDataEn.sectionFourSub.sectionFourSubFirstLabelEn );
         setSectionFourSubLabelsEn(TableDataEn.sectionFourSub.sectionFourSubLabelsEn || Array(3).fill(""));
         setFlowSectionFourSubNotesEn(TableDataEn.sectionFourSub.sectionFourSubNotesEn || Array(3).fill(""));
         setFlowSectionFourSubEn(TableDataEn.sectionFourSub.sectionFourSubItemsEn || Array(3).fill(""));
         setFlowSectionFourSubDate2En(TableDataEn.sectionFourSub.sectionFourSubItemsDate2En || Array(3).fill(""));
-        setSectionFourSubTotalLabel(TableDataEn.sectionFourSub.sectionFourSubTotalLabel || "Fifth Total (Loss for the year)");
+        setSectionFourSubTotalLabel(TableDataEn.sectionFourSub.sectionFourSubTotalLabel );
       }
       
       // Section Attribute One
       if (TableDataEn.sectionAttributeOne) {
-        setSectionFourAttributeLabel(TableDataEn.sectionAttributeOne.sectionFourAttribute || "Net income from continuing operations Attributable to:");
+        setSectionFourAttributeLabel(TableDataEn.sectionAttributeOne.sectionFourAttribute );
         setSectionFourAttributeLabelsEn(TableDataEn.sectionAttributeOne.sectionFourAttributeLabelsEn || Array(2).fill(""));
         setSectionFourAttributeItemsEn(TableDataEn.sectionAttributeOne.sectionFourAttributeItemsEn || Array(2).fill(""));
         setSectionFourAttributeItemsDate2En(TableDataEn.sectionAttributeOne.sectionFourAttributeItemsDate2En || Array(2).fill(""));
@@ -299,7 +299,7 @@ useEffect(() => {
       
       // Section Attribute Two
       if (TableDataEn.sectionAttributeTwo) {
-        setSectionFourAttribute2Label(TableDataEn.sectionAttributeTwo.sectionFourAttribute2 || "Net (Loss) income Attributable to:");
+        setSectionFourAttribute2Label(TableDataEn.sectionAttributeTwo.sectionFourAttribute2 );
         setSectionFourAttribute2LabelsEn(TableDataEn.sectionAttributeTwo.sectionFourAttribute2LabelsEn || Array(2).fill(""));
         setSectionFourAttribute2ItemsEn(TableDataEn.sectionAttributeTwo.sectionFourAttribute2ItemsEn || Array(2).fill(""));
         setSectionFourAttribute2ItemsDate2En(TableDataEn.sectionAttributeTwo.sectionFourAttribute2ItemsDate2En || Array(2).fill(""));
@@ -307,7 +307,7 @@ useEffect(() => {
       
       // Section Other Comprehensive Income
       if (TableDataEn.sectionOtherComprehensiveIncome) {
-        setSectionFourOtherComprehensiveIncomeLabel(TableDataEn.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncome || "Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
+        setSectionFourOtherComprehensiveIncomeLabel(TableDataEn.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncome );
         setSectionFourOtherComprehensiveIncomeSubheadingLabelsEn(TableDataEn.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheadingLabelsEn || Array(2).fill(""));
         setSectionFourOtherComprehensiveIncomeSubheadingNotesEn(TableDataEn.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheadingNotesEn || Array(2).fill(""));
         setSectionFourOtherComprehensiveIncomeSubheadingItemsEn(TableDataEn.sectionOtherComprehensiveIncome.sectionFourOtherComprehensiveIncomeSubheadingItemsEn || Array(2).fill(""));
@@ -326,37 +326,37 @@ useEffect(() => {
         
         // Table 2 - Section One
         if (TableDataEn.Table2.sectionOneTable2) {
-          setSectionLastLabel(TableDataEn.Table2.sectionOneTable2.sectionLastLabel || "Fifth Total (Loss for the year)");
-          setSectionSevenLastLabel(TableDataEn.Table2.sectionOneTable2.sectionSevenLastLabel || "Other comprehensive income");
-          setSectionSevenSubheadingLabel(TableDataEn.Table2.sectionOneTable2.sectionSevenSubheading || "Other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years:");
+          setSectionLastLabel(TableDataEn.Table2.sectionOneTable2.sectionLastLabel );
+          setSectionSevenLastLabel(TableDataEn.Table2.sectionOneTable2.sectionSevenLastLabel );
+          setSectionSevenSubheadingLabel(TableDataEn.Table2.sectionOneTable2.sectionSevenSubheading );
           setSectionLastLabelsEn(TableDataEn.Table2.sectionOneTable2.sectionLastLabelsEn || Array(8).fill(""));
           setSectionLastNotesEn(TableDataEn.Table2.sectionOneTable2.sectionLastNotesEn || Array(8).fill(""));
           setSectionLastItemsEn(TableDataEn.Table2.sectionOneTable2.sectionLastItemsEn || Array(8).fill(""));
           setSectionLastItemsDate2En(TableDataEn.Table2.sectionOneTable2.sectionLastItemsDate2En || Array(8).fill(""));
-          setSectionLastTotalLabelEn(TableDataEn.Table2.sectionOneTable2.sectionLastTotalLabelEn || "Total other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years");
+          setSectionLastTotalLabelEn(TableDataEn.Table2.sectionOneTable2.sectionLastTotalLabelEn );
         }
         
         // Table 2 - Section Two
         if (TableDataEn.Table2.sectionTwoTable2) {
-          setSectionSevenSubheadingLabel2(TableDataEn.Table2.sectionTwoTable2.sectionSevenSubheading2 || "Other comprehensive income (loss) not reclassified to profit or loss in subsequent years:");
+          setSectionSevenSubheadingLabel2(TableDataEn.Table2.sectionTwoTable2.sectionSevenSubheading2 );
           setSectionLastLabelsEn2(TableDataEn.Table2.sectionTwoTable2.sectionLastLabelsEn2 || Array(8).fill(""));
           setSectionLastNotesEn2(TableDataEn.Table2.sectionTwoTable2.sectionLastNotesEn2 || Array(8).fill(""));
           setSectionLastItemsEn2(TableDataEn.Table2.sectionTwoTable2.sectionLastItemsEn2 || Array(8).fill(""));
           setSectionLastItemsDate2En2(TableDataEn.Table2.sectionTwoTable2.sectionLastItemsDate2En2 || Array(8).fill(""));
-          setSectionToatalLastLabelEn2(TableDataEn.Table2.sectionTwoTable2.sectionLastTotalLabelEn2 || "Total other comprehensive income (loss) not reclassified to profit or loss in subsequent years:");
+          setSectionToatalLastLabelEn2(TableDataEn.Table2.sectionTwoTable2.sectionLastTotalLabelEn2 );
           
           // Total sections
           if (TableDataEn.Table2.sectionTwoTable2.totalOtherComp) {
-            setSectionSevenSecondLastLabel2(TableDataEn.Table2.sectionTwoTable2.totalOtherComp.SectionSevenSecondLastLabel2 || "Total other comprehensive income");
+            setSectionSevenSecondLastLabel2(TableDataEn.Table2.sectionTwoTable2.totalOtherComp.SectionSevenSecondLastLabel2 );
           }
           if (TableDataEn.Table2.sectionTwoTable2.totalComprehensiveLoss) {
-            setSectionSevenLastLabel2(TableDataEn.Table2.sectionTwoTable2.totalComprehensiveLoss.SectionSevenLastLabel2 || "Total comprehensive (loss) income for the year");
+            setSectionSevenLastLabel2(TableDataEn.Table2.sectionTwoTable2.totalComprehensiveLoss.SectionSevenLastLabel2 );
           }
         }
         
         // Table 2 - Attribute One
         if (TableDataEn.Table2.sectionAttributeOneTable2) {
-          setSectionFourAttributeLabelTable2(TableDataEn.Table2.sectionAttributeOneTable2.sectionFourAttributeTable2 || "Net income from continuing operations Attributable to:");
+          setSectionFourAttributeLabelTable2(TableDataEn.Table2.sectionAttributeOneTable2.sectionFourAttributeTable2 );
           setSectionFourAttributeLabelsEnTable2(TableDataEn.Table2.sectionAttributeOneTable2.sectionFourAttributeLabelsEnTable2 || Array(2).fill(""));
           setSectionFourAttributeItemsEnTable2(TableDataEn.Table2.sectionAttributeOneTable2.sectionFourAttributeItemsEnTable2 || Array(2).fill(""));
           setSectionFourAttributeItemsDate2EnTable2(TableDataEn.Table2.sectionAttributeOneTable2.sectionFourAttributeItemsDate2EnTable2 || Array(2).fill(""));
@@ -364,7 +364,7 @@ useEffect(() => {
         
         // Table 2 - Attribute Two
         if (TableDataEn.Table2.sectionAttributeTwoTable2) {
-          setSectionFourAttribute2LabelTable2(TableDataEn.Table2.sectionAttributeTwoTable2.sectionFourAttribute2Table2 || "Net (Loss) income Attributable to:");
+          setSectionFourAttribute2LabelTable2(TableDataEn.Table2.sectionAttributeTwoTable2.sectionFourAttribute2Table2 );
           setSectionFourAttribute2LabelsEnTable2(TableDataEn.Table2.sectionAttributeTwoTable2.sectionFourAttribute2LabelsEnTable2 || Array(2).fill(""));
           setSectionFourAttribute2ItemsEnTable2(TableDataEn.Table2.sectionAttributeTwoTable2.sectionFourAttribute2ItemsEnTable2 || Array(2).fill(""));
           setSectionFourAttribute2ItemsDate2EnTable2(TableDataEn.Table2.sectionAttributeTwoTable2.sectionFourAttribute2ItemsDate2EnTable2 || Array(2).fill(""));
@@ -372,7 +372,7 @@ useEffect(() => {
         
         // Table 2 - Other Comprehensive Income
         if (TableDataEn.Table2.sectionOtherComprehensiveIncomeTable2) {
-          setSectionFourOtherComprehensiveIncomeLabelTable2(TableDataEn.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeTable2 || "Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
+          setSectionFourOtherComprehensiveIncomeLabelTable2(TableDataEn.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeTable2 );
           setSectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2(TableDataEn.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2 || Array(2).fill(""));
           setSectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2(TableDataEn.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2 || Array(2).fill(""));
           setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2(TableDataEn.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2 || Array(2).fill(""));
@@ -380,7 +380,6 @@ useEffect(() => {
         }
       }
       
-      console.log("All financial statement data successfully loaded into state");
       
     } catch (error) {
       console.error("Error loading financial data into state:", error);

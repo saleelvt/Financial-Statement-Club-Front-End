@@ -925,12 +925,12 @@ useEffect(() => {
       if (TableDataAr.sectionOne) {
         const sectionOne = TableDataAr.sectionOne;
         
-        setSectionOneFirstLabelEn(sectionOne.sectionOneFirstLabelEn || "Continuing operation:");
+        setSectionOneFirstLabelEn(sectionOne.sectionOneFirstLabelEn );
         setSectionOneLabelsEn(sectionOne.sectionOneLabelsEn || Array(5).fill(""));
         setFlowSectionOneNotesEn(sectionOne.sectionOneNotesEn || Array(5).fill(""));
         setFlowSectionOneEn(sectionOne.sectionOneItemsEn || Array(5).fill(""));
         setFlowSectionOneDate2En(sectionOne.sectionOneItemsDate2En || Array(5).fill(""));
-        setSectionOneTotalLabel(sectionOne.sectionOneTotalLabel || "First Total (Gross income)");
+        setSectionOneTotalLabel(sectionOne.sectionOneTotalLabel);
       }
       
       // SECTION TWO - Complete mapping
@@ -941,7 +941,7 @@ useEffect(() => {
         setFlowSectionTwoNotesEn(sectionTwo.sectionTwoNotesEn || Array(12).fill(""));
         setFlowSectionTwoEn(sectionTwo.sectionTwoItemsEn || Array(12).fill(""));
         setFlowSectionTwoDate2En(sectionTwo.sectionTwoItemsDate2En || Array(12).fill(""));
-        setSectionTwoTotalLabel(sectionTwo.sectionTwoTotalLabel || "Second Total (Operating loss)");
+        setSectionTwoTotalLabel(sectionTwo.sectionTwoTotalLabel );
       }
       
       // SECTION THREE - Complete mapping
@@ -952,7 +952,7 @@ useEffect(() => {
         setFlowSectionThreeNotesEn(sectionThree.sectionThreeNotesEn || Array(7).fill(""));
         setFlowSectionThreeEn(sectionThree.sectionThreeItemsEn || Array(7).fill(""));
         setFlowSectionThreeDate2En(sectionThree.sectionThreeItemsDate2En || Array(7).fill(""));
-        setSectionThreeTotalLabel(sectionThree.sectionThreeTotalLabel || "Third Total (Income (loss) before zakat and foreign Income)");
+        setSectionThreeTotalLabel(sectionThree.sectionThreeTotalLabel );
       }
       
       // SECTION FOUR - Complete mapping
@@ -963,26 +963,26 @@ useEffect(() => {
         setFlowSectionFourNotesEn(sectionFour.sectionFourNotesEn || Array(5).fill(""));
         setFlowSectionFourEn(sectionFour.sectionFourItemsEn || Array(5).fill(""));
         setFlowSectionFourDate2En(sectionFour.sectionFourItemsDate2En || Array(5).fill(""));
-        setSectionFourTotalLabel(sectionFour.sectionFourTotalLabel || "Four Total (Loss for the year from continuing operations)");
+        setSectionFourTotalLabel(sectionFour.sectionFourTotalLabel);
       }
       
       // SECTION FOUR SUB - Complete mapping
       if (TableDataAr.sectionFourSub) {
         const sectionFourSub = TableDataAr.sectionFourSub;
         
-        setSectionFourSubFirstLabelEn(sectionFourSub.sectionFourSubFirstLabelEn || "Discontinued operation:");
+        setSectionFourSubFirstLabelEn(sectionFourSub.sectionFourSubFirstLabelEn );
         setSectionFourSubLabelsEn(sectionFourSub.sectionFourSubLabelsEn || Array(3).fill(""));
         setFlowSectionFourSubNotesEn(sectionFourSub.sectionFourSubNotesEn || Array(3).fill(""));
         setFlowSectionFourSubEn(sectionFourSub.sectionFourSubItemsEn || Array(3).fill(""));
         setFlowSectionFourSubDate2En(sectionFourSub.sectionFourSubItemsDate2En || Array(3).fill(""));
-        setSectionFourSubTotalLabel(sectionFourSub.sectionFourSubTotalLabel || "Fifth Total (Loss for the year)");
+        setSectionFourSubTotalLabel(sectionFourSub.sectionFourSubTotalLabel );
       }
       
       // SECTION ATTRIBUTE ONE - Complete mapping
       if (TableDataAr.sectionAttributeOne) {
         const sectionAttributeOne = TableDataAr.sectionAttributeOne;
         
-        setSectionFourAttributeLabel(sectionAttributeOne.sectionFourAttribute || "Net income from continuing operations Attributable to:1");
+        setSectionFourAttributeLabel(sectionAttributeOne.sectionFourAttribute );
         setSectionFourAttributeLabelsEn(sectionAttributeOne.sectionFourAttributeLabelsEn || Array(2).fill(""));
         setSectionFourAttributeItemsEn(sectionAttributeOne.sectionFourAttributeItemsEn || Array(2).fill(""));
         setSectionFourAttributeItemsDate2En(sectionAttributeOne.sectionFourAttributeItemsDate2En || Array(2).fill(""));
@@ -992,7 +992,7 @@ useEffect(() => {
       if (TableDataAr.sectionAttributeTwo) {
         const sectionAttributeTwo = TableDataAr.sectionAttributeTwo;
         
-        setSectionFourAttribute2Label(sectionAttributeTwo.sectionFourAttribute2 || "Net (Loss) income Attributable to:2");
+        setSectionFourAttribute2Label(sectionAttributeTwo.sectionFourAttribute2 );
         setSectionFourAttribute2LabelsEn(sectionAttributeTwo.sectionFourAttribute2LabelsEn || Array(2).fill(""));
         setSectionFourAttribute2ItemsEn(sectionAttributeTwo.sectionFourAttribute2ItemsEn || Array(2).fill(""));
         setSectionFourAttribute2ItemsDate2En(sectionAttributeTwo.sectionFourAttribute2ItemsDate2En || Array(2).fill(""));
@@ -1002,7 +1002,7 @@ useEffect(() => {
       if (TableDataAr.sectionOtherComprehensiveIncome) {
         const sectionOCI = TableDataAr.sectionOtherComprehensiveIncome;
         
-        setSectionFourOtherComprehensiveIncomeLabel(sectionOCI.sectionFourOtherComprehensiveIncome || "Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
+        setSectionFourOtherComprehensiveIncomeLabel(sectionOCI.sectionFourOtherComprehensiveIncome );
         setSectionFourOtherComprehensiveIncomeSubheadingLabelsEn(sectionOCI.sectionFourOtherComprehensiveIncomeSubheadingLabelsEn || Array(2).fill(""));
         setSectionFourOtherComprehensiveIncomeSubheadingNotesEn(sectionOCI.sectionFourOtherComprehensiveIncomeSubheadingNotesEn || Array(2).fill(""));
         setSectionFourOtherComprehensiveIncomeSubheadingItemsEn(sectionOCI.sectionFourOtherComprehensiveIncomeSubheadingItemsEn || Array(2).fill(""));
@@ -1025,35 +1025,35 @@ useEffect(() => {
         if (table2.sectionOneTable2) {
           const sectionOneT2 = table2.sectionOneTable2;
           
-          setSectionLastLabel(sectionOneT2.sectionLastLabel || "Fifth Total (Loss for the year)2");
-          setSectionSevenLastLabel(sectionOneT2.sectionSevenLastLabel || "Other comprehensive income");
-          setSectionSevenSubheadingLabel(sectionOneT2.sectionSevenSubheading || "Other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years:");
+          setSectionLastLabel(sectionOneT2.sectionLastLabel );
+          setSectionSevenLastLabel(sectionOneT2.sectionSevenLastLabel);
+          setSectionSevenSubheadingLabel(sectionOneT2.sectionSevenSubheading );
           setSectionLastLabelsEn(sectionOneT2.sectionLastLabelsEn || Array(8).fill(""));
           setSectionLastNotesEn(sectionOneT2.sectionLastNotesEn || Array(8).fill(""));
           setSectionLastItemsEn(sectionOneT2.sectionLastItemsEn || Array(8).fill(""));
           setSectionLastItemsDate2En(sectionOneT2.sectionLastItemsDate2En || Array(8).fill(""));
-          setSectionLastTotalLabelEn(sectionOneT2.sectionLastTotalLabelEn || "Total other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years");
+          setSectionLastTotalLabelEn(sectionOneT2.sectionLastTotalLabelEn );
         }
         
         // Section Two Table 2
         if (table2.sectionTwoTable2) {
           const sectionTwoT2 = table2.sectionTwoTable2;
           
-          setSectionSevenSubheadingLabel2(sectionTwoT2.sectionSevenSubheading2 || "Other comprehensive income (loss) not reclassified to profit or loss in subsequent years:1");
+          setSectionSevenSubheadingLabel2(sectionTwoT2.sectionSevenSubheading2 );
           setSectionLastLabelsEn2(sectionTwoT2.sectionLastLabelsEn2 || Array(8).fill(""));
           setSectionLastNotesEn2(sectionTwoT2.sectionLastNotesEn2 || Array(8).fill(""));
           setSectionLastItemsEn2(sectionTwoT2.sectionLastItemsEn2 || Array(8).fill(""));
           setSectionLastItemsDate2En2(sectionTwoT2.sectionLastItemsDate2En2 || Array(8).fill(""));
-          setSectionToatalLastLabelEn2(sectionTwoT2.sectionLastTotalLabelEn2 || "Total other comprehensive income (loss) not reclassified to profit or loss in subsequent years:");
+          setSectionToatalLastLabelEn2(sectionTwoT2.sectionLastTotalLabelEn2 );
           
           // Total Other Comprehensive Income
           if (sectionTwoT2.totalOtherComp) {
-            setSectionSevenSecondLastLabel2(sectionTwoT2.totalOtherComp.SectionSevenSecondLastLabel2 || "Total other comprehensive income");
+            setSectionSevenSecondLastLabel2(sectionTwoT2.totalOtherComp.SectionSevenSecondLastLabel2 );
           }
           
           // Total Comprehensive Loss
           if (sectionTwoT2.totalComprehensiveLoss) {
-            setSectionSevenLastLabel2(sectionTwoT2.totalComprehensiveLoss.SectionSevenLastLabel2 || "Total comprehensive (loss) income for the year ");
+            setSectionSevenLastLabel2(sectionTwoT2.totalComprehensiveLoss.SectionSevenLastLabel2 );
           }
         }
         
@@ -1061,7 +1061,7 @@ useEffect(() => {
         if (table2.sectionAttributeOneTable2) {
           const sectionAttrOneT2 = table2.sectionAttributeOneTable2;
           
-          setSectionFourAttributeLabelTable2(sectionAttrOneT2.sectionFourAttributeTable2 || "Net income from continuing operations Attributable to:");
+          setSectionFourAttributeLabelTable2(sectionAttrOneT2.sectionFourAttributeTable2 );
           setSectionFourAttributeLabelsEnTable2(sectionAttrOneT2.sectionFourAttributeLabelsEnTable2 || Array(2).fill(""));
           setSectionFourAttributeItemsEnTable2(sectionAttrOneT2.sectionFourAttributeItemsEnTable2 || Array(2).fill(""));
           setSectionFourAttributeItemsDate2EnTable2(sectionAttrOneT2.sectionFourAttributeItemsDate2EnTable2 || Array(2).fill(""));
@@ -1071,7 +1071,7 @@ useEffect(() => {
         if (table2.sectionAttributeTwoTable2) {
           const sectionAttrTwoT2 = table2.sectionAttributeTwoTable2;
           
-          setSectionFourAttribute2LabelTable2(sectionAttrTwoT2.sectionFourAttribute2Table2 || "Net (Loss) income Attributable to:");
+          setSectionFourAttribute2LabelTable2(sectionAttrTwoT2.sectionFourAttribute2Table2 );
           setSectionFourAttribute2LabelsEnTable2(sectionAttrTwoT2.sectionFourAttribute2LabelsEnTable2 || Array(2).fill(""));
           setSectionFourAttribute2ItemsEnTable2(sectionAttrTwoT2.sectionFourAttribute2ItemsEnTable2 || Array(2).fill(""));
           setSectionFourAttribute2ItemsDate2EnTable2(sectionAttrTwoT2.sectionFourAttribute2ItemsDate2EnTable2 || Array(2).fill(""));
@@ -1081,7 +1081,7 @@ useEffect(() => {
         if (table2.sectionOtherComprehensiveIncomeTable2) {
           const sectionOCIT2 = table2.sectionOtherComprehensiveIncomeTable2;
           
-          setSectionFourOtherComprehensiveIncomeLabelTable2(sectionOCIT2.sectionFourOtherComprehensiveIncomeTable2 || "Basic and diluted earnings per share from net (loss) income attributable to equity holders of the Parent (Saudi Riyals)");
+          setSectionFourOtherComprehensiveIncomeLabelTable2(sectionOCIT2.sectionFourOtherComprehensiveIncomeTable2 );
           setSectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2(sectionOCIT2.sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2 || Array(2).fill(""));
           setSectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2(sectionOCIT2.sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2 || Array(2).fill(""));
           setSectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2(sectionOCIT2.sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2 || Array(2).fill(""));

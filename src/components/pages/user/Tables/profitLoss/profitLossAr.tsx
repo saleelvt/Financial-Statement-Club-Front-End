@@ -5,12 +5,12 @@ type CashFlowPropsAr = {
   Tabledata: any; // You can replace `any` with an actual type later
 };
 
-const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
+const ProfitLossUserArabic: React.FC<CashFlowPropsAr> = React.memo(
   ({ Tabledata }) => {
     const [table, setTable] = useState<any>(null);
 
     useEffect(() => {
-      console.log("my cashFlow on for show the data Arabic : ", Tabledata);
+      console.log("my ProfitLoss for show the data Arabic : ", Tabledata);
 
       setTable(Tabledata);
     }, [Tabledata]);
@@ -1164,8 +1164,6 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
 
 
 
-
-
                 { table.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2.map(
                   (label: string, idx: number) => {
                     const note = table.Table2.sectionOtherComprehensiveIncomeTable2.sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2[idx];
@@ -1201,18 +1199,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                   }
                 )}
 
-                
-
-
-
-
-
-
-
               </tbody>
-       
-
-
+    
             </table>
           </div>
         ) : (
@@ -1222,5 +1210,4 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
     );
   }
 );
-
-export default CashFlowUserArabic;
+export default ProfitLossUserArabic

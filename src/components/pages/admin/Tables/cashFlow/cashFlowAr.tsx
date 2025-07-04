@@ -77,7 +77,7 @@ useEffect(() => {
     const [sectionTwoNotesEn, setFlowSectionTwoNotesEn] = useState<string[]>(  Array(23).fill("")   );
     const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(  Array(23).fill("")   );
     const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(23).fill(""));
-    const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("");
+    const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState(".");
     const TotalsectionTwoItemsEn =   sumStringValues(sectionTwoItemsEn);
     const TotalsectionTwoItemsDate2En = sumStringValues(sectionTwoItemsDate2En);
 

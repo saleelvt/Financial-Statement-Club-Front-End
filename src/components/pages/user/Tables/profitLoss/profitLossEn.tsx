@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 
-type CashFlowArProps = {
+type ProfitLossArProps = {
   Tabledata: any; // You can replace `any` with an actual type later
 };
 
-const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
+const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
   ({ Tabledata }) => {
     const [table, setTable] = useState<any>(null);
 
     useEffect(() => {
-      console.log("my cashFlow on for show the data  English: ", Tabledata);
-
+      console.log("my ProfitLoss on for show the data  English: ", Tabledata);
       setTable(Tabledata);
     }, [Tabledata]);
-
     console.log("The table data from props:", Tabledata);
 
     const formatValue = (v: string | number) => {
@@ -1203,4 +1201,4 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
   }
 );
 
-export default CashFlowUserEnglish;
+export default ProfitLossUserEnglish;

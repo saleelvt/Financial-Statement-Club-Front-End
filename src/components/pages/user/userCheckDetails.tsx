@@ -23,6 +23,8 @@ const BalaceSheetFormUser = lazy(() => import("./Tables/balanceSheet"));
 const BalanceSheetFormUserArabic = lazy( () => import("./Tables/balanceSheetAr"));
 const CashFlowUserEn =lazy(()=> import("./Tables/cashFlow/cashFlowEn"))
 const CashFlowUserArabic =lazy(()=> import("./Tables/cashFlow/cashFlowAr"))
+const ProfitLossEn =lazy(()=> import("./Tables/profitLoss/profitLossEn"))
+const ProfitLossArabic =lazy(()=> import("./Tables/profitLoss/profitLossAr"))
 
 const UserCompanyDetails = React.memo(() => {
   const { userLanguage } = useSelector(
@@ -215,9 +217,8 @@ const UserCompanyDetails = React.memo(() => {
 
     if (selectedFilteredDocWithYear.length > 0) {
       const document = selectedFilteredDocWithYear[0];
-      const filteredData =
-        document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
-      console.log("the balancesheet data : ", filteredData, "key: ", tableKey);
+      const filteredData =  document.formData?.[selectedPdfKey as FieldKey]?.table?.[tableKey];
+      console.log("the table data : ", filteredData, "key: ", tableKey);
 
       const isEmptyDeep = (obj: any): boolean => {
         if (!obj || typeof obj !== "object") return true;
@@ -239,10 +240,7 @@ const UserCompanyDetails = React.memo(() => {
     
     setTableData(null);
       setSelectedTableKey(null);
-  //     if (!selectedPdfKey) return; // Exit early if null
-  //   setTableButton(false);
-  //  await handlePdfButtonClick(selectedPdfKey)
-   
+
   };
 
   const handleTABLE = () => {
@@ -638,6 +636,19 @@ const UserCompanyDetails = React.memo(() => {
             </div>
           ) : (
             <CashFlowUserArabic Tabledata={table} />
+          )}
+        </div>
+      )}
+      {selectedTableKey === "ProfitLoss" && (
+        <div className="h-screen w-full overflow-y-auto pr-2">
+          {language === "English" ? (
+            <div className="flex items-center justify-center">
+              <div className="w-full p-1 border-[6px] border-gray-700">
+                <ProfitLossEn Tabledata={table} />
+              </div>
+            </div>
+          ) : (
+            <ProfitLossArabic Tabledata={table} />
           )}
         </div>
       )}

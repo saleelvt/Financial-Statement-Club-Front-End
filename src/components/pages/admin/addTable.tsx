@@ -30,8 +30,8 @@ import CashFlowUpdateFormEn from "./Tables/updateCashFlow/updateCashFlowEn";
 
 import ProfitLossFormEn from "./Tables/ProfitLoss/addProfitLossEn";
 import ProfitLossFormAr from "./Tables/ProfitLoss/addProfitLossAr";
-import ProfitLossUserArabic from "../user/Tables/cashFlow/cashFlowAr";
-import ProfitLossUserEnglish from "../user/Tables/cashFlow/cashFlowEn";
+import ProfitLossUserArabic from "../user/Tables/profitLoss/profitLossAr";
+import ProfitLossUserEnglish from "../user/Tables/profitLoss/profitLossEn";
 import ProfitLossUpdateFormAr from "./Tables/updateProfitLoss/updateProfitLossAr";
 import ProfitLossUpdateFormEn from "./Tables/updateProfitLoss/updateProfitLossEn";
 

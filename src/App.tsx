@@ -14,7 +14,6 @@ const DocumentList = lazy(() => import("./components/pages/admin/Document/docume
 const AdminLogin = lazy(() => import("./components/forms/admin/login"));
 const AdminHomePage = lazy(() => import("./components/pages/admin/adminDashBoard"));
 const EmailVerification = lazy(() => import("./components/forms/admin/otpVerifiy"));
-// import { UserCompanyDetailsNew } from './components/pages/user/old';
 const AddNewTable=lazy(() => import("./components/pages/admin/addTable"));
 const AddDocumentArabic = lazy(() => import("./components/pages/admin/Document/addDocumentAr"));
 const UpdateDocument = lazy(() => import("./components/pages/admin/Document/updateDocument"));
@@ -30,19 +29,15 @@ export const App: React.FC = React.memo(() => {
   return (
     <Fragment>
       <Toaster position="top-center" />
-      <Suspense fallback={<Loading />}>
- 
+      <Suspense fallback={<Loading />}> 
         <Routes>
           <Route path="/" element={ <UserHomePage/>} />
-  
           <Route path="/verify" element={ <EmailVerification/>} />
-       
           <Route path="/companyDetails" element={ <UserCompanyDetails /> } />
           <Route path="/login" element={isLogged && role === 'admin' ? <Navigate to="/home" /> : <AdminLogin />} />
           <Route path="/home" element={isLogged && role === 'admin' ? <AdminHomePage /> : <AdminLogin />} />
           <Route path="/addDocument" element={isLogged &&  role === 'admin' ? <AddDocumentArabic /> : <AdminLogin />}/>
           <Route path="/addNewTable" element={isLogged &&  role === 'admin' ? <AddNewTable /> : <AdminLogin />}/>
-          {/* <Route path="/newOldTableshow" element={ <UserCompanyDetailsNew /> }/> */}
           <Route path="/documentList" element={isLogged &&  role === 'admin' ? <DocumentList /> : <AdminLogin />} />
           <Route path="/updateDocument" element={isLogged &&  role === 'admin' ? <UpdateDocument /> : <AdminLogin />} />
           <Route path="/updateDocumentAr" element={isLogged &&  role === 'admin' ? <UpdateDocumentAr /> : <AdminLogin />} />

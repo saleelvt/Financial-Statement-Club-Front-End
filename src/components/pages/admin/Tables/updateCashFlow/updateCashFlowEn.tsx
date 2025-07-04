@@ -763,7 +763,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
 
 
 
-            {sectionOneLabelsEn.map((val, idx) => {
+            {sectionOneLabelsEn.map((_, idx) => {
            
 
               return (
@@ -990,7 +990,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
 
            
 
-            {sectionTwoLabelsEn.map((val, idx) => {
+            {sectionTwoLabelsEn.map((_, idx) => {
             
               return (
                 <tr key={`section-two-${idx}`} className="bg-gray-100">
@@ -1234,7 +1234,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
               <td className=""></td>
             </tr>
 
-            {sectionThreeLabelsEn.map((val, idx) => {
+            {sectionThreeLabelsEn.map((_, idx) => {
          
               return (
                 <tr key={`section-three-${idx}`} className="bg-gray-100">
@@ -1469,7 +1469,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
             </tr>
 
 
-            {sectionFourLabelsEn.map((val, idx) => {
+            {sectionFourLabelsEn.map((_, idx) => {
        
 
               return (
@@ -1715,7 +1715,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
 
 
 
-{sectionFiveLabelsEn.map((val, idx) => {
+{sectionFiveLabelsEn.map((_, idx) => {
 
   return (
     <tr key={`section-five-${idx}`} className="bg-gray-100">
@@ -1904,7 +1904,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
             </tr>
 
 
-            {sectionSixLabelsEn.map((val, idx) => {
+            {sectionSixLabelsEn.map((_, idx) => {
  
   return (
     <tr key={`section-six-${idx}`} className="bg-gray-100">
@@ -2098,7 +2098,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
             </tr>
 
 
-      {sectionSevenLabelsEn.map((val, idx) => {
+      {sectionSevenLabelsEn.map((_, idx) => {
 
 
   return (
@@ -2281,7 +2281,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
 
 
 
-{sectionEightLabelsEn.map((val, idx) => {
+{sectionEightLabelsEn.map((_, idx) => {
 
 
   return (
@@ -2558,7 +2558,7 @@ console.log("the update cashflow data is the data : ", TableDataEn);
             
 
           </body>
-{sectionNineLabelsEn.map((val, idx) => {
+{sectionNineLabelsEn.map((_, idx) => {
 
   return (
     <tr key={`section-nine-${idx}`} className="bg-gray-100">

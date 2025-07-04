@@ -730,7 +730,7 @@ useEffect(()=>{
 
 
 
-            {sectionOneLabelsEn.map((val, idx) => {
+            {sectionOneLabelsEn.map((_, idx) => {
           
               return (
                 <tr key={`section-one-${idx}`} className="bg-gray-100">
@@ -956,7 +956,7 @@ useEffect(()=>{
 
            
 
-            {sectionTwoLabelsEn.map((val, idx) => {
+            {sectionTwoLabelsEn.map((_, idx) => {
            
               return (
                 <tr key={`section-two-${idx}`} className="bg-gray-100">
@@ -1200,7 +1200,7 @@ useEffect(()=>{
               <td className=""></td>
             </tr>
 
-            {sectionThreeLabelsEn.map((val, idx) => {
+            {sectionThreeLabelsEn.map((_, idx) => {
     
 
               return (
@@ -1436,7 +1436,7 @@ useEffect(()=>{
             </tr>
 
 
-            {sectionFourLabelsEn.map((val, idx) => {
+            {sectionFourLabelsEn.map((_, idx) => {
       
               return (
                 <tr key={`section-four-${idx}`} className="bg-gray-100">
@@ -1680,7 +1680,7 @@ useEffect(()=>{
 
 
 
-{sectionFiveLabelsEn.map((val, idx) => {
+{sectionFiveLabelsEn.map((_, idx) => {
 
 
   return (
@@ -1870,7 +1870,7 @@ useEffect(()=>{
             </tr>
 
 
-            {sectionSixLabelsEn.map((val, idx) => {
+            {sectionSixLabelsEn.map((_, idx) => {
 
   return (
     <tr key={`section-six-${idx}`} className="bg-gray-100">
@@ -2064,7 +2064,7 @@ useEffect(()=>{
             </tr>
 
 
-      {sectionSevenLabelsEn.map((val, idx) => {
+      {sectionSevenLabelsEn.map((_, idx) => {
 
 
   return (
@@ -2245,7 +2245,7 @@ useEffect(()=>{
 
 
 
-{sectionEightLabelsEn.map((val, idx) => {
+{sectionEightLabelsEn.map((_, idx) => {
 
   return (
     <tr key={`section-eight-${idx}`} className="bg-gray-100">
@@ -2518,7 +2518,7 @@ useEffect(()=>{
             
 
           </body>
-{sectionNineLabelsEn.map((val, idx) => {
+{sectionNineLabelsEn.map((_, idx) => {
 
   return (
     <tr key={`section-nine-${idx}`} className="bg-gray-100">

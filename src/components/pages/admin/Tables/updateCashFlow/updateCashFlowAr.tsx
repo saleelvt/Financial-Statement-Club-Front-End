@@ -144,6 +144,10 @@ const [sectionEightItemsDate2En, setSectionEightItemsDate2En] = useState<string[
 const [sectionEightLastLabel, setSectionEightLastLabel] = useState("");
 
 
+// table2 section
+    const [date1Table2, setDate1Table2] = useState<Date | null>(null);
+    const [date2Table2, setDate2Table2] = useState<Date | null>(null);
+
 
 // section Nine
 const [sectionNineLabelsEn, setSectionNineLabelsEn] = useState<string[]>(Array(16).fill(""));
@@ -245,7 +249,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionEightLastLabel: sectionEightLastLabel,
   },
    
-  qTable2: {
+ qTable2: {
     qdateTwo1En: data1En,
     qdateTwo2En: data2En,
     qsectionOneTable2: {
@@ -443,16 +447,16 @@ if (TableDataAr.sectionEight) {
 }
 
       // Table 2 sections
-      if (TableDataAr.Table2) {     
-        setDate1En(new Date(TableDataAr.Table2.dateTwo1En))
-        setDate2En(new Date(TableDataAr.Table2.dateTwo2En))
- if (TableDataAr.Table2.sectionOneTable2){
+    
+        setDate1Table2(new Date(TableDataAr.Table2.dateTwo1En))
+        setDate2Table2(new Date(TableDataAr.Table2.dateTwo2En))
+
     setSectionNineLabelsEn(TableDataAr.Table2.sectionOneTable2.sectionNineLabelsEn || Array(16).fill(""))
     setSectionNineNotesEn(TableDataAr.Table2.sectionOneTable2.sectionNineNotesEn ||Array(16).fill(""))
     setSectionNineItemsEn(TableDataAr.Table2.sectionOneTable2.sectionNineItemsEn ||Array(16).fill(""))
     setSectionNineItemsDate2En(TableDataAr.Table2.sectionOneTable2.sectionNineItemsDate2En ||Array(16).fill(""))
- }
-      }
+ 
+      
     } catch (error) {
       console.error("Error loading financial data into state:", error);
     }
@@ -2560,7 +2564,7 @@ if (TableDataAr.sectionEight) {
                 <div dir="rtl" className="items-center h-5">
                   <DatePicker
                     className="text-right"
-                    value={data1En}
+                    value={date1Table2}
                     onChange={(date: DateObject | null) => {
                       if (date) {
                         const jsDate = new Date(
@@ -2568,9 +2572,9 @@ if (TableDataAr.sectionEight) {
                           date.month.number - 1, // ✅ Correct usage
                           date.day
                         );
-                        setDate1En(jsDate);
+                        setDate1Table2(jsDate);
                       } else {
-                        setDate1En(null);
+                        setDate1Table2(null);
                       }
                     }}
                     calendar={arabic}
@@ -2612,7 +2616,7 @@ if (TableDataAr.sectionEight) {
                 <div dir="rtl" className="items-center bg-green">
                   <DatePicker
                     className="text-right"
-                    value={data2En}
+                    value={date2Table2}
                     onChange={(date: DateObject | null) => {
                       if (date) {
                         const jsDate = new Date(
@@ -2620,9 +2624,9 @@ if (TableDataAr.sectionEight) {
                           date.month.number - 1, 
                           date.day
                         );
-                        setDate2En(jsDate);
+                        setDate2Table2(jsDate);
                       } else {
-                        setDate2En(null);
+                        setDate2Table2(null);
                       }
                     }}
                     calendar={arabic}
@@ -2661,8 +2665,6 @@ if (TableDataAr.sectionEight) {
               </th>
             </tr>
           </thead>
-
-
           <body>
             
             

@@ -469,18 +469,18 @@ if (TableDataEn.sectionEight) {
 }
 
       // Table 2 sections
-      if (TableDataEn.Table2) {    
+    
         setDate1Table2(new Date(TableDataEn.Table2.dateTwo1En))
         setDate2Table2(new Date(TableDataEn.Table2.dateTwo2En))
- if (TableDataEn.Table2.sectionOneTable2){
+
     setSectionNineLabelsEn(TableDataEn.Table2.sectionOneTable2.sectionNineLabelsEn ||Array(16).fill(""))
     setSectionNineNotesEn(TableDataEn.Table2.sectionOneTable2.sectionNineNotesEn ||Array(16).fill(""))
     setSectionNineItemsEn(TableDataEn.Table2.sectionOneTable2.sectionNineItemsEn ||Array(16).fill(""))
     setSectionNineItemsDate2En(TableDataEn.Table2.sectionOneTable2.sectionNineItemsDate2En ||Array(16).fill(""))
 
- }
+ 
 
-      }
+      
       
     } catch (error) {
       console.error("Error loading financial data into state:", error);

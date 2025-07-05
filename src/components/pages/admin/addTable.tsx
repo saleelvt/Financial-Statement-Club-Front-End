@@ -116,7 +116,6 @@ const AddNewTable = React.memo(() => {
     console.log(" The Latest Cash Flow Arabic", cashFlowDataAr);
   }, [cashFlowDataEn, cashFlowDataAr]);
 
-
   useEffect(() => {
     if (selectedTableType === "BalanceSheet") {
       const arTable = tableDataAr?.[selectedTableType as keyof ITable];

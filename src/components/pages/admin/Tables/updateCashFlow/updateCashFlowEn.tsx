@@ -387,8 +387,6 @@ useEffect(() => {
   
  if(TableDataEn && Object.keys(TableDataEn).length > 0){
     try {
-
-      // Set main dates
       if (TableDataEn.date1En) {
         setDate1En(new Date(TableDataEn.date1En));
       }
@@ -399,44 +397,90 @@ useEffect(() => {
       // Section One
       if (TableDataEn.sectionOne) {
         setSectionOneFirstLabelEn(TableDataEn.sectionOne.sectionOneFirstLabelEn );
-        setSectionOneLabelsEn(TableDataEn.sectionOne.sectionOneLabelsEn || Array(5).fill(""));
-        setFlowSectionOneNotesEn(TableDataEn.sectionOne.sectionOneNotesEn || Array(5).fill(""));
-        setFlowSectionOneEn(TableDataEn.sectionOne.sectionOneItemsEn || Array(5).fill(""));
-        setFlowSectionOneDate2En(TableDataEn.sectionOne.sectionOneItemsDate2En || Array(5).fill(""));
+        setSectionOneSecondLabelEn(TableDataEn.sectionOne.sectionOneSecondLabelEn)
+        setSectionOneLabelsEn(TableDataEn.sectionOne.sectionOneLabelsEn || Array(2).fill(""));
+        setFlowSectionOneNotesEn(TableDataEn.sectionOne.sectionOneNotesEn || Array(2).fill(""));
+        setFlowSectionOneEn(TableDataEn.sectionOne.sectionOneItemsEn || Array(2).fill(""));
+        setFlowSectionOneDate2En(TableDataEn.sectionOne.sectionOneItemsDate2En || Array(2).fill(""));
     
       }
       
       // Section Two
       if (TableDataEn.sectionTwo) {
-        setSectionTwoLabelsEn(TableDataEn.sectionTwo.sectionTwoLabelsEn || Array(12).fill(""));
-        setFlowSectionTwoNotesEn(TableDataEn.sectionTwo.sectionTwoNotesEn || Array(12).fill(""));
-        setFlowSectionTwoEn(TableDataEn.sectionTwo.sectionTwoItemsEn || Array(12).fill(""));
-        setFlowSectionTwoDate2En(TableDataEn.sectionTwo.sectionTwoItemsDate2En || Array(12).fill(""));
+        setSectionTwoFirstLabel(TableDataEn.sectionTwo.sectionTwoFirstLabel)
+        setSectionTwoLabelsEn(TableDataEn.sectionTwo.sectionTwoLabelsEn || Array(23).fill(""));
+        setFlowSectionTwoNotesEn(TableDataEn.sectionTwo.sectionTwoNotesEn || Array(23).fill(""));
+        setFlowSectionTwoEn(TableDataEn.sectionTwo.sectionTwoItemsEn || Array(23).fill(""));
+        setFlowSectionTwoDate2En(TableDataEn.sectionTwo.sectionTwoItemsDate2En || Array(23).fill(""));
         setSectionTwoTotalLabel(TableDataEn.sectionTwo.sectionTwoTotalLabel );
       }
       
       // Section Three
       if (TableDataEn.sectionThree) {
-        setSectionThreeLabelsEn(TableDataEn.sectionThree.sectionThreeLabelsEn || Array(7).fill(""));
-        setFlowSectionThreeNotesEn(TableDataEn.sectionThree.sectionThreeNotesEn || Array(7).fill(""));
-        setFlowSectionThreeEn(TableDataEn.sectionThree.sectionThreeItemsEn || Array(7).fill(""));
-        setFlowSectionThreeDate2En(TableDataEn.sectionThree.sectionThreeItemsDate2En || Array(7).fill(""));
+        setSectionThreeFirstLabel(TableDataEn.sectionThree.sectionThreeFirstLabel)
+        setSectionThreeLabelsEn(TableDataEn.sectionThree.sectionThreeLabelsEn || Array(17).fill(""));
+        setFlowSectionThreeNotesEn(TableDataEn.sectionThree.sectionThreeNotesEn || Array(17).fill(""));
+        setFlowSectionThreeEn(TableDataEn.sectionThree.sectionThreeItemsEn || Array(17).fill(""));
+        setFlowSectionThreeDate2En(TableDataEn.sectionThree.sectionThreeItemsDate2En || Array(17).fill(""));
         setSectionThreeTotalLabel(TableDataEn.sectionThree.sectionThreeTotalLabel );
       }
       
       // Section Four
       if (TableDataEn.sectionFour) {
-        setSectionFourLabelsEn(TableDataEn.sectionFour.sectionFourLabelsEn || Array(5).fill(""));
-        setFlowSectionFourNotesEn(TableDataEn.sectionFour.sectionFourNotesEn || Array(5).fill(""));
-        setFlowSectionFourEn(TableDataEn.sectionFour.sectionFourItemsEn || Array(5).fill(""));
-        setFlowSectionFourDate2En(TableDataEn.sectionFour.sectionFourItemsDate2En || Array(5).fill(""));
+        setSectionFourFirstLabel(TableDataEn.sectionFour.sectionFourFirstLabel)
+        setSectionFourLabelsEn(TableDataEn.sectionFour.sectionFourLabelsEn || Array(17).fill(""));
+        setFlowSectionFourNotesEn(TableDataEn.sectionFour.sectionFourNotesEn || Array(17).fill(""));
+        setFlowSectionFourEn(TableDataEn.sectionFour.sectionFourItemsEn || Array(17).fill(""));
+        setFlowSectionFourDate2En(TableDataEn.sectionFour.sectionFourItemsDate2En || Array(17).fill(""));
         setSectionFourTotalLabel(TableDataEn.sectionFour.sectionFourTotalLabel );
       }
+      if (TableDataEn.sectionFive) {
+  setSectionFiveFirstLabel(TableDataEn.sectionFive.sectionFiveFirstLabel);
+  setSectionFiveLabelsEn(TableDataEn.sectionFive.sectionFiveLabelsEn || Array(15).fill(""));
+  setSectionFiveNotesEn(TableDataEn.sectionFive.sectionFiveNotesEn || Array(15).fill(""));
+  setSectionFiveItemsEn(TableDataEn.sectionFive.sectionFiveItemsEn || Array(15).fill(""));
+  setSectionFiveItemsDate2En(TableDataEn.sectionFive.sectionFiveItemsDate2En || Array(15).fill(""));
+  setSectionFiveTotalLabel(TableDataEn.sectionFive.sectionFiveTotalLabel);
+}
+if (TableDataEn.sectionSix) {
+  setSectionSixFirstLabel(TableDataEn.sectionSix.sectionSixFirstLabel);
+  setSectionSixLabelsEn(TableDataEn.sectionSix.sectionSixLabelsEn || Array(12).fill(""));
+  setSectionSixNotesEn(TableDataEn.sectionSix.sectionSixNotesEn || Array(12).fill(""));
+  setSectionSixItemsEn(TableDataEn.sectionSix.sectionSixItemsEn || Array(12).fill(""));
+  setSectionSixItemsDate2En(TableDataEn.sectionSix.sectionSixItemsDate2En || Array(12).fill(""));
+  setSectionSixTotalLabel(TableDataEn.sectionSix.sectionSixTotalLabel);
+  setSectionSixSecondTotalLabel(TableDataEn.sectionSix.sectionSixSecondTotalLabel);
+}
 
-      
+if (TableDataEn.sectionSeven) {
+  setSectionSevenLabelsEn(TableDataEn.sectionSeven.sectionSevenLabelsEn || Array(2).fill(""));
+  setSectionSevenNotesEn(TableDataEn.sectionSeven.sectionSevenNotesEn || Array(2).fill(""));
+  setSectionSevenItemsEn(TableDataEn.sectionSeven.sectionSevenItemsEn || Array(2).fill(""));
+  setSectionSevenItemsDate2En(TableDataEn.sectionSeven.sectionSevenItemsDate2En || Array(2).fill(""));
+  setSectionSevenTotalLabel(TableDataEn.sectionSeven.sectionSevenTotalLabel);
+}
+
+if (TableDataEn.sectionEight) {
+  setSectionEightLabelsEn(TableDataEn.sectionEight.sectionEightLabelsEn || Array(8).fill(""));
+  setSectionEightNotesEn(TableDataEn.sectionEight.sectionEightNotesEn || Array(8).fill(""));
+  setSectionEightItemsEn(TableDataEn.sectionEight.sectionEightItemsEn || Array(8).fill(""));
+  setSectionEightItemsDate2En(TableDataEn.sectionEight.sectionEightItemsDate2En || Array(8).fill(""));
+  setSectionEightLastLabel(TableDataEn.sectionEight.sectionEightLastLabel);
+}
+
       // Table 2 sections
-      // if (TableDataEn.Table2) {     
-      // }
+      if (TableDataEn.Table2) {    
+        setDate1Table2(new Date(TableDataEn.Table2.dateTwo1En))
+        setDate2Table2(new Date(TableDataEn.Table2.dateTwo2En))
+ if (TableDataEn.Table2.sectionOneTable2){
+    setSectionNineLabelsEn(TableDataEn.Table2.sectionOneTable2.sectionNineLabelsEn ||Array(16).fill(""))
+    setSectionNineNotesEn(TableDataEn.Table2.sectionOneTable2.sectionNineNotesEn ||Array(16).fill(""))
+    setSectionNineItemsEn(TableDataEn.Table2.sectionOneTable2.sectionNineItemsEn ||Array(16).fill(""))
+    setSectionNineItemsDate2En(TableDataEn.Table2.sectionOneTable2.sectionNineItemsDate2En ||Array(16).fill(""))
+
+ }
+
+      }
       
     } catch (error) {
       console.error("Error loading financial data into state:", error);
@@ -813,7 +857,7 @@ useEffect(() => {
                 <input
                   value={sectionOneFirstLabelEn}
                   onChange={(e) => setSectionOneFirstLabelEn(e.target.value)}
-                  className="w-full  bg-gray-200 text-black p-1"
+                  className="w-full  bg-gray-300 text-black p-1"
                 />
               </td>
               <td className=""></td>

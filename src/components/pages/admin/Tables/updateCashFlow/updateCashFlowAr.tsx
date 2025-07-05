@@ -3,8 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../reduxKit/store";
-import { SetCashFlowDataEnglishAction } from "../../../../../reduxKit/actions/Tables/cashFlowEn";
+import { SetCashFlowDataArabicAction } from "../../../../../reduxKit/actions/Tables/cashFlowAr";
 
+import gregorian_ar from "react-date-object/locales/gregorian_ar";
+import arabic from "react-date-object/calendars/gregorian";
+import type { DateObject } from "react-multi-date-picker";
+
+
+import DatePicker from "react-multi-date-picker";
 type BalaceSheetFormArProps = { TableDataAr: any };
 
 
@@ -249,7 +255,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionNineItemsDate2En: sectionNineItemsDate2En,
   },
 };
-      await dispatch(SetCashFlowDataEnglishAction(formData));
+      await dispatch(SetCashFlowDataArabicAction(formData));
     } catch (error) {
       console.log("Dispatch Error:", error);
     }
@@ -348,20 +354,115 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
  
 
 
-useEffect(()=>{
-  console.log("some data getting in the data for the update  set",TableDataAr);
 
-
-
-  if(TableDataAr){
-
-   setDate1En(TableDataAr.date1)
-   setDate2En(TableDataAr.date2)
+// Complete useEffect to populate all data from MongoDB
+useEffect(() => {
+ 
+  
+ if(TableDataAr && Object.keys(TableDataAr).length > 0){
+    try {
+      if (TableDataAr.date1En) {
+        setDate1En(new Date(TableDataAr.date1En));
+      }
+      if (TableDataAr.date2En) {
+        setDate2En(new Date(TableDataAr.date2En));
+      }
+      // Section One
+      if (TableDataAr.sectionOne) {
+        setSectionOneFirstLabelEn(TableDataAr.sectionOne.sectionOneFirstLabelEn );
+        setSectionOneSecondLabelEn(TableDataAr.sectionOne.sectionOneSecondLabelEn)
+        setSectionOneLabelsEn(TableDataAr.sectionOne.sectionOneLabelsEn || Array(2).fill(""));
+        setFlowSectionOneNotesEn(TableDataAr.sectionOne.sectionOneNotesEn || Array(2).fill(""));
+        setFlowSectionOneEn(TableDataAr.sectionOne.sectionOneItemsEn || Array(2).fill(""));
+        setFlowSectionOneDate2En(TableDataAr.sectionOne.sectionOneItemsDate2En || Array(2).fill(""));
     
+      }
+      
+      // Section Two
+      if (TableDataAr.sectionTwo) {
+        setSectionTwoFirstLabel(TableDataAr.sectionTwo.sectionTwoFirstLabel)
+        setSectionTwoLabelsEn(TableDataAr.sectionTwo.sectionTwoLabelsEn || Array(23).fill(""));
+        setFlowSectionTwoNotesEn(TableDataAr.sectionTwo.sectionTwoNotesEn || Array(23).fill(""));
+        setFlowSectionTwoEn(TableDataAr.sectionTwo.sectionTwoItemsEn || Array(23).fill(""));
+        setFlowSectionTwoDate2En(TableDataAr.sectionTwo.sectionTwoItemsDate2En || Array(23).fill(""));
+        setSectionTwoTotalLabel(TableDataAr.sectionTwo.sectionTwoTotalLabel );
+      }
+      
+      // Section Three
+      if (TableDataAr.sectionThree) {
+        setSectionThreeFirstLabel(TableDataAr.sectionThree.sectionThreeFirstLabel)
+        setSectionThreeLabelsEn(TableDataAr.sectionThree.sectionThreeLabelsEn || Array(17).fill(""));
+        setFlowSectionThreeNotesEn(TableDataAr.sectionThree.sectionThreeNotesEn || Array(17).fill(""));
+        setFlowSectionThreeEn(TableDataAr.sectionThree.sectionThreeItemsEn || Array(17).fill(""));
+        setFlowSectionThreeDate2En(TableDataAr.sectionThree.sectionThreeItemsDate2En || Array(17).fill(""));
+        setSectionThreeTotalLabel(TableDataAr.sectionThree.sectionThreeTotalLabel );
+      }
+      
+      // Section Four
+      if (TableDataAr.sectionFour) {
+        setSectionFourFirstLabel(TableDataAr.sectionFour.sectionFourFirstLabel)
+        setSectionFourLabelsEn(TableDataAr.sectionFour.sectionFourLabelsEn || Array(17).fill(""));
+        setFlowSectionFourNotesEn(TableDataAr.sectionFour.sectionFourNotesEn || Array(17).fill(""));
+        setFlowSectionFourEn(TableDataAr.sectionFour.sectionFourItemsEn || Array(17).fill(""));
+        setFlowSectionFourDate2En(TableDataAr.sectionFour.sectionFourItemsDate2En || Array(17).fill(""));
+        setSectionFourTotalLabel(TableDataAr.sectionFour.sectionFourTotalLabel );
+      }
+      if (TableDataAr.sectionFive) {
+  setSectionFiveFirstLabel(TableDataAr.sectionFive.sectionFiveFirstLabel);
+  setSectionFiveLabelsEn(TableDataAr.sectionFive.sectionFiveLabelsEn || Array(15).fill(""));
+  setSectionFiveNotesEn(TableDataAr.sectionFive.sectionFiveNotesEn || Array(15).fill(""));
+  setSectionFiveItemsEn(TableDataAr.sectionFive.sectionFiveItemsEn || Array(15).fill(""));
+  setSectionFiveItemsDate2En(TableDataAr.sectionFive.sectionFiveItemsDate2En || Array(15).fill(""));
+  setSectionFiveTotalLabel(TableDataAr.sectionFive.sectionFiveTotalLabel);
+}
+if (TableDataAr.sectionSix) {
+  setSectionSixFirstLabel(TableDataAr.sectionSix.sectionSixFirstLabel);
+  setSectionSixLabelsEn(TableDataAr.sectionSix.sectionSixLabelsEn || Array(12).fill(""));
+  setSectionSixNotesEn(TableDataAr.sectionSix.sectionSixNotesEn || Array(12).fill(""));
+  setSectionSixItemsEn(TableDataAr.sectionSix.sectionSixItemsEn || Array(12).fill(""));
+  setSectionSixItemsDate2En(TableDataAr.sectionSix.sectionSixItemsDate2En || Array(12).fill(""));
+  setSectionSixTotalLabel(TableDataAr.sectionSix.sectionSixTotalLabel);
+  setSectionSixSecondTotalLabel(TableDataAr.sectionSix.sectionSixSecondTotalLabel);
+}
 
+if (TableDataAr.sectionSeven) {
+  setSectionSevenLabelsEn(TableDataAr.sectionSeven.sectionSevenLabelsEn || Array(2).fill(""));
+  setSectionSevenNotesEn(TableDataAr.sectionSeven.sectionSevenNotesEn || Array(2).fill(""));
+  setSectionSevenItemsEn(TableDataAr.sectionSeven.sectionSevenItemsEn || Array(2).fill(""));
+  setSectionSevenItemsDate2En(TableDataAr.sectionSeven.sectionSevenItemsDate2En || Array(2).fill(""));
+  setSectionSevenTotalLabel(TableDataAr.sectionSeven.sectionSevenTotalLabel);
+}
+
+if (TableDataAr.sectionEight) {
+  setSectionEightLabelsEn(TableDataAr.sectionEight.sectionEightLabelsEn || Array(8).fill(""));
+  setSectionEightNotesEn(TableDataAr.sectionEight.sectionEightNotesEn || Array(8).fill(""));
+  setSectionEightItemsEn(TableDataAr.sectionEight.sectionEightItemsEn || Array(8).fill(""));
+  setSectionEightItemsDate2En(TableDataAr.sectionEight.sectionEightItemsDate2En || Array(8).fill(""));
+  setSectionEightLastLabel(TableDataAr.sectionEight.sectionEightLastLabel);
+}
+
+      // Table 2 sections
+      if (TableDataAr.Table2) {     
+        setDate1En(new Date(TableDataAr.Table2.dateTwo1En))
+        setDate2En(new Date(TableDataAr.Table2.dateTwo2En))
+ if (TableDataAr.Table2.sectionOneTable2){
+    setSectionNineLabelsEn(TableDataAr.Table2.sectionOneTable2.sectionNineLabelsEn || Array(16).fill(""))
+    setSectionNineNotesEn(TableDataAr.Table2.sectionOneTable2.sectionNineNotesEn ||Array(16).fill(""))
+    setSectionNineItemsEn(TableDataAr.Table2.sectionOneTable2.sectionNineItemsEn ||Array(16).fill(""))
+    setSectionNineItemsDate2En(TableDataAr.Table2.sectionOneTable2.sectionNineItemsDate2En ||Array(16).fill(""))
+ }
+      }
+    } catch (error) {
+      console.error("Error loading financial data into state:", error);
+    }
+  } else {
+    console.log("TableDataEn is empty or undefined");
   }
+}, [TableDataAr]);
 
-},[TableDataAr])
+
+
+
 
 
 
@@ -606,42 +707,51 @@ useEffect(()=>{
 
 
 
-
-
-
-
-
-
     return (
       <div className="flex justify-start  my-2 text-black">
-        <table className="border  font-semibold border-gray-300 text-xs mb-12  w-full">
+        <table dir="rtl" className="border  font-semibold border-gray-300 text-xs mb-12  w-full">
 
+         
           <thead>
-            <tr className="bg-gray-100 ">
+            <tr className="bg-gray-100">
               <th className="border border-gray-100 w-96"></th>
-              <th className="border border-gray-100 w-16">Notes</th>
-              <th className="border  border-gray-100 p-1 w-28   ">
-                <input
-                  type="date"
-                  className="text-center   h-5  bg-gray-100"
-                  placeholder=""
-                  value={data1En ? data1En.toISOString().split("T")[0] : ""}
-                  onChange={(e) => {
-                    const selectedDate = e.target.value;
-                    setDate1En(selectedDate ? new Date(selectedDate) : null);
-                  }}
-                  lang="en"
-                />
+              <th className="border border-gray-100 w-16">إيضاحات</th>
+              <th className="border border-gray-100 p-1 w-28">
+                <div dir="rtl" className="items-center h-5">
+                  <DatePicker
+                    className="text-right"
+                    value={data1En}
+                    onChange={(date: DateObject | null) => {
+                      if (date) {
+                        const jsDate = new Date(
+                          date.year,
+                          date.month.number - 1, // ✅ Correct usage
+                          date.day
+                        );
+                        setDate1En(jsDate);
+                      } else {
+                        setDate1En(null);
+                      }
+                    }}
+                    calendar={arabic}
+                    locale={gregorian_ar}
+                    inputClass="text-center bg-gray-100 w-28"
+                    placeholder="اختر التاريخ"
+                  />
+                </div>
+
+     
 
                 <input
                   placeholder=""
                   value={date1}
                   onChange={(e) => setDate1(e.target.value)}
                   className="w-full text-center bg-gray-100 fext-row"
+                  type="text"
                 />
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100 w-full   rounded"
+                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -652,34 +762,48 @@ useEffect(()=>{
                     placeholder=""
                     value={date1Rl}
                     onChange={(e) => setDate1Rl(e.target.value)}
-                    className="w-8 selection: text-center bg-gray-100 focus:outline-none"
+                    className="w-8  text-center bg-gray-100 focus:outline-none"
                     type="text"
                   />
                 </div>
               </th>
-              <th className="border   border-gray-100 p-1 w-28 ">
-                <input
-                  value={data2En ? data2En.toISOString().split("T")[0] : ""}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setDate2En(value ? new Date(value) : null);
-                  }}
-                  placeholder=""
-                  className="text-center bg-gray-100"
-                  type="date"
-                  lang="en"
-                />
+
+              <th className="border border-gray-100  w-28 p-1 ">
+                <div dir="rtl" className="items-center bg-green">
+                  <DatePicker
+                    className="text-right"
+                    value={data2En}
+                    onChange={(date: DateObject | null) => {
+                      if (date) {
+                        const jsDate = new Date(
+                          date.year,
+                          date.month.number - 1, 
+                          date.day
+                        );
+                        setDate2En(jsDate);
+                      } else {
+                        setDate2En(null);
+                      }
+                    }}
+                    calendar={arabic}
+                    locale={gregorian_ar}
+                    inputClass="text-center bg-gray-100 w-28"
+                    placeholder="اختر التاريخ"
+                  />
+                </div>
 
                 <input
                   placeholder=""
                   value={date2}
                   onChange={(e) => setDate2(e.target.value)}
-                  className="w-full text-center bg-gray-100 fext-row"
+                  className="w-full text-center bg-gray-100"
+                  type="text"
                 />
 
+                {/* Riyal symbol + input as flex */}
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
+                  className="flex items-center justify-center bg-gray-100   rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -704,7 +828,7 @@ useEffect(()=>{
                 <input
                   value={sectionOneFirstLabelEn}
                   onChange={(e) => setSectionOneFirstLabelEn(e.target.value)}
-                  className="w-full  bg-gray-200 text-black p-1"
+                  className="w-full  bg-gray-300 text-black p-1"
                 />
               </td>
               <td className=""></td>
@@ -2426,32 +2550,47 @@ useEffect(()=>{
           </tbody>
 
 
-        <thead>
-            <tr className="bg-gray-100 ">
+       
+          <thead>
+            <tr className="bg-gray-100">
               <th className="border border-gray-100 w-96"></th>
-              <th className="border border-gray-100 w-16">Notes</th>
-              <th className="border  border-gray-100 p-1 w-28   ">
-                <input
-                  type="date"
-                  className="text-center   h-5  bg-gray-100"
-                  placeholder=""
-                  value={data1En ? data1En.toISOString().split("T")[0] : ""}
-                  onChange={(e) => {
-                    const selectedDate = e.target.value;
-                    setDate1En(selectedDate ? new Date(selectedDate) : null);
-                  }}
-                  lang="en"
-                />
+              <th className="border border-gray-100 w-16">إيضاحات</th>
+              <th className="border border-gray-100 p-1 w-28">
+                <div dir="rtl" className="items-center h-5">
+                  <DatePicker
+                    className="text-right"
+                    value={data1En}
+                    onChange={(date: DateObject | null) => {
+                      if (date) {
+                        const jsDate = new Date(
+                          date.year,
+                          date.month.number - 1, // ✅ Correct usage
+                          date.day
+                        );
+                        setDate1En(jsDate);
+                      } else {
+                        setDate1En(null);
+                      }
+                    }}
+                    calendar={arabic}
+                    locale={gregorian_ar}
+                    inputClass="text-center bg-gray-100 w-28"
+                    placeholder="اختر التاريخ"
+                  />
+                </div>
+
+     
 
                 <input
                   placeholder=""
                   value={date1}
                   onChange={(e) => setDate1(e.target.value)}
                   className="w-full text-center bg-gray-100 fext-row"
+                  type="text"
                 />
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100 w-full   rounded"
+                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"
@@ -2462,34 +2601,48 @@ useEffect(()=>{
                     placeholder=""
                     value={date1Rl}
                     onChange={(e) => setDate1Rl(e.target.value)}
-                    className="w-8 selection: text-center bg-gray-100 focus:outline-none"
+                    className="w-8  text-center bg-gray-100 focus:outline-none"
                     type="text"
                   />
                 </div>
               </th>
-              <th className="border   border-gray-100 p-1 w-28 ">
-                <input
-                  value={data2En ? data2En.toISOString().split("T")[0] : ""}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setDate2En(value ? new Date(value) : null);
-                  }}
-                  placeholder=""
-                  className="text-center bg-gray-100"
-                  type="date"
-                  lang="en"
-                />
+
+              <th className="border border-gray-100  w-28 p-1 ">
+                <div dir="rtl" className="items-center bg-green">
+                  <DatePicker
+                    className="text-right"
+                    value={data2En}
+                    onChange={(date: DateObject | null) => {
+                      if (date) {
+                        const jsDate = new Date(
+                          date.year,
+                          date.month.number - 1, 
+                          date.day
+                        );
+                        setDate2En(jsDate);
+                      } else {
+                        setDate2En(null);
+                      }
+                    }}
+                    calendar={arabic}
+                    locale={gregorian_ar}
+                    inputClass="text-center bg-gray-100 w-28"
+                    placeholder="اختر التاريخ"
+                  />
+                </div>
 
                 <input
                   placeholder=""
                   value={date2}
                   onChange={(e) => setDate2(e.target.value)}
-                  className="w-full text-center bg-gray-100 fext-row"
+                  className="w-full text-center bg-gray-100"
+                  type="text"
                 />
 
+                {/* Riyal symbol + input as flex */}
                 <div
                   dir="ltr"
-                  className="flex items-center justify-center bg-gray-100 w-full  rounded"
+                  className="flex items-center justify-center bg-gray-100   rounded"
                 >
                   <img
                     src="https://res.cloudinary.com/dllmjze4p/image/upload/fl_preserve_transparency/v1746013121/riyal_uxhuwz.jpg?_s=public-apps"

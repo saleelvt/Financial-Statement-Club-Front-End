@@ -41,8 +41,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                   {/* Date 1 Display */}
                   <th className="border border-gray-100 p-1 w-28">
                     <div className="bg-gray-100 w-24 text-center font-bold">
-                      {table.date1Ar
-                        ? new Date(table.date1Ar).toLocaleDateString("ar-GB", {
+                      {table.date1En
+                        ? new Date(table.date1En).toLocaleDateString("ar-GB", {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",
@@ -70,8 +70,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                   {/* Date 2 Display */}
                   <th className="border border-gray-100 p-1 w-28">
                     <div className="bg-gray-100 w-24 text-center font-bold">
-                      {table.date2Ar
-                        ? new Date(table.date2Ar).toLocaleDateString("ar-GB", {
+                      {table.date2En
+                        ? new Date(table.date2En).toLocaleDateString("ar-GB", {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",
@@ -652,8 +652,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                   {/* Date 1 Display */}
                   <th className="border border-gray-100 p-1 w-28">
                     <div className="bg-gray-100 w-24 text-center font-bold">
-                      {table?.Table2.dateTwo1Ar
-                        ? new Date(table?.Table2.dateTwo1Ar).toLocaleDateString("ar-GB", {
+                      {table?.date1En
+                        ? new Date(table?.date1En).toLocaleDateString("ar-GB", {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",
@@ -681,8 +681,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                   {/* Date 2 Display */}
                   <th className="border border-gray-100 p-1 w-28">
                     <div className="bg-gray-100 w-24 text-center font-bold">
-                      {table?.Table2.dateTwo2Ar
-                        ? new Date(table?.Table2.dateTwo2Ar).toLocaleDateString("ar-GB", {
+                      {table?.date2En
+                        ? new Date(table?.date2En).toLocaleDateString("ar-GB", {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",

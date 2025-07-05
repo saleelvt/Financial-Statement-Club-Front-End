@@ -68,9 +68,9 @@ useEffect(() => {
     const [sectionTwoNotesEn, setFlowSectionTwoNotesEn] = useState<string[]>(  Array(23).fill("")   );
     const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(  Array(23).fill("")   );
     const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(23).fill(""));
-    const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("empty....");
-    const TotalsectionTwoItemsEn =   sumStringValues(sectionTwoItemsEn);
-    const TotalsectionTwoItemsDate2En = sumStringValues(sectionTwoItemsDate2En);
+    const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState(".");
+    const TotalsectionTwoItemsEn = sumStringValues(sectionOneItemsEn) +  sumStringValues(sectionTwoItemsEn);
+    const TotalsectionTwoItemsDate2En =  sumStringValues(sectionOneItemsDate2En) + sumStringValues(sectionTwoItemsDate2En);
 
     // section Three
       const [sectionThreeFirstLabel, setSectionThreeFirstLabel] = useState("Working capital adjustments");
@@ -79,8 +79,8 @@ useEffect(() => {
     const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(17).fill("")   );
     const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(17).fill(""));
     const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("Cash from operations");
-    const TotalsectionThreeItemsEn =      sumStringValues(sectionThreeItemsEn);
-    const TotalsectionThreeItemsDate2En =     sumStringValues(sectionThreeItemsDate2En);
+    const TotalsectionThreeItemsEn =   TotalsectionTwoItemsEn+   sumStringValues(sectionThreeItemsEn);
+    const TotalsectionThreeItemsDate2En =  TotalsectionTwoItemsDate2En+   sumStringValues(sectionThreeItemsDate2En);
 
 
     // sectoin Four
@@ -90,8 +90,8 @@ useEffect(() => {
     const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(Array(17).fill("") );
     const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<string[] >(Array(17).fill(""));
     const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("Net cash from operating activities");
-    const TotalsectionFourItemsEn =  sumStringValues(sectionFourItemsEn);
-    const TotalsectionFourItemsDate2En =  sumStringValues(sectionFourItemsDate2En);
+    const TotalsectionFourItemsEn =TotalsectionThreeItemsEn+   sumStringValues(sectionFourItemsEn);
+    const TotalsectionFourItemsDate2En =TotalsectionThreeItemsDate2En+  sumStringValues(sectionFourItemsDate2En);
 
     // section Five
 const [sectionFiveFirstLabel, setSectionFiveFirstLabel] = useState("Investing activities:");
@@ -100,7 +100,7 @@ const [sectionFiveNotesEn, setSectionFiveNotesEn] = useState<string[]>(Array(15 
 const [sectionFiveItemsEn, setSectionFiveItemsEn] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveItemsDate2En, setSectionFiveItemsDate2En] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveTotalLabel, setSectionFiveTotalLabel] = useState("Net cash used in investing activities");
-const TotalsectionFiveItemsEn = sumStringValues(sectionFiveItemsEn);
+const TotalsectionFiveItemsEn =sumStringValues(sectionFiveItemsEn);
 const TotalsectionFiveItemsDate2En = sumStringValues(sectionFiveItemsDate2En);
 
 // section Six
@@ -114,8 +114,8 @@ const TotalsectionSixItemsEn = sumStringValues(sectionSixItemsEn);
 const TotalsectionSixItemsDate2En = sumStringValues(sectionSixItemsDate2En);
 
 const [sectionSixSecondTotalLabel, setSectionSixSecondTotalLabel] = useState("Net (Decrease) / increase in cash and cash equivalents");
-const TotalsectionSixSecondItemsEn = sumStringValues(sectionSixItemsEn);
-const TotalsectionSixSecondItemsDate2En = sumStringValues(sectionSixItemsDate2En);
+const TotalsectionSixSecondItemsEn = TotalsectionFourItemsEn+TotalsectionFiveItemsEn+ TotalsectionSixItemsEn
+const TotalsectionSixSecondItemsDate2En = TotalsectionFourItemsDate2En+ TotalsectionFiveItemsDate2En+TotalsectionSixItemsDate2En
 
 // section Seven
 const [sectionSevenLabelsEn, setSectionSevenLabelsEn] = useState<string[]>(Array(2).fill(""));
@@ -123,7 +123,7 @@ const [sectionSevenNotesEn, setSectionSevenNotesEn] = useState<string[]>(Array(2
 const [sectionSevenItemsEn, setSectionSevenItemsEn] = useState<string[]>(Array(2).fill(""));
 const [sectionSevenItemsDate2En, setSectionSevenItemsDate2En] = useState<string[]>(Array(2).fill(""));
 const [sectionSevenTotalLabel, setSectionSevenTotalLabel] = useState("Cash and cash equivalents at the end of the year");
-const TotalsectionSevenItemsEn = sumStringValues(sectionSevenItemsEn);
+const TotalsectionSevenItemsEn =sumStringValues(sectionSevenItemsEn);
 const TotalsectionSevenItemsDate2En = sumStringValues(sectionSevenItemsDate2En);
 
 // section Eight

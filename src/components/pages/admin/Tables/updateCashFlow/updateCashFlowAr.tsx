@@ -245,14 +245,15 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionEightLastLabel: sectionEightLastLabel,
   },
    
-  qsectionNine: {
-    dateTwo1En: data1En,
-    dateTwo2En: data2En,
-
-    qsectionNineLabelsEn: sectionNineLabelsEn,
+  qTable2: {
+    qdateTwo1En: data1En,
+    qdateTwo2En: data2En,
+    qsectionOneTable2: {
+      qsectionNineLabelsEn: sectionNineLabelsEn,
         qsectionNineNotesEn: sectionNineNotesEn,
         qsectionNineItemsEn: sectionNineItemsEn,
         qsectionNineItemsDate2En: sectionNineItemsDate2En,
+    }
   },
 };
       await dispatch(SetCashFlowDataArabicAction(formData));

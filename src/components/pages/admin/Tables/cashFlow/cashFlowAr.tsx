@@ -152,9 +152,6 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
 
 const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
 
-
-
-
  useEffect(() => {
   const handleDispatch = async () => {
     try {
@@ -257,7 +254,6 @@ const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
         qsectionNineItemsDate2En: sectionNineItemsDate2En,
     }
   },
- 
 };
       await dispatch(SetCashFlowDataArabicAction(formData));
     } catch (error) {

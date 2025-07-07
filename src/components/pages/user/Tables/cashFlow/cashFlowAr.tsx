@@ -591,7 +591,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                       <td className="p-1">
                         {table.sectionSeven.sectionSevenTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                     <td className="border text-center border-gray-300">{table.sectionSeven.sectionSevenTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionSeven.TotalsectionSevenItemsEn)}
                       </td>

@@ -132,6 +132,7 @@ const [sectionSevenNotesEn, setSectionSevenNotesEn] = useState<string[]>(Array(2
 const [sectionSevenItemsEn, setSectionSevenItemsEn] = useState<string[]>(Array(2).fill(""));
 const [sectionSevenItemsDate2En, setSectionSevenItemsDate2En] = useState<string[]>(Array(2).fill(""));
 const [sectionSevenTotalLabel, setSectionSevenTotalLabel] = useState("النقدية وشبه النقدية في بداية الفترة");
+const [sectionSevenTotalNote, setSectionSevenTotalNote] = useState("");
 const TotalsectionSevenItemsEn = sumStringValues(sectionSevenItemsEn);
 const TotalsectionSevenItemsDate2En = sumStringValues(sectionSevenItemsDate2En);
 
@@ -232,6 +233,7 @@ const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
         qsectionSevenItemsEn: sectionSevenItemsEn,
         qsectionSevenItemsDate2En: sectionSevenItemsDate2En,
         qsectionSevenTotalLabel: sectionSevenTotalLabel,
+        qsectionSevenTotalNote: sectionSevenTotalNote,
         qTotalsectionSevenItemsEn: TotalsectionSevenItemsEn,
         qTotalsectionSevenItemsDate2En: TotalsectionSevenItemsDate2En,
   },
@@ -333,6 +335,7 @@ const {cashFlowDataEn}=useSelector((state:RootState)=>state.cashFlowEn)
   sectionSevenNotesEn,
   sectionSevenItemsEn,
   sectionSevenItemsDate2En,
+  sectionSevenTotalNote,
   sectionSevenTotalLabel,
   TotalsectionSevenItemsEn,
   TotalsectionSevenItemsDate2En,
@@ -2308,7 +2311,14 @@ useEffect(()=>{
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300">
+                 <input 
+                  placeholder=""
+                  value={sectionSevenTotalNote}
+                  onChange={(e) => setSectionSevenTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                />
+              </td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionSevenItemsEn)}
               </td>

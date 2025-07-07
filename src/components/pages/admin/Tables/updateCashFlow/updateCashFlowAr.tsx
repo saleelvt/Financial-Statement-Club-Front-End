@@ -133,6 +133,7 @@ const [sectionSevenNotesEn, setSectionSevenNotesEn] = useState<string[]>(Array(2
 const [sectionSevenItemsEn, setSectionSevenItemsEn] = useState<string[]>(Array(2).fill(""));
 const [sectionSevenItemsDate2En, setSectionSevenItemsDate2En] = useState<string[]>(Array(2).fill(""));
 const [sectionSevenTotalLabel, setSectionSevenTotalLabel] = useState("");
+const [sectionSevenTotalNote, setSectionSevenTotalNote] = useState("");
 const TotalsectionSevenItemsEn = sumStringValues(sectionSevenItemsEn);
 const TotalsectionSevenItemsDate2En = sumStringValues(sectionSevenItemsDate2En);
 
@@ -238,6 +239,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionSevenItemsEn: sectionSevenItemsEn,
         qsectionSevenItemsDate2En: sectionSevenItemsDate2En,
         qsectionSevenTotalLabel: sectionSevenTotalLabel,
+        qsectionSevenTotalNote:sectionSevenTotalNote,
         qTotalsectionSevenItemsEn: TotalsectionSevenItemsEn,
         qTotalsectionSevenItemsDate2En: TotalsectionSevenItemsDate2En,
   },
@@ -339,6 +341,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionSevenItemsEn,
   sectionSevenItemsDate2En,
   sectionSevenTotalLabel,
+  sectionSevenTotalNote,
   TotalsectionSevenItemsEn,
   TotalsectionSevenItemsDate2En,
 
@@ -2174,7 +2177,7 @@ if (TableDataAr.sectionEight) {
 
                 <input 
                   placeholder=""
-                  value={sectionSixTotalLabel}
+                  value={sectionSixSecondTotalLabel}
                   onChange={(e) => setSectionSixSecondTotalLabel(e.target.value)}
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
@@ -2187,7 +2190,6 @@ if (TableDataAr.sectionEight) {
                 {formatWithParentheses(TotalsectionSixSecondItemsDate2En)}
               </td>
             </tr>
-
 
       {sectionSevenLabelsEn.map((_, idx) => {
 
@@ -2346,17 +2348,25 @@ if (TableDataAr.sectionEight) {
     </tr>
   );
 })} 
+              
               <tr className="bg-gray-200 font-semibold"> 
               <td className=""> 
                  {" "} 
                 <input 
                   placeholder=""
-                  value={sectionSixTotalLabel}
+                  value={sectionSevenTotalLabel}
                   onChange={(e) => setSectionSevenTotalLabel(e.target.value)}
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300">
+                <input 
+                  placeholder=""
+                  value={sectionSevenTotalNote}
+                  onChange={(e) => setSectionSevenTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                />
+              </td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionSevenItemsEn)}
               </td>

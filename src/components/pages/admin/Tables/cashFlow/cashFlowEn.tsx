@@ -2054,7 +2054,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
 
                 <input 
                   placeholder=""
-                  value={sectionSixTotalLabel}
+                  value={sectionSixSecondTotalLabel}
                   onChange={(e) => setSectionSixSecondTotalLabel(e.target.value)}
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
@@ -2234,7 +2234,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
                  {" "} 
                 <input 
                   placeholder=""
-                  value={sectionSixTotalLabel}
+                  value={sectionSevenTotalLabel}
                   onChange={(e) => setSectionSevenTotalLabel(e.target.value)}
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
@@ -2416,7 +2416,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   );
 })}
 
-
+<br />
 
 
 
@@ -2437,6 +2437,36 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
               </td>
               <td className="border border-gray-300">
              
+              </td>
+            </tr>
+     
+ <tr className="bg-gray-200 text-right font-semibold">
+              <td className="">
+                 {" "}
+
+              
+              </td>
+              <td className="border "></td>
+              <td className="border ">
+              </td>
+              <td className="border ">
+                 Rema
+              </td>
+            </tr>
+         
+ <tr className="bg-gray-200 font-semibold">
+              <td className="">
+                 {" "}
+
+              
+              </td>
+              <td className="border  border-gray-300"></td>
+              <td className="border text-center border-gray-300">
+                 Remarks
+
+              </td>
+              <td className="border text-center border-gray-300">
+                 Remarks
               </td>
             </tr>
           </tbody>

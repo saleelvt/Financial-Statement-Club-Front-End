@@ -621,7 +621,11 @@ const UserCompanyDetails = React.memo(() => {
               </div>
             </div>
           ) : (
-            <BalanceSheetFormUserArabic Tabledata={table} />
+           <div className="flex items-center justify-center">
+              <div className="w-full p-1 border-[6px] border-gray-700">
+                <BalanceSheetFormUserArabic Tabledata={table} />
+              </div>
+            </div>
           )}
         </div>
       )}
@@ -635,7 +639,11 @@ const UserCompanyDetails = React.memo(() => {
               </div>
             </div>
           ) : (
-            <CashFlowUserArabic Tabledata={table} />
+            <div className="flex items-center justify-center">
+              <div className="w-full p-1 border-[6px] border-gray-700">
+                <CashFlowUserArabic Tabledata={table} />
+              </div>
+            </div>
           )}
         </div>
       )}
@@ -648,7 +656,11 @@ const UserCompanyDetails = React.memo(() => {
               </div>
             </div>
           ) : (
-            <ProfitLossArabic Tabledata={table} />
+             <div className="flex items-center justify-center">
+              <div className="w-full p-1 border-[6px] border-gray-700">
+                <ProfitLossArabic Tabledata={table} />
+              </div>
+            </div>
           )}
         </div>
       )}

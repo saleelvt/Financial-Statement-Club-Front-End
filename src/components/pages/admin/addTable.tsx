@@ -1889,10 +1889,10 @@ const handleUpdateTable = async (wlanguage: string | null) => {
         </div>
       </div>
       <div className="flex flex-wrap  items-start mt-1 mb-1 gap-4  text-sm text-gray-700 font-semibold">
-        <div className="relative ">
+        <div className="relative bg-white  ">
           <label className="block mb-1">Tadawul Code</label>
           <input
-            className="p-1 w-28 placeholder:text-xs bg-gray-100 text-black border rounded focus:outline-none focus:bg-white"
+            className="p-1 w-28 placeholder:text-xs bg-white  text-black border rounded focus:outline-none focus:bg-white"
             type="text"
             placeholder="Tadawul Code"
             value={tadawalCode}
@@ -1926,7 +1926,7 @@ const handleUpdateTable = async (wlanguage: string | null) => {
               Loading suggestions...
             </p>
           )}
-          {/* Suggestions */}
+   
           {suggestions.length > 0 && (
             <ul className="absolute z-10 w-10/12 mt-1 border border-gray-300 bg-white rounded max-h-40 overflow-y-auto">
               {suggestions.map((suggestion, index) => (
@@ -1957,18 +1957,21 @@ const handleUpdateTable = async (wlanguage: string | null) => {
 
             {isYearDropdownOpen && (
               <div className="absolute z-10 mt-1 w-44 bg-white border border-gray-300 rounded-md shadow-lg">
-                {years.map((year) => (
-                  <div
-                    key={year}
-                    className="p-1 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => {
-                      handleYearSelect(year);
-                      setIsYearDropdownOpen(false); // Close after select
-                    }}
-                  >
-                    {year}
-                  </div>
-                ))}
+               {[...years]
+  .sort((a, b) => Number(b) - Number(a)) // Convert strings to numbers for correct numeric sorting
+  .map((year) => (
+    <div
+      key={year}
+      className="p-1 hover:bg-gray-100 cursor-pointer"
+      onClick={() => {
+        handleYearSelect(year);
+        setIsYearDropdownOpen(false); // Close after select
+      }}
+    >
+      {year}
+    </div>
+))}
+
               </div>
             )}
           </div>
@@ -2001,7 +2004,7 @@ const handleUpdateTable = async (wlanguage: string | null) => {
           <div>
             <label className="block mb-1">Table Type</label>
             <select
-              className="p-1 w-44 border border-gray-300 bg-slate-200 text-black rounded"
+              className="p-1 w-44 border border-gray-300 bg-white text-black rounded"
               id="tableType"
               value={selectedTableType || ""}
               onChange={(e) => setTableType(e.target.value)}

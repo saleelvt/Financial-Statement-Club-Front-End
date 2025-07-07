@@ -40,7 +40,7 @@ const ProfitLossUserArabic: React.FC<CashFlowPropsAr> = React.memo(
 
                   {/* Date 1 Display */}
                   <th className="border border-gray-100 p-1 w-28">
-                    <div className="bg-gray-100 w-24 text-center font-bold">
+                    <div className="bg-gray-100  text-center font-bold">
                       {table.date1Ar
                         ? new Date(table.date1Ar).toLocaleDateString("ar-GB", {
                             day: "2-digit",
@@ -69,7 +69,7 @@ const ProfitLossUserArabic: React.FC<CashFlowPropsAr> = React.memo(
 
                   {/* Date 2 Display */}
                   <th className="border border-gray-100 p-1 w-28">
-                    <div className="bg-gray-100 w-24 text-center font-bold">
+                    <div className="bg-gray-100  text-center font-bold">
                       {table.date2Ar
                         ? new Date(table.date2Ar).toLocaleDateString("ar-GB", {
                             day: "2-digit",

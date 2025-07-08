@@ -231,7 +231,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className="px-1">
                         {table.sectionTwo.sectionTwoTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300">  {table.sectionTwo.sectionTwoTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionTwo.TotalsectionTwoItemsEn)}
                       </td>
@@ -306,7 +306,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className=" p-1">
                         {table.sectionThree.sectionThreeTotalLabel} 
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300">  {table.sectionThree.sectionThreeTotalNote} </td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(
                           table.sectionThree.TotalsectionThreeItemsEn
@@ -378,7 +378,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className="p-1">
                         {table.sectionFour.sectionFourTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center  border-gray-300">  {table.sectionFour.sectionFourTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionFour.TotalsectionFourItemsEn)}
                       </td>
@@ -446,7 +446,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className="p-1">
                         {table.sectionFive.sectionFiveTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border  border-gray-300 text-center ">   {table.sectionFive.sectionFiveTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionFive.TotalsectionFiveItemsEn)}
                       </td>
@@ -514,7 +514,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className="p-1">
                         {table.sectionSix.sectionSixTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300"> {table.sectionSix.sectionSixTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionSix.TotalsectionSixItemsEn)}
                       </td>
@@ -532,7 +532,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className="p-1">
                         {table.sectionSix.sectionSixSecondTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300"> {table.sectionSix.sectionSixSecondTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionSix.TotalsectionSixSecondItemsEn)}
                       </td>

@@ -235,7 +235,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                       <td className="px-1">
                         {table.sectionTwo.sectionTwoTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                <td className="border text-center border-gray-300">  {table.sectionTwo.sectionTwoTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionTwo.TotalsectionTwoItemsEn)}
                       </td>
@@ -309,8 +309,8 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                     <tr className="bg-gray-200 border-gray-300 font-bold">
                       <td className=" p-1">
                         {table.sectionThree.sectionThreeTotalLabel} 
-                      </td>
-                      <td className="border border-gray-300"></td>
+                      </td> 
+ <td className="border text-center border-gray-300">  {table.sectionThree.sectionThreeTotalNote} </td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(
                           table.sectionThree.TotalsectionThreeItemsEn
@@ -382,7 +382,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                       <td className="p-1">
                         {table.sectionFour.sectionFourTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                <td className="border text-center border-gray-300">  {table.sectionFour.sectionFourTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionFour.TotalsectionFourItemsEn)}
                       </td>
@@ -448,7 +448,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                       <td className="p-1">
                         {table.sectionFive.sectionFiveTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                       <td className="border text-center border-gray-300">   {table.sectionFive.sectionFiveTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionFive.TotalsectionFiveItemsEn)}
                       </td>
@@ -519,7 +519,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                       <td className="p-1">
                         {table.sectionSix.sectionSixTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                          <td className="border text-center border-gray-300"> {table.sectionSix.sectionSixTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionSix.TotalsectionSixItemsEn)}
                       </td>
@@ -537,7 +537,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                       <td className="p-1">
                         {table.sectionSix.sectionSixSecondTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                        <td className="border text-center border-gray-300"> {table.sectionSix.sectionSixSecondTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionSix.TotalsectionSixSecondItemsEn)}
                       </td>
@@ -582,7 +582,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                         </td>
                       </tr>
                     );
-                  }
+                  } 
                 )}
               
                 {table.sectionSeven.sectionSevenTotalLabel &&
@@ -591,7 +591,7 @@ const CashFlowUserArabic: React.FC<CashFlowPropsAr> = React.memo(
                       <td className="p-1">
                         {table.sectionSeven.sectionSevenTotalLabel}
                       </td>
-                     <td className="border text-center border-gray-300">{table.sectionSeven.sectionSevenTotalNote}</td>
+                     <td className="border text-center  border-gray-300">{table.sectionSeven.sectionSevenTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionSeven.TotalsectionSevenItemsEn)}
                       </td>

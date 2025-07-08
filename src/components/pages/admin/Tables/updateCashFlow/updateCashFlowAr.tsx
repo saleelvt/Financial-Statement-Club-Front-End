@@ -79,8 +79,9 @@ useEffect(() => {
     const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(  Array(23).fill("")   );
     const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(23).fill(""));
     const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("");
-    const TotalsectionTwoItemsEn =   sumStringValues(sectionTwoItemsEn);
-    const TotalsectionTwoItemsDate2En = sumStringValues(sectionTwoItemsDate2En);
+     const [sectionTwoTotalNote, setSectionTwoTotalNote] = useState("");
+   const TotalsectionTwoItemsEn = sumStringValues(sectionOneItemsEn) +  sumStringValues(sectionTwoItemsEn);
+    const TotalsectionTwoItemsDate2En =  sumStringValues(sectionOneItemsDate2En) + sumStringValues(sectionTwoItemsDate2En);
 
     // section Three
       const [sectionThreeFirstLabel, setSectionThreeFirstLabel] = useState("");
@@ -89,8 +90,9 @@ useEffect(() => {
     const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(17).fill("")   );
     const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(17).fill(""));
     const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("");
-    const TotalsectionThreeItemsEn =      sumStringValues(sectionThreeItemsEn);
-    const TotalsectionThreeItemsDate2En =     sumStringValues(sectionThreeItemsDate2En);
+        const [sectionThreeTotalNote, setSectionThreeTotalNote] = useState("");
+   const TotalsectionThreeItemsEn =   TotalsectionTwoItemsEn+   sumStringValues(sectionThreeItemsEn);
+    const TotalsectionThreeItemsDate2En =  TotalsectionTwoItemsDate2En+   sumStringValues(sectionThreeItemsDate2En);
 
 
     // sectoin Four
@@ -100,8 +102,9 @@ useEffect(() => {
     const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(Array(17).fill("") );
     const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<string[] >(Array(17).fill(""));
     const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("");
-    const TotalsectionFourItemsEn =  sumStringValues(sectionFourItemsEn);
-    const TotalsectionFourItemsDate2En =  sumStringValues(sectionFourItemsDate2En);
+     const [sectionFourTotalNote, setSectionFourTotalNote] = useState("");
+ const TotalsectionFourItemsEn =TotalsectionThreeItemsEn+   sumStringValues(sectionFourItemsEn);
+    const TotalsectionFourItemsDate2En =TotalsectionThreeItemsDate2En+  sumStringValues(sectionFourItemsDate2En);
 
     // section Five
 const [sectionFiveFirstLabel, setSectionFiveFirstLabel] = useState("");
@@ -110,6 +113,7 @@ const [sectionFiveNotesEn, setSectionFiveNotesEn] = useState<string[]>(Array(15 
 const [sectionFiveItemsEn, setSectionFiveItemsEn] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveItemsDate2En, setSectionFiveItemsDate2En] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveTotalLabel, setSectionFiveTotalLabel] = useState("");
+const [sectionFiveTotalNote, setSectionFiveTotalNote] = useState("");
 const TotalsectionFiveItemsEn = sumStringValues(sectionFiveItemsEn);
 const TotalsectionFiveItemsDate2En = sumStringValues(sectionFiveItemsDate2En);
 
@@ -120,12 +124,14 @@ const [sectionSixNotesEn, setSectionSixNotesEn] = useState<string[]>(Array(12).f
 const [sectionSixItemsEn, setSectionSixItemsEn] = useState<string[]>(Array(12).fill(""));
 const [sectionSixItemsDate2En, setSectionSixItemsDate2En] = useState<string[]>(Array(12).fill(""));
 const [sectionSixTotalLabel, setSectionSixTotalLabel] = useState("");
+const [sectionSixTotalNote, setSectionSixTotalNote] = useState("");
 const TotalsectionSixItemsEn = sumStringValues(sectionSixItemsEn);
 const TotalsectionSixItemsDate2En = sumStringValues(sectionSixItemsDate2En);
 
 const [sectionSixSecondTotalLabel, setSectionSixSecondTotalLabel] = useState("");
-const TotalsectionSixSecondItemsEn = sumStringValues(sectionSixItemsEn);
-const TotalsectionSixSecondItemsDate2En = sumStringValues(sectionSixItemsDate2En);
+const [sectionSixSecondTotalNote, setSectionSixSecondTotalNote] = useState("");
+const TotalsectionSixSecondItemsEn = TotalsectionFourItemsEn+TotalsectionFiveItemsEn+ TotalsectionSixItemsEn
+const TotalsectionSixSecondItemsDate2En = TotalsectionFourItemsDate2En+ TotalsectionFiveItemsDate2En+TotalsectionSixItemsDate2En
 
 // section Seven
 const [sectionSevenLabelsEn, setSectionSevenLabelsEn] = useState<string[]>(Array(2).fill(""));
@@ -181,6 +187,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionTwoItemsEn: sectionTwoItemsEn,
         qsectionTwoItemsDate2En: sectionTwoItemsDate2En,
         qsectionTwoTotalLabel: sectionTwoTotalLabel,
+               qsectionTwoTotalNote: sectionTwoTotalNote,
         qTotalsectionTwoItemsEn: TotalsectionTwoItemsEn,
         qTotalsectionTwoItemsDate2En: TotalsectionTwoItemsDate2En,
   },
@@ -192,6 +199,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionThreeItemsEn: sectionThreeItemsEn,
         qsectionThreeItemsDate2En: sectionThreeItemsDate2En,
         qsectionThreeTotalLabel: sectionThreeTotalLabel,
+         qsectionThreeTotalNote:sectionThreeTotalNote,
         qTotalsectionThreeItemsEn: TotalsectionThreeItemsEn,
         qTotalsectionThreeItemsDate2En: TotalsectionThreeItemsDate2En,
   },
@@ -203,6 +211,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionFourItemsEn: sectionFourItemsEn,
         qsectionFourItemsDate2En: sectionFourItemsDate2En,
         qsectionFourTotalLabel: sectionFourTotalLabel,
+          qsectionFourTotalNote:sectionFourTotalNote,
         qTotalsectionFourItemsEn: TotalsectionFourItemsEn,
         qTotalsectionFourItemsDate2En: TotalsectionFourItemsDate2En,
   },
@@ -214,6 +223,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionFiveItemsEn: sectionFiveItemsEn,
         qsectionFiveItemsDate2En: sectionFiveItemsDate2En,
         qsectionFiveTotalLabel: sectionFiveTotalLabel,
+          qsectionFiveTotalNote:sectionFiveTotalNote,
         qTotalsectionFiveItemsEn: TotalsectionFiveItemsEn,
         qTotalsectionFiveItemsDate2En: TotalsectionFiveItemsDate2En,
   },
@@ -225,9 +235,11 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
         qsectionSixItemsEn: sectionSixItemsEn,
         qsectionSixItemsDate2En: sectionSixItemsDate2En,
         qsectionSixTotalLabel: sectionSixTotalLabel,
+          qsectionSixTotalNote:sectionSixTotalNote,
         qTotalsectionSixItemsEn: TotalsectionSixItemsEn,
         qTotalsectionSixItemsDate2En: TotalsectionSixItemsDate2En,
         qsectionSixSecondTotalLabel: sectionSixSecondTotalLabel,
+          qsectionSixSecondTotalNote:sectionSixSecondTotalNote,
         qTotalsectionSixSecondItemsEn: TotalsectionSixSecondItemsEn,
         qTotalsectionSixSecondItemsDate2En: TotalsectionSixSecondItemsDate2En,
 
@@ -289,6 +301,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionTwoItemsEn,
   sectionTwoItemsDate2En,
   sectionTwoTotalLabel,
+     sectionTwoTotalNote,
   TotalsectionTwoItemsEn,
   TotalsectionTwoItemsDate2En,
 
@@ -299,6 +312,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionThreeItemsEn,
   sectionThreeItemsDate2En,
   sectionThreeTotalLabel,
+    sectionThreeTotalNote,
   TotalsectionThreeItemsEn,
   TotalsectionThreeItemsDate2En,
 
@@ -309,6 +323,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionFourItemsEn,
   sectionFourItemsDate2En,
   sectionFourTotalLabel,
+   sectionFourTotalNote,
   TotalsectionFourItemsEn,
   TotalsectionFourItemsDate2En,
 
@@ -319,6 +334,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionFiveItemsEn,
   sectionFiveItemsDate2En,
   sectionFiveTotalLabel,
+    sectionFiveTotalNote,
   TotalsectionFiveItemsEn,
   TotalsectionFiveItemsDate2En,
 
@@ -329,9 +345,11 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionSixItemsEn,
   sectionSixItemsDate2En,
   sectionSixTotalLabel,
+   sectionSixTotalNote,
   TotalsectionSixItemsEn,
   TotalsectionSixItemsDate2En,
   sectionSixSecondTotalLabel,
+  sectionSixSecondTotalNote,
   TotalsectionSixSecondItemsEn,
   TotalsectionSixSecondItemsDate2En,
 
@@ -357,7 +375,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionNineNotesEn,
   sectionNineItemsEn,
   sectionNineItemsDate2En,
-  dispatch
+  dispatch 
 ]);
  
 
@@ -1298,7 +1316,12 @@ if (TableDataAr.sectionEight) {
                 />
               </td>
 
-              <td className="border border-gray-300 bg-gray-200 p-1"></td>
+                <td className="border border-gray-300 bg-gray-200 p-1"> <input
+                  placeholder=""
+                  value={sectionTwoTotalNote}
+                  onChange={(e) => setSectionTwoTotalNote(e.target.value)}
+                  className=" text-start p-0.5 w-full bg-gray-200  fext-row"
+                /></td>
 
               <td className="border border-gray-300 bg-gray-200 p-1 text-start">
                 {TotalsectionTwoItemsEn !== 0 &&
@@ -1540,7 +1563,12 @@ if (TableDataAr.sectionEight) {
                   className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300"> <input
+                  value={sectionThreeTotalNote}
+                  onChange={(e) => setSectionThreeTotalNote(e.target.value)}
+                  className="w-full  bg-gray-200 text-black p-1"
+                /></td>
+
 
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionThreeItemsEn)}
@@ -1777,7 +1805,12 @@ if (TableDataAr.sectionEight) {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={sectionFourTotalNote}
+                  onChange={(e) => setSectionFourTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionFourItemsEn)}
               </td>
@@ -1975,7 +2008,12 @@ if (TableDataAr.sectionEight) {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300">    <input
+                  placeholder=""
+                  value={sectionFiveTotalNote}
+                  onChange={(e) => setSectionFiveTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionFiveItemsEn)}
               </td>
@@ -2162,7 +2200,12 @@ if (TableDataAr.sectionEight) {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={sectionSixTotalNote}
+                  onChange={(e) => setSectionSixTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionSixItemsEn)}
               </td>
@@ -2182,7 +2225,12 @@ if (TableDataAr.sectionEight) {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300"> <input 
+                  placeholder=""
+                  value={sectionSixSecondTotalNote}
+                  onChange={(e) => setSectionSixSecondTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionSixSecondItemsEn)}
               </td>

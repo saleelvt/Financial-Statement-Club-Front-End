@@ -72,6 +72,7 @@ useEffect(() => {
     const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(  Array(23).fill("")   );
     const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(23).fill(""));
     const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("");
+      const [sectionTwoTotalNote, setSectionTwoTotalNote] = useState("");
     const TotalsectionTwoItemsEn =   sumStringValues(sectionTwoItemsEn);
     const TotalsectionTwoItemsDate2En = sumStringValues(sectionTwoItemsDate2En);
 
@@ -82,6 +83,7 @@ useEffect(() => {
     const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(17).fill("")   );
     const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(17).fill(""));
     const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("");
+     const [sectionThreeTotalNote, setSectionThreeTotalNote] = useState("");
     const TotalsectionThreeItemsEn =      sumStringValues(sectionThreeItemsEn);
     const TotalsectionThreeItemsDate2En =     sumStringValues(sectionThreeItemsDate2En);
 
@@ -93,6 +95,7 @@ useEffect(() => {
     const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(Array(17).fill("") );
     const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<string[] >(Array(17).fill(""));
     const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("");
+         const [sectionFourTotalNote, setSectionFourTotalNote] = useState("");
     const TotalsectionFourItemsEn =  sumStringValues(sectionFourItemsEn);
     const TotalsectionFourItemsDate2En =  sumStringValues(sectionFourItemsDate2En);
 
@@ -103,6 +106,7 @@ const [sectionFiveNotesEn, setSectionFiveNotesEn] = useState<string[]>(Array(15 
 const [sectionFiveItemsEn, setSectionFiveItemsEn] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveItemsDate2En, setSectionFiveItemsDate2En] = useState<string[]>(Array(15 ).fill(""));
 const [sectionFiveTotalLabel, setSectionFiveTotalLabel] = useState("");
+const [sectionFiveTotalNote, setSectionFiveTotalNote] = useState("");
 const TotalsectionFiveItemsEn = sumStringValues(sectionFiveItemsEn);
 const TotalsectionFiveItemsDate2En = sumStringValues(sectionFiveItemsDate2En);
 
@@ -113,10 +117,12 @@ const [sectionSixNotesEn, setSectionSixNotesEn] = useState<string[]>(Array(12).f
 const [sectionSixItemsEn, setSectionSixItemsEn] = useState<string[]>(Array(12).fill(""));
 const [sectionSixItemsDate2En, setSectionSixItemsDate2En] = useState<string[]>(Array(12).fill(""));
 const [sectionSixTotalLabel, setSectionSixTotalLabel] = useState("");
+const [sectionSixTotalNote, setSectionSixTotalNote] = useState("");
 const TotalsectionSixItemsEn = sumStringValues(sectionSixItemsEn);
 const TotalsectionSixItemsDate2En = sumStringValues(sectionSixItemsDate2En);
 
 const [sectionSixSecondTotalLabel, setSectionSixSecondTotalLabel] = useState("");
+const [sectionSixSecondTotalNote, setSectionSixSecondTotalNote] = useState("");
 const TotalsectionSixSecondItemsEn = sumStringValues(sectionSixItemsEn);
 const TotalsectionSixSecondItemsDate2En = sumStringValues(sectionSixItemsDate2En);
 
@@ -179,6 +185,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
     sectionTwoItemsEn,
     sectionTwoItemsDate2En,
     sectionTwoTotalLabel,
+       sectionTwoTotalNote,
     TotalsectionTwoItemsEn,
     TotalsectionTwoItemsDate2En,
   },
@@ -191,6 +198,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
     sectionThreeItemsEn,
     sectionThreeItemsDate2En,
     sectionThreeTotalLabel,
+        sectionThreeTotalNote,
     TotalsectionThreeItemsEn,
     TotalsectionThreeItemsDate2En,
   },
@@ -203,6 +211,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
     sectionFourItemsEn,
     sectionFourItemsDate2En,
     sectionFourTotalLabel,
+     sectionFourTotalNote,
     TotalsectionFourItemsEn,
     TotalsectionFourItemsDate2En,
   },
@@ -215,6 +224,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
     sectionFiveItemsEn,
     sectionFiveItemsDate2En,
     sectionFiveTotalLabel,
+        sectionFiveTotalNote,
     TotalsectionFiveItemsEn,
     TotalsectionFiveItemsDate2En,
   },
@@ -227,9 +237,11 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
     sectionSixItemsEn,
     sectionSixItemsDate2En,
     sectionSixTotalLabel,
+        sectionSixTotalNote,
     TotalsectionSixItemsEn,
     TotalsectionSixItemsDate2En,
     sectionSixSecondTotalLabel,
+        sectionSixSecondTotalNote,
     TotalsectionSixSecondItemsEn,
     TotalsectionSixSecondItemsDate2En,
   },
@@ -294,6 +306,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionTwoItemsEn,
   sectionTwoItemsDate2En,
   sectionTwoTotalLabel,
+    sectionTwoTotalNote,
   TotalsectionTwoItemsEn,
   TotalsectionTwoItemsDate2En,
 
@@ -304,6 +317,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionThreeItemsEn,
   sectionThreeItemsDate2En,
   sectionThreeTotalLabel,
+    sectionThreeTotalNote,
   TotalsectionThreeItemsEn,
   TotalsectionThreeItemsDate2En,
 
@@ -314,6 +328,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionFourItemsEn,
   sectionFourItemsDate2En,
   sectionFourTotalLabel,
+    sectionFourTotalNote,
   TotalsectionFourItemsEn,
   TotalsectionFourItemsDate2En,
 
@@ -324,6 +339,7 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionFiveItemsEn,
   sectionFiveItemsDate2En,
   sectionFiveTotalLabel,
+  sectionFiveTotalNote,
   TotalsectionFiveItemsEn,
   TotalsectionFiveItemsDate2En,
 
@@ -334,9 +350,11 @@ const [sectionNineItemsDate2En, setSectionNineItemsDate2En] = useState<string[]>
   sectionSixItemsEn,
   sectionSixItemsDate2En,
   sectionSixTotalLabel,
+    sectionSixTotalNote,
   TotalsectionSixItemsEn,
   TotalsectionSixItemsDate2En,
   sectionSixSecondTotalLabel,
+    sectionSixSecondTotalNote,
   TotalsectionSixSecondItemsEn,
   TotalsectionSixSecondItemsDate2En,
 
@@ -1323,7 +1341,13 @@ if (TableDataEn.sectionEight) {
                 />
               </td>
 
-              <td className="border border-gray-300 bg-gray-200 p-1"></td>
+               <td className="border border-gray-300 bg-gray-200 p-1"> <input
+                  placeholder=""
+                  value={sectionTwoTotalNote}
+                  onChange={(e) => setSectionTwoTotalNote(e.target.value)}
+                  className=" text-start p-0.5 w-full bg-gray-200  fext-row"
+                /></td>
+
 
               <td className="border border-gray-300 bg-gray-200 p-1 text-start">
                 {TotalsectionTwoItemsEn !== 0 &&
@@ -1564,7 +1588,11 @@ if (TableDataEn.sectionEight) {
                   className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  value={sectionThreeTotalNote}
+                  onChange={(e) => setSectionThreeTotalNote(e.target.value)}
+                  className="w-full  bg-gray-200 text-black p-1"
+                /></td>
 
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionThreeItemsEn)}
@@ -1803,7 +1831,12 @@ if (TableDataEn.sectionEight) {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+                          <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={sectionFourTotalNote}
+                  onChange={(e) => setSectionFourTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionFourItemsEn)}
               </td>
@@ -2000,7 +2033,12 @@ if (TableDataEn.sectionEight) {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300">    <input
+                  placeholder=""
+                  value={sectionFiveTotalNote}
+                  onChange={(e) => setSectionFiveTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionFiveItemsEn)}
               </td>
@@ -2187,7 +2225,12 @@ if (TableDataEn.sectionEight) {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={sectionSixTotalNote}
+                  onChange={(e) => setSectionSixTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionSixItemsEn)}
               </td>
@@ -2207,7 +2250,12 @@ if (TableDataEn.sectionEight) {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300"> <input 
+                  placeholder=""
+                  value={sectionSixSecondTotalNote}
+                  onChange={(e) => setSectionSixSecondTotalNote(e.target.value)}
+                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionSixSecondItemsEn)}
               </td>

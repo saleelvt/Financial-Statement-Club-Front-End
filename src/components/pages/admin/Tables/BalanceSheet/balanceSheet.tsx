@@ -9,121 +9,196 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
   ({ TakingShort }) => {
     // Updated state declarations with empty strings as initial values
     const dispatch = useDispatch<AppDispatch>();
-    const [nonCurrentAssetsAr, setNonCurrentAssets] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [nonCurrentNotes, setNonCurrentNotes] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [nonCurrentAssetsDate2Ar, setNonCurrentAssetsDate2] = useState<
-      string[]
-    >(Array(12).fill(""));
-    const [nonCurrentSubAssetsDate2Ar, setNonCurrentSubAssetsDate2] = useState<
-      string[]
-    >(Array(3).fill(""));
 
-    const [nonCurrentSubAssetsAr, setNonCurrentSubAssets] = useState<string[]>(
-      Array(3).fill("")
-    );
+ // Helper function to safely parse numeric values from strings
+    const parseNumericValue = (value: string): number => {
+      if (!value || value.trim() === "-" || value.trim() === "") return 0;
 
-    const [currentAssetsAr, setCurrentAssets] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [currentSubAssetsAr, setCurrentSubAssets] = useState<string[]>(
-      Array(3).fill("")
-    );
-    const [CurrentAssetsNotes, setCurrentAssetsNotes] = useState<string[]>(
-      Array(12).fill("")
-    );
+      const isNegative =
+        value.trim().startsWith("(") && value.trim().endsWith(")");
+      const cleaned = value.replace(/[(),]/g, ""); // Remove (, ), and ,
+      const numValue = parseFloat(cleaned);
 
-    const [currentAssetsDate2Ar, setCurrentAssetsDate2] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [currentSubAssetsDate2Ar, setCurrentSubAssetsDate2] = useState<
-      string[]
-    >(Array(3).fill(""));
+      if (isNaN(numValue)) return 0;
+      return isNegative ? -numValue : numValue;
+    };
+
+    const sumStringValues = (values: string[]): number => {
+      return values.reduce((sum, val) => sum + parseNumericValue(val), 0);
+    };
+    const formatWithParentheses = (value: number): string => {
+      const formatted = new Intl.NumberFormat("en-US").format(Math.abs(value));
+      return value < 0 ? `(${formatted})` : formatted;
+    };
+
+
+
+
+
+
+
+    const [data1En, setDate1En] = useState<Date | null>(null);
+    // const [date, setDate] = useState< null|string>(null);
+    const [data2En, setDate2En] = useState<Date | null>(null);
+
+    const [date1Rl, setDate1Rl] = useState("'000");
+    const [date2Rl, setDate2Rl] = useState("'000");
+
+    const [date1, setDate1] = useState("(Unaudited)");
+    const [date2, setDate2] = useState("(Audited)");
+
+    
+ 
+    const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(  "Total non-current assets");
+    const [scurrentAssets, ssetCurrentAssets] = useState("Current assets");
+    const [sfirtsTotalCurrentAssets, ssetfirtsTotalCurrentAssets] =  useState("");
+    const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(  "Total current assets" );
+    const [stotalAssets, ssetTotalAssets] = useState("TOTAL ASSETS");
+
+    const [ sShareholdersEquityandliabilitiess,  setShareholdersEquityandliabilities,  ] = useState("EQUITY AND LIABILITIES");
+    const [sShareholdersEquity, setShareholdersEquity] = useState(  "Equity");
+    const [sfirtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =   useState("");
+    const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState(  "Total equity" );
+
+    const [sliabilities, setLiabilities] = useState("Liabilities");
+    const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(    "Non-current liabilities"  );
+    const [sfirtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] =   useState("");
+    const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] =   useState("Total non-current liabilities");
+
+    const [scurrentliabilities, setcurrentliabilities] = useState(    "Current liabilities"  );
+    const [sfirtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] =    useState("");
+    const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState( "Total current liabilities"  );
+    const [stotalliabilities, setTotalliabilities] =    useState("Total liabilities");
+    const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(  "TOTAL EQUITY AND LIABILITIES"   );
+
+
+
+
+    const [sassets, setAssets] = useState("ASSETS");
+    const [snonCurrentAssets, ssetnonCurrentAssets] =  useState("Non-current assets");
+    const [nonCurrentAssetsAr, setNonCurrentAssets] = useState<string[]>( Array(12).fill(""));
+    const [nonCurrentNotes, setNonCurrentNotes] = useState<string[]>(  Array(12).fill("") );
+    const [nonCurrentAssetsDate2Ar, setNonCurrentAssetsDate2] = useState<  string[] >(Array(12).fill(""));
+       const [sfirtsTotalnonCurrentAssets, ssetfirtsTotalnonCurrentAssets] =  useState("");
+      
+    const [nonCurrentSubAssetsDate2Ar, setNonCurrentSubAssetsDate2] = useState< string[]>(Array(3).fill(""));
+    const [nonCurrentSubAssetsAr, setNonCurrentSubAssets] = useState<string[]>( Array(3).fill("") );
+
+    const [currentAssetsAr, setCurrentAssets] = useState<string[]>( Array(12).fill("") );
+    const [currentSubAssetsAr, setCurrentSubAssets] = useState<string[]>(  Array(3).fill("")  );
+    const [CurrentAssetsNotes, setCurrentAssetsNotes] = useState<string[]>(  Array(12).fill("")  );
+
+    const [currentAssetsDate2Ar, setCurrentAssetsDate2] = useState<string[]>(  Array(12).fill("")    );
+    const [currentSubAssetsDate2Ar, setCurrentSubAssetsDate2] = useState<    string[]  >(Array(3).fill(""));
 
     // Labels remain as strings
-    const [nonCurrentLabelsAr, setNonCurrentLabels] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [nonCurrentSubLabelsAr, setNonCurrentSubLabels] = useState<string[]>(
-      Array(3).fill("")
-    );
+    const [nonCurrentLabelsAr, setNonCurrentLabels] = useState<string[]>(    Array(12).fill("") );
+    const [nonCurrentSubLabelsAr, setNonCurrentSubLabels] = useState<string[]>(  Array(3).fill("") );
 
-    const [currentLabelsAr, setCurrentLabels] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [currentSubLabelsAr, setCurrentSubLabels] = useState<string[]>(
-      Array(3).fill("")
-    );
+    const [currentLabelsAr, setCurrentLabels] = useState<string[]>(   Array(12).fill("")   );
+    const [currentSubLabelsAr, setCurrentSubLabels] = useState<string[]>(  Array(3).fill("")   );
 
     // States for equity and liabilities with empty strings
-    const [equityItemsAr, setEquityItems] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [equityItemsNotes, setEquityItemsNotes] = useState<string[]>(
-      Array(12).fill("")
-    );
+    const [equityItemsAr, setEquityItems] = useState<string[]>(    Array(12).fill("")  );
+    const [equityItemsNotes, setEquityItemsNotes] = useState<string[]>(   Array(12).fill("")  );
 
-    const [equityItemsDate2Ar, setEquityItemsDate2] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [equityLabelsAr, setEquityLabels] = useState<string[]>(
-      Array(12).fill("")
-    );
+    const [equityItemsDate2Ar, setEquityItemsDate2] = useState<string[]>(    Array(12).fill("")  );
+    const [equityLabelsAr, setEquityLabels] = useState<string[]>(   Array(12).fill("")  );
 
-    const [equitySubItemsAr, setEquitySubItems] = useState<string[]>(
-      Array(3).fill("")
-    );
-    const [equitySubItemsDate2Ar, setEquitySubItemsDate2] = useState<string[]>(
-      Array(3).fill("")
-    );
-    const [equitySubLabelsAr, setEquitySubLabels] = useState<string[]>(
-      Array(3).fill("")
-    );
+    const [equitySubItemsAr, setEquitySubItems] = useState<string[]>(    Array(3).fill("")  );
+    const [equitySubItemsDate2Ar, setEquitySubItemsDate2] = useState<string[]>(   Array(3).fill("")  );
+    const [equitySubLabelsAr, setEquitySubLabels] = useState<string[]>(    Array(3).fill("")  );
 
-    const [nonCurrentLiabilitiesAr, setNonCurrentLiabilities] = useState<
-      string[]
-    >(Array(12).fill(""));
-    const [nonCurrentLiabilitiesNotes, setNonCurrentLiabilitiesNotes] =
-      useState<string[]>(Array(12).fill(""));
-    const [nonCurrentLiabilitiesDate2Ar, setNonCurrentLiabilitiesDate2] =
-      useState<string[]>(Array(12).fill(""));
-    const [nonCurrentLiabilitiesLabelsAr, setNonCurrentLiabilitiesLabels] =
-      useState<string[]>(Array(12).fill(""));
+    const [nonCurrentLiabilitiesAr, setNonCurrentLiabilities] = useState<    string[]  >(Array(12).fill(""));
+    const [nonCurrentLiabilitiesNotes, setNonCurrentLiabilitiesNotes] =    useState<string[]>(Array(12).fill(""));
+    const [nonCurrentLiabilitiesDate2Ar, setNonCurrentLiabilitiesDate2] =   useState<string[]>(Array(12).fill(""));
+    const [nonCurrentLiabilitiesLabelsAr, setNonCurrentLiabilitiesLabels] =  useState<string[]>(Array(12).fill(""));
 
-    const [nonCurrentSubLiabilitiesAr, setNonCurrentSubLiabilities] = useState<
-      string[]
-    >(Array(3).fill(""));
-    const [nonCurrentSubLiabilitiesDate2Ar, setNonCurrentSubLiabilitiesDate2] =
-      useState<string[]>(Array(3).fill(""));
-    const [
-      nonCurrentSubLiabilitiesLabelsAr,
-      setNonCurrentSubLiabilitiesLabels,
-    ] = useState<string[]>(Array(3).fill(""));
+    const [nonCurrentSubLiabilitiesAr, setNonCurrentSubLiabilities] = useState<  string[]  >(Array(3).fill(""));
+    const [nonCurrentSubLiabilitiesDate2Ar, setNonCurrentSubLiabilitiesDate2] =    useState<string[]>(Array(3).fill(""));
+    const [nonCurrentSubLiabilitiesLabelsAr,  setNonCurrentSubLiabilitiesLabels, ] = useState<string[]>(Array(3).fill(""));
 
-    const [currentLiabilitiesAr, setCurrentLiabilities] = useState<string[]>(
-      Array(12).fill("")
-    );
-    const [currentLiabilitiesNotes, setCurrentLiabilitiesNotes] = useState<
-      string[]
-    >(Array(12).fill(""));
-    const [currentLiabilitiesDate2Ar, setCurrentLiabilitiesDate2] = useState<
-      string[]
-    >(Array(12).fill(""));
+    const [currentLiabilitiesAr, setCurrentLiabilities] = useState<string[]>(   Array(12).fill("") );
+    const [currentLiabilitiesNotes, setCurrentLiabilitiesNotes] = useState<   string[]  >(Array(12).fill(""));
+    const [currentLiabilitiesDate2Ar, setCurrentLiabilitiesDate2] = useState<   string[]  >(Array(12).fill(""));
 
-    const [currentLiabilitiesLabelsAr, setCurrentLiabilitiesLabels] = useState<
-      string[]
-    >(Array(12).fill(""));
-    const [currentSubLiabilitiesLabelsAr, setCurrentSubLiabilitiesLabels] =
-      useState<string[]>(Array(3).fill(""));
+    const [currentLiabilitiesLabelsAr, setCurrentLiabilitiesLabels] = useState<    string[]  >(Array(12).fill(""));
+    const [currentSubLiabilitiesLabelsAr, setCurrentSubLiabilitiesLabels] =    useState<string[]>(Array(3).fill(""));
 
-    const [currentSubLiabilitiesAr, setCurrentSubLiabilities] = useState<
-      string[]
-    >(Array(3).fill(""));
-    const [currentSubLiabilitiesDate2Ar, setCurrentSubLiabilitiesDate2] =
-      useState<string[]>(Array(3).fill(""));
+    const [currentSubLiabilitiesAr, setCurrentSubLiabilities] = useState<     string[]  >(Array(3).fill(""));
+    const [currentSubLiabilitiesDate2Ar, setCurrentSubLiabilitiesDate2] =   useState<string[]>(Array(3).fill(""));
+
+
+
+
+    // Calculate totals for Assets
+     const [sfirtsTotalnonCurrentNote, ssetfirtsTotalnonCurrentAssetsNote] =  useState("");
+    const firstTotalNonCurrent = sumStringValues(nonCurrentAssetsAr);
+    const firstTotalNonCurrentDate2 = sumStringValues(nonCurrentAssetsDate2Ar);
+
+      const [stotalNonCurrentAssetsNote, ssetTotalNonCurrentAssetsNote] = useState(  "");
+    const secondTotalNonCurrent =   firstTotalNonCurrent + sumStringValues(nonCurrentSubAssetsAr);
+    const secondTotalNonCurrentDate2 =   firstTotalNonCurrentDate2 + sumStringValues(nonCurrentSubAssetsDate2Ar);
+
+    const [sfirtsTotalCurrentAssetsNote, ssetfirtsTotalCurrentAssetsNote] =  useState("");
+    const firstTotalCurrent = sumStringValues(currentAssetsAr);
+     const firstTotalCurrentDate2 = sumStringValues(currentAssetsDate2Ar);
+
+       const [stotalCurrentAssetsNote, ssetTotalCurrentAssetsNote] = useState(  "" );
+    const secondTotalCurrent =   firstTotalCurrent + sumStringValues(currentSubAssetsAr);
+     const secondTotalCurrentDate2 =   firstTotalCurrentDate2 + sumStringValues(currentSubAssetsDate2Ar);
+      
+     const [stotalAssetsNote, ssetTotalAssetsNote] = useState("");
+    const totalAssets = secondTotalNonCurrent + secondTotalCurrent;
+     const totalAssetsDate2 =    secondTotalNonCurrentDate2 + secondTotalCurrentDate2;
+
+    // Calculate totals for Date 2
+  
+
+    // Calculate totals for Equity
+     const [sfirtsTotalShareholdersEquityNote, ssetfirtsTotalShareholdersEquityNote] =   useState("");
+    const firstTotalEquity = sumStringValues(equityItemsAr);
+    const firstTotalEquityDate2 = sumStringValues(equityItemsDate2Ar);
+    
+    const [stotalShareholdersEquityNote, setTotalShareholdersEquityNote] = useState(  "" );
+    const totalEquity = firstTotalEquity + sumStringValues(equitySubItemsAr);
+    const totalEquityDate2 =   firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2Ar);
+
+
+
+    // Calculate totals for Non-Current Liabilities
+    const [sfirtsTotalNoncurrentLiabilitiesNote, ssetfirtsNoncurrentLiabilitiesNote] =   useState("");
+    const firstTotalNonCurrentLiabilities = sumStringValues(   nonCurrentLiabilitiesAr );
+    const firstTotalNonCurrentLiabilitiesDate2 = sumStringValues(    nonCurrentLiabilitiesDate2Ar   );
+    
+    const [stotalNoncurrentliabilitiesNote, setTotalNoncurrentliabilitiesNote] =   useState("");
+    const totalNonCurrentLiabilities =    firstTotalNonCurrentLiabilities +   sumStringValues(nonCurrentSubLiabilitiesAr);
+    const totalNonCurrentLiabilitiesDate2 =  firstTotalNonCurrentLiabilitiesDate2 + sumStringValues(nonCurrentSubLiabilitiesDate2Ar);
+
+
+    // Calculate totals for Current Liabilities
+     const [sfirtsTotalcurrentLiabilitiesNote, ssetfirtscurrentLiabilitiesNote] =    useState("");
+    const firstTotalCurrentLiabilities = sumStringValues(currentLiabilitiesAr);
+    const firstTotalCurrentLiabilitiesDate2 = sumStringValues(   currentLiabilitiesDate2Ar );
+    
+     const [stotalcurrentliabilitiesNote, setTotalcurrentliabilitiesNote] = useState( ""  );
+    const totalCurrentLiabilities =  firstTotalCurrentLiabilities + sumStringValues(currentSubLiabilitiesAr);
+    const totalCurrentLiabilitiesDate2 =  firstTotalCurrentLiabilitiesDate2 +   sumStringValues(currentSubLiabilitiesDate2Ar);
+
+
+
+    // Calculate Total Liabilities
+     const [stotalliabilitiesNote, setTotalliabilitiesNote] =    useState("");
+    const totalLiabilities =  totalNonCurrentLiabilities + totalCurrentLiabilities;
+    const totalLiabilitiesDate2 =   totalNonCurrentLiabilitiesDate2 + totalCurrentLiabilitiesDate2;
+
+    // Calculate Total Shareholder's Equity and Liabilities
+       const [stotalEquityAndLiabilitiesNote, settotalEquityAndLiabilitiesNote] = useState(  ""   );
+    const totalEquityAndLiabilities = totalEquity + totalLiabilities;
+    const totalEquityAndLiabilitiesDate2 =  totalEquityDate2 + totalLiabilitiesDate2;
+
+
+
 
     // Updated handleChange function to work with string values
     const handleChange = (
@@ -288,154 +363,8 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
       }
     };
 
-    // Helper function to safely parse numeric values from strings
-    const parseNumericValue = (value: string): number => {
-      if (!value || value.trim() === "-" || value.trim() === "") return 0;
+   
 
-      const isNegative =
-        value.trim().startsWith("(") && value.trim().endsWith(")");
-      const cleaned = value.replace(/[(),]/g, ""); // Remove (, ), and ,
-      const numValue = parseFloat(cleaned);
-
-      if (isNaN(numValue)) return 0;
-      return isNegative ? -numValue : numValue;
-    };
-
-    const sumStringValues = (values: string[]): number => {
-      return values.reduce((sum, val) => sum + parseNumericValue(val), 0);
-    };
-    const formatWithParentheses = (value: number): string => {
-      const formatted = new Intl.NumberFormat("en-US").format(Math.abs(value));
-      return value < 0 ? `(${formatted})` : formatted;
-    };
-
-    // Calculate totals for Assets
-    const firstTotalNonCurrent = sumStringValues(nonCurrentAssetsAr);
-    const secondTotalNonCurrent =
-      firstTotalNonCurrent + sumStringValues(nonCurrentSubAssetsAr);
-    const firstTotalCurrent = sumStringValues(currentAssetsAr);
-    const secondTotalCurrent =
-      firstTotalCurrent + sumStringValues(currentSubAssetsAr);
-    const totalAssets = secondTotalNonCurrent + secondTotalCurrent;
-
-    // Calculate totals for Date 2
-    const firstTotalNonCurrentDate2 = sumStringValues(nonCurrentAssetsDate2Ar);
-
-    const secondTotalNonCurrentDate2 =
-      firstTotalNonCurrentDate2 + sumStringValues(nonCurrentSubAssetsDate2Ar);
-    const firstTotalCurrentDate2 = sumStringValues(currentAssetsDate2Ar);
-    const secondTotalCurrentDate2 =
-      firstTotalCurrentDate2 + sumStringValues(currentSubAssetsDate2Ar);
-    const totalAssetsDate2 =
-      secondTotalNonCurrentDate2 + secondTotalCurrentDate2;
-
-    // Calculate totals for Equity
-    const firstTotalEquity = sumStringValues(equityItemsAr);
-    const totalEquity = firstTotalEquity + sumStringValues(equitySubItemsAr);
-
-    const firstTotalEquityDate2 = sumStringValues(equityItemsDate2Ar);
-    const totalEquityDate2 =
-      firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2Ar);
-
-    // Calculate totals for Non-Current Liabilities
-    const firstTotalNonCurrentLiabilities = sumStringValues(
-      nonCurrentLiabilitiesAr
-    );
-    const totalNonCurrentLiabilities =
-      firstTotalNonCurrentLiabilities +
-      sumStringValues(nonCurrentSubLiabilitiesAr);
-
-    const firstTotalNonCurrentLiabilitiesDate2 = sumStringValues(
-      nonCurrentLiabilitiesDate2Ar
-    );
-    const totalNonCurrentLiabilitiesDate2 =
-      firstTotalNonCurrentLiabilitiesDate2 +
-      sumStringValues(nonCurrentSubLiabilitiesDate2Ar);
-
-    // Calculate totals for Current Liabilities
-    const firstTotalCurrentLiabilities = sumStringValues(currentLiabilitiesAr);
-    const totalCurrentLiabilities =
-      firstTotalCurrentLiabilities + sumStringValues(currentSubLiabilitiesAr);
-
-    const firstTotalCurrentLiabilitiesDate2 = sumStringValues(
-      currentLiabilitiesDate2Ar
-    );
-    const totalCurrentLiabilitiesDate2 =
-      firstTotalCurrentLiabilitiesDate2 +
-      sumStringValues(currentSubLiabilitiesDate2Ar);
-
-    // Calculate Total Liabilities
-    const totalLiabilities =
-      totalNonCurrentLiabilities + totalCurrentLiabilities;
-    const totalLiabilitiesDate2 =
-      totalNonCurrentLiabilitiesDate2 + totalCurrentLiabilitiesDate2;
-
-    // Calculate Total Shareholder's Equity and Liabilities
-    const totalEquityAndLiabilities = totalEquity + totalLiabilities;
-    const totalEquityAndLiabilitiesDate2 =
-      totalEquityDate2 + totalLiabilitiesDate2;
-
-    const [data1En, setDate1En] = useState<Date | null>(null);
-    // const [date, setDate] = useState< null|string>(null);
-    const [data2En, setDate2En] = useState<Date | null>(null);
-
-    const [date1Rl, setDate1Rl] = useState("'000");
-    const [date2Rl, setDate2Rl] = useState("'000");
-
-    const [date1, setDate1] = useState("(Unaudited)");
-    const [date2, setDate2] = useState("(Audited)");
-
-    const [sassets, setAssets] = useState("ASSETS");
-    const [snonCurrentAssets, ssetnonCurrentAssets] =
-      useState("Non-current assets");
-    const [sfirtsTotalnonCurrentAssets, ssetfirtsTotalnonCurrentAssets] =
-      useState("");
-    const [stotalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(
-      "Total non-current assets"
-    );
-    const [scurrentAssets, ssetCurrentAssets] = useState("Current assets");
-    const [sfirtsTotalCurrentAssets, ssetfirtsTotalCurrentAssets] =
-      useState("");
-    const [stotalCurrentAssets, ssetTotalCurrentAssets] = useState(
-      "Total current assets"
-    );
-    const [stotalAssets, ssetTotalAssets] = useState("TOTAL ASSETS");
-
-    const [
-      sShareholdersEquityandliabilitiess,
-      setShareholdersEquityandliabilities,
-    ] = useState("EQUITY AND LIABILITIES");
-    const [sShareholdersEquity, setShareholdersEquity] = useState(
-      "Equity"
-    );
-    const [sfirtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =
-      useState("");
-    const [stotalShareholdersEquity, setTotalShareholdersEquity] = useState(
-      "Total equity"
-    );
-
-    const [sliabilities, setLiabilities] = useState("Liabilities");
-    const [sNoncurrentliabilities, setNoncurrentliabilities] = useState(
-      "Non-current liabilities"
-    );
-    const [sfirtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] =
-      useState("");
-    const [stotalNoncurrentliabilities, setTotalNoncurrentliabilities] =
-      useState("Total non-current liabilities");
-
-    const [scurrentliabilities, setcurrentliabilities] = useState(
-      "Current liabilities"
-    );
-    const [sfirtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] =
-      useState("");
-    const [stotalcurrentliabilities, setTotalcurrentliabilities] = useState(
-      "Total current liabilities"
-    );
-    const [stotalliabilities, setTotalliabilities] =
-      useState("Total liabilities");
-    const [stotalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(
-      "TOTAL EQUITY AND LIABILITIES"
-    );
 
     useEffect(() => {
       try {
@@ -450,19 +379,24 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
       currentLabelsAr,
       equityLabelsAr,
       equitySubLabelsAr,
+      stotalNonCurrentAssetsNote,
       currentLiabilitiesLabelsAr,
       currentSubLiabilitiesLabelsAr,
       nonCurrentLiabilitiesLabelsAr,
       nonCurrentSubLiabilitiesLabelsAr,
-
+       sfirtsTotalCurrentAssetsNote,
+       stotalCurrentAssetsNote,
       sassets,
       snonCurrentAssets,
+    stotalShareholdersEquityNote,
       sfirtsTotalnonCurrentAssets,
+      sfirtsTotalnonCurrentNote,
       stotalNonCurrentAssets,
       scurrentAssets,
       sfirtsTotalCurrentAssets,
       stotalCurrentAssets,
       stotalAssets,
+      stotalAssetsNote,
       sShareholdersEquityandliabilitiess,
       sShareholdersEquity,
       sfirtsTotalShareholdersEquity,
@@ -496,6 +430,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
       equityItemsAr,
       equitySubItemsAr,
       equityItemsDate2Ar,
+      sfirtsTotalShareholdersEquityNote,
       equitySubItemsDate2Ar,
       equityItemsNotes,
 
@@ -503,6 +438,8 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
       nonCurrentLiabilitiesAr,
       nonCurrentLiabilitiesNotes,
       nonCurrentSubLiabilitiesAr,
+      sfirtsTotalNoncurrentLiabilitiesNote,
+      stotalNoncurrentliabilitiesNote,
       nonCurrentLiabilitiesDate2Ar,
       nonCurrentSubLiabilitiesDate2Ar,
 
@@ -510,8 +447,13 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
       currentLiabilitiesAr,
       currentLiabilitiesNotes,
       currentSubLiabilitiesAr,
+      sfirtsTotalcurrentLiabilitiesNote,
+      stotalcurrentliabilitiesNote,
       currentLiabilitiesDate2Ar,
       currentSubLiabilitiesDate2Ar,
+
+      stotalEquityAndLiabilitiesNote,
+      dispatch
     ]);
 
     const prepareAndDispatchData = async () => {
@@ -529,8 +471,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             subItems: nonCurrentSubAssetsAr,
             subItemsDate2: nonCurrentSubAssetsDate2Ar,
             sfirtsTotalnonCurrentAssets: sfirtsTotalnonCurrentAssets,
+            sfirtsTotalnonCurrentNote,
             firstTotal: firstTotalNonCurrent,
             firstTotalDate2: firstTotalNonCurrentDate2,
+            stotalNonCurrentAssetsNote,
             secondTotal: secondTotalNonCurrent,
             secondTotalDate2: secondTotalNonCurrentDate2,
             stotalNonCurrentAssets: stotalNonCurrentAssets,
@@ -541,18 +485,20 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             items: currentAssetsAr,
             itemsDate2: currentAssetsDate2Ar,
             CurrentAssetsNotes: CurrentAssetsNotes,
-
             currentSubLabelsAr: currentSubLabelsAr,
             subItems: currentSubAssetsAr,
             subItemsDate2: currentSubAssetsDate2Ar,
             sfirtsTotalCurrentAssets: sfirtsTotalCurrentAssets,
+            sfirtsTotalCurrentAssetsNote,
             firstTotal: firstTotalCurrent,
             firstTotalDate2: firstTotalCurrentDate2,
             stotalCurrentAssets: stotalCurrentAssets,
+            stotalCurrentAssetsNote,
             secondTotal: secondTotalCurrent,
             secondTotalDate2: secondTotalCurrentDate2,
           },
           stotalAssets: stotalAssets,
+          stotalAssetsNote,
           totalAssets,
           totalAssetsDate2,
         },
@@ -563,14 +509,15 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
           equityItemsNotes: equityItemsNotes,
           items: equityItemsAr,
           itemsDate2: equityItemsDate2Ar,
-
           equitySubLabelsAr: equitySubLabelsAr,
           subItems: equitySubItemsAr,
           subItemsDate2: equitySubItemsDate2Ar,
           sfirtsTotalShareholdersEquity: sfirtsTotalShareholdersEquity,
+          sfirtsTotalShareholdersEquityNote, 
           firstTotal: firstTotalEquity,
           firstTotalDate2: firstTotalEquityDate2,
           stotalShareholdersEquity: stotalShareholdersEquity,
+          stotalShareholdersEquityNote,
           totalEquity,
           totalEquityDate2,
         },
@@ -582,14 +529,15 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             nonCurrentLiabilitiesNotes: nonCurrentLiabilitiesNotes,
             items: nonCurrentLiabilitiesAr,
             itemsDate2: nonCurrentLiabilitiesDate2Ar,
-
             nonCurrentSubLiabilitiesLabelsAr: nonCurrentSubLiabilitiesLabelsAr,
             subItems: nonCurrentSubLiabilitiesAr,
             subItemsDate2: nonCurrentSubLiabilitiesDate2Ar,
             sfirtsTotalNoncurrentLiabilities: sfirtsTotalNoncurrentLiabilities,
+            sfirtsTotalNoncurrentLiabilitiesNote,
             firstTotal: firstTotalNonCurrentLiabilities,
             firstTotalDate2: firstTotalNonCurrentLiabilitiesDate2,
             stotalNoncurrentliabilities: stotalNoncurrentliabilities,
+            stotalNoncurrentliabilitiesNote,
             total: totalNonCurrentLiabilities,
             totalDate2: totalNonCurrentLiabilitiesDate2,
           },
@@ -600,6 +548,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             items: currentLiabilitiesAr,
             itemsDate2: currentLiabilitiesDate2Ar,
             sfirtsTotalcurrentLiabilities: sfirtsTotalcurrentLiabilities,
+            sfirtsTotalcurrentLiabilitiesNote,
             firstTotal: firstTotalCurrentLiabilities,
             firstTotalDate2: firstTotalCurrentLiabilitiesDate2,
 
@@ -609,14 +558,17 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
             subItems: currentSubLiabilitiesAr,
             subItemsDate2: currentSubLiabilitiesDate2Ar,
             stotalcurrentliabilities: stotalcurrentliabilities,
+            stotalcurrentliabilitiesNote,
             total: totalCurrentLiabilities,
             totalDate2: totalCurrentLiabilitiesDate2,
           },
           stotalliabilities: stotalliabilities,
+          stotalliabilitiesNote,
           totalLiabilities,
           totalLiabilitiesDate2,
         },
         stotalEquityAndLiabilities: stotalEquityAndLiabilities,
+        stotalEquityAndLiabilitiesNote,
         ItotalEquityAndLiabilities: totalEquityAndLiabilities,
         ItotalEquityAndLiabilitiesDate2: totalEquityAndLiabilitiesDate2,
         data1En: data1En,
@@ -723,8 +675,8 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
         <table className="border  font-semibold border-gray-300 text-xs mb-12  w-full">
           <thead>
             <tr className="bg-gray-100">
-              <th className="border border-gray-100 w-96"></th>
-              <th className="border border-gray-100 w-16">Notes</th>
+              <th className="border  border-gray-100 w-96"></th>
+              <th className="border  border-gray-100 w-16">Notes</th>
               <th className="border  border-gray-100 p-1 w-28   ">
                 <input
                   type="date"
@@ -839,7 +791,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 <tr key={`non-current-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
                     <input
-                      className="w-full h-7   bg-gray-100 text-black p-1"
+                      className="w-full h-7  bg-gray-100 text-black p-1"
                       value={nonCurrentLabelsAr[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
@@ -852,10 +804,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                       }
                     />
                   </td>
-                  <td className="border border-gray-300">
+                  <td className="border  border-gray-300">
                     <td className="border ">
                       <input
-                        className="w-full  bg-gray-100 text-black p-1"
+                        className=" text-center w-full   bg-gray-100 text-black p-1"
                         value={nonCurrentNotes[idx]}
                         onChange={(e) =>
                           handleChange(
@@ -1049,7 +1001,13 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border  text-center border-gray-300"> <input
+                  value={sfirtsTotalnonCurrentNote}
+                  onChange={(e) =>
+                    ssetfirtsTotalnonCurrentAssetsNote(e.target.value)
+                  }
+                  className=" bg-gray-200 text-center text-black p-1"
+                /></td>
               <td className="border  border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrent)}
               </td>
@@ -1236,11 +1194,8 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                         const finalValue = isNegative
                           ? `(${formatted})`
                           : formatted;
-
-                        // Update the value in the parent component
                         handleChange(idx, finalValue, "nonCurrentSub", "date2");
-
-                        // Optional: Restore caret position after formatting
+                      
                         setTimeout(() => {
                           const newLength = finalValue.length;
                           const offset = newLength - inputValue.length;
@@ -1261,11 +1216,17 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   
                   value={stotalNonCurrentAssets}
                   onChange={(e) => ssetTotalNonCurrentAssets(e.target.value)}
-                  className=" text-start p-0.5 w-full bg-gray-200  fext-row"
+                  className=" text-start p-1 w-full bg-gray-200  fext-row"
                 />
               </td>
 
-              <td className="border border-gray-300 bg-gray-200 p-1"></td>
+              <td className="border border-gray-300 bg-gray-200 "> <input
+                  placeholder=""
+                  
+                  value={stotalNonCurrentAssetsNote}
+                  onChange={(e) => ssetTotalNonCurrentAssetsNote(e.target.value)}
+                  className=" text-center w-full p-1  bg-gray-200  "
+                /></td>
 
               <td className="border border-gray-300 bg-gray-200 p-1 text-start">
                 {secondTotalNonCurrent !== 0 &&
@@ -1318,7 +1279,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <td className="border border-gray-300">
                     <input
                       type="text"
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center bg-gray-100 text-black p-1"
                       value={CurrentAssetsNotes[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1507,7 +1468,11 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  value={sfirtsTotalCurrentAssetsNote}
+                  onChange={(e) => ssetfirtsTotalCurrentAssetsNote(e.target.value)}
+                  className=" text-center   bg-gray-200 text-black w-full p-1 "
+                /></td>
 
               <td className="border border-gray-300">
                 {formatWithParentheses(firstTotalCurrent)}
@@ -1687,7 +1652,13 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className=" text-start p-0.5   bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={stotalCurrentAssetsNote}
+                  
+                  onChange={(e) => ssetTotalCurrentAssetsNote(e.target.value)}
+                  className="text-center w-full p-1  bg-gray-200 "
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(secondTotalCurrent)}
               </td>
@@ -1706,7 +1677,13 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className=" text-start p-1  bg-gray-400 fext-row"
                 />{" "}
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  placeholder=""
+                  
+                  value={stotalAssetsNote}
+                  onChange={(e) => ssetTotalAssetsNote(e.target.value)}
+                  className=" text-center p-1  bg-gray-400 fext-row"
+                />{" "}</td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalAssets)}
               </td>
@@ -1769,7 +1746,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   <td className="border border-gray-300">
                     <input
                       type="text"
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="text-center bg-gray-100 text-black p-1"
                       value={equityItemsNotes[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1925,7 +1902,13 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 }
                 className="w-full bg-gray-200 text-black p-1"
               />
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                value={sfirtsTotalShareholdersEquityNote}
+                onChange={(e) =>
+                  ssetfirtsTotalShareholdersEquityNote(e.target.value)
+                }
+                className="text-center bg-gray-200 text-black p-1"
+              /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(firstTotalEquity)}
               </td>
@@ -2107,7 +2090,12 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className=" text-start w-full bg-gray-300 p-0.5 "
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={stotalShareholdersEquityNote}
+                  onChange={(e) => setTotalShareholdersEquityNote(e.target.value)}
+                  className=" text-center w-full p-1  bg-gray-300 "
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalEquity)}
               </td>
@@ -2162,7 +2150,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="text-center bg-gray-100 text-black p-1"
                       value={nonCurrentLiabilitiesNotes[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -2240,7 +2228,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                       }}
                     />
                   </td>
-
+ 
                   <td className="border border-gray-300">
                     <input
                       className="w-full bg-gray-100 text-black p-1"
@@ -2340,7 +2328,13 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className="w-full bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  value={sfirtsTotalNoncurrentLiabilitiesNote}
+                  onChange={(e) =>
+                    ssetfirtsNoncurrentLiabilitiesNote(e.target.value)
+                  }
+                  className="w-full text-center bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrentLiabilities)}
               </td>
@@ -2549,7 +2543,14 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className=" text-start w-full   bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={stotalNoncurrentliabilitiesNote}
+                  onChange={(e) =>
+                    setTotalNoncurrentliabilitiesNote(e.target.value)
+                  }
+                  className="text-center w-full p-1   bg-gray-200 "
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalNonCurrentLiabilities)}
               </td>
@@ -2593,7 +2594,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center bg-gray-100 text-black p-1"
                       value={currentLiabilitiesNotes[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -2758,7 +2759,12 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className="w-full bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border  border-gray-300">  <input
+                     value={`${sfirtsTotalcurrentLiabilitiesNote   }`}
+
+                  onChange={(e) => ssetfirtscurrentLiabilitiesNote(e.target.value)}
+                  className="w-full text-center bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(firstTotalCurrentLiabilities)}
               </td>
@@ -2961,7 +2967,11 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  value={stotalcurrentliabilitiesNote}
+                  onChange={(e) => setTotalcurrentliabilitiesNote(e.target.value)}
+                  className="w-full text-center bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalCurrentLiabilities)}
               </td>
@@ -2981,7 +2991,13 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={stotalliabilitiesNote}
+                  onChange={(e) => setTotalliabilitiesNote(e.target.value)}
+                  className=" text-center w-full p-1    bg-gray-300 "
+                  type="text"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalLiabilities)}
               </td>
@@ -2999,7 +3015,13 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  placeholder=""
+                  value={stotalEquityAndLiabilitiesNote}
+                  onChange={(e) => settotalEquityAndLiabilitiesNote(e.target.value)}
+                  className=" text-center w-full p-1    bg-gray-400 "
+                  type="text"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalEquityAndLiabilities)}
               </td>

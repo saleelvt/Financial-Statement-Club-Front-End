@@ -13,7 +13,7 @@ const Loading = lazy(() => import("../Loading"));
 import { Error } from "../Error";
 import { commonRequest } from "../../../config/api";
 import { config } from "../../../config/constants";
-import "../../../css/YearSlider.css";
+import "../../../css/YearSlider.css"; 
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";

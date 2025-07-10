@@ -100,23 +100,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 {table.sectionOne.sectionOneFirstLabelEn &&
                   table.sectionOne.sectionOneFirstLabelEn.trim() !== "" && (
                     <tr className="bg-gray-300 px-1   font-semibold">

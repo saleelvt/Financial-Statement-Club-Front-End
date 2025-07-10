@@ -825,7 +825,7 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-gray-400  text-sm font-semibold font-semibold">
+            <tr className="bg-gray-400   text-sm font-semibold font-semibold">
               <td colSpan={4} className="p-1">
                 <input
                   placeholder=""
@@ -913,13 +913,11 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
               <td className="">
                 <input
                   value={firtsTotalnonCurrentAssets}
-                  onChange={(e) =>
-                    ssetfirtsTotalnonCurrentAssets(e.target.value)
-                  }
+                  onChange={(e) =>  ssetfirtsTotalnonCurrentAssets(e.target.value)}
                   className="w-full   bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300">                <input
+              <td className="border border-gray-300"> <input
                   value={sfirtsTotalnonCurrentNote}
                   onChange={(e) =>
                     ssetfirtsTotalnonCurrentAssetsNote(e.target.value)
@@ -1001,10 +999,8 @@ const BalaceSheetFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
                 />
               </td>
 
-              <td className="border bg-gray-200  border-gray-300"> <input
-             
+              <td className="border bg-gray-200  border-gray-300"> <input          
                   value={stotalNonCurrentAssetsNote}
-                  
                   onChange={(e) => ssetTotalNonCurrentAssetsNote(e.target.value)}
                   className=" text-center w-full p-1  bg-gray-200 "
                 /></td>

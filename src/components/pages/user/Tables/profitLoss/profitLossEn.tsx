@@ -150,7 +150,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className="">
                         {table.sectionOne.sectionOneTotalLabel}
                       </td>
-                      <td className="border   border-gray-300"></td>
+                      <td className="border  text-center  border-gray-300"> {table.sectionOne.sectionOsectionOneTotalNoteneTotalLabel}</td>
                       <td className="border  px-1 text-right  border-gray-300">
                         {formatValue(table.sectionOne.TotalsectionOneItemsEn)}
                       </td>
@@ -205,7 +205,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className="px-1">
                         {table.sectionTwo.sectionTwoTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300"> {table.sectionTwo.sectionTwoTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionTwo.TotalsectionTwoItemsEn)}
                       </td>
@@ -260,7 +260,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className=" p-1">
                         {table.sectionThree.sectionThreeTotalLabel} 
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border border-gray-300">{table.sectionThree.sectionThreeTotalNote} </td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(
                           table.sectionThree.TotalsectionThreeItemsEn
@@ -316,7 +316,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className="p-1">
                         {table.sectionFour.sectionFourTotalLabel}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border border-gray-300"> {table.sectionFour.sectionFourTotalNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.sectionFour.TotalsectionFourItemsEn)}
                       </td>
@@ -387,7 +387,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className="">
                         {table.sectionFourSub.sectionFourSubTotalLabel}
                       </td>
-                      <td className="border   border-gray-300"></td>
+                      <td className="border   border-gray-300">  {table.sectionFourSub.sectionFourSubTotalNote}</td>
                       <td className="border  px-1 text-right  border-gray-300">
                         {formatValue(
                           table.sectionFourSub.TotalsectionFourSubItemsEn
@@ -757,7 +757,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className="">
                         {table.Table2.sectionOneTable2?.sectionLastLabel}
                       </td>
-                      <td className="border   border-gray-300"></td>
+                      <td className="border   border-gray-300"> {table.Table2.sectionOneTable2?.sectionLastNote}</td>
                       <td className="border  px-1 text-right  border-gray-300">
                         {formatValue(
                           table.Table2.sectionOneTable2.TotalsectionFourSubItemsEn
@@ -846,7 +846,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className="">
                         {table.Table2.sectionOneTable2.sectionLastTotalLabelEn}
                       </td>
-                      <td className="border   border-gray-300"></td>
+                      <td className="border   border-gray-300"> {table.Table2.sectionOneTable2.sectionLastTotalNote}</td>
                       <td className="border  px-1 text-right  border-gray-300">
                         {formatValue(table.Table2.sectionOneTable2.TotalSectionLastLabelItemsEn)}
                       </td>
@@ -857,13 +857,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       </td>
                     </tr>
                   )}
-
-
-
-
 <br />
-
-
 
 
        {table.Table2.sectionTwoTable2?.sectionSevenSubheading2&&
@@ -877,17 +871,6 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className="  px-1  text-right "></td>
                     </tr>
                   )}
-
-
-
-
-
-
-
-
-
-
-
 
 
                 {table.Table2.sectionTwoTable2?.sectionLastLabelsEn2.map(
@@ -934,7 +917,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                       <td className="">
                         {table.Table2.sectionTwoTable2.sectionLastTotalLabelEn2}
                       </td>
-                      <td className="border   border-gray-300"></td>
+                      <td className="border   border-gray-300"> {table.Table2.sectionTwoTable2.sectionLastTotalNoteEn2}</td>
                       <td className="border  px-1 text-right  border-gray-300">
                         {formatValue(table.Table2.sectionTwoTable2.TotalSectionLastLabelItemsEn2)}
                       </td>
@@ -944,14 +927,14 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                         )}
                       </td>
                     </tr>
-                  )}
+                  )} 
 
  {table.Table2.sectionTwoTable2.totalComprehensiveLoss.SectionSevenLastLabel2&&  table.Table2.sectionTwoTable2.totalComprehensiveLoss.SectionSevenLastLabel2.trim() !== "" && (
                     <tr className="bg-gray-200 px-1   font-semibold">
                       <td className="">
                         {table.Table2.sectionTwoTable2.totalComprehensiveLoss.SectionSevenLastLabel2}
                       </td>
-                      <td className="border   border-gray-300"></td>
+                      <td className="border   border-gray-300">  {table.Table2.sectionTwoTable2.totalComprehensiveLoss.SectionSevenLastNote}</td>
                       <td className="border  px-1 text-right  border-gray-300">
                         {formatValue(table.Table2.sectionTwoTable2.totalComprehensiveLoss.TotalsectionSevenLastItemEn)}
                       </td>
@@ -961,7 +944,7 @@ const ProfitLossUserEnglish: React.FC<ProfitLossArProps> = React.memo(
                         )}
                       </td>
                     </tr>
-                  )}
+                  )} 
  {table.Table2.sectionTwoTable2.totalOtherComp.SectionSevenSecondLastLabel2&&  table.Table2.sectionTwoTable2.totalOtherComp.SectionSevenSecondLastLabel2.trim() !== "" && (
                     <tr className="bg-gray-200 px-1    font-semibold">
                       <td className="">

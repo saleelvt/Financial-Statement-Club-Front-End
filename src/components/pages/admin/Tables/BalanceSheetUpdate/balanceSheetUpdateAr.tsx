@@ -315,68 +315,69 @@ const BalaceSheetUpdateFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
       return value < 0 ? `(${formatted})` : formatted;
     };
 
+    
     // Calculate totals for Assets
+       const [sfirtsTotalnonCurrentNote, ssetfirtsTotalnonCurrentAssetsNote] =  useState("");
     const firstTotalNonCurrent = sumStringValues(nonCurrentAssets);
-    const secondTotalNonCurrent =
-      firstTotalNonCurrent + sumStringValues(nonCurrentSubAssets);
-    const firstTotalCurrent = sumStringValues(currentAssets);
-    const secondTotalCurrent = firstTotalCurrent + sumStringValues(currentSubAssets);
-    const LtotalAssets = secondTotalNonCurrent + secondTotalCurrent;
+      const firstTotalNonCurrentDate2 = sumStringValues(nonCurrentAssetsDate2);
 
-    // Calculate totals for Date 2
-    const firstTotalNonCurrentDate2 = sumStringValues(nonCurrentAssetsDate2);
-    const secondTotalNonCurrentDate2 =
-      firstTotalNonCurrentDate2 + sumStringValues(nonCurrentSubAssetsDate2);
-    const firstTotalCurrentDate2 = sumStringValues(currentAssetsDate2);
-    const secondTotalCurrentDate2 =
-      firstTotalCurrentDate2 + sumStringValues(currentSubAssetsDate2);
-    const totalAssetsDate2 =
-      secondTotalNonCurrentDate2 + secondTotalCurrentDate2;
 
-    // Calculate totals for Equity
+        const [stotalNonCurrentAssetsNote, ssetTotalNonCurrentAssetsNote] = useState(  "");
+        const secondTotalNonCurrent =    firstTotalNonCurrent + sumStringValues(nonCurrentSubAssets);
+       const secondTotalNonCurrentDate2 =    firstTotalNonCurrentDate2 + sumStringValues(nonCurrentSubAssetsDate2);
+
+         const [sfirtsTotalCurrentAssetsNote, ssetfirtsTotalCurrentAssetsNote] =  useState("");
+         const firstTotalCurrent = sumStringValues(currentAssets);
+         const firstTotalCurrentDate2 = sumStringValues(currentAssetsDate2);
+
+           const [stotalCurrentAssetsNote, ssetTotalCurrentAssetsNote] = useState(  "" );
+           const secondTotalCurrent =    firstTotalCurrent + sumStringValues(currentSubAssets);
+           const secondTotalCurrentDate2 =    firstTotalCurrentDate2 + sumStringValues(currentSubAssetsDate2);
+
+             const [stotalAssetsNote, ssetTotalAssetsNote] = useState("");
+             const LtotalAssets = secondTotalNonCurrent + secondTotalCurrent;
+             const totalAssetsDate2 =   secondTotalNonCurrentDate2 + secondTotalCurrentDate2;
+
+
+
+    const [sfirtsTotalShareholdersEquityNote, ssetfirtsTotalShareholdersEquityNote] =   useState("");
     const firstTotalEquity = sumStringValues(equityItems);
-    const totalEquity = firstTotalEquity + sumStringValues(equitySubItems);
-
     const firstTotalEquityDate2 = sumStringValues(equityItemsDate2);
-    const totalEquityDate2 =
-      firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2);
 
-    // Calculate totals for Non-Current Liabilities
-    const firstTotalNonCurrentLiabilities = sumStringValues(
-      nonCurrentLiabilities
-    );
-    const totalNonCurrentLiabilities =
-      firstTotalNonCurrentLiabilities +
-      sumStringValues(nonCurrentSubLiabilities);
 
-    const firstTotalNonCurrentLiabilitiesDate2 = sumStringValues(
-      nonCurrentLiabilitiesDate2
-    );
-    const totalNonCurrentLiabilitiesDate2 =
-      firstTotalNonCurrentLiabilitiesDate2 +
-      sumStringValues(nonCurrentSubLiabilitiesDate2);
+         const [stotalShareholdersEquityNote, setTotalShareholdersEquityNote] = useState(  "" );
+    const totalEquity = firstTotalEquity + sumStringValues(equitySubItems);
+    const totalEquityDate2 = firstTotalEquityDate2 + sumStringValues(equitySubItemsDate2);
+
+
+      const [sfirtsTotalNoncurrentLiabilitiesNote, ssetfirtsNoncurrentLiabilitiesNote] =   useState("");
+      const firstTotalNonCurrentLiabilities = sumStringValues(     nonCurrentLiabilities   );
+      const firstTotalNonCurrentLiabilitiesDate2 = sumStringValues(   nonCurrentLiabilitiesDate2   );
+
+   
+          const [stotalNoncurrentliabilitiesNote, setTotalNoncurrentliabilitiesNote] =   useState("");
+    const totalNonCurrentLiabilities =    firstTotalNonCurrentLiabilities +    sumStringValues(nonCurrentSubLiabilities);
+    const totalNonCurrentLiabilitiesDate2 =    firstTotalNonCurrentLiabilitiesDate2 +     sumStringValues(nonCurrentSubLiabilitiesDate2);
+
 
     // Calculate totals for Current Liabilities
+      const [sfirtsTotalcurrentLiabilitiesNote, ssetfirtscurrentLiabilitiesNote] =    useState("");
     const firstTotalCurrentLiabilities = sumStringValues(currentLiabilities);
-    const totalCurrentLiabilities =
-      firstTotalCurrentLiabilities + sumStringValues(currentSubLiabilities);
-
-    const firstTotalCurrentLiabilitiesDate2 = sumStringValues(
-      currentLiabilitiesDate2
-    );
-    const totalCurrentLiabilitiesDate2 =
-      firstTotalCurrentLiabilitiesDate2 +
-      sumStringValues(currentSubLiabilitiesDate2);
+    const firstTotalCurrentLiabilitiesDate2 = sumStringValues(    currentLiabilitiesDate2  );
+    
+        const [stotalcurrentliabilitiesNote, setTotalcurrentliabilitiesNote] = useState( ""  );
+    const totalCurrentLiabilities =    firstTotalCurrentLiabilities + sumStringValues(currentSubLiabilities);
+    const totalCurrentLiabilitiesDate2 =    firstTotalCurrentLiabilitiesDate2 +     sumStringValues(currentSubLiabilitiesDate2);
 
     // Calculate Total Liabilities
-    const totalLiabilities =
-      totalNonCurrentLiabilities + totalCurrentLiabilities;
-    const totalLiabilitiesDate2 =
-      totalNonCurrentLiabilitiesDate2 + totalCurrentLiabilitiesDate2;
+         const [stotalliabilitiesNote, setTotalliabilitiesNote] =    useState("");
+    const totalLiabilities =   totalNonCurrentLiabilities + totalCurrentLiabilities;
+    const totalLiabilitiesDate2 =    totalNonCurrentLiabilitiesDate2 + totalCurrentLiabilitiesDate2;
 
     // Calculate Total Shareholder's Equity and Liabilities
+      const [stotalEquityAndLiabilitiesNote, settotalEquityAndLiabilitiesNote] = useState(  ""   );
     const LtotalEquityAndLiabilities = totalEquity + totalLiabilities;
-    const totalEquityAndLiabilitiesDate2 =    totalEquityDate2 + totalLiabilitiesDate2;
+    const totalEquityAndLiabilitiesDate2 =   totalEquityDate2 + totalLiabilitiesDate2;
 
     // const hasNonEmptyNonCurrentSubAssets = nonCurrentSubAssets.some(
     //   (val, idx) => val || nonCurrentSubAssetsDate2[idx]
@@ -403,53 +404,38 @@ const BalaceSheetUpdateFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
     const [date1Rl, setDate1Rl] = useState("'000");
     const [date2Rl, setDate2Rl] = useState("'000");
 
-    const [assets, setAssets] = useState("الأصول");
-    const [lnonCurrentAssets, ssetnonCurrentAssets] = useState( "الأصول غير المتداولة"
+    const [assets, setAssets] = useState("");
+    const [lnonCurrentAssets, ssetnonCurrentAssets] = useState( ""
     );
     const [firtsTotalnonCurrentAssets, ssetfirtsTotalnonCurrentAssets] =
       useState("");
-    const [totalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState(
-      "إجمالي الأصول غير المتداولة"
-    );
+    const [totalNonCurrentAssets, ssetTotalNonCurrentAssets] = useState( "");
 
-    const [lcurrentAssets, ssetCurrentAssets] = useState("الأصول المتداولة");
+    const [lcurrentAssets, ssetCurrentAssets] = useState("");
     const [firtsTotalCurrentAssets, ssetfirtsTotalCurrentAssets] =
       useState("");
-    const [totalCurrentAssets, ssetTotalCurrentAssets] = useState(
-      "إجمالي الأصول المتداولة"
-    );
-    const [totalAssets, ssetTotalAssets] = useState("إجمالي الأصول");
+    const [totalCurrentAssets, ssetTotalCurrentAssets] = useState(   "");
+    const [totalAssets, ssetTotalAssets] = useState("");
 
-    const [   ShareholdersEquityandliabilitiess,  setShareholdersEquityandliabilities, ]  = useState(" حقوق المساهمين والمطلوبات");
-    const [ShareholdersEquity, setShareholdersEquity] = useState("حقوق المساهمين");
-    const [firtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =
-      useState("");
-    const [totalShareholdersEquity, setTotalShareholdersEquity] = useState(
-      "إجمالي حقوق المساهمين"
-    );
+    const [   ShareholdersEquityandliabilitiess,  setShareholdersEquityandliabilities, ]  = useState("");
+    const [ShareholdersEquity, setShareholdersEquity] = useState("");
+    const [firtsTotalShareholdersEquity, ssetfirtsTotalShareholdersEquity] =  useState("");
+    const [totalShareholdersEquity, setTotalShareholdersEquity] = useState(  "" );
 
-    const [liabilities, setLiabilities] = useState("المطلوبات");
-    const [Noncurrentliabilities, setNoncurrentliabilities] = useState(
-      "المطلوبات غير المتداولة"
-    );
-    const [firtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] =
-      useState("");
-    const [totalNoncurrentliabilities, setTotalNoncurrentliabilities] =
-      useState("إجمالي المطلوبات غير المتداولة");
+    const [liabilities, setLiabilities] = useState("");
+    const [Noncurrentliabilities, setNoncurrentliabilities] = useState( "" );
+    const [firtsTotalNoncurrentLiabilities, ssetfirtsNoncurrentLiabilities] = useState("");
+    const [totalNoncurrentliabilities, setTotalNoncurrentliabilities] =useState("");
 
-    const [currentliabilities, setcurrentliabilities] = useState(
-      "المطلوبات المتداولة"
-    );
-    const [firtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] =
-      useState("");
-    const [totalcurrentliabilities, setTotalcurrentliabilities] = useState(
-      "إجمالي المطلوبات المتداولة"
+    const [currentliabilities, setcurrentliabilities] = useState("");
+    const [firtsTotalcurrentLiabilities, ssetfirtscurrentLiabilities] =  useState("");
+    const [totalcurrentliabilities, setTotalcurrentliabilities] = useState(  ""
     );
     const [totalliabilities, setTotalliabilities] =
-      useState("إجمالي المطلوبات");
+      useState("");
 
     const [totalEquityAndLiabilities, settotalEquityAndLiabilities] = useState(
-      "إجمالي حقوق المساهمين والمطلوبات"
+      ""
     );
 
 
@@ -733,7 +719,7 @@ useEffect(() => {
       
       nonCurrentLabels,
       nonCurrentSubLabels,
-      
+
       currentSubLabels,
       currentLabels,
 
@@ -746,19 +732,20 @@ useEffect(() => {
       nonCurrentLiabilitiesLabels,
       nonCurrentSubLiabilitiesLabels,
 
-    assets,
-    nonCurrentAssets,
-    firtsTotalnonCurrentAssets,
-    totalNonCurrentAssets,
-    currentAssets,
-    firtsTotalCurrentAssets,
-    totalCurrentAssets,
-    totalAssets,
-    ShareholdersEquityandliabilitiess,
-    ShareholdersEquity,
-    firtsTotalShareholdersEquity,
-    totalShareholdersEquity,
-        liabilities,
+      assets,
+      nonCurrentAssets,
+      firtsTotalnonCurrentAssets,
+
+      totalNonCurrentAssets,
+      currentAssets,
+      firtsTotalCurrentAssets,
+      totalCurrentAssets,
+      totalAssets,
+      ShareholdersEquityandliabilitiess,
+      ShareholdersEquity,
+      firtsTotalShareholdersEquity,
+      totalShareholdersEquity,
+      liabilities,
       Noncurrentliabilities,
       firtsTotalNoncurrentLiabilities,
       totalNoncurrentliabilities,
@@ -803,10 +790,26 @@ useEffect(() => {
       currentSubLiabilities,
       currentLiabilitiesDate2,
       currentSubLiabilitiesDate2,
+
+
+      sfirtsTotalnonCurrentNote,
+      stotalNonCurrentAssetsNote,
+      sfirtsTotalCurrentAssetsNote,
+      stotalCurrentAssetsNote,
+      stotalAssetsNote,
+      sfirtsTotalShareholdersEquityNote,
+      stotalShareholdersEquityNote,
+      sfirtsTotalNoncurrentLiabilitiesNote,
+      stotalNoncurrentliabilitiesNote,
+      sfirtsTotalcurrentLiabilitiesNote,
+      stotalcurrentliabilitiesNote,
+      stotalliabilitiesNote,
+      stotalEquityAndLiabilitiesNote,
+      dispatch,
     ]);
 
     const prepareAndDispatchForArabicDataStore = async () => {
-      const formDataAr = { 
+      const formDataAr = {
         qassets: {
           qsassets: assets,
           qnonCurrent: {
@@ -815,14 +818,15 @@ useEffect(() => {
             qitems: nonCurrentAssets,
             qitemsDate2: nonCurrentAssetsDate2,
             qnonCurrentNotes: nonCurrentNotes,
-
-           qnonCurrentSubLabelsAr: nonCurrentSubLabels,
+            qnonCurrentSubLabelsAr: nonCurrentSubLabels,
             qsubItems: nonCurrentSubAssets,
             qsubItemsDate2: nonCurrentSubAssetsDate2,
             qsfirtsTotalnonCurrentAssets: firtsTotalnonCurrentAssets,
+            qsfirtsTotalnonCurrentNote:sfirtsTotalnonCurrentNote,
             qfirstTotal: firstTotalNonCurrent,
             qfirstTotalDate2: firstTotalNonCurrentDate2,
-           qsecondTotal: secondTotalNonCurrent,
+            qsecondTotal: secondTotalNonCurrent,
+            qstotalNonCurrentAssetsNote:stotalNonCurrentAssetsNote,
             qsecondTotalDate2: secondTotalNonCurrentDate2,
             qstotalNonCurrentAssets: totalNonCurrentAssets,
           },
@@ -831,23 +835,25 @@ useEffect(() => {
             qcurrentLabelsAr: currentLabels,
             qitems: currentAssets,
             qitemsDate2: currentAssetsDate2,
-           qCurrentAssetsNotes: CurrentAssetsNotes,
-
+            qCurrentAssetsNotes: CurrentAssetsNotes,
             qcurrentSubLabelsAr: currentSubLabels,
             qsubItems: currentSubAssets,
             qsubItemsDate2: currentSubAssetsDate2,
             qsfirtsTotalCurrentAssets: firtsTotalCurrentAssets,
+            qsfirtsTotalCurrentAssetsNote:sfirtsTotalCurrentAssetsNote,
             qfirstTotal: firstTotalCurrent,
             qfirstTotalDate2: firstTotalCurrentDate2,
-            qstotalCurrentAssets:totalCurrentAssets,
+            qstotalCurrentAssets: totalCurrentAssets,
+            qstotalCurrentAssetsNote:stotalCurrentAssetsNote,
             qsecondTotal: secondTotalCurrent,
             qsecondTotalDate2: secondTotalCurrentDate2,
           },
-          qstotalAssets:totalAssets,
-          qtotalAssets:  LtotalAssets,
-          qtotalAssetsDate2:totalAssetsDate2,
+          qstotalAssets: totalAssets,
+          qstotalAssetsNote:stotalAssetsNote,
+          qtotalAssets: LtotalAssets,
+          qtotalAssetsDate2: totalAssetsDate2,
         },
-        qShareholdersEquityandliabilitiess:ShareholdersEquityandliabilitiess,
+        qShareholdersEquityandliabilitiess: ShareholdersEquityandliabilitiess,
         qequity: {
           qsShareholdersEquity: ShareholdersEquity,
           qequityLabelsAr: equityLabels,
@@ -858,12 +864,14 @@ useEffect(() => {
           qequitySubLabelsAr: equitySubLabels,
           qsubItems: equitySubItems,
           qsubItemsDate2: equitySubItemsDate2,
-          qsfirtsTotalShareholdersEquity:firtsTotalShareholdersEquity,
+          qsfirtsTotalShareholdersEquity: firtsTotalShareholdersEquity,
+          qsfirtsTotalShareholdersEquityNote:sfirtsTotalShareholdersEquityNote,
           qfirstTotal: firstTotalEquity,
           qfirstTotalDate2: firstTotalEquityDate2,
           qstotalShareholdersEquity: totalShareholdersEquity,
-          qtotalEquity:totalEquity,
-          totalEquityDate2:totalEquityDate2,
+          qstotalShareholdersEquityNote:stotalShareholdersEquityNote,
+          qtotalEquity: totalEquity,
+          qtotalEquityDate2: totalEquityDate2,
         },
         qliabilities: {
           qliabilities: liabilities,
@@ -878,9 +886,11 @@ useEffect(() => {
             qsubItems: nonCurrentSubLiabilities,
             qsubItemsDate2: nonCurrentSubLiabilitiesDate2,
             qsfirtsTotalNoncurrentLiabilities: firtsTotalNoncurrentLiabilities,
+            qsfirtsTotalNoncurrentLiabilitiesNote:sfirtsTotalNoncurrentLiabilitiesNote,
             qfirstTotal: firstTotalNonCurrentLiabilities,
             qfirstTotalDate2: firstTotalNonCurrentLiabilitiesDate2,
             qstotalNoncurrentliabilities: totalNoncurrentliabilities,
+            qstotalNoncurrentliabilitiesNote:stotalNoncurrentliabilitiesNote,
             qtotal: totalNonCurrentLiabilities,
             qtotalDate2: totalNonCurrentLiabilitiesDate2,
           },
@@ -891,7 +901,8 @@ useEffect(() => {
             qcurrentLiabilitiesNotes: currentLiabilitiesNotes,
             qitems: currentLiabilities,
             qitemsDate2: currentLiabilitiesDate2,
-            qsfirtsTotalcurrentLiabilities:firtsTotalcurrentLiabilities,
+            qsfirtsTotalcurrentLiabilities: firtsTotalcurrentLiabilities,
+            qsfirtsTotalcurrentLiabilitiesNote:sfirtsTotalcurrentLiabilitiesNote,
             qfirstTotal: firstTotalCurrentLiabilities,
             qfirstTotalDate2: firstTotalCurrentLiabilitiesDate2,
 
@@ -899,14 +910,17 @@ useEffect(() => {
             qsubItems: currentSubLiabilities,
             qsubItemsDate2: currentSubLiabilitiesDate2,
             qstotalcurrentliabilities: totalcurrentliabilities,
+            qstotalcurrentliabilitiesNote:stotalcurrentliabilitiesNote,
             qtotal: totalCurrentLiabilities,
             qtotalDate2: totalCurrentLiabilitiesDate2,
           },
           qstotalliabilities: totalliabilities,
-          qtotalLiabilities:totalLiabilities,
-          qtotalLiabilitiesDate2:totalLiabilitiesDate2,
+          qstotalliabilitiesNote:stotalliabilitiesNote,
+          qtotalLiabilities: totalLiabilities,
+          qtotalLiabilitiesDate2: totalLiabilitiesDate2,
         },
         qstotalEquityAndLiabilities: totalEquityAndLiabilities,
+        qstotalEquityAndLiabilitiesNote:stotalEquityAndLiabilitiesNote,
         qItotalEquityAndLiabilities: LtotalEquityAndLiabilities,
         qItotalEquityAndLiabilitiesDate2: totalEquityAndLiabilitiesDate2,
         qdata1En: data1Ar,
@@ -1261,7 +1275,13 @@ const jsDate = new Date(
                   className="w-full bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+           <td className="border border-gray-300"> <input
+                  value={sfirtsTotalnonCurrentNote}
+                  onChange={(e) =>
+                    ssetfirtsTotalnonCurrentAssetsNote(e.target.value)
+                  }
+                  className="w-full   bg-gray-200 text-black p-1"
+                /></td>
               <td className="border  border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrent)}
               </td>
@@ -1334,7 +1354,11 @@ const jsDate = new Date(
                 />
               </td>
 
-              <td className="border bg-gray-200  border-gray-300"></td>
+             <td className="border bg-gray-200  border-gray-300"> <input          
+                  value={stotalNonCurrentAssetsNote}
+                  onChange={(e) => ssetTotalNonCurrentAssetsNote(e.target.value)}
+                  className=" text-center w-full p-1  bg-gray-200 "
+                /></td>
               <td className="border border-gray-300 bg-gray-200 p-1 text-start">
                 {secondTotalNonCurrent !== 0 &&
                 secondTotalNonCurrent !== undefined
@@ -1426,7 +1450,13 @@ const jsDate = new Date(
                   className="w-full bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+            <td className="border border-gray-300"> <input
+                  value={sfirtsTotalCurrentAssetsNote}
+                  onChange={(e) =>
+                    ssetfirtsTotalCurrentAssetsNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(firstTotalCurrent)}
               </td>
@@ -1494,7 +1524,13 @@ const jsDate = new Date(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border  border-gray-300"> <input
+                  value={stotalCurrentAssetsNote}
+                  onChange={(e) =>
+                    ssetTotalCurrentAssetsNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(secondTotalCurrent)}
               </td>
@@ -1514,7 +1550,13 @@ const jsDate = new Date(
                   type="text"
                 />{" "}
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300">  <input
+                  value={stotalAssetsNote}
+                  onChange={(e) =>
+                    ssetTotalAssetsNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-400 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(LtotalAssets)}
               </td>
@@ -1622,7 +1664,13 @@ const jsDate = new Date(
                   className="w-full bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300">   <input
+                  value={sfirtsTotalShareholdersEquityNote}
+                  onChange={(e) =>
+                    ssetfirtsTotalShareholdersEquityNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(firstTotalEquity)}
               </td>
@@ -1692,7 +1740,13 @@ const jsDate = new Date(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300">   <input
+                  value={stotalShareholdersEquityNote}
+                  onChange={(e) =>
+                    setTotalShareholdersEquityNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-300 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalEquity)}
               </td>
@@ -1799,7 +1853,13 @@ const jsDate = new Date(
                   className="w-full bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+ <td className="border border-gray-300">   <input
+                  value={sfirtsTotalNoncurrentLiabilitiesNote}
+                  onChange={(e) =>
+                    ssetfirtsNoncurrentLiabilitiesNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrentLiabilities)}
               </td>
@@ -1882,7 +1942,15 @@ const jsDate = new Date(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+           <td className="border border-gray-300">
+                 <input
+                  value={stotalNoncurrentliabilitiesNote}
+                  onChange={(e) =>
+                    setTotalNoncurrentliabilitiesNote(e.target.value)
+                  }
+                  className="w-full   text-center  bg-gray-200 text-black p-1"
+                />
+</td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalNonCurrentLiabilities)}
               </td>
@@ -1975,7 +2043,13 @@ const jsDate = new Date(
                   className="w-full bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  value={sfirtsTotalcurrentLiabilitiesNote}
+                  onChange={(e) =>
+                    ssetfirtscurrentLiabilitiesNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(firstTotalCurrentLiabilities)}
               </td>
@@ -2052,7 +2126,13 @@ const jsDate = new Date(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+            <td className="border border-gray-300"> <input
+                  value={stotalcurrentliabilitiesNote}
+                  onChange={(e) =>
+                    setTotalcurrentliabilitiesNote(e.target.value)
+                  }
+                  className="w-full  text-center   bg-gray-200 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalCurrentLiabilities)}
               </td>
@@ -2071,7 +2151,13 @@ const jsDate = new Date(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+             <td className="border border-gray-300"> <input
+                  value={stotalliabilitiesNote}
+                  onChange={(e) =>
+                    setTotalliabilitiesNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-300 text-black p-1"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(totalLiabilities)}
               </td>
@@ -2089,7 +2175,13 @@ const jsDate = new Date(
                   type="text"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  value={stotalEquityAndLiabilitiesNote}
+                  onChange={(e) =>
+                    settotalEquityAndLiabilitiesNote(e.target.value)
+                  }
+                  className="w-full  text-center  bg-gray-400 text-black p-1"
+                /></td>
               <td className="border border-gray-300"> 
                 {formatWithParentheses(LtotalEquityAndLiabilities)}
               </td>

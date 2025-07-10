@@ -53,6 +53,7 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionOneItemsEn, setFlowSectionOneEn] = useState<string[]>(     Array(5).fill("")   );
        const [sectionOneItemsDate2En, setFlowSectionOneDate2En] = useState<    string[]   >(Array(5).fill(""));
        const [sectionOneTotalLabel, setSectionOneTotalLabel] = useState("First Total (Gross income)");
+        const [sectionOneTotalNote, setSectionOneTotalNote] = useState(""); 
        const TotalsectionOneItemsEn = sumStringValues(sectionOneItemsEn);
        const TotalsectionOneItemsDate2En = sumStringValues(sectionOneItemsDate2En);
    
@@ -62,6 +63,7 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionTwoItemsEn, setFlowSectionTwoEn] = useState<string[]>(     Array(12).fill("")   );
        const [sectionTwoItemsDate2En, setFlowSectionTwoDate2En] = useState<    string[]  >(Array(12).fill(""));
        const [sectionTwoTotalLabel, setSectionTwoTotalLabel] = useState("Second Total (Operating loss)");
+         const [sectionTwoTotalNote, setSectionTwoTotalNote] = useState("");
        const TotalsectionTwoItemsEn =    TotalsectionOneItemsEn + sumStringValues(sectionTwoItemsEn);
        const TotalsectionTwoItemsDate2En =   TotalsectionOneItemsDate2En + sumStringValues(sectionTwoItemsDate2En);
    
@@ -71,6 +73,7 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionThreeItemsEn, setFlowSectionThreeEn] = useState<string[]>(     Array(7).fill("")   );
        const [sectionThreeItemsDate2En, setFlowSectionThreeDate2En] = useState<     string[]    >(Array(7).fill(""));
        const [sectionThreeTotalLabel, setSectionThreeTotalLabel] = useState("Third Total (Income (loss) before zakat and foreign Income)");
+        const [sectionThreeTotalNote, setSectionThreeTotalNote] = useState("");
        const TotalsectionThreeItemsEn =      TotalsectionTwoItemsEn + sumStringValues(sectionThreeItemsEn);
        const TotalsectionThreeItemsDate2En =      TotalsectionTwoItemsDate2En + sumStringValues(sectionThreeItemsDate2En);
    
@@ -81,6 +84,7 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionFourItemsEn, setFlowSectionFourEn] = useState<string[]>(      Array(5).fill("")    );
        const [sectionFourItemsDate2En, setFlowSectionFourDate2En] = useState<      string[]    >(Array(5).fill(""));
        const [sectionFourTotalLabel, setSectionFourTotalLabel] = useState("Four Total (Loss for the year from continuing operations)");
+         const [sectionFourTotalNote, setSectionFourTotalNote] = useState("");
        const TotalsectionFourItemsEn =      TotalsectionThreeItemsEn + sumStringValues(sectionFourItemsEn);
        const TotalsectionFourItemsDate2En =     TotalsectionThreeItemsDate2En + sumStringValues(sectionFourItemsDate2En);
    
@@ -90,6 +94,7 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
        const [sectionFourSubItemsEn, setFlowSectionFourSubEn] = useState<string[]>(  Array(3).fill("")    );
        const [sectionFourSubItemsDate2En, setFlowSectionFourSubDate2En] = useState<   string[]   >(Array(3).fill(""));
        const [sectionFourSubTotalLabel, setSectionFourSubTotalLabel] =  useState("Fifth Total (Loss for the year)");
+         const [sectionFourSubTotalNote, setSectionFourSubTotalNote] =  useState("");
        const TotalsectionFourSubItemsEn = TotalsectionFourItemsEn+  sumStringValues(sectionFourSubItemsEn);
        const TotalsectionFourSubItemsDate2En = TotalsectionFourItemsDate2En + sumStringValues(sectionFourSubItemsDate2En);
    
@@ -126,6 +131,7 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
    
    
          const [sectionLastLabel, setSectionLastLabel] =  useState("Fifth Total (Loss for the year)2");
+          const [sectionLastNote, setSectionLastNote] =  useState("");
          const [sectionSevenLastLabel, setSectionSevenLastLabel] =  useState("Other comprehensive income");
          const [ sectionSevenSubheading,   setSectionSevenSubheadingLabel ] = useState("Other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years:");
    
@@ -134,6 +140,7 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
          const [ sectionLastItemsEn,    setSectionLastItemsEn,   ] = useState<string[]>(Array(8).fill(""));
          const [ sectionLastItemsDate2En,   setSectionLastItemsDate2En,   ] = useState<string[]>(Array(8).fill(""));
           const [ sectionLastTotalLabelEn,  setSectionLastTotalLabelEn,  ] = useState("Total other comprehensive income (loss) that may be reclassified to profit or loss in subsequent years");
+            const [ sectionLastTotalNote,  setSectionLastTotalNote,  ] = useState("");
           const TotalSectionLastLabelItemsEn =      sumStringValues(sectionLastItemsEn);
           const TotalSectionLastItemsDate2En =  sumStringValues(sectionLastItemsDate2En);
    
@@ -147,13 +154,16 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
           const [ sectionLastItemsDate2En2,   setSectionLastItemsDate2En2 ] = useState<string[]>(Array(8).fill(""));
     
           const [ sectionLastTotalLabelEn2,  setSectionToatalLastLabelEn2 ] = useState("Total other comprehensive income (loss) not reclassified to profit or loss in subsequent years:");
+           const [ sectionLastTotalNoteEn2,  setSectionToatalLastNoteEn2 ] = useState("");
           const TotalSectionLastLabelItemsEn2 =      sumStringValues(sectionLastItemsEn2);
           const TotalSectionLastItemsDate2En2 =  sumStringValues(sectionLastItemsDate2En2);
    
           const [SectionSevenSecondLastLabel2,   setSectionSevenSecondLastLabel2 ] = useState("Total other comprehensive income");
+           const [SectionSevenSecondLastNote,   setSectionSevenSecondLastNote ] = useState("");
           const TotalsectionSevenSecondLastItemEn = TotalSectionLastLabelItemsEn+TotalSectionLastLabelItemsEn2
           const TotalsectionSevenSecondLastItemsDate2En = TotalSectionLastItemsDate2En+TotalSectionLastItemsDate2En2
           const [ SectionSevenLastLabel2,   setSectionSevenLastLabel2 ] = useState("Total comprehensive (loss) income for the year");
+           const [ SectionSevenLastNote,   setSectionSevenLastNote ] = useState("");
           const TotalsectionSevenLastItemEn =    TotalsectionFourSubItemsEn+   TotalsectionSevenSecondLastItemEn
           const TotalsectionSevenLastItemsDate2En = TotalsectionFourSubItemsDate2En+ TotalsectionSevenSecondLastItemsDate2En 
    
@@ -630,6 +640,7 @@ useEffect(() => {
           qsectionOneItemsEn: sectionOneItemsEn,
           qsectionOneItemsDate2En: sectionOneItemsDate2En,
           qsectionOneTotalLabel: sectionOneTotalLabel,
+          qsectionOneTotalNote:sectionOneTotalNote,
           qTotalsectionOneItemsEn: TotalsectionOneItemsEn,
           qTotalsectionOneItemsDate2En: TotalsectionOneItemsDate2En,
         },
@@ -639,6 +650,7 @@ useEffect(() => {
           qsectionTwoItemsEn: sectionTwoItemsEn,
           qsectionTwoItemsDate2En: sectionTwoItemsDate2En,
           qsectionTwoTotalLabel: sectionTwoTotalLabel,
+          qsectionTwoTotalNote:sectionTwoTotalNote,
           qTotalsectionTwoItemsEn: TotalsectionTwoItemsEn,
           qTotalsectionTwoItemsDate2En: TotalsectionTwoItemsDate2En,
         },
@@ -648,6 +660,7 @@ useEffect(() => {
           qsectionThreeItemsEn: sectionThreeItemsEn,
           qsectionThreeItemsDate2En: sectionThreeItemsDate2En,
           qsectionThreeTotalLabel: sectionThreeTotalLabel,
+          qsectionThreeTotalNote:sectionThreeTotalNote,
           qTotalsectionThreeItemsEn: TotalsectionThreeItemsEn,
           qTotalsectionThreeItemsDate2En: TotalsectionThreeItemsDate2En,
         },
@@ -657,6 +670,7 @@ useEffect(() => {
           qsectionFourItemsEn: sectionFourItemsEn,
           qsectionFourItemsDate2En: sectionFourItemsDate2En,
           qsectionFourTotalLabel: sectionFourTotalLabel,
+          qsectionFourTotalNote:sectionFourTotalNote,
           qTotalsectionFourItemsEn: TotalsectionFourItemsEn,
           qTotalsectionFourItemsDate2En: TotalsectionFourItemsDate2En,
         },
@@ -669,6 +683,7 @@ useEffect(() => {
           qsectionFourSubItemsEn: sectionFourSubItemsEn,
           qsectionFourSubItemsDate2En: sectionFourSubItemsDate2En,
           qsectionFourSubTotalLabel: sectionFourSubTotalLabel,
+          qsectionFourSubTotalNote:sectionFourSubTotalNote,
           qTotalsectionFourSubItemsEn: TotalsectionFourSubItemsEn,
           qTotalsectionFourSubItemsDate2En: TotalsectionFourSubItemsDate2En,
         },
@@ -703,6 +718,7 @@ useEffect(() => {
 
           qsectionOneTable2: {
             qsectionLastLabel: sectionLastLabel,
+            qsectionLastNote: sectionLastNote,
             qTotalsectionFourSubItemsEn: TotalsectionFourSubItemsEn,
             qTotalsectionFourSubItemsDate2En: TotalsectionFourSubItemsDate2En,
             qsectionSevenLastLabel: sectionSevenLastLabel,
@@ -712,6 +728,7 @@ useEffect(() => {
             qsectionLastItemsEn: sectionLastItemsEn,
             qsectionLastItemsDate2En: sectionLastItemsDate2En,
             qsectionLastTotalLabelEn: sectionLastTotalLabelEn,
+            qsectionLastTotalNote:sectionLastTotalNote,
             qTotalSectionLastLabelItemsEn: TotalSectionLastLabelItemsEn,
             qTotalSectionLastItemsDate2En: TotalSectionLastItemsDate2En,
           },
@@ -722,16 +739,19 @@ useEffect(() => {
             qsectionLastItemsEn2: sectionLastItemsEn2,
             qsectionLastItemsDate2En2: sectionLastItemsDate2En2,
             qsectionLastTotalLabelEn2: sectionLastTotalLabelEn2,
+            qsectionLastTotalNoteEn2:sectionLastTotalNoteEn2,
             qTotalSectionLastLabelItemsEn2: TotalSectionLastLabelItemsEn2,
             qTotalSectionLastItemsDate2En2: TotalSectionLastItemsDate2En2,
 
             qtotalOtherComp: {
               qSectionSevenSecondLastLabel2: SectionSevenSecondLastLabel2,
+              qSectionSevenSecondLastNote:SectionSevenSecondLastNote,
               qTotalsectionSevenSecondLastItemEn: TotalsectionSevenSecondLastItemEn,
               qTotalsectionSevenSecondLastItemsDate2En: TotalsectionSevenSecondLastItemsDate2En,
             },
             qtotalComprehensiveLoss: {
               qSectionSevenLastLabel2: SectionSevenLastLabel2,
+              qSectionSevenLastNote:SectionSevenLastNote,
               qTotalsectionSevenLastItemEn: TotalsectionSevenLastItemEn,
               qTotalsectionSevenLastItemsDate2En: TotalsectionSevenLastItemsDate2En
             },
@@ -891,6 +911,18 @@ useEffect(() => {
   sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2,
   sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2,
   sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2,
+
+  sectionOneTotalNote,
+sectionTwoTotalNote,
+sectionThreeTotalNote,
+sectionFourTotalNote,
+sectionFourSubTotalNote,
+sectionLastTotalNote,
+sectionLastTotalNoteEn2,
+SectionSevenSecondLastNote,
+SectionSevenLastNote,
+sectionLastNote,
+
 
   // dispatch function
   dispatch
@@ -1330,7 +1362,11 @@ useEffect(() => {
                   className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  value={sectionOneTotalNote}
+                  onChange={(e) => setSectionOneTotalNote(e.target.value)}
+                  className="w-full  bg-gray-200 text-black p-1"
+                /></td>
               <td className="border  border-gray-300">
                 {formatWithParentheses(TotalsectionOneItemsEn)}
               </td>
@@ -1556,7 +1592,12 @@ useEffect(() => {
                 />
               </td>
 
-              <td className="border border-gray-300 bg-gray-200 p-1"></td>
+              <td className="border border-gray-300 bg-gray-200 p-1"> <input
+                  placeholder=""
+                  value={sectionTwoTotalNote}
+                  onChange={(e) => setSectionTwoTotalNote(e.target.value)}
+                  className=" text-center w-full bg-gray-200  "
+                /></td>
 
               <td className="border border-gray-300 bg-gray-200 p-1 text-start">
                 {TotalsectionTwoItemsEn !== 0 &&
@@ -1787,7 +1828,11 @@ useEffect(() => {
                   className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"> <input
+                  value={sectionThreeTotalNote}
+                  onChange={(e) => setSectionThreeTotalNote(e.target.value)}
+                  className="w-full  bg-gray-200 text-black p-1"
+                /></td>
 
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionThreeItemsEn)}
@@ -2014,7 +2059,12 @@ useEffect(() => {
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300">  <input
+                  placeholder=""
+                  value={sectionFourTotalNote}
+                  onChange={(e) => setSectionFourTotalNote(e.target.value)}
+                  className=" text-center p-1 w-full bg-gray-200"
+                /></td>
               <td className="border border-gray-300">
                 {formatWithParentheses(TotalsectionFourItemsEn)}
               </td>
@@ -2280,7 +2330,15 @@ useEffect(() => {
                   className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
-              <td className=" "></td>
+              <td className=" "> <input
+                  value={sectionFourSubTotalNote}
+                  onChange={(e) =>
+                    setSectionFourSubTotalNote(
+                      e.target.value
+                    )
+                  }
+                  className="w-full     bg-gray-200 text-black px-1 "
+                /></td>
               <td className="p-1   ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
@@ -3240,7 +3298,15 @@ useEffect(() => {
                   className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
-              <td className=" "></td>
+              <td className=" "> <input
+                  value={sectionLastNote}
+                  onChange={(e) =>
+                    setSectionLastNote(
+                      e.target.value
+                    )
+                  }
+                  className="w-full     bg-gray-200 text-black px-1 "
+                /></td>
               <td className="p-1  ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
@@ -3483,7 +3549,15 @@ useEffect(() => {
     rows={1}
   />
 </td>
-              <td></td>
+              <td> <input
+                  value={sectionLastTotalNote}
+                  onChange={(e) =>
+                    setSectionLastTotalNote(
+                      e.target.value
+                    )
+                  }
+                  className="w-full     bg-gray-200 text-black px-1 "
+                /></td>
               <td className="p-2">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn)}
               </td>
@@ -3693,7 +3767,13 @@ useEffect(() => {
     rows={1}
   />
 </td>
-              <td></td>
+              <td> <input
+                  value={sectionLastTotalNoteEn2}
+                  onChange={(e) =>
+                    setSectionToatalLastNoteEn2(  e.target.value   )
+                  }
+                  className="w-full     bg-gray-200 text-black px-1 "
+                /></td>
               <td className="p-2">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn2)}
               </td>
@@ -3717,7 +3797,15 @@ useEffect(() => {
                   className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
-              <td className=" "></td>
+              <td className=" "> <input
+                  value={SectionSevenSecondLastNote}
+                  onChange={(e) =>
+                    setSectionSevenSecondLastNote(
+                      e.target.value
+                    )
+                  }
+                  className="w-full     bg-gray-200 text-black px-1 "
+                /></td>
               <td className="p-1  ">
                 {formatWithParentheses(
                   TotalsectionSevenSecondLastItemEn
@@ -3741,7 +3829,15 @@ useEffect(() => {
                   className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
-              <td className=" "></td>
+              <td className=" "> <input
+                  value={SectionSevenLastNote}
+                  onChange={(e) => 
+                    setSectionSevenLastNote(
+                      e.target.value
+                    )
+                  }
+                  className="w-full     bg-gray-200 text-black px-1 "
+                /></td>
               <td className="p-1  ">
                 {formatWithParentheses(
                   TotalsectionSevenLastItemEn 

@@ -156,7 +156,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                       <td className="">
                         {table.assets.nonCurrent.sfirtsTotalnonCurrentAssets}
                       </td>
-                      <td className="border   border-gray-300"></td>
+                      <td className="border  text-center border-gray-300">  {table.assets.nonCurrent.sfirtsTotalnonCurrentNote}</td>
                       <td className="border  px-1 text-right  border-gray-300">
                         {formatValue(table.assets.nonCurrent.firstTotal)}
                       </td>
@@ -207,7 +207,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                       <td className="border px-1 border-gray-300">
                         {table.assets.nonCurrent.stotalNonCurrentAssets}
                       </td>
-                      <td className="border border-gray-300 bg-gray-200 p-1"></td>
+                      <td className="border text-center border-gray-300 bg-gray-200 p-1"> {table.assets.nonCurrent.stotalNonCurrentAssetsNote}</td>
                       <td className="border    text-right border-gray-300 bg-gray-200 p-1  ">
                         {formatValue(table.assets.nonCurrent.secondTotal)}
                       </td>
@@ -269,7 +269,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                       <td className="px-1">
                         {table.assets.current.sfirtsTotalCurrentAssets}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300">  {table.assets.current.sfirtsTotalCurrentAssetsNote}</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.assets.current.firstTotal)}
                       </td>
@@ -318,7 +318,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                       <td className="p-1">
                         {table.assets.current.stotalCurrentAssets}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300"> {table.assets.current.stotalCurrentAssetsNote}</td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(table.assets.current.secondTotal)}
                       </td>
@@ -332,7 +332,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   table.assets.stotalAssets.trim() !== "" && (
                     <tr className="bg-gray-400 font-bold">
                       <td className="px-1">{table.assets.stotalAssets}</td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300">{table.assets.stotalAssetsNote}</td>
                       <td className="border p-1 text-right border-gray-300">
                         {formatValue(table.assets.totalAssets)}
                       </td>
@@ -403,7 +403,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                       <td className="border p-1 border-gray-300">
                         {table.equity.sfirtsTotalShareholdersEquity}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border border-gray-300"> {table.equity.sfirtsTotalShareholdersEquityNote}</td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(table.equity.firstTotal)}
                       </td>
@@ -454,7 +454,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                       <td className=" p-1">
                         {table.equity.stotalShareholdersEquity}
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300"> {table.equity.stotalShareholdersEquityNote}</td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(table.equity.totalEquity)}
                       </td>
@@ -523,8 +523,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                   }
                 )}
 
-                {table.liabilities.nonCurrent
-                  .sfirtsTotalNoncurrentLiabilities &&
+                {table.liabilities.nonCurrent.sfirtsTotalNoncurrentLiabilities &&
                   table.liabilities.nonCurrent.sfirtsTotalNoncurrentLiabilities.trim() !==
                     "" && (
                     <tr className="bg-gray-200 font-semibold">
@@ -534,7 +533,10 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                             .sfirtsTotalNoncurrentLiabilities
                         }
                       </td>
-                      <td className="border border-gray-300">hh</td>
+                      <td className="border text-center border-gray-300"> {
+                          table.liabilities.nonCurrent
+                            .sfirtsTotalNoncurrentLiabilitiesNote
+                        }</td>
                       <td className="border   px-1  text-right border-gray-300">
                         {formatValue(table.liabilities.nonCurrent.firstTotal)}
                       </td>
@@ -592,7 +594,10 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                             .stotalNoncurrentliabilities
                         }
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300">  {
+                          table.liabilities.nonCurrent
+                            .stotalNoncurrentliabilitiesNote
+                        }</td>
                       <td className="border  px-1    text-right border-gray-300">
                         {formatValue(table.liabilities.nonCurrent.total)}
                       </td>
@@ -659,7 +664,10 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                             .sfirtsTotalcurrentLiabilities
                         }
                       </td>
-                      <td className="border border-gray-300"></td>
+                      <td className="border text-center border-gray-300"> {
+                          table.liabilities.current
+                            .sfirtsTotalcurrentLiabilitiesNote
+                        }</td>
                       <td className="border  px-1   text-right border-gray-300">
                         {formatValue(table.liabilities.current.firstTotal)}
                       </td>
@@ -710,7 +718,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                     <td className="p-1">
                       {table.liabilities.current.stotalcurrentliabilities}
                     </td>
-                    <td className="border border-gray-300"></td>
+                    <td className="border text-center border-gray-300"> {table.liabilities.current.stotalcurrentliabilitiesNote}</td>
                     <td className="border  px-1   text-right border-gray-300">
                       {formatValue(table.liabilities.current.total)}
                     </td>
@@ -725,7 +733,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                     <td className="p-1">
                       {table.liabilities.stotalliabilities}
                     </td>
-                    <td className="border border-gray-300"></td>
+                    <td className="border text-center border-gray-300">  {table.liabilities.stotalliabilitiesNote}</td>
                     <td className="border   px-1  text-right border-gray-300">
                       {formatValue(table.liabilities.totalLiabilities)}
                     </td>
@@ -740,7 +748,7 @@ const BalanceSheetFormUser: React.FC<BalanceSheetFormUserProps> = React.memo(
                     <td className="p-1">
                       {table.stotalEquityAndLiabilities}
                     </td>
-                    <td className="border border-gray-300"></td>
+                    <td className="border text-center border-gray-300">     {table.stotalEquityAndLiabilitiesNote}</td>
                     <td className="border  p-1 text-right border-gray-300">
                       {formatValue(table.ItotalEquityAndLiabilities)}
                     </td>

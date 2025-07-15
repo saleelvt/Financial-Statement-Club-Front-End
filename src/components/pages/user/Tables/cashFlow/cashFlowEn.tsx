@@ -159,7 +159,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                   }
                 )}
 
-
                     {table.sectionTwo.sectionTwoFirstLabel &&
                   table.sectionTwo.sectionTwoFirstLabel.trim() !== "" && (
                     <tr className="bg-gray-200 px-1   font-semibold">
@@ -227,9 +226,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                   )}
 
 
-
-
-
   {table.sectionThree.sectionThreeFirstLabel &&
                   table.sectionThree.sectionThreeFirstLabel.trim() !== "" && (
                     <tr className="bg-gray-200 px-1   font-semibold">
@@ -241,9 +237,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className="  px-1  text-right "></td>
                     </tr>
                   )}
-
-
-
 
 
                 {table.sectionThree.sectionThreeLabelsEn.map(
@@ -302,9 +295,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       </td>
                     </tr>
                   )}
-
-
-
 
                {table.sectionFour.sectionFourFirstLabel &&
                   table.sectionFour.sectionFourFirstLabel.trim() !== "" && (
@@ -372,8 +362,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       </td>
                     </tr>
                   )}
-
-
                {table.sectionFive.sectionFiveFirstLabel &&
                   table.sectionFive.sectionFiveFirstLabel.trim() !== "" && (
                     <tr className="bg-gray-200 px-1   font-semibold">
@@ -385,8 +373,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className="  px-1  text-right "></td>
                     </tr>
                   )}
-
-
                 {table.sectionFive.sectionFiveLabelsEn.map(
                   (label: string, idx: number) => {
                     const note = table.sectionFive.sectionFiveNotesEn[idx];
@@ -422,7 +408,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                     );
                   }
                 )}
-
                 {table.sectionFive.sectionFiveTotalLabel &&
                   table.sectionFive.sectionFiveTotalLabel.trim() !== "" && (
                     <tr className="bg-gray-200 font-semibold">
@@ -440,8 +425,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       </td>
                     </tr>
                   )}
-
-
                {table.sectionSix.sectionSixFirstLabel &&
                   table.sectionSix.sectionSixFirstLabel.trim() !== "" && (
                     <tr className="bg-gray-200 px-1   font-semibold">
@@ -453,8 +436,6 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                       <td className="  px-1  text-right "></td>
                     </tr>
                   )}
-
-
                 {table.sectionSix.sectionSixLabelsEn.map(
                   (label: string, idx: number) => {
                     const note = table.sectionSix.sectionSixNotesEn[idx];
@@ -525,9 +506,7 @@ const CashFlowUserEnglish: React.FC<CashFlowArProps> = React.memo(
                         )}
                       </td>
                     </tr>
-                  )}
-
-                
+                  )}                
                     {table.sectionSeven.sectionSevenLabelsEn.map(
                   (label: string, idx: number) => { 
                     const note = table.sectionSeven.sectionSevenNotesEn[idx]; 

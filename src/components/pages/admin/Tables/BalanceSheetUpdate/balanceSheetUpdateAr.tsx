@@ -1275,14 +1275,14 @@ const jsDate = new Date(
                   className="w-full bg-gray-200 text-black p-1"
                 />
               </td>
-           <td className="border border-gray-300"> <input
+           <td className="border  border-gray-300"> <input
                   value={sfirtsTotalnonCurrentNote}
                   onChange={(e) =>
                     ssetfirtsTotalnonCurrentAssetsNote(e.target.value)
                   }
-                  className="w-full   bg-gray-200 text-black p-1"
+                  className="w-full text-center   bg-gray-200 text-black p-1"
                 /></td>
-              <td className="border  border-gray-300">
+              <td className="border   border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrent)}
               </td>
               <td className="border border-gray-300">

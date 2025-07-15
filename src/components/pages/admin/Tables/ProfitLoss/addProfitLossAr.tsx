@@ -1133,7 +1133,7 @@ sectionLastNote,
               </th>
             </tr>
           </thead>
-   <tbody>
+    <tbody>
             <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
@@ -1156,7 +1156,7 @@ sectionLastNote,
                 <tr key={`section-one-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
                     <input
-                      className="w-full h-7 bg-gray-100 text-black p-1"
+                      className="w-full h-7  bg-gray-100 text-black p-1"
                       value={sectionOneLabelsEn[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
@@ -1171,7 +1171,7 @@ sectionLastNote,
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center bg-gray-100 text-black p-1"
                       value={sectionOneNotesEn[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1186,7 +1186,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right  bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionOneItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -1270,7 +1270,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionOneItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1362,22 +1362,21 @@ sectionLastNote,
                   className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"> <input
+              <td className="border  border-gray-300"> <input
                   value={sectionOneTotalNote}
                   onChange={(e) => setSectionOneTotalNote(e.target.value)}
-                  className="w-full  bg-gray-200 text-black p-1"
+                  className="w-full text-center  bg-gray-200 text-black p-1"
                 /></td>
-              <td className="border  border-gray-300">
+              <td className="border text-right  border-gray-300">
                 {formatWithParentheses(TotalsectionOneItemsEn)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionOneItemsDate2En)}
               </td>
             </tr>
 
             {sectionTwoLabelsEn.map((val, idx) => {
               const isRowEmpty = !val && !sectionTwoItemsDate2En[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
               if (TakingShort && isRowEmpty) return null;
 
               return (
@@ -1399,7 +1398,7 @@ sectionLastNote,
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center  bg-gray-100 text-black p-1"
                       value={sectionTwoNotesEn[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1414,7 +1413,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionTwoItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -1498,7 +1497,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionTwoItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1582,13 +1581,13 @@ sectionLastNote,
               );
             })}
 
-            <tr className="bg-gray-100 font-semibold">
+            <tr className="bg-gray-200 font-semibold">
               <td className="border border-gray-300">
                 <input
                   placeholder=""
                   value={sectionTwoTotalLabel}
                   onChange={(e) => setSectionTwoTotalLabel(e.target.value)}
-                  className=" text-start p-0.5 w-full bg-gray-200  fext-row"
+                  className=" text-start w-full bg-gray-200  fext-row"
                 />
               </td>
 
@@ -1596,17 +1595,17 @@ sectionLastNote,
                   placeholder=""
                   value={sectionTwoTotalNote}
                   onChange={(e) => setSectionTwoTotalNote(e.target.value)}
-                  className=" text-center w-full bg-gray-200  "
+                  className=" text-center w-full bg-gray-200 "
                 /></td>
 
-              <td className="border border-gray-300 bg-gray-200 p-1 text-start">
+              <td className="border border-gray-300 bg-gray-200 text-right">
                 {TotalsectionTwoItemsEn !== 0 &&
                 TotalsectionTwoItemsEn !== undefined
                   ? formatWithParentheses(Number(TotalsectionTwoItemsEn))
                   : ""}
               </td>
 
-              <td className="border border-gray-300 font bg-gray-200 p-1 text-start">
+              <td className="border border-gray-300 font bg-gray-200 text-right">
                 {TotalsectionTwoItemsDate2En !== 0 &&
                 TotalsectionTwoItemsDate2En !== undefined
                   ? formatWithParentheses(Number(TotalsectionTwoItemsDate2En))
@@ -1638,7 +1637,7 @@ sectionLastNote,
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center bg-gray-100 text-black p-1"
                       value={sectionThreeNotesEn[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1653,7 +1652,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionThreeItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -1737,7 +1736,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionThreeItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1817,7 +1816,7 @@ sectionLastNote,
                       }}
                     />
                   </td>
-                </tr>
+                </tr> 
               );
             })}
             <tr className="bg-gray-200 font-semibold">
@@ -1831,13 +1830,13 @@ sectionLastNote,
               <td className="border border-gray-300"> <input
                   value={sectionThreeTotalNote}
                   onChange={(e) => setSectionThreeTotalNote(e.target.value)}
-                  className="w-full  bg-gray-200 text-black p-1"
+                  className="w-full text-center  bg-gray-200 text-black p-1"
                 /></td>
 
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionThreeItemsEn)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionThreeItemsDate2En)}
               </td>
             </tr>
@@ -1850,7 +1849,7 @@ sectionLastNote,
               return (
                 <tr key={`section-four-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
-                    <input
+                    <input  
                       className="w-full h-7 bg-gray-100 text-black p-1"
                       value={sectionFourLabelsEn[idx]}
                       placeholder={`${idx + 1}`}
@@ -1866,7 +1865,7 @@ sectionLastNote,
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center   bg-gray-100 text-black p-1"
                       value={sectionFourNotesEn[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1881,7 +1880,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionFourItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -1948,7 +1947,6 @@ sectionLastNote,
                         const finalValue = isNegative
                           ? `(${formatted})`
                           : formatted;
-
                         // Update the value in the parent component
                         handleChange(idx, finalValue, "sectionFour");
 
@@ -1965,7 +1963,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionFourItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2059,21 +2057,21 @@ sectionLastNote,
                   className=" text-start p-0.5   w-full bg-gray-200 fext-row"
                 />
               </td>
-              <td className="border border-gray-300">  <input
+              <td className="border border-gray-300"> <input
                   placeholder=""
                   value={sectionFourTotalNote}
                   onChange={(e) => setSectionFourTotalNote(e.target.value)}
-                  className=" text-center p-1 w-full bg-gray-200"
+                  className=" p-0.5 text-center   w-full bg-gray-200 fext-row"
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionFourItemsEn)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionFourItemsDate2En)}
               </td>
             </tr>
-          
             <br />
+        
             <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
@@ -2119,7 +2117,7 @@ sectionLastNote,
       {/* Note */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full bg-gray-100 text-center text-black p-1"
           value={sectionFourSubNotesEn[idx]}
           onChange={(e) =>
             handleChangeSectionFourSub(
@@ -2135,7 +2133,7 @@ sectionLastNote,
       {/* Item */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full bg-gray-100 text-right text-black p-1"
           value={sectionFourSubItemsEn[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -2226,7 +2224,7 @@ sectionLastNote,
       {/* Date2 */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           value={sectionFourSubItemsDate2En[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -2330,21 +2328,21 @@ sectionLastNote,
                   className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
-              <td className=" "> <input
+              <td className=" "><input
                   value={sectionFourSubTotalNote}
                   onChange={(e) =>
-                    setSectionFourSubTotalNote(
+                    setSectionFourSubTotalNote( 
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-200 text-black px-1 "
+                  className="w-full   text-center    bg-gray-200 text-black px-1 "
                 /></td>
-              <td className="p-1   ">
+              <td className="p-1  text-right ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
                 )}
               </td>
-              <td className="">
+              <td className=" text-right">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsDate2En
                 )}
@@ -2353,38 +2351,6 @@ sectionLastNote,
 
 
             <br />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2435,13 +2401,13 @@ sectionLastNote,
                     />
                   </td>
                   <td className="border border-gray-300">
-                    <input className="w-full bg-gray-100 text-black p-1" />
+
                   </td>
 
                   {/* Item Input */}
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionFourAttributeItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -2533,7 +2499,7 @@ sectionLastNote,
                   {/* Date2 Input */}
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionFourAttributeItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2627,10 +2593,10 @@ sectionLastNote,
             <tr className="bg-gray-200 font-semibold  ">
               <td className=""></td>
               <td className=" "></td>
-              <td className="p-1   ">
+              <td className="p-1 text-right ">
                 {formatWithParentheses(TotalsectionFourAttributeItemsEn)}
               </td>
-              <td className="">
+              <td className=" text-right">
                 {formatWithParentheses(TotalsectionFourAttributeItemsDate2En)}
               </td>
             </tr>
@@ -2709,7 +2675,7 @@ sectionLastNote,
                   {/* Item Input */}
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionFourAttribute2ItemsEn[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2774,7 +2740,7 @@ sectionLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionFourAttribute2ItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2844,10 +2810,10 @@ sectionLastNote,
             <tr className="bg-gray-200 font-semibold">
               <td className=""></td>
               <td></td>
-              <td className="p-1">
+              <td className="p-1 text-right">
                 {formatWithParentheses(TotalsectionFourAttribute2ItemsEn)}
               </td>
-              <td>
+              <td className="p-1 text-right">
                 {formatWithParentheses(TotalsectionFourAttribute2ItemsDate2En)}
               </td>
             </tr>
@@ -2855,39 +2821,26 @@ sectionLastNote,
 
 
 
+         <tr className="bg-gray-200 font-semibold">
+  <td>
 
+    <textarea
+      ref={textareaRef}
+      value={sectionFourOtherComprehensiveIncome}
+      onChange={(e) => {
+        setSectionFourOtherComprehensiveIncomeLabel(e.target.value);
+        autoResizeTextarea(e.target);
+      }}
+      onInput={(e) => autoResizeTextarea(e.target)}
+      className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+      rows={1}
+    />
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <tr className="bg-gray-200 font-semibold  ">
-              <td className="">
- <textarea 
-    value={sectionFourOtherComprehensiveIncome}
-    onChange={(e) => {
-      setSectionFourOtherComprehensiveIncomeLabel(e.target.value);
-      autoResizeTextarea(e.target);
-    }}
-    onInput={(e) => autoResizeTextarea(e.target)}
-    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
-    rows={1}
-  />
-</td>
-
-              <td className=" "></td>
-              <td className="   "></td>
-              <td className=""></td>
-            </tr>
            
 
             {sectionFourOtherComprehensiveIncomeSubheadingLabelsEn.map(
@@ -2924,7 +2877,7 @@ sectionLastNote,
                     {/* Note */}
                     <td className="border border-gray-300">
                       <input
-                        className="w-full bg-gray-100 text-black p-1"
+                        className="w-full  text-center  bg-gray-100 text-black p-1"
                         value={
                           sectionFourOtherComprehensiveIncomeSubheadingNotesEn[
                             idx
@@ -2944,18 +2897,14 @@ sectionLastNote,
 
 
 
-
-
-
-                    {/* Item */}
-                   <td className="border border-gray-300">
+                 <td className="border border-gray-300">
   <input
-    className="w-full bg-gray-100 text-black p-1"
+    className="w-full bg-gray-100 text-right text-black p-1"
     value={sectionFourOtherComprehensiveIncomeSubheadingItemsEn[idx]}
     onKeyDown={(e) => {
       const input = e.currentTarget;
       const caretPos = input.selectionStart ?? 0;
-      if (
+      if ( 
         e.key === "Backspace" &&
         caretPos === input.value.length &&
         input.value.endsWith(")")
@@ -2971,15 +2920,11 @@ sectionLastNote,
       }
     }}
     onChange={(e) => {
-      const input = e.target;
-      const inputValue = input.value;
-      const caretPos = input.selectionStart ?? 0;
+      const inputValue = e.target.value;
+      const caretPos = e.target.selectionStart ?? 0;
 
-      if (
-        inputValue === "-" ||
-        inputValue === "." ||
-        inputValue === "-."
-      ) {
+      // Allow user to type a single minus sign or dot
+      if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
         handleChangeOtherComprehensiveIncome(
           idx,
           inputValue,
@@ -2992,10 +2937,12 @@ sectionLastNote,
       const isNegative =
         inputValue.startsWith("-") || inputValue.startsWith("(");
 
+      // Remove formatting symbols but keep the decimal point
       const  rawValue = inputValue
-        .replace(/[(),\s]/g, "")
-        .replace(/^-/, "");
+        .replace(/[(),\s]/g, "") // remove brackets and spaces
+        .replace(/^-/, ""); // remove minus sign only for validation
 
+      // Validate: only numbers and at most one dot allowed
       if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
       if (rawValue === "") {
@@ -3008,12 +2955,9 @@ sectionLastNote,
         return;
       }
 
-      const formatted = new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 20,
-      }).format(Number(rawValue));
-
-      const finalValue = isNegative ? `(${formatted})` : formatted;
+      const finalValue = isNegative
+        ? `(${rawValue})`
+        : rawValue;
 
       handleChangeOtherComprehensiveIncome(
         idx,
@@ -3026,17 +2970,53 @@ sectionLastNote,
         const newLength = finalValue.length;
         const offset = newLength - inputValue.length;
         const newPos = caretPos + offset;
-        input.setSelectionRange(newPos, newPos);
+        e.target.setSelectionRange(newPos, newPos);
       }, 0);
     }}
   />
 </td>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     {/* Date2 */}
-                   <td className="border border-gray-300">
+                  <td className="border border-gray-300">
   <input
-    className="w-full bg-gray-100 text-black p-1"
+    className="w-full text-right bg-gray-100 text-black p-1"
     value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[idx]}
     onKeyDown={(e) => {
       const input = e.currentTarget;
@@ -3061,11 +3041,8 @@ sectionLastNote,
       const inputValue = input.value;
       const caretPos = input.selectionStart ?? 0;
 
-      if (
-        inputValue === "-" ||
-        inputValue === "." ||
-        inputValue === "-."
-      ) {
+      // Allow temporary input states
+      if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
         handleChangeOtherComprehensiveIncome(
           idx,
           inputValue,
@@ -3078,10 +3055,12 @@ sectionLastNote,
       const isNegative =
         inputValue.startsWith("-") || inputValue.startsWith("(");
 
+      // Clean value for validation, but keep the dot
       const  rawValue = inputValue
-        .replace(/[(),\s]/g, "")
-        .replace(/^-/, "");
+        .replace(/[(),\s]/g, "") // remove brackets and spaces
+        .replace(/^-/, ""); // remove minus for validation
 
+      // Only allow digits and one optional dot
       if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
       if (rawValue === "") {
@@ -3094,12 +3073,7 @@ sectionLastNote,
         return;
       }
 
-      const formatted = new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 20,
-      }).format(Number(rawValue));
-
-      const finalValue = isNegative ? `(${formatted})` : formatted;
+      const finalValue = isNegative ? `(${rawValue})` : rawValue;
 
       handleChangeOtherComprehensiveIncome(
         idx,
@@ -3117,18 +3091,28 @@ sectionLastNote,
     }}
   />
 </td>
-
-                  </tr>
+ </tr>
                 );
               }
             )}
+
+
+
+
 
           
 
             <br />
             <br />
-          </tbody>
 
+
+
+
+
+
+
+
+          </tbody>
 
 
 
@@ -3283,8 +3267,7 @@ sectionLastNote,
 
 
 
-
-  <tbody>
+ <tbody>
 
         <tr className="bg-gray-200 font-semibold">
               <td className="">
@@ -3305,23 +3288,20 @@ sectionLastNote,
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-200 text-black px-1 "
+                  className="w-full   text-center    bg-gray-200 text-black px-1 "
                 /></td>
-              <td className="p-1  ">
+              <td className="p-1   text-right ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
                 )}
               </td>
-              <td className="">
+              <td className=" text-right">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsDate2En
                 )}
               </td>
             </tr>
 
-
-
- 
         <tr className="bg-gray-200 font-semibold">
               <td className=" p-1">
                 <input
@@ -3329,7 +3309,7 @@ sectionLastNote,
                   onChange={(e) =>
                     setSectionSevenLastLabel(
                       e.target.value
-                    )
+                    ) 
                   }
                   className="w-full  bg-gray-200 text-black  "
                 />
@@ -3343,8 +3323,11 @@ sectionLastNote,
               </td>
 
             </tr>
-               <tr className="bg-gray-200 font-semibold  ">
-             <td className="">
+
+
+           
+             <tr className="bg-gray-200 font-semibold">
+ <td>
   <textarea
     value={sectionSevenSubheading}
     onChange={(e) => {
@@ -3356,10 +3339,11 @@ sectionLastNote,
     rows={1}
   />
 </td>
-              <td className=" "></td>
-              <td className="   "></td>
-              <td className=""></td>
-            </tr>
+
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
 
 
 
@@ -3369,15 +3353,14 @@ sectionLastNote,
 
 
 
-
+  
             {sectionLastLabelsEn.map((val, idx) => {
   const isRowEmpty = !val && !sectionLastItemsDate2En[idx];
   if (TakingShort && isRowEmpty) return null;
 
   return (
-
     <tr key={`section-last-${idx}`} className="bg-gray-100">
-     <td className="border border-gray-300">
+    <td className="border border-gray-300">
   <textarea
     className="w-full bg-gray-100 text-black p-1 resize-none overflow-hidden"
     rows={1}
@@ -3394,7 +3377,7 @@ sectionLastNote,
 
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-center  bg-gray-100 text-black p-1"
           value={sectionLastNotesEn[idx]}
           onChange={(e) =>
             handleChangeSectionLast(idx, e.target.value, "sectionLast", "note")
@@ -3405,7 +3388,7 @@ sectionLastNote,
       {/* Item */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-right bg-gray-100 text-black p-1"
           value={sectionLastItemsEn[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3466,7 +3449,7 @@ sectionLastNote,
       {/* Date2 */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-right bg-gray-100 text-black p-1"
           value={sectionLastItemsDate2En[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3536,35 +3519,33 @@ sectionLastNote,
 
 
 
-            <tr className="bg-gray-200 font-semibold">
-              <td className="">
-  <textarea
-    value={sectionLastTotalLabelEn}
-    onChange={(e) => {
-      setSectionLastTotalLabelEn(e.target.value);
-      autoResizeTextarea(e.target);
-    }}
-    onInput={(e) => autoResizeTextarea(e.target)}
-    className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
-    rows={1}
-  />
-</td>
-              <td> <input
+           <tr className="bg-gray-200 font-semibold">
+  <td className="">
+    <textarea
+      value={sectionLastTotalLabelEn}
+      onChange={(e) => {
+        setSectionLastTotalLabelEn(e.target.value);
+        autoResizeTextarea(e.target);
+      }}
+      onInput={(e) => autoResizeTextarea(e.target)}
+      className="w-full bg-gray-200 text-black px-1 resize-none overflow-hidden"
+      rows={1}
+    />
+  </td>
+  <td> <input
+                  placeholder=""
                   value={sectionLastTotalNote}
-                  onChange={(e) =>
-                    setSectionLastTotalNote(
-                      e.target.value
-                    )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
+                  onChange={(e) => setSectionLastTotalNote(e.target.value)}
+                  className=" text-start p-1   w-full bg-gray-200 "
                 /></td>
-              <td className="p-2">
-                {formatWithParentheses(TotalSectionLastLabelItemsEn)}
-              </td>
-              <td>
-                {formatWithParentheses(TotalSectionLastItemsDate2En)}
-              </td>
-            </tr>
+  <td className="p-2  text-right">
+    {formatWithParentheses(TotalSectionLastLabelItemsEn)}
+  </td>
+  <td className="p-2  text-right">
+    {formatWithParentheses(TotalSectionLastItemsDate2En)}
+  </td>
+</tr>
+
             <br />
 
 
@@ -3572,7 +3553,7 @@ sectionLastNote,
 
             
                <tr className="bg-gray-200 font-semibold  ">
-            <td className="">
+             <td className="">
   <textarea
     value={sectionSevenSubheading2}
     onChange={(e) => {
@@ -3585,7 +3566,6 @@ sectionLastNote,
   />
 </td>
 
- 
               <td className=" "></td>
               <td className="   "></td>
               <td className=""></td>
@@ -3601,6 +3581,10 @@ sectionLastNote,
   return (
     <tr key={`section-last2-${idx}`} className="bg-gray-100">
       {/* Label */}
+
+
+
+
    <td className="border border-gray-300">
   <textarea
     className="w-full bg-gray-100 text-black p-1 resize-none overflow-hidden"
@@ -3616,10 +3600,17 @@ sectionLastNote,
 </td>
 
 
+
+
+
+
+
+
+
       {/* Note */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-center  bg-gray-100 text-black p-1"
           value={sectionLastNotesEn2[idx]}
           onChange={(e) =>
             handleChangeSectionLast2(idx, e.target.value, "sectionLast2", "note")
@@ -3630,7 +3621,7 @@ sectionLastNote,
       {/* Item */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-right bg-gray-100 text-black p-1"
           value={sectionLastItemsEn2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3691,7 +3682,7 @@ sectionLastNote,
       {/* Date2 */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-right bg-gray-100 text-black p-1"
           value={sectionLastItemsDate2En2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3755,7 +3746,7 @@ sectionLastNote,
 
 
 <tr className="bg-gray-200 font-semibold">
-<td className="">
+<td className=""> 
   <textarea
     value={sectionLastTotalLabelEn2}
     onChange={(e) => {
@@ -3767,20 +3758,22 @@ sectionLastNote,
     rows={1}
   />
 </td>
+
               <td> <input
+                  placeholder=""
                   value={sectionLastTotalNoteEn2}
-                  onChange={(e) =>
-                    setSectionToatalLastNoteEn2(  e.target.value   )
-                  }
-                  className="w-full     bg-gray-200 text-black px-1 "
+                  onChange={(e) => setSectionToatalLastNoteEn2(e.target.value)}
+                  className=" text-center p-1   w-full bg-gray-200 "
                 /></td>
-              <td className="p-2">
+              <td className="p-1  text-right">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn2)}
               </td>
-              <td>
+              <td  className="p-1  text-right">
                 {formatWithParentheses(TotalSectionLastItemsDate2En2)}
               </td>
             </tr>
+
+
 
 
 
@@ -3797,31 +3790,31 @@ sectionLastNote,
                   className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
-              <td className=" "> <input
+              <td className=" "><input
                   value={SectionSevenSecondLastNote}
                   onChange={(e) =>
                     setSectionSevenSecondLastNote(
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-200 text-black px-1 "
+                  className="w-full   text-center   bg-gray-200 text-black p-1 "
                 /></td>
-              <td className="p-1  ">
+              <td className="p-1  text-right ">
                 {formatWithParentheses(
                   TotalsectionSevenSecondLastItemEn
                 )}
               </td>
-              <td className="">
+              <td className="p-1  text-right">
                 {formatWithParentheses(
                   TotalsectionSevenSecondLastItemsDate2En
-                )}
+                )} 
               </td>
             </tr>
       <tr className="bg-gray-200 font-semibold">
               <td className="">
                 <input
                   value={SectionSevenLastLabel2}
-                  onChange={(e) => 
+                  onChange={(e) =>
                     setSectionSevenLastLabel2(
                       e.target.value
                     )
@@ -3829,21 +3822,21 @@ sectionLastNote,
                   className="w-full     bg-gray-200 text-black px-1 "
                 />
               </td>
-              <td className=" "> <input
+              <td className=" "><input
                   value={SectionSevenLastNote}
-                  onChange={(e) => 
+                  onChange={(e) =>
                     setSectionSevenLastNote(
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-200 text-black px-1 "
+                  className="w-full   text-center p-1   bg-gray-200 text-black  "
                 /></td>
-              <td className="p-1  ">
+              <td className="p-1 text-right  ">
                 {formatWithParentheses(
                   TotalsectionSevenLastItemEn 
                 )}
               </td>
-              <td className="">
+              <td className="text-right">
                 {formatWithParentheses(
                   TotalsectionSevenLastItemsDate2En
                 )}
@@ -3854,7 +3847,7 @@ sectionLastNote,
 
 
 <br />
-<br />
+
 
 
 
@@ -3897,13 +3890,13 @@ sectionLastNote,
       </td>
 
       <td className="border border-gray-300">
-        <input className="w-full bg-gray-100 text-black p-1" />
+       
       </td>
 
       {/* Item Input */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           placeholder=""
           value={sectionFourAttributeItemsEnTable2[idx]}
           onKeyDown={(e) => {
@@ -3970,7 +3963,7 @@ sectionLastNote,
       {/* Date2 Input */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           value={sectionFourAttributeItemsDate2EnTable2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -4024,7 +4017,7 @@ sectionLastNote,
             handleChangeAttributeTable2(idx, finalValue, "sectionFourAttribute", "date2");
 
             setTimeout(() => {
-              const newLength = finalValue.length; 
+              const newLength = finalValue.length;
               const offset = newLength - inputValue.length;
               const newPos = caretPos + offset;
               input.setSelectionRange(newPos, newPos);
@@ -4036,14 +4029,13 @@ sectionLastNote,
   );
 })}
 
-
 <tr className="bg-gray-200 font-semibold">
   <td className=""></td>
   <td className=""></td>
-  <td className="p-1">
+  <td className="p-1 text-right">
     {formatWithParentheses(TotalsectionFourAttributeItemsEnTable2)}
   </td>
-  <td className="">
+  <td className="text-right">
     {formatWithParentheses(TotalsectionFourAttributeItemsDate2EnTable2)}
   </td>
 </tr>
@@ -4090,7 +4082,7 @@ sectionLastNote,
       {/* Item Input */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           value={sectionFourAttribute2ItemsEnTable2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -4153,7 +4145,7 @@ sectionLastNote,
       {/* Date2 Input */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           value={sectionFourAttribute2ItemsDate2EnTable2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -4216,22 +4208,21 @@ sectionLastNote,
   );
 })}
 
-
 {/* Total Row */}
 <tr className="bg-gray-200 font-semibold">
   <td className=""></td>
   <td></td>
-  <td className="p-1">
+  <td className="p-1 text-right">
     {formatWithParentheses(TotalsectionFourAttribute2ItemsEnTable2)}
   </td>
-  <td>
+  <td  className="p-1 text-right">
     {formatWithParentheses(TotalsectionFourAttribute2ItemsDate2EnTable2)}
   </td>
 </tr>
 
 <br />
 <tr className="bg-gray-200 font-semibold">
-<td>
+ <td>
   <textarea
     value={sectionFourOtherComprehensiveIncomeTable2}
     onChange={(e) => {
@@ -4248,6 +4239,7 @@ sectionLastNote,
   <td></td>
   <td></td>
 </tr>
+
 
 {sectionFourOtherComprehensiveIncomeSubheadingLabelsEnTable2.map((val, idx) => {
   const isRowEmpty =
@@ -4271,7 +4263,7 @@ sectionLastNote,
       {/* Note */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-center  bg-gray-100 text-black p-1"
           value={sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2[idx]}
           onChange={(e) =>
             handleChangeOtherComprehensiveIncomeTable2(idx, e.target.value, "note")
@@ -4281,22 +4273,10 @@ sectionLastNote,
 
 
 
-
-
-
-
-
-
-
-
- 
-
-
       {/* Item */}
-     
-    <td className="border border-gray-300">
+  <td className="border border-gray-300">
   <input
-    className="w-full bg-gray-100 text-black p-1"
+    className="w-full text-right  bg-gray-100 text-black p-1"
     value={sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2[idx]}
     onKeyDown={(e) => {
       const input = e.currentTarget;
@@ -4316,7 +4296,7 @@ sectionLastNote,
       const inputValue = input.value;
       const caretPos = input.selectionStart ?? 0;
 
-      // Allow intermediate states like "-", ".", "-."
+      // Allow intermediate input like "-", ".", "-."
       if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
         handleChangeOtherComprehensiveIncomeTable2(idx, inputValue, "item");
         return;
@@ -4325,11 +4305,12 @@ sectionLastNote,
       const isNegative =
         inputValue.startsWith("-") || inputValue.startsWith("(");
 
+      // Strip brackets and whitespace, retain dot
       const  rawValue = inputValue
-        .replace(/[(),\s]/g, "") // remove formatting/brackets
-        .replace(/^-/, "");      // remove leading dash for parsing
+        .replace(/[(),\s]/g, "")
+        .replace(/^-/, "");
 
-      // Allow digits with optional one dot (decimal)
+      // Validate: allow only digits and at most one dot
       if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
       if (rawValue === "") {
@@ -4353,9 +4334,9 @@ sectionLastNote,
 
 
       {/* Date2 */}
-     <td className="border border-gray-300">
+    <td className="border border-gray-300">
   <input
-    className="w-full bg-gray-100 text-black p-1"
+    className="w-full text-right bg-gray-100 text-black p-1"
     value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2[idx]}
     onKeyDown={(e) => {
       const input = e.currentTarget;
@@ -4375,7 +4356,7 @@ sectionLastNote,
       const inputValue = input.value;
       const caretPos = input.selectionStart ?? 0;
 
-      // Allow intermediate values like "-", ".", "-."
+      // Allow typing "-", ".", or "-." without blocking
       if (inputValue === "-" || inputValue === "." || inputValue === "-.") {
         handleChangeOtherComprehensiveIncomeTable2(idx, inputValue, "date2");
         return;
@@ -4384,11 +4365,12 @@ sectionLastNote,
       const isNegative =
         inputValue.startsWith("-") || inputValue.startsWith("(");
 
+      // Clean brackets, commas, spaces; preserve dot
       const  rawValue = inputValue
-        .replace(/[(),\s]/g, "") // remove brackets/spaces
-        .replace(/^-/, "");      // remove starting dash for parse
+        .replace(/[(),\s]/g, "")
+        .replace(/^-/, "");
 
-      // Allow digits with at most one dot
+      // Only digits and optionally one dot
       if (!/^\d*\.?\d*$/.test(rawValue)) return;
 
       if (rawValue === "") {

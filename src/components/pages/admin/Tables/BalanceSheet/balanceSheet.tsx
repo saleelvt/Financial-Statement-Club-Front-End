@@ -788,7 +788,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
               if (TakingShort && isRowEmpty) return null;
 
               return (
-                <tr key={`non-current-${idx}`} className="bg-gray-100">
+                <tr key={`non-current-${idx}`}  className="bg-gray-100 ">
                   <td className="border border-gray-300">
                     <input
                       className="w-full h-7  bg-gray-100 text-black p-1"
@@ -821,9 +821,9 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     </td>
                   </td>
 
-                  <td className="border border-gray-300">
+                  <td className="border  border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full   text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={val}
                       onKeyDown={(e) => {
@@ -905,9 +905,9 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     />
                   </td>
 
-                  <td className="border border-gray-300">
+                  <td className="border  border-gray-300">
                     <input
-                      className=" w-full bg-gray-100 text-black p-1"
+                      className=" w-full  text-right bg-gray-100 text-black p-1"
                       value={nonCurrentAssetsDate2Ar[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1008,10 +1008,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   }
                   className=" bg-gray-200 text-center text-black p-1"
                 /></td>
-              <td className="border  border-gray-300">
+              <td className="border  text-right  border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrent)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border  text-right border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrentDate2)}
               </td>
             </tr>
@@ -1040,11 +1040,11 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   </td>
 
                   <td className="border border-gray-300">
-                    <input className="w-full bg-gray-100 text-black " />
+                    {/* <input className="w-full  bg-gray-100 text-black " /> */}
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full  text-right bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1127,7 +1127,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full  text-right bg-gray-100 text-black p-1"
                       value={nonCurrentSubAssetsDate2Ar[idx]}
                       placeholder=""
                       onKeyDown={(e) => {
@@ -1228,14 +1228,14 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className=" text-center w-full p-1  bg-gray-200  "
                 /></td>
 
-              <td className="border border-gray-300 bg-gray-200 p-1 text-start">
+              <td className="border border-gray-300 bg-gray-200 p-1  text-right">
                 {secondTotalNonCurrent !== 0 &&
                 secondTotalNonCurrent !== undefined
                   ? formatWithParentheses(Number(secondTotalNonCurrent))
                   : ""}
               </td>
 
-              <td className="border border-gray-300 font bg-gray-200 p-1 text-start">
+              <td className="border border-gray-300 font bg-gray-200 p-1  text-right">
                 {secondTotalNonCurrentDate2 !== 0 &&
                 secondTotalNonCurrentDate2 !== undefined
                   ? formatWithParentheses(Number(secondTotalNonCurrentDate2))
@@ -1294,7 +1294,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full  text-right bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1375,7 +1375,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full  text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={currentAssetsDate2Ar[idx]}
                       onKeyDown={(e) => {
@@ -1474,10 +1474,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className=" text-center   bg-gray-200 text-black w-full p-1 "
                 /></td>
 
-              <td className="border border-gray-300">
+              <td className="border  text-right px-1 border-gray-300">
                 {formatWithParentheses(firstTotalCurrent)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border  text-right px-1 border-gray-300">
                 {formatWithParentheses(firstTotalCurrentDate2)}
               </td>
             </tr>
@@ -1505,12 +1505,12 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     />
                   </td>
                   <td className="border border-gray-300">
-                    <input className="w-full bg-gray-100 text-black p-1" />
+                 
                   </td>
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full  text-right bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1575,7 +1575,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full  text-right bg-gray-100 text-black p-1"
                       value={currentSubAssetsDate2Ar[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1659,10 +1659,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   onChange={(e) => ssetTotalCurrentAssetsNote(e.target.value)}
                   className="text-center w-full p-1  bg-gray-200 "
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border  text-right px-1 border-gray-300">
                 {formatWithParentheses(secondTotalCurrent)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border  text-right px-1 border-gray-300">
                 {formatWithParentheses(secondTotalCurrentDate2)}
               </td>
             </tr>
@@ -1682,12 +1682,12 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   
                   value={stotalAssetsNote}
                   onChange={(e) => ssetTotalAssetsNote(e.target.value)}
-                  className=" text-center p-1  bg-gray-400 "
+                  className=" text-center p-1    bg-gray-400 "
                 />{" "}</td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalAssets)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalAssetsDate2)}
               </td>
             </tr>
@@ -1761,7 +1761,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right  bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1827,7 +1827,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right  bg-gray-100 text-black p-1"
                       value={equityItemsDate2Ar[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1909,10 +1909,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                 }
                 className="text-center bg-gray-200 text-black p-1"
               /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(firstTotalEquity)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(firstTotalEquityDate2)}
               </td>
             </tr>
@@ -1942,12 +1942,12 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   </td>
 
                   <td className="border border-gray-300">
-                    <input className="w-full bg-gray-100 text-black p-1" />
+                  
                   </td>
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2013,7 +2013,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={equitySubItemsDate2Ar[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2096,10 +2096,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   onChange={(e) => setTotalShareholdersEquityNote(e.target.value)}
                   className=" text-center w-full p-1  bg-gray-300 "
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalEquity)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalEquityDate2)}
               </td>
             </tr>
@@ -2165,7 +2165,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2231,7 +2231,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
  
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={nonCurrentLiabilitiesDate2Ar[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2335,10 +2335,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   }
                   className="w-full text-center bg-gray-200 text-black p-1"
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrentLiabilities)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(firstTotalNonCurrentLiabilitiesDate2)}
               </td>
             </tr>
@@ -2369,11 +2369,11 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     />
                   </td>
                   <td className="border border-gray-300">
-                    <input className="w-full bg-gray-100 text-black p-1" />
+                  
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2439,7 +2439,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={nonCurrentSubLiabilitiesDate2Ar[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2551,10 +2551,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   }
                   className="text-center w-full p-1   bg-gray-200 "
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalNonCurrentLiabilities)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalNonCurrentLiabilitiesDate2)}
               </td>
             </tr>
@@ -2608,7 +2608,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2674,7 +2674,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={currentLiabilitiesDate2Ar[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2765,17 +2765,16 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   onChange={(e) => ssetfirtscurrentLiabilitiesNote(e.target.value)}
                   className="w-full text-center bg-gray-200 text-black p-1"
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(firstTotalCurrentLiabilities)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(firstTotalCurrentLiabilitiesDate2)}
               </td>
             </tr>
 
             {currentSubLiabilitiesAr.map((val, idx) => {
               const isRowEmpty = !val && !currentSubLiabilitiesDate2Ar[idx];
-
               if (TakingShort && isRowEmpty) return null;
 
               return (
@@ -2799,11 +2798,11 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                     />
                   </td>
                   <td className="border border-gray-300">
-                    <input className="w-full bg-gray-100 text-black p-1" />
+                  
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={val}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2869,7 +2868,7 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right px-1 bg-gray-100 text-black p-1"
                       value={currentSubLiabilitiesDate2Ar[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2972,10 +2971,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   onChange={(e) => setTotalcurrentliabilitiesNote(e.target.value)}
                   className="w-full text-center bg-gray-200 text-black p-1"
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalCurrentLiabilities)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalCurrentLiabilitiesDate2)}
               </td>
             </tr>
@@ -2998,10 +2997,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className=" text-center w-full p-1    bg-gray-300 "
                   type="text"
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalLiabilities)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalLiabilitiesDate2)}
               </td>
             </tr>
@@ -3022,10 +3021,10 @@ const BalaceSheetForm: React.FC<BalaceSheetFormArProps> = React.memo(
                   className=" text-center w-full p-1    bg-gray-400 "
                   type="text"
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalEquityAndLiabilities)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right px-1 border-gray-300">
                 {formatWithParentheses(totalEquityAndLiabilitiesDate2)}
               </td>
             </tr>

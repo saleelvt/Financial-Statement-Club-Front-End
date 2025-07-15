@@ -486,6 +486,8 @@ const handleClickArabic = async () => {
         if (wlanguage === "English") {
           setUpdateEn(false);
           setTableEn(null);
+          setTableCashFlowEn(null);
+          setTableProfitLossEn(null);
           setShowDeleteToast(true);
           setTimeout(() => {
             setShowDeleteToast(false);
@@ -493,6 +495,9 @@ const handleClickArabic = async () => {
         } else {
           setUpdateAr(false);
           setTableAr(null);
+          setTableCashFlowAr(null);
+          setTableProfitLossAr(null);
+          
           setShowDeleteToastAr(true);
           setTimeout(() => {
             setShowDeleteToastAr(false);
@@ -1321,7 +1326,7 @@ const handleUpdateTable = async (wlanguage: string | null) => {
       );
     } else {
       return (
-        <div className="flex justify-center     flex-col lg:flex-row  gap-1   ">
+        <div className="flex justify-center     flex-col lg:flex-row   ">
           <div className="w-screen">
             <form>
               <div className="">
@@ -1365,7 +1370,7 @@ const handleUpdateTable = async (wlanguage: string | null) => {
           {/* English Form */}
           <div className="w-screen">
             <form>
-              <div className=" pb-8">
+              <div className=" pb-8 ">
                 <div className="  ">
                   <CashFlowFormAr TakingShort={takeShot} />
 

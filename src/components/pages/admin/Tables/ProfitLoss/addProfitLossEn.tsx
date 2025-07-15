@@ -1026,7 +1026,7 @@ SectionSevenLastNote,
                 <tr key={`section-one-${idx}`} className="bg-gray-100">
                   <td className="border border-gray-300">
                     <input
-                      className="w-full h-7 bg-gray-100 text-black p-1"
+                      className="w-full h-7  bg-gray-100 text-black p-1"
                       value={sectionOneLabelsEn[idx]}
                       placeholder={`${idx + 1}`}
                       onChange={(e) =>
@@ -1041,7 +1041,7 @@ SectionSevenLastNote,
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center bg-gray-100 text-black p-1"
                       value={sectionOneNotesEn[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1056,7 +1056,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right  bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionOneItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -1140,7 +1140,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionOneItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1232,22 +1232,21 @@ SectionSevenLastNote,
                   className="w-full  bg-gray-200 text-black p-1"
                 />
               </td>
-              <td className="border border-gray-300"> <input
+              <td className="border  border-gray-300"> <input
                   value={sectionOneTotalNote}
                   onChange={(e) => setSectionOneTotalNote(e.target.value)}
-                  className="w-full  bg-gray-200 text-black p-1"
+                  className="w-full text-center  bg-gray-200 text-black p-1"
                 /></td>
-              <td className="border  border-gray-300">
+              <td className="border text-right  border-gray-300">
                 {formatWithParentheses(TotalsectionOneItemsEn)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionOneItemsDate2En)}
               </td>
             </tr>
 
             {sectionTwoLabelsEn.map((val, idx) => {
               const isRowEmpty = !val && !sectionTwoItemsDate2En[idx];
-              // 🧠 Only hide the row *after* submission if it's empty
               if (TakingShort && isRowEmpty) return null;
 
               return (
@@ -1269,7 +1268,7 @@ SectionSevenLastNote,
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center  bg-gray-100 text-black p-1"
                       value={sectionTwoNotesEn[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1284,7 +1283,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionTwoItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -1368,7 +1367,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionTwoItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1452,13 +1451,13 @@ SectionSevenLastNote,
               );
             })}
 
-            <tr className="bg-gray-100 font-semibold">
+            <tr className="bg-gray-200 font-semibold">
               <td className="border border-gray-300">
                 <input
                   placeholder=""
                   value={sectionTwoTotalLabel}
                   onChange={(e) => setSectionTwoTotalLabel(e.target.value)}
-                  className=" text-start p-0.5 w-full bg-gray-200  fext-row"
+                  className=" text-start w-full bg-gray-200  fext-row"
                 />
               </td>
 
@@ -1466,17 +1465,17 @@ SectionSevenLastNote,
                   placeholder=""
                   value={sectionTwoTotalNote}
                   onChange={(e) => setSectionTwoTotalNote(e.target.value)}
-                  className=" text-center p-1 w-full bg-gray-200 "
+                  className=" text-center w-full bg-gray-200 "
                 /></td>
 
-              <td className="border border-gray-300 bg-gray-200 p-1 text-start">
+              <td className="border border-gray-300 bg-gray-200 text-right">
                 {TotalsectionTwoItemsEn !== 0 &&
                 TotalsectionTwoItemsEn !== undefined
                   ? formatWithParentheses(Number(TotalsectionTwoItemsEn))
                   : ""}
               </td>
 
-              <td className="border border-gray-300 font bg-gray-200 p-1 text-start">
+              <td className="border border-gray-300 font bg-gray-200 text-right">
                 {TotalsectionTwoItemsDate2En !== 0 &&
                 TotalsectionTwoItemsDate2En !== undefined
                   ? formatWithParentheses(Number(TotalsectionTwoItemsDate2En))
@@ -1508,7 +1507,7 @@ SectionSevenLastNote,
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center bg-gray-100 text-black p-1"
                       value={sectionThreeNotesEn[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1523,7 +1522,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionThreeItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -1607,7 +1606,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionThreeItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1701,13 +1700,13 @@ SectionSevenLastNote,
               <td className="border border-gray-300"> <input
                   value={sectionThreeTotalNote}
                   onChange={(e) => setSectionThreeTotalNote(e.target.value)}
-                  className="w-full  bg-gray-200 text-black p-1"
+                  className="w-full text-center  bg-gray-200 text-black p-1"
                 /></td>
 
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionThreeItemsEn)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionThreeItemsDate2En)}
               </td>
             </tr>
@@ -1736,7 +1735,7 @@ SectionSevenLastNote,
                   </td>
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-center   bg-gray-100 text-black p-1"
                       value={sectionFourNotesEn[idx]}
                       onChange={(e) =>
                         handleChange(
@@ -1751,7 +1750,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionFourItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -1818,7 +1817,6 @@ SectionSevenLastNote,
                         const finalValue = isNegative
                           ? `(${formatted})`
                           : formatted;
-
                         // Update the value in the parent component
                         handleChange(idx, finalValue, "sectionFour");
 
@@ -1835,7 +1833,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionFourItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -1933,12 +1931,12 @@ SectionSevenLastNote,
                   placeholder=""
                   value={sectionFourTotalNote}
                   onChange={(e) => setSectionFourTotalNote(e.target.value)}
-                  className=" text-start p-0.5   w-full bg-gray-200 fext-row"
+                  className=" p-0.5 text-center   w-full bg-gray-200 fext-row"
                 /></td>
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionFourItemsEn)}
               </td>
-              <td className="border border-gray-300">
+              <td className="border text-right border-gray-300">
                 {formatWithParentheses(TotalsectionFourItemsDate2En)}
               </td>
             </tr>
@@ -1989,7 +1987,7 @@ SectionSevenLastNote,
       {/* Note */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full bg-gray-100 text-center text-black p-1"
           value={sectionFourSubNotesEn[idx]}
           onChange={(e) =>
             handleChangeSectionFourSub(
@@ -2005,7 +2003,7 @@ SectionSevenLastNote,
       {/* Item */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full bg-gray-100 text-right text-black p-1"
           value={sectionFourSubItemsEn[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -2096,7 +2094,7 @@ SectionSevenLastNote,
       {/* Date2 */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           value={sectionFourSubItemsDate2En[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -2203,18 +2201,18 @@ SectionSevenLastNote,
               <td className=" "><input
                   value={sectionFourSubTotalNote}
                   onChange={(e) =>
-                    setSectionFourSubTotalNote(
+                    setSectionFourSubTotalNote( 
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-200 text-black px-1 "
+                  className="w-full   text-center    bg-gray-200 text-black px-1 "
                 /></td>
-              <td className="p-1  ">
+              <td className="p-1  text-right ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
                 )}
               </td>
-              <td className="">
+              <td className=" text-right">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsDate2En
                 )}
@@ -2273,13 +2271,13 @@ SectionSevenLastNote,
                     />
                   </td>
                   <td className="border border-gray-300">
-                    <input className="w-full bg-gray-100 text-black p-1" />
+
                   </td>
 
                   {/* Item Input */}
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       placeholder=""
                       value={sectionFourAttributeItemsEn[idx]}
                       onKeyDown={(e) => {
@@ -2371,7 +2369,7 @@ SectionSevenLastNote,
                   {/* Date2 Input */}
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionFourAttributeItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2465,10 +2463,10 @@ SectionSevenLastNote,
             <tr className="bg-gray-200 font-semibold  ">
               <td className=""></td>
               <td className=" "></td>
-              <td className="p-1   ">
+              <td className="p-1 text-right ">
                 {formatWithParentheses(TotalsectionFourAttributeItemsEn)}
               </td>
-              <td className="">
+              <td className=" text-right">
                 {formatWithParentheses(TotalsectionFourAttributeItemsDate2En)}
               </td>
             </tr>
@@ -2547,7 +2545,7 @@ SectionSevenLastNote,
                   {/* Item Input */}
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionFourAttribute2ItemsEn[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2612,7 +2610,7 @@ SectionSevenLastNote,
 
                   <td className="border border-gray-300">
                     <input
-                      className="w-full bg-gray-100 text-black p-1"
+                      className="w-full text-right bg-gray-100 text-black p-1"
                       value={sectionFourAttribute2ItemsDate2En[idx]}
                       onKeyDown={(e) => {
                         const input = e.currentTarget;
@@ -2682,10 +2680,10 @@ SectionSevenLastNote,
             <tr className="bg-gray-200 font-semibold">
               <td className=""></td>
               <td></td>
-              <td className="p-1">
+              <td className="p-1 text-right">
                 {formatWithParentheses(TotalsectionFourAttribute2ItemsEn)}
               </td>
-              <td>
+              <td className="p-1 text-right">
                 {formatWithParentheses(TotalsectionFourAttribute2ItemsDate2En)}
               </td>
             </tr>
@@ -2749,7 +2747,7 @@ SectionSevenLastNote,
                     {/* Note */}
                     <td className="border border-gray-300">
                       <input
-                        className="w-full bg-gray-100 text-black p-1"
+                        className="w-full  text-center  bg-gray-100 text-black p-1"
                         value={
                           sectionFourOtherComprehensiveIncomeSubheadingNotesEn[
                             idx
@@ -2771,12 +2769,12 @@ SectionSevenLastNote,
 
                  <td className="border border-gray-300">
   <input
-    className="w-full bg-gray-100 text-black p-1"
+    className="w-full bg-gray-100 text-right text-black p-1"
     value={sectionFourOtherComprehensiveIncomeSubheadingItemsEn[idx]}
     onKeyDown={(e) => {
       const input = e.currentTarget;
       const caretPos = input.selectionStart ?? 0;
-      if (
+      if ( 
         e.key === "Backspace" &&
         caretPos === input.value.length &&
         input.value.endsWith(")")
@@ -2888,7 +2886,7 @@ SectionSevenLastNote,
                     {/* Date2 */}
                   <td className="border border-gray-300">
   <input
-    className="w-full bg-gray-100 text-black p-1"
+    className="w-full text-right bg-gray-100 text-black p-1"
     value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2En[idx]}
     onKeyDown={(e) => {
       const input = e.currentTarget;
@@ -3089,14 +3087,14 @@ SectionSevenLastNote,
                       e.target.value
                     )
                   }
-                  className="w-full     bg-gray-200 text-black px-1 "
+                  className="w-full   text-center    bg-gray-200 text-black px-1 "
                 /></td>
-              <td className="p-1  ">
+              <td className="p-1   text-right ">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsEn
                 )}
               </td>
-              <td className="">
+              <td className=" text-right">
                 {formatWithParentheses(
                   TotalsectionFourSubItemsDate2En
                 )}
@@ -3178,7 +3176,7 @@ SectionSevenLastNote,
 
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-center  bg-gray-100 text-black p-1"
           value={sectionLastNotesEn[idx]}
           onChange={(e) =>
             handleChangeSectionLast(idx, e.target.value, "sectionLast", "note")
@@ -3189,7 +3187,7 @@ SectionSevenLastNote,
       {/* Item */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-right bg-gray-100 text-black p-1"
           value={sectionLastItemsEn[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3250,7 +3248,7 @@ SectionSevenLastNote,
       {/* Date2 */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-right bg-gray-100 text-black p-1"
           value={sectionLastItemsDate2En[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3339,10 +3337,10 @@ SectionSevenLastNote,
                   onChange={(e) => setSectionLastTotalNote(e.target.value)}
                   className=" text-start p-1   w-full bg-gray-200 "
                 /></td>
-  <td className="p-2">
+  <td className="p-2  text-right">
     {formatWithParentheses(TotalSectionLastLabelItemsEn)}
   </td>
-  <td>
+  <td className="p-2  text-right">
     {formatWithParentheses(TotalSectionLastItemsDate2En)}
   </td>
 </tr>
@@ -3411,7 +3409,7 @@ SectionSevenLastNote,
       {/* Note */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-center  bg-gray-100 text-black p-1"
           value={sectionLastNotesEn2[idx]}
           onChange={(e) =>
             handleChangeSectionLast2(idx, e.target.value, "sectionLast2", "note")
@@ -3422,7 +3420,7 @@ SectionSevenLastNote,
       {/* Item */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-right bg-gray-100 text-black p-1"
           value={sectionLastItemsEn2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3483,7 +3481,7 @@ SectionSevenLastNote,
       {/* Date2 */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-right bg-gray-100 text-black p-1"
           value={sectionLastItemsDate2En2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3547,7 +3545,7 @@ SectionSevenLastNote,
 
 
 <tr className="bg-gray-200 font-semibold">
-<td className="">
+<td className=""> 
   <textarea
     value={sectionLastTotalLabelEn2}
     onChange={(e) => {
@@ -3566,31 +3564,13 @@ SectionSevenLastNote,
                   onChange={(e) => setSectionToatalLastNoteEn2(e.target.value)}
                   className=" text-center p-1   w-full bg-gray-200 "
                 /></td>
-              <td className="p-2">
+              <td className="p-1  text-right">
                 {formatWithParentheses(TotalSectionLastLabelItemsEn2)}
               </td>
-              <td>
+              <td  className="p-1  text-right">
                 {formatWithParentheses(TotalSectionLastItemsDate2En2)}
               </td>
             </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3618,12 +3598,12 @@ SectionSevenLastNote,
                   }
                   className="w-full   text-center   bg-gray-200 text-black p-1 "
                 /></td>
-              <td className="p-1  ">
+              <td className="p-1  text-right ">
                 {formatWithParentheses(
                   TotalsectionSevenSecondLastItemEn
                 )}
               </td>
-              <td className="">
+              <td className="p-1  text-right">
                 {formatWithParentheses(
                   TotalsectionSevenSecondLastItemsDate2En
                 )} 
@@ -3650,12 +3630,12 @@ SectionSevenLastNote,
                   }
                   className="w-full   text-center p-1   bg-gray-200 text-black  "
                 /></td>
-              <td className="p-1  ">
+              <td className="p-1 text-right  ">
                 {formatWithParentheses(
                   TotalsectionSevenLastItemEn 
                 )}
               </td>
-              <td className="">
+              <td className="text-right">
                 {formatWithParentheses(
                   TotalsectionSevenLastItemsDate2En
                 )}
@@ -3666,7 +3646,7 @@ SectionSevenLastNote,
 
 
 <br />
-<br />
+
 
 
 
@@ -3709,13 +3689,13 @@ SectionSevenLastNote,
       </td>
 
       <td className="border border-gray-300">
-        <input className="w-full bg-gray-100 text-black p-1" />
+       
       </td>
 
       {/* Item Input */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           placeholder=""
           value={sectionFourAttributeItemsEnTable2[idx]}
           onKeyDown={(e) => {
@@ -3782,7 +3762,7 @@ SectionSevenLastNote,
       {/* Date2 Input */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           value={sectionFourAttributeItemsDate2EnTable2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3851,10 +3831,10 @@ SectionSevenLastNote,
 <tr className="bg-gray-200 font-semibold">
   <td className=""></td>
   <td className=""></td>
-  <td className="p-1">
+  <td className="p-1 text-right">
     {formatWithParentheses(TotalsectionFourAttributeItemsEnTable2)}
   </td>
-  <td className="">
+  <td className="text-right">
     {formatWithParentheses(TotalsectionFourAttributeItemsDate2EnTable2)}
   </td>
 </tr>
@@ -3901,7 +3881,7 @@ SectionSevenLastNote,
       {/* Item Input */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           value={sectionFourAttribute2ItemsEnTable2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -3964,7 +3944,7 @@ SectionSevenLastNote,
       {/* Date2 Input */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full text-right bg-gray-100 text-black p-1"
           value={sectionFourAttribute2ItemsDate2EnTable2[idx]}
           onKeyDown={(e) => {
             const input = e.currentTarget;
@@ -4031,10 +4011,10 @@ SectionSevenLastNote,
 <tr className="bg-gray-200 font-semibold">
   <td className=""></td>
   <td></td>
-  <td className="p-1">
+  <td className="p-1 text-right">
     {formatWithParentheses(TotalsectionFourAttribute2ItemsEnTable2)}
   </td>
-  <td>
+  <td  className="p-1 text-right">
     {formatWithParentheses(TotalsectionFourAttribute2ItemsDate2EnTable2)}
   </td>
 </tr>
@@ -4082,7 +4062,7 @@ SectionSevenLastNote,
       {/* Note */}
       <td className="border border-gray-300">
         <input
-          className="w-full bg-gray-100 text-black p-1"
+          className="w-full  text-center  bg-gray-100 text-black p-1"
           value={sectionFourOtherComprehensiveIncomeSubheadingNotesEnTable2[idx]}
           onChange={(e) =>
             handleChangeOtherComprehensiveIncomeTable2(idx, e.target.value, "note")
@@ -4095,7 +4075,7 @@ SectionSevenLastNote,
       {/* Item */}
   <td className="border border-gray-300">
   <input
-    className="w-full bg-gray-100 text-black p-1"
+    className="w-full text-right  bg-gray-100 text-black p-1"
     value={sectionFourOtherComprehensiveIncomeSubheadingItemsEnTable2[idx]}
     onKeyDown={(e) => {
       const input = e.currentTarget;
@@ -4155,7 +4135,7 @@ SectionSevenLastNote,
       {/* Date2 */}
     <td className="border border-gray-300">
   <input
-    className="w-full bg-gray-100 text-black p-1"
+    className="w-full text-right bg-gray-100 text-black p-1"
     value={sectionFourOtherComprehensiveIncomeSubheadingItemsDate2EnTable2[idx]}
     onKeyDown={(e) => {
       const input = e.currentTarget;

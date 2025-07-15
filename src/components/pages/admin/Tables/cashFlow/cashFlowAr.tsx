@@ -672,7 +672,7 @@ useEffect(()=>{
 
 
     return (
-      <div className="flex justify-start  my-2 text-black">
+      <div className="flex justify-start  my-2  text-black">
         <table dir="rtl" className="border  font-semibold border-gray-300 text-xs mb-12  w-full">
 
           <thead>

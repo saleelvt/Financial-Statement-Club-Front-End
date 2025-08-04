@@ -162,6 +162,7 @@ const ProfitLossFormAr: React.FC<BalaceSheetFormArProps> = React.memo(
            const [SectionSevenSecondLastNote,   setSectionSevenSecondLastNote ] = useState("");
           const TotalsectionSevenSecondLastItemEn = TotalSectionLastLabelItemsEn+TotalSectionLastLabelItemsEn2
           const TotalsectionSevenSecondLastItemsDate2En = TotalSectionLastItemsDate2En+TotalSectionLastItemsDate2En2
+          
           const [ SectionSevenLastLabel2,   setSectionSevenLastLabel2 ] = useState("Total comprehensive (loss) income for the year");
            const [ SectionSevenLastNote,   setSectionSevenLastNote ] = useState("");
           const TotalsectionSevenLastItemEn =    TotalsectionFourSubItemsEn+   TotalsectionSevenSecondLastItemEn
